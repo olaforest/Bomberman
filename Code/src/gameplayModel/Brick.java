@@ -1,0 +1,47 @@
+package gameplayModel;
+
+import java.util.ArrayList;
+
+/**
+ * @author Olivier Laforest
+ *
+ */
+public class Brick extends AnimatedObject {
+	
+	public static enum AnimationType {destruction};
+
+	public Brick(int x, int y) {
+		super(x, y);
+		animCycleParam = 3;
+	}
+	
+	public void generateAnimationList() {
+		
+		int[][] animParam = {{19, 259, 7}};
+		
+		animationList = new Animation[AnimationType.values().length];
+		
+		for (AnimationType type : AnimationType.values()){
+			
+			int i = type.ordinal();
+			
+			animationList[i] = new Animation(animParam[i][2]);
+			
+			for (int j = 0 ; j < animParam[i][2] ; j++){
+			
+			animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + (GridObject.PIXELWIDTH + 2) * j, 
+					animParam[i][1], GridObject.PIXELWIDTH, GridObject.PIXELHEIGHT), ZOOM), j);
+			}
+		}
+	}
+	
+    public ArrayList<String> toCSVEntry() {
+		
+		ArrayList<String> entryList = new ArrayList<String>();
+		
+		entryList.add(Integer.toString(xPosition));
+		entryList.add(Integer.toString(yPosition));
+
+		return entryList; 
+	}
+}
