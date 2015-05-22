@@ -1,3 +1,0 @@
-For a work sample, please check out the following GitHub repository.
-
-https://github.com/olaforest/Bomberman.git
