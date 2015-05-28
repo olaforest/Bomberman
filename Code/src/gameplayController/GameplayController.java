@@ -1,39 +1,26 @@
 package gameplayController;
 
 import gameplayModel.*;
-import gameplayView.*;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.ArrayDeque;
-
-import javax.swing.JFrame;
-import javax.swing.JViewport;
-import javax.swing.Timer;
-
+import gameplayView.GameStatusPanel;
+import gameplayView.GameplayPanel;
 import menuController.MenuController;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 
-/**
- * This class contains the various methods that controls the gameplay aspect of this game, 
- * such as taking the required action given certain user inputs, updating positions of all objects
- * on the gamepanel, controlling the game timer, repainting the gamepanel one each iteration of the 
- * game timer, etc.
- * 
- * @author Olivier Laforest
- *
- */
 public class GameplayController implements ActionListener {
 	
 	public static final int TIMEOUT = 50;
 	public static final int VIEW_PORT_WIDTH = 16 * GridObject.EFFECTIVE_PIXEL_WIDTH;
-	
+
 	private boolean placeBomb;
-    
+
 	private MenuController menuCtrl;
 	private GameContext gameContext;
 	private GridMap gridMap;
@@ -53,7 +40,8 @@ public class GameplayController implements ActionListener {
 	private Bomberman bomberman;
 	private Exitway exitway;
 	private PowerUp powerup;
-	
+
+
 	private JFrame gameFrame;
 	private JViewport gameView;
 	private Timer timer;
@@ -143,25 +131,15 @@ public class GameplayController implements ActionListener {
     }
     
 	
-    /**
-     * @return the game context of the currently played game
-     */
     public GameContext getGameContext() {
 		return gameContext;
 	}
 	
-    /**
-     * Sets the game frame visible and restarts the game timer.
-     */
     public void resumeGame() {
     	gameFrame.setVisible(true);
     	timer.start();
     }
-    
-    
-	/* Gets the appropriate references to classes lower in the game hierarchy and instantiate the remaining 
-	 * required objects such as the Artificial intelligence and the collision detector.
-	 */
+
 	private void initializeReferences() {
 		
     	gridMap = gameContext.getGridMap();
@@ -251,12 +229,13 @@ public class GameplayController implements ActionListener {
     	
     	if (!bomberman.isDead()) {
     		
-    		/* Move bomberman and set proper animation according to last key that was pressed. Before moving bomberman, 
+    		/*
+    		 * Move bomberman and set proper animation according to last key that was pressed. Before moving bomberman,
     		 * checks if bomberman is colliding with a bomb.
     		*/
 	    	if (activeDirectionKeys.size() != 0) {
 	    		
-		    	switch (activeDirectionKeys.getFirst().intValue()) {
+		    	switch (activeDirectionKeys.getFirst()) {
 				case KeyEvent.VK_UP:
 					if (bomberman.getAnimationNumber() != Bomberman.AnimationType.up.ordinal())
 						bomberman.setCurrentAnimation(Bomberman.AnimationType.up.ordinal());

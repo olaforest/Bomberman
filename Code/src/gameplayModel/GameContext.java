@@ -1,18 +1,9 @@
-
 package gameplayModel;
-
-import java.util.ArrayList;
 
 import gameplayController.GameplayController;
 
-/**
- * This class manages the user interface as well as high level components of the gameplay. Aspects such as Score,
- * Time, current level, and the generation of the gridMap are all controlled and modified through internal
- * methods.
- * 
- * @author Olivier Laforest
- *
- */
+import java.util.ArrayList;
+
 public class GameContext {
 
 	public final int MAX_GAME_TIME = 200 * 1000;

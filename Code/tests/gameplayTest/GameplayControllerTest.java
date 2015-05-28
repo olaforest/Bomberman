@@ -1,11 +1,12 @@
 package gameplayTest;
-import static org.junit.Assert.assertTrue;
-import menuController.MenuController;
 
+import gameplayController.GameplayController;
+import menuController.MenuController;
 import org.junit.Before;
 import org.junit.Test;
 
-import gameplayController.GameplayController;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
 
 public class GameplayControllerTest {
@@ -22,5 +23,6 @@ public class GameplayControllerTest {
 	@Test
 	public void testGetGameContext() {
 		assertTrue(gameCtrl.getGameContext().getClass().toString().equals("class gameplayModel.GameContext"));
+		assertThat(menuCtrl).as("Test").isNull();
 	}
 }
