@@ -1,19 +1,13 @@
 
 package gameplayModel;
 
+import lombok.Getter;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-
-/**
- * This class as as the SuperClass of all different type of GridObject.
- * It controls each object's location, zooming, size, and what happens if they collide with concrete
- * 
- * @author Olivier Laforest
- *
- */
 
 public class GridObject {
     
@@ -26,16 +20,10 @@ public class GridObject {
     public static final int EFFECTIVE_PIXEL_HEIGHT = PIXELHEIGHT * ZOOM;
     public static final int MISALIGNMENT_ALLOWED = 16;
 	
-	protected int xPosition;
-	protected int yPosition;
+	@Getter protected int xPosition;
+	@Getter protected int yPosition;
     protected boolean concreteCollision;
 
-    /**
-     * Initialize each GridObject
-     * 
-     * @param x the x-coordinate of the GridObject
-     * @param y the y-coordinate of the GridObject
-     */
     public GridObject(int x, int y) {
     	
     	xPosition = x;
@@ -53,13 +41,7 @@ public class GridObject {
         }
     }
 
-    public boolean isConcreteCollision() {
-        return concreteCollision;
-    }
-
-    public int getXPosition() {
-        return xPosition;
-    }
+    public boolean isConcreteCollision() { return concreteCollision; }
 
     public void setXPosition(int xPosition) {
     	concreteCollision = false;
@@ -78,10 +60,6 @@ public class GridObject {
     		this.yPosition -= 4;
     	}else 
     		concreteCollision = true;
-    }
-
-    public int getYPosition() {
-        return yPosition;
     }
 
     public void setYPosition(int yPosition) {
@@ -106,14 +84,6 @@ public class GridObject {
     		concreteCollision = true;
     }
     
-	/**
-	 * This method draw each GridObjects on the GridMap in  2D Graphics
-	 * It uses image buffering to load the drawing onto the Map
-	 * 
-	 * @param imageIn the input image being buffered
-	 * @param factor the enlargement factor used for input image
-	 * @return the output image
-	 */
 	public static BufferedImage resizeImage(BufferedImage imageIn, int factor) {
         
 		final BufferedImage imageOut = new BufferedImage(imageIn.getWidth() * factor, imageIn.getHeight() * factor, BufferedImage.TYPE_INT_RGB);
