@@ -1,12 +1,8 @@
 
 package gameplayModel;
 
-/**
- * This class deals with animation related controller for all of the movable obstacles on the GridMap
- * It involves loading the sprite sheets, images cycling.
- * 
- * @author Olivier Laforest
- */
+import lombok.Getter;
+
 public abstract class AnimatedObject extends GridObject {
 	
 	public final int INITIAL_ANIMATION = 0;
@@ -14,6 +10,7 @@ public abstract class AnimatedObject extends GridObject {
 	protected Animation[] animationList;
 	private Animation currentAnimation;
 
+	@Getter
 	protected boolean isDead, isObsolete;
 	
 	private int animationNumber;
@@ -42,10 +39,6 @@ public abstract class AnimatedObject extends GridObject {
     	isObsolete = false;
 	}
 	
-	/**
-	 * Each animation requires cycling through Sprite Sheets to generate on screen
-	 * This method controls the timing of each animated event
-	 */
 	public void cycleAnimation() {
     	
     	if (counter % animCycleParam == 0) {
@@ -64,25 +57,11 @@ public abstract class AnimatedObject extends GridObject {
 		counter++;
     }
 	
-	/**
-	 * Triggers when the animated object is dead
-	 */
 	public void triggerDeath() {
 		currentAnimation = animationList[animationList.length - 1];
 		isDead = true;
 	}
 	
-	public boolean isDead() {
-		return isDead;
-	}
-
-	public boolean isObsolete() {
-		return isObsolete;
-	}
-	
-	/**
-	 * Marked for deletion
-	 */
 	public abstract void generateAnimationList();
 	
 	public Animation getCurrentAnimation() {
@@ -93,11 +72,6 @@ public abstract class AnimatedObject extends GridObject {
 		return animationNumber;
 	}
 	
-	/**
-	 * Controls the current frame of the animation
-	 * 
-	 * @param aT the type of animation desired by the object
-	 */
 	public void setCurrentAnimation(int aT) {
 		currentAnimation = animationList[aT];
 		currentAnimation.setToInitialFrame();
