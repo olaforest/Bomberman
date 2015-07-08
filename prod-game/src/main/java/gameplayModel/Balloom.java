@@ -1,27 +1,11 @@
 package gameplayModel;
 
-/**
- * This class defined the the enemy type "Balloom". It defined all of the initializing parameter of this enemy type 
- * which includes the number of points players gain if killed,  the speed it moves at, the AI "smartnesss" of it, 
- * and the wall-passing capabilities.
- * 
- * @author Olivier Laforest
- */
-
-
 public class Balloom extends Enemy {
 	
 	public final int POINTS = 100;
 	public final int SPEED = 2;
 	public final int SMARTNESS = 1;
 	public final boolean WALLPASS = false;
-	
-	/**
-	 * Initialize the enemy when each round of the game start
-	 * @param  x x-coordinates of the spawning location of the enemy
-	 * @param  y y-coordinates of the spawning location of the enemy
-	 *
-	 */
 	
 	public Balloom(int x, int y) {
 		super(x, y);
@@ -35,12 +19,6 @@ public class Balloom extends Enemy {
 		initialize();
 	}
 	
-	/* (non-Javadoc)
-	 * 
-	 * Animation of this specific type of enemy, generated from the sprite sheets
-	 * 
-	 * @see gameplayModel.Enemy#generateAnimationList()
-	 */
 	public void generateAnimationList() {
 		
 		int[][] animParam = {	{72, 39, 4},
@@ -67,6 +45,6 @@ public class Balloom extends Enemy {
 		points = POINTS;
 		speed = SPEED * SPEED_MULTIPLIER;
 		smartness = SMARTNESS;
-		wallpass = WALLPASS;
+		isWallpass = WALLPASS;
 	}
 }

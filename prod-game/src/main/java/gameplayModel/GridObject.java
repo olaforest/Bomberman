@@ -1,4 +1,3 @@
-
 package gameplayModel;
 
 import lombok.Getter;
@@ -22,13 +21,13 @@ public class GridObject {
 	
 	@Getter protected int xPosition;
 	@Getter protected int yPosition;
-    protected boolean concreteCollision;
+	@Getter protected boolean isConcreteCollision;
 
     public GridObject(int x, int y) {
     	
     	xPosition = x;
     	yPosition = y;
-        concreteCollision = false;
+        isConcreteCollision = false;
     	
     	try {
     		InputStream in = Bomberman.class.getResourceAsStream("/spritesheet.png");
@@ -41,10 +40,8 @@ public class GridObject {
         }
     }
 
-    public boolean isConcreteCollision() { return concreteCollision; }
-
     public void setXPosition(int xPosition) {
-    	concreteCollision = false;
+    	isConcreteCollision = false;
     	boolean isInXRange = (xPosition >= EFFECTIVE_PIXEL_WIDTH) && (xPosition <= EFFECTIVE_PIXEL_WIDTH * (GridMap.MAPWIDTH - 2));
     	boolean isAlignedWithRow = ((this.yPosition - EFFECTIVE_PIXEL_HEIGHT) % (EFFECTIVE_PIXEL_HEIGHT * 2)) == 0;
     	boolean isBelowRow = ((this.yPosition - EFFECTIVE_PIXEL_HEIGHT) % (EFFECTIVE_PIXEL_HEIGHT * 2)) <= MISALIGNMENT_ALLOWED;
@@ -59,12 +56,12 @@ public class GridObject {
     		this.xPosition = xPosition;
     		this.yPosition -= 4;
     	}else 
-    		concreteCollision = true;
+    		isConcreteCollision = true;
     }
 
     public void setYPosition(int yPosition) {
     	
-        concreteCollision = false;
+        isConcreteCollision = false;
     	int xError = (this.xPosition - EFFECTIVE_PIXEL_WIDTH) % (EFFECTIVE_PIXEL_WIDTH * 2);
     	
     	boolean isInYRange = (yPosition >= EFFECTIVE_PIXEL_HEIGHT) && (yPosition <= EFFECTIVE_PIXEL_HEIGHT * (GridMap.MAPHEIGHT - 2));
@@ -81,7 +78,7 @@ public class GridObject {
     		this.yPosition = yPosition;
     		this.xPosition += 4;
     	} else 
-    		concreteCollision = true;
+    		isConcreteCollision = true;
     }
     
 	public static BufferedImage resizeImage(BufferedImage imageIn, int factor) {

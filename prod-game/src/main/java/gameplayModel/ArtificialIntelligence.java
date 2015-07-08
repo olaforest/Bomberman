@@ -111,7 +111,7 @@ public class ArtificialIntelligence {
 						
 						collisionCount = 0;
 						
-						if (!(temp.wallpass)){
+						if (!(temp.isWallpass)){
 							
 							for (Brick brick:bricks)
 								randomChangeCheck(temp,brick);
@@ -142,13 +142,13 @@ public class ArtificialIntelligence {
 				 * just moving the enemy and checking if it is colliding won't work
 				 * with concrete, because we don't allow anything to move into concrete.
 				 * 
-				 * As such, if the enemy tried to move into concrete concreteCollision will
+				 * As such, if the enemy tried to move into concrete isConcreteCollision will
 				 * be true, so we can just check that to tell if there was a collision
 				 */
 				if (temp.isConcreteCollision())
 					collision = true;
 				
-				if (!(temp.wallpass)){
+                        if (!(temp.isWallpass)){
 					/* Now we check if any bricks or bombs are colliding with the enemy due to 
 					 * its initial movement
 					 */        
@@ -308,10 +308,10 @@ public class ArtificialIntelligence {
 			if((Math.abs(bomberman.getXPosition()- e.getXPosition()) <= 2 * GridObject.EFFECTIVE_PIXEL_WIDTH)
 					&&(Math.abs(bomberman.getYPosition() - e.getYPosition()) <= 2 * GridObject.EFFECTIVE_PIXEL_HEIGHT)){
 				
-				/* Wallpass makes it unnecessary to use AStar, so we only do it if
-				 * the enemy doesn't have wallpass
+				/* getWallpass makes it unnecessary to use AStar, so we only do it if
+				 * the enemy doesn't have isWallpass
 				 */
-				if(!e.wallpass){
+				if(!e.isWallpass){
 					
 					/* we use AStar to find a path. If the path exists, we trace it back 
 					 * until we have a Node that is one move from our enemy's current position

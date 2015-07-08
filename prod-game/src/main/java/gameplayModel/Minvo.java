@@ -1,13 +1,4 @@
-
 package gameplayModel;
-
-/**
- * This class defined the the enemy type "Minvo". It defined all of the initializing parameter of this enemy type 
- * which includes the number of points players gain if killed,  the speed it moves at, the AI "smartnesss" of it, 
- * and the wall-passing capabilities.
- * 
- * @author Olivier Laforest
- */
 
 public class Minvo extends Enemy {
 	
@@ -39,7 +30,7 @@ public class Minvo extends Enemy {
 		points = POINTS;
 		speed = SPEED * SPEED_MULTIPLIER;
 		smartness = SMARTNESS;
-		wallpass = WALLPASS;
+		isWallpass = WALLPASS;
 	}
 
 	public void generateAnimationList() {

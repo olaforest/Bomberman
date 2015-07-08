@@ -1,4 +1,3 @@
-
 package gameplayModel;
 
 import lombok.Getter;
@@ -8,21 +7,12 @@ public abstract class AnimatedObject extends GridObject {
 	public final int INITIAL_ANIMATION = 0;
 	
 	protected Animation[] animationList;
-	private Animation currentAnimation;
-
-	@Getter
-	protected boolean isDead, isObsolete;
-	
-	private int animationNumber;
-
+	@Getter	private Animation currentAnimation;
+	@Getter	protected boolean isDead, isObsolete;
+	@Getter	private int animationNumber;
 	protected int animCycleParam;
-
 	protected int counter;
 	
-	/**
-	 * @param x the x-coordinates of location of the animation taking place
-	 * @param y the y-coordinates of location of the animation taking place
-	 */
 	public AnimatedObject (int x, int y) {
 		
 		super(x, y);
@@ -63,14 +53,6 @@ public abstract class AnimatedObject extends GridObject {
 	}
 	
 	public abstract void generateAnimationList();
-	
-	public Animation getCurrentAnimation() {
-		return currentAnimation;
-	}
-	
-	public int getAnimationNumber() {
-		return animationNumber;
-	}
 	
 	public void setCurrentAnimation(int aT) {
 		currentAnimation = animationList[aT];

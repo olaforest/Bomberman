@@ -39,7 +39,7 @@ public class Kondoria extends Enemy {
 		points = POINTS;
 		speed = SPEED * SPEED_MULTIPLIER;
 		smartness = SMARTNESS;
-		wallpass = WALLPASS;
+		isWallpass = WALLPASS;
 	}
 
 	public void generateAnimationList() {
