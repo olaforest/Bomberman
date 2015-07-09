@@ -98,7 +98,7 @@ public class GameplayController implements ActionListener {
 		updateBricksStatus();
 		
 		destroyObjectInExplodedBombsRange();
-		
+
 		if (!bomberman.canWallpass())
 			checkCollisionBtwBombermanAndBricks();
 		
