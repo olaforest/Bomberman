@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+@Getter
 public class GridObject {
     
 	public static BufferedImage image;
@@ -19,9 +20,9 @@ public class GridObject {
     public static final int EFFECTIVE_PIXEL_HEIGHT = PIXELHEIGHT * ZOOM;
     public static final int MISALIGNMENT_ALLOWED = 16;
 	
-	@Getter protected int xPosition;
-	@Getter protected int yPosition;
-	@Getter protected boolean isConcreteCollision;
+	protected int xPosition;
+	protected int yPosition;
+	protected boolean isConcreteCollision;
 
     public GridObject(int x, int y) {
     	

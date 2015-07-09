@@ -1,24 +1,14 @@
-//*****************************************************************************************************
-//  Animation.java
-//
-//*****************************************************************************************************
-
 package gameplayModel;
 
 import lombok.Getter;
 
 import java.awt.image.BufferedImage;
 
-/**
- *
- * @author Olivier Laforest
- */
 public class Animation {
 
-	@Getter
-    private BufferedImage[] frames;
+	@Getter private BufferedImage[] frames;
     private int counter;
-    private boolean isAnimDone;
+    @Getter private boolean isAnimDone;
     
     public Animation(int frameNumber) {
 
@@ -40,10 +30,6 @@ public class Animation {
     
 	public BufferedImage getCurrentFrame() {return frames[counter];}
 	
-//	private BufferedImage[] getFrames() {
-//		return frames;
-//	}
-	
 	public void cycleFrame() {
 		counter = ((counter + 1) % frames.length);
 		
@@ -53,9 +39,5 @@ public class Animation {
 	
 	public void setToInitialFrame(){
 		counter = 0;
-	}
-	
-	public boolean isAnimDone() {
-		return isAnimDone;
 	}
 }
