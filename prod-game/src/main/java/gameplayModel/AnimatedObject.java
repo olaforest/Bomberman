@@ -32,12 +32,10 @@ public abstract class AnimatedObject extends GridObject {
 	public void cycleAnimation() {
     	
     	if (counter % animCycleParam == 0) {
-			
 			if (!isDead) {
 				currentAnimation.cycleFrame();
 			
 			} else {
-					
 				if (currentAnimation.isAnimDone())
 					isObsolete = true;
 				else

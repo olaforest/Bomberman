@@ -1,79 +1,55 @@
-
 package gameplayModel;
 
 import gameplayController.GameplayController;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 
-/**
- * This class define the bomb which is the main weapon used by the bomberman.
- * It controls the explosion time, animation effects, bombing range radius, triggering methods,
- * and it also contains trigger methods for other events when the bomb is blasted
- * 
- * @author Olivier Laforest
- */
-
 public class Bomb extends AnimatedObject {
 	
-	public static enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp,expVertical, expHorizontal};
+	public enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp,expVertical, expHorizontal}
+
+    public final int TIME_TO_EXPLOSION = 2500;
 	
-	public final int TIME_TO_EXPLOSION = 2500;
+	@Getter private ArrayList<Animation> currentAnimations;
+	@Getter private ArrayList<Integer> animXOffset, animYOffset;
+
+	@Getter private static int range = 1;
+    @Getter @Setter private int timer;
+    @Getter private int rightRange, leftRange, downRange, upRange;
+    private int counter, animCycleParam;
+
+    @Accessors(fluent = true) @Getter()
+    private boolean wasTrigByBomb;
+    private boolean wasRightRangeChg, wasLeftRangeChg, wasDownRangeChg, wasUpRangeChg;
 	
-	private ArrayList<Animation> currentAnimations;
-	private ArrayList<Integer> animXOffset, animYOffset;
-	
-	private static int range = 1;
-	private int timer, counter, animCycleParam, rightRange, leftRange, downRange, upRange;
-	
-	private boolean wasTrigByBomb, wasRightRangeChg, wasLeftRangeChg, wasDownRangeChg, wasUpRangeChg;
-	
-	/**
-	 * @param x the x-coordinates of location of the bomb
-	 * @param y the y-coordinates of location of the bomb
-	 */
 	public Bomb(int x, int y) {
 		super(x, y);
 		
-		currentAnimations = new ArrayList<Animation>();
-		animXOffset = new ArrayList<Integer>();
-		animYOffset = new ArrayList<Integer>();
+		currentAnimations = new ArrayList<>();
+		animXOffset = new ArrayList<>();
+		animYOffset = new ArrayList<>();
 		
 		timer = TIME_TO_EXPLOSION;
 		counter = 0;
 		animCycleParam = 3;
-		
-		
-		rightRange = range;
-		leftRange = range;
-		downRange = range;
-		upRange = range;
+
+		rightRange = leftRange = downRange = upRange = range;
 		setRanges();
 		
-		wasTrigByBomb = false;
-		wasRightRangeChg = false;
-		wasLeftRangeChg = false;
-		wasDownRangeChg = false;
-		wasUpRangeChg = false;
+		wasTrigByBomb = wasRightRangeChg = wasLeftRangeChg = wasDownRangeChg = wasUpRangeChg = false;
 		
 		addAnimation(Bomb.AnimationType.unexploded.ordinal(), 0, 0);
 	}
 	
-	/**
-	 * @param range the effective range of the bomb
-	 * @param x the x-coordinates of location of the bomb
-	 * @param y the y-coordinates of location of the bomb
-	 * @param timer the amount of time before it explode counting from when it's being placed by bomberman
-	 * @param right the effective range above the bomb
-	 * @param left the effective range below the bomb
-	 * @param down the effective range on the left of the bomb
-	 * @param up the effective range on the left of the bomb
-	 */
 	public Bomb(int range, int x, int y, int timer, int right, int left, int down, int up) {
 		super(x, y);
 		
-		currentAnimations = new ArrayList<Animation>();
-		animXOffset = new ArrayList<Integer>();
-		animYOffset = new ArrayList<Integer>();
+		currentAnimations = new ArrayList<>();
+		animXOffset = new ArrayList<>();
+		animYOffset = new ArrayList<>();
 		
 		this.timer = timer;
 		counter = 0;
@@ -87,10 +63,6 @@ public class Bomb extends AnimatedObject {
 		addAnimation(Bomb.AnimationType.unexploded.ordinal(), 0, 0);
 	}
 
-	/* (non-Javadoc)
-	 * @see gameplayModel.AnimatedObject#generateAnimationList()
-	 */
-	
 	@Override
 	public void generateAnimationList() {
 		
@@ -108,38 +80,25 @@ public class Bomb extends AnimatedObject {
 		for (AnimationType type : AnimationType.values()){
 			
 			int i = type.ordinal();
-			
 			animationList[i] = new Animation(animParam[i][2]);
 			
-			for (int j = 0 ; j < animParam[i][3] ; j++){
-				
-				animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + animParam[i][4] * j, animParam[i][1], GridObject.PIXELWIDTH, GridObject.PIXELHEIGHT), ZOOM), j);
-			}
+			for (int j = 0 ; j < animParam[i][3] ; j++)
+                animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + animParam[i][4] * j, animParam[i][1], GridObject.PIXELWIDTH, GridObject.PIXELHEIGHT), ZOOM), j);
 			
-			for (int n = (animParam[i][2] - animParam[i][3]) ; n > 0 ; n--) {
-				
-				animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + animParam[i][4] * n, animParam[i][1], GridObject.PIXELWIDTH, GridObject.PIXELHEIGHT), ZOOM), animParam[i][3] - n);
-			}
+			for (int n = (animParam[i][2] - animParam[i][3]) ; n > 0 ; n--)
+                animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + animParam[i][4] * n, animParam[i][1], GridObject.PIXELWIDTH, GridObject.PIXELHEIGHT), ZOOM), animParam[i][3] - n);
 		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see gameplayModel.AnimatedObject#cycleAnimation()
-	 */
 	
 	public void cycleAnimation() {
 		
 		if (counter % animCycleParam == 0) {
-			
 			if (!isDead) {
-				
 				for (Animation animation : currentAnimations)
 					animation.cycleFrame();
 			
 			} else {
-				
 				for (int i = 0 ; i < currentAnimations.size() ;) {
-					
 					if (currentAnimations.get(i).isAnimDone()) {
 						removeAnimation(i);
 						
@@ -156,9 +115,6 @@ public class Bomb extends AnimatedObject {
 		counter++;
 	}
 	
-	/**
-	 * trigger the bomb when the timer reached preset limit
-	 */
 	public void decreaseTimer() {
 		timer -= GameplayController.TIMEOUT;
 		
@@ -166,33 +122,15 @@ public class Bomb extends AnimatedObject {
 			triggerExplosion();
 	}
 	
-	public int getTimer() {
-		return timer;
-	}
-
-	public void setTimer(int timer) {
-		this.timer = timer;
-	}
-
-	/**
-	 * trigger the series of events when a bomb is blasted
-	 */
-	/**
-	 * 
-	 */
 	public void triggerExplosion() {
 		
 		isDead = true;
 		timer = 0;
-		
-		animCycleParam = 2;
-		
-		clearAnimation();
-		
-		addAnimation(Bomb.AnimationType.expCenter.ordinal(), 0, 0);
+        animCycleParam = 2;
+        clearAnimation();
+        addAnimation(Bomb.AnimationType.expCenter.ordinal(), 0, 0);
 		
 		if (leftRange > 0) {
-			
 			if (wasLeftRangeChg) {
 				for (int i = 1 ; i <= leftRange ; i++)
 					addAnimation(Bomb.AnimationType.expHorizontal.ordinal(), -i, 0);
@@ -205,7 +143,6 @@ public class Bomb extends AnimatedObject {
 		}
 		
 		if (rightRange > 0) {
-			
 			if (wasRightRangeChg) {
 				for (int i = 1 ; i <= rightRange ; i++)
 					addAnimation(Bomb.AnimationType.expHorizontal.ordinal(), i, 0);
@@ -218,7 +155,6 @@ public class Bomb extends AnimatedObject {
 		}
 		
 		if (upRange > 0) {
-			
 			if (wasUpRangeChg) {
 				for (int i = 1 ; i <= upRange ; i++)
 					addAnimation(Bomb.AnimationType.expVertical.ordinal(), 0, -i);
@@ -231,7 +167,6 @@ public class Bomb extends AnimatedObject {
 		}
 		
 		if (downRange > 0) {
-			
 			if (wasDownRangeChg) {
 				for (int i = 1 ; i <= downRange ; i++)
 					addAnimation(Bomb.AnimationType.expVertical.ordinal(), 0, i);
@@ -257,8 +192,7 @@ public class Bomb extends AnimatedObject {
 			if ((xPosition - leftRange * EFFECTIVE_PIXEL_WIDTH) <= EFFECTIVE_PIXEL_WIDTH)
 				leftRange = xPosition / EFFECTIVE_PIXEL_WIDTH - 1;
 		}
-		
-		
+
 		boolean isNotAlignedWithColumn = (xPosition % (EFFECTIVE_PIXEL_WIDTH * 2)) == 0;
 		
 		if (isNotAlignedWithColumn) {
@@ -273,7 +207,6 @@ public class Bomb extends AnimatedObject {
 	}
 	
 	private void addAnimation(int animType, int xOffset, int yOffset) {
-		
 		currentAnimations.add(new Animation(animationList[animType]));
 		animXOffset.add(xOffset);
 		animYOffset.add(yOffset);	
@@ -291,43 +224,21 @@ public class Bomb extends AnimatedObject {
 		animYOffset.clear();
 	}
 	
-	public boolean wasTrigByBomb() {
-		return wasTrigByBomb;
-	}
-
 	public void setWasTrigByBomb() {
 		wasTrigByBomb = true;
 	}
 
-	public static int getRange() {
-		return range;
-	}
-
-	/**
-	 * increase the effective range of the bomb
-	 */
 	public static void increaseRange() {
 		range++;
 	}
 	
-	/**
-	 * restore the default range of the the bomb
-	 */
 	public static void resetRange() {
 		range = 1;
 	}
 	
-	public int getRightRange() {
-		return rightRange;
-	}
-
 	public void setRightRange(int rightRange) {
 		wasRightRangeChg = true;
 		this.rightRange = rightRange;
-	}
-
-	public int getLeftRange() {
-		return leftRange;
 	}
 
 	public void setLeftRange(int leftRange) {
@@ -335,17 +246,9 @@ public class Bomb extends AnimatedObject {
 		this.leftRange = leftRange;
 	}
 
-	public int getDownRange() {
-		return downRange;
-	}
-
 	public void setDownRange(int downRange) {
 		wasDownRangeChg = true;
 		this.downRange = downRange;
-	}
-
-	public int getUpRange() {
-		return upRange;
 	}
 
 	public void setUpRange(int upRange) {
@@ -353,22 +256,6 @@ public class Bomb extends AnimatedObject {
 		this.upRange = upRange;
 	}
 	
-	public ArrayList<Animation> getCurrentAnimations() {
-		return currentAnimations;
-	}
-	
-	public ArrayList<Integer> getAnimXOffset() {
-		return animXOffset;
-	}
-	
-	public ArrayList<Integer> getAnimYOffset() {
-		return animYOffset;
-	}
-	
-	/**
-	 * record the location of each bombs placed on the GridMap and prepare to be saved as CSV
-	 * @return entryList the complete Array of all the stored location and timer record of bombs
-	 */
 	public ArrayList<String> toCSVEntry() {
 		
 		ArrayList<String> entryList = new ArrayList<String>();
