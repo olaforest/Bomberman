@@ -2,13 +2,9 @@ package gameplayModel;
 
 import java.util.ArrayList;
 
-/**
- * @author Olivier Laforest
- *
- */
 public class Brick extends AnimatedObject {
 	
-	public static enum AnimationType {destruction};
+	public enum AnimationType {destruction}
 
 	public Brick(int x, int y) {
 		super(x, y);
@@ -22,15 +18,12 @@ public class Brick extends AnimatedObject {
 		animationList = new Animation[AnimationType.values().length];
 		
 		for (AnimationType type : AnimationType.values()){
-			
 			int i = type.ordinal();
-			
 			animationList[i] = new Animation(animParam[i][2]);
 			
 			for (int j = 0 ; j < animParam[i][2] ; j++){
-			
-			animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + (GridObject.PIXELWIDTH + 2) * j, 
-					animParam[i][1], GridObject.PIXELWIDTH, GridObject.PIXELHEIGHT), ZOOM), j);
+				animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + (GridObject.PIXELWIDTH + 2) * j,
+						animParam[i][1], GridObject.PIXELWIDTH, GridObject.PIXELHEIGHT), ZOOM), j);
 			}
 		}
 	}
