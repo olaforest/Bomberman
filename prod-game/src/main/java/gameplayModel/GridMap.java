@@ -1,17 +1,8 @@
-
 package gameplayModel;
 
 import gameplayController.GameplayController;
 
 import java.util.ArrayList;
-
-/**
- * This class defines the underlying map during game play. 
- * It contains all the methods used to initialize the maps for gameplay.
- * It will generate all of the GridObject and place them on the map according to level specification
- * 
- * @author Olivier Laforest
- */
 
 public class GridMap {
 	
@@ -35,11 +26,6 @@ public class GridMap {
 	
 	private Bomberman bomberman;
 	
-	/**
-	 * Used for GridMap Initialization based on the specification of each level
-	 *
-	 * @param levelSpecification the number and the types of GridObjects in each level
-	 */
 	public GridMap(int[] levelSpecification) {
 		
 		levelSpec = levelSpecification;
