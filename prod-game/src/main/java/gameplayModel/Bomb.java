@@ -1,29 +1,33 @@
 package gameplayModel;
 
 import gameplayController.GameplayController;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 
+@Getter
 public class Bomb extends AnimatedObject {
 	
 	public enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp,expVertical, expHorizontal}
 
     public final int TIME_TO_EXPLOSION = 2500;
 	
-	@Getter private ArrayList<Animation> currentAnimations;
-	@Getter private ArrayList<Integer> animXOffset, animYOffset;
+	private ArrayList<Animation> currentAnimations;
+	private ArrayList<Integer> animXOffset, animYOffset;
 
 	@Getter private static int range = 1;
-    @Getter @Setter private int timer;
-    @Getter private int rightRange, leftRange, downRange, upRange;
-    private int counter, animCycleParam;
+    @Setter private int timer;
+    private int rightRange, leftRange, downRange, upRange;
+    @Getter(AccessLevel.NONE) private int counter, animCycleParam;
 
-    @Accessors(fluent = true) @Getter()
+    @Accessors(fluent = true)
     private boolean wasTrigByBomb;
-    private boolean wasRightRangeChg, wasLeftRangeChg, wasDownRangeChg, wasUpRangeChg;
+
+	@Getter(AccessLevel.NONE)
+	private boolean wasRightRangeChg, wasLeftRangeChg, wasDownRangeChg, wasUpRangeChg;
 	
 	public Bomb(int x, int y) {
 		super(x, y);
