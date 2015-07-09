@@ -21,6 +21,6 @@ public class Flamepass extends PowerUp {
 		super(x, y);
 		
 		isPermanent = false;
-		img = generateImage(imageParam);
+		image = generateImage(imageParam);
 	}
 }

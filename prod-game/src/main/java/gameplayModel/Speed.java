@@ -21,6 +21,6 @@ public class Speed extends PowerUp {
 		super(x, y);
 		
 		isPermanent = true;
-		img = generateImage(imageParam);
+		image = generateImage(imageParam);
 	}
 }

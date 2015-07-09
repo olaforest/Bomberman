@@ -1,16 +1,14 @@
-
 package gameplayModel;
+
+import lombok.Getter;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-/**
- * @author Olivier Laforest
- *
- */
+@Getter
 public class PowerUp extends GridObject {
 	
-	protected BufferedImage img;
+	protected BufferedImage image;
 	protected boolean isPermanent;
 	
 	public PowerUp(int x, int y) {
@@ -18,23 +16,14 @@ public class PowerUp extends GridObject {
 	}
 	
 	public BufferedImage generateImage(int[] imageParameter) {
-		
 		return resizeImage(image.getSubimage(imageParameter[0], imageParameter[1], PIXELWIDTH, PIXELHEIGHT), ZOOM);
 	}
 	
-	public BufferedImage getImage(){
-		return img;
-	}
-	
-    public boolean isPermanent() {
-		return isPermanent;
-	}
+	@Override
+	public void setXPosition(int xPosition) { this.xPosition = xPosition; }
 
-	public void setXPosition(int xPosition) {
-        this.xPosition = xPosition;
-    }
-
-    public void setYPosition(int yPosition) {
+    @Override
+	public void setYPosition(int yPosition) {
         this.yPosition = yPosition;
     }
     

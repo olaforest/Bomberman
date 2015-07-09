@@ -10,8 +10,9 @@
 
        
 */
-package gameplayModel;
+package gameplayTest;
 
+import gameplayModel.*;
 import org.junit.Before;
 import org.junit.Test;
 
