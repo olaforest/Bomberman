@@ -25,7 +25,7 @@ public class GridObject {
 	protected boolean isConcreteCollision;
 
     public GridObject(int x, int y) {
-    	
+
     	xPosition = x;
     	yPosition = y;
         isConcreteCollision = false;

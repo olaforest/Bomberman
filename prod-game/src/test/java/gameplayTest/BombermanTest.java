@@ -2,6 +2,7 @@ package gameplayTest;
 
 import gameplayController.GameplayController;
 import gameplayModel.*;
+import gameplayModel.PowerUps.*;
 import org.junit.Before;
 import org.junit.Test;
 

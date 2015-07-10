@@ -1,6 +1,6 @@
 package gameplayTest;
 
-import gameplayModel.Balloom;
+import gameplayModel.Enemies.Balloom;
 import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
@@ -51,7 +51,7 @@ public class BalloomTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(balloom.toCSVEntry().size() == 4);
-		assertTrue(balloom.toCSVEntry().get(0).equals("class gameplayModel.Balloom"));
+		assertTrue(balloom.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Balloom"));
 		assertTrue(balloom.toCSVEntry().get(1).equals(Integer.toString(balloom.getXPosition())));
 		assertTrue(balloom.toCSVEntry().get(2).equals(Integer.toString(balloom.getYPosition())));
 		assertTrue(balloom.toCSVEntry().get(3).equals(Integer.toString(balloom.getDirection())));

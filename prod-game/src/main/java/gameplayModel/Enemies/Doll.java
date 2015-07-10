@@ -1,18 +1,22 @@
-package gameplayModel;
+package gameplayModel.Enemies;
 
-public class Kondoria extends Enemy {
+import gameplayModel.Animation;
+import gameplayModel.Enemy;
+import gameplayModel.GridObject;
+
+public class Doll extends Enemy {
 	
-	public final int POINTS = 1000;
-	public final int SPEED = 1;
-	public final int SMARTNESS = 3;
-	public final boolean WALLPASS = true;
+	public final int POINTS = 400;
+	public final int SPEED = 3;
+	public final int SMARTNESS = 1;
+	public final boolean WALLPASS = false;
 	
-	public Kondoria(int x, int y) {
+	public Doll(int x, int y) {
 		super(x, y);
 		initialize();
 	}
 	
-	public Kondoria(int x, int y, int dir) {
+	public Doll(int x, int y, int dir) {
 		super(x, y, dir);
 		initialize();
 	}
@@ -26,9 +30,9 @@ public class Kondoria extends Enemy {
 
 	public void generateAnimationList() {
 		
-		int[][] animParam = {	{56, 146, 3},
-								{2, 146, 3},
-								{110, 146, 5}};
+		int[][] animParam = {	{55, 110, 3},
+								{1, 110, 3},
+								{107, 110, 5}};
 
 		animationList = new Animation[AnimationType.values().length];
 

@@ -3,6 +3,8 @@ package database;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import gameplayModel.*;
+import gameplayModel.Enemies.*;
+import gameplayModel.PowerUps.*;
 import menuModel.Player;
 import menuModel.SavedGame;
 
@@ -216,28 +218,28 @@ public class Database {
 			direction = Integer.parseInt(data.remove(0));
 			
 			switch (type) {
-			case "class gameplayModel.Balloom":
+			case "class gameplayModel.Enemies.Balloom":
 				enemies.add(new Balloom(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Oneal":
+			case "class gameplayModel.Enemies.Oneal":
 				enemies.add(new Oneal(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Doll":
+			case "class gameplayModel.Enemies.Doll":
 				enemies.add(new Doll(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Minvo":
+			case "class gameplayModel.Enemies.Minvo":
 				enemies.add(new Minvo(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Kondoria":
+			case "class gameplayModel.Enemies.Kondoria":
 				enemies.add(new Kondoria(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Ovapi":
+			case "class gameplayModel.Enemies.Ovapi":
 				enemies.add(new Ovapi(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Pass":
+			case "class gameplayModel.Enemies.Pass":
 				enemies.add(new Pass(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Pontan":
+			case "class gameplayModel.Enemies.Pontan":
 				enemies.add(new Pontan(xPosition, yPosition, direction));
 				break;
 			}
@@ -303,28 +305,28 @@ public class Database {
 		PowerUp powerup = new PowerUp(xPosition, yPosition);
 		
 		switch (type) {
-		case "class gameplayModel.BombPU":
+		case "class gameplayModel.PowerUps.BombPU":
 			powerup = new BombPU(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Flames":
+		case "class gameplayModel.PowerUps.Flames":
 			powerup = new Flames(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Speed":
+		case "class gameplayModel.PowerUps.Speed":
 			powerup = new Speed(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Wallpass":
+		case "class gameplayModel.PowerUps.Wallpass":
 			powerup = new Wallpass(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Detonator":
+		case "class gameplayModel.PowerUps.Detonator":
 			powerup = new Detonator(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Bombpass":
+		case "class gameplayModel.PowerUps.Bombpass":
 			powerup = new Bombpass(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Flamepass":
+		case "class gameplayModel.PowerUps.Flamepass":
 			powerup = new Flamepass(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Mystery":
+		case "class gameplayModel.PowerUps.Mystery":
 			powerup = new Mystery(xPosition, yPosition);
 			break;
 		}

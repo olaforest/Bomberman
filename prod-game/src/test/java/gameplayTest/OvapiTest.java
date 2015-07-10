@@ -1,9 +1,9 @@
 package gameplayTest;
 
+import gameplayModel.Enemies.Ovapi;
 import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
-import gameplayModel.Ovapi;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class OvapiTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(ovapi.toCSVEntry().size() == 4);
-		assertTrue(ovapi.toCSVEntry().get(0).equals("class gameplayModel.Ovapi"));
+		assertTrue(ovapi.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Ovapi"));
 		assertTrue(ovapi.toCSVEntry().get(1).equals(Integer.toString(ovapi.getXPosition())));
 		assertTrue(ovapi.toCSVEntry().get(2).equals(Integer.toString(ovapi.getYPosition())));
 		assertTrue(ovapi.toCSVEntry().get(3).equals(Integer.toString(ovapi.getDirection())));

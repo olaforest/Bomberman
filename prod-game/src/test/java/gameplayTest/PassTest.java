@@ -1,9 +1,9 @@
 package gameplayTest;
 
+import gameplayModel.Enemies.Pass;
 import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
-import gameplayModel.Pass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class PassTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(pass.toCSVEntry().size() == 4);
-		assertTrue(pass.toCSVEntry().get(0).equals("class gameplayModel.Pass"));
+		assertTrue(pass.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Pass"));
 		assertTrue(pass.toCSVEntry().get(1).equals(Integer.toString(pass.getXPosition())));
 		assertTrue(pass.toCSVEntry().get(2).equals(Integer.toString(pass.getYPosition())));
 		assertTrue(pass.toCSVEntry().get(3).equals(Integer.toString(pass.getDirection())));

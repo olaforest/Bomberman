@@ -36,9 +36,9 @@ public class GridMapTest {
 		gridMap.generateEnemies(testLevelSpec2);
 		
 		assertEquals(19, gridMap.getEnemies().size());
-		assertTrue(gridMap.getEnemies().get(16).getClass().toString().equals("class gameplayModel.Doll"));
-		assertTrue(gridMap.getEnemies().get(17).getClass().toString().equals("class gameplayModel.Doll"));
-		assertTrue(gridMap.getEnemies().get(18).getClass().toString().equals("class gameplayModel.Doll"));
+		assertTrue(gridMap.getEnemies().get(16).getClass().toString().equals("class gameplayModel.Enemies.Doll"));
+		assertTrue(gridMap.getEnemies().get(17).getClass().toString().equals("class gameplayModel.Enemies.Doll"));
+		assertTrue(gridMap.getEnemies().get(18).getClass().toString().equals("class gameplayModel.Enemies.Doll"));
 		
 		/* Test irrelevant input, last number in the array corresponds to the power up type in the level, therefore 
 		should not be taken into account for generating new enemies.*/
@@ -85,7 +85,7 @@ public class GridMapTest {
 	
 	@Test
 	public void testGetPowerUp() {
-		assertTrue(gridMap.getPowerUps().getClass().toString().equals("class gameplayModel.Flames"));
+		assertTrue(gridMap.getPowerUp().getClass().toString().equals("class gameplayModel.PowerUps.Flames"));
 	}
 	
 	@Test
@@ -111,7 +111,7 @@ public class GridMapTest {
 		assertTrue(gridMap.toCSVEntry().getClass().toString().equals("class java.util.ArrayList"));
 		
 		assertTrue(gridMap.toCSVEntry().size() == (8 + gridMap.getBricks().size()*2 + gridMap.getBombs().size()*7 + gridMap.getEnemies().size()*4 + gridMap.getExitway().toCSVEntry().size() + 
-				gridMap.getPowerUps().toCSVEntry().size() + gridMap.getBomberman().toCSVEntry().size()));
+				gridMap.getPowerUp().toCSVEntry().size() + gridMap.getBomberman().toCSVEntry().size()));
 		assertTrue(gridMap.toCSVEntry().get(1).equals("Bricks"));
 	}
 }

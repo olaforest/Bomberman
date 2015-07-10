@@ -1,7 +1,7 @@
 package gameplayTest;
 
-import gameplayModel.BombPU;
 import gameplayModel.GridObject;
+import gameplayModel.PowerUps.BombPU;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,7 +63,7 @@ public class BombPUTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(bombPU.toCSVEntry().size() == 3);
-		assertTrue(bombPU.toCSVEntry().get(0).equals("class gameplayModel.BombPU"));
+		assertTrue(bombPU.toCSVEntry().get(0).equals("class gameplayModel.PowerUps.BombPU"));
 		assertTrue(bombPU.toCSVEntry().get(1).equals(Integer.toString(bombPU.getXPosition())));
 		assertTrue(bombPU.toCSVEntry().get(2).equals(Integer.toString(bombPU.getYPosition())));
 	}

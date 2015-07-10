@@ -138,29 +138,29 @@ public class Bomberman extends AnimatedObject {
 		for (PowerUp powerup : powerUpsAcquired) {
 			
 			switch (powerup.getClass().toString()) {
-			case "class gameplayModel.BombPU":
+			case "class gameplayModel.PowerUps.BombPU":
 				bombsAvailable++;
 				bombsLeft++;
 				break;
-			case "class gameplayModel.Flames":
+			case "class gameplayModel.PowerUps.Flames":
 				Bomb.increaseRange();
 				break;
-			case "class gameplayModel.Speed":
+			case "class gameplayModel.PowerUps.Speed":
 				speed += SPEED_INCREMENT;
 				break;
-			case "class gameplayModel.Wallpass":
+			case "class gameplayModel.PowerUps.Wallpass":
 				canWallpass = true;
 				break;
-			case "class gameplayModel.Detonator":
+			case "class gameplayModel.PowerUps.Detonator":
 				canDetonateBombs = true;
 				break;
-			case "class gameplayModel.Bombpass":
+			case "class gameplayModel.PowerUps.Bombpass":
 				canBombpass = true;
 				break;
-			case "class gameplayModel.Flamepass":
+			case "class gameplayModel.PowerUps.Flamepass":
 				canFlamepass = true;
 				break;
-			case "class gameplayModel.Mystery":
+			case "class gameplayModel.PowerUps.Mystery":
 				isInvincible = true;
 				invincibilityTimer = INVINCIBILITY_TIMEOUT;
 				break;

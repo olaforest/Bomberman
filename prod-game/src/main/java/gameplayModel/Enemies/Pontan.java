@@ -1,4 +1,8 @@
-package gameplayModel;
+package gameplayModel.Enemies;
+
+import gameplayModel.Animation;
+import gameplayModel.Enemy;
+import gameplayModel.GridObject;
 
 public class Pontan extends Enemy {
 	

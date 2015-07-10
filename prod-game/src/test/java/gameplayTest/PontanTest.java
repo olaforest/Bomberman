@@ -1,9 +1,9 @@
 package gameplayTest;
 
+import gameplayModel.Enemies.Pontan;
 import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
-import gameplayModel.Pontan;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class PontanTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(pontan.toCSVEntry().size() == 4);
-		assertTrue(pontan.toCSVEntry().get(0).equals("class gameplayModel.Pontan"));
+		assertTrue(pontan.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Pontan"));
 		assertTrue(pontan.toCSVEntry().get(1).equals(Integer.toString(pontan.getXPosition())));
 		assertTrue(pontan.toCSVEntry().get(2).equals(Integer.toString(pontan.getYPosition())));
 		assertTrue(pontan.toCSVEntry().get(3).equals(Integer.toString(pontan.getDirection())));

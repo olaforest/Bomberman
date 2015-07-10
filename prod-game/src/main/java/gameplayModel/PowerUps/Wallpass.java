@@ -1,4 +1,6 @@
-package gameplayModel;
+package gameplayModel.PowerUps;
+
+import gameplayModel.PowerUp;
 
 public class Wallpass extends PowerUp {
 	

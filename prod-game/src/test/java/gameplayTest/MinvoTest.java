@@ -1,9 +1,9 @@
 package gameplayTest;
 
+import gameplayModel.Enemies.Minvo;
 import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
-import gameplayModel.Minvo;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class MinvoTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(minvo.toCSVEntry().size() == 4);
-		assertTrue(minvo.toCSVEntry().get(0).equals("class gameplayModel.Minvo"));
+		assertTrue(minvo.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Minvo"));
 		assertTrue(minvo.toCSVEntry().get(1).equals(Integer.toString(minvo.getXPosition())));
 		assertTrue(minvo.toCSVEntry().get(2).equals(Integer.toString(minvo.getYPosition())));
 		assertTrue(minvo.toCSVEntry().get(3).equals(Integer.toString(minvo.getDirection())));

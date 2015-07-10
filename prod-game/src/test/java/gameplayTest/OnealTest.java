@@ -1,9 +1,9 @@
 package gameplayTest;
 
+import gameplayModel.Enemies.Oneal;
 import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
-import gameplayModel.Oneal;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class OnealTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(oneal.toCSVEntry().size() == 4);
-		assertTrue(oneal.toCSVEntry().get(0).equals("class gameplayModel.Oneal"));
+		assertTrue(oneal.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Oneal"));
 		assertTrue(oneal.toCSVEntry().get(1).equals(Integer.toString(oneal.getXPosition())));
 		assertTrue(oneal.toCSVEntry().get(2).equals(Integer.toString(oneal.getYPosition())));
 		assertTrue(oneal.toCSVEntry().get(3).equals(Integer.toString(oneal.getDirection())));

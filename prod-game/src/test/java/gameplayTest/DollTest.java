@@ -1,6 +1,6 @@
 package gameplayTest;
 
-import gameplayModel.Doll;
+import gameplayModel.Enemies.Doll;
 import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
@@ -51,7 +51,7 @@ public class DollTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(doll.toCSVEntry().size() == 4);
-		assertTrue(doll.toCSVEntry().get(0).equals("class gameplayModel.Doll"));
+		assertTrue(doll.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Doll"));
 		assertTrue(doll.toCSVEntry().get(1).equals(Integer.toString(doll.getXPosition())));
 		assertTrue(doll.toCSVEntry().get(2).equals(Integer.toString(doll.getYPosition())));
 		assertTrue(doll.toCSVEntry().get(3).equals(Integer.toString(doll.getDirection())));

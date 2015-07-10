@@ -1,6 +1,7 @@
 package gameplayController;
 
 import gameplayModel.*;
+import gameplayModel.Enemies.*;
 import gameplayView.GameStatusPanel;
 import gameplayView.GameplayPanel;
 import menuController.MenuController;
@@ -152,7 +153,7 @@ public class GameplayController implements ActionListener {
     	enemies = gameContext.getGridMap().getEnemies();
     	bomberman = gameContext.getGridMap().getBomberman();
     	exitway = gameContext.getGridMap().getExitway();
-    	powerup = gameContext.getGridMap().getPowerUps();
+    	powerup = gameContext.getGridMap().getPowerUp();
     	
         colDetect = new CollisionDetector(gameContext);
     	AI = new ArtificialIntelligence(bomberman,enemies, bricks, bombs,colDetect);

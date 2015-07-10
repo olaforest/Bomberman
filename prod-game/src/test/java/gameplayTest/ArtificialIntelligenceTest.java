@@ -13,6 +13,7 @@
 package gameplayTest;
 
 import gameplayModel.*;
+import gameplayModel.Enemies.Balloom;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -309,7 +310,7 @@ public class ArtificialIntelligenceTest {
     public void testDownCollision(){ //tests what happens when a brick or bomb is in the path of the enemy going down
          
         //when a brick is below the enemy and it is going down
-        balloom = new Balloom(GridObject.EFFECTIVE_PIXEL_WIDTH,GridObject.EFFECTIVE_PIXEL_HEIGHT * 6,1);  
+        balloom = new Balloom(GridObject.EFFECTIVE_PIXEL_WIDTH,GridObject.EFFECTIVE_PIXEL_HEIGHT * 6,1);
          
         br.clear();
         e.clear();

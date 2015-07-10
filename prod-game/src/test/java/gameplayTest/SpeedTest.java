@@ -1,7 +1,7 @@
 package gameplayTest;
 
 import gameplayModel.GridObject;
-import gameplayModel.Speed;
+import gameplayModel.PowerUps.Speed;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,7 +63,7 @@ public class SpeedTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(speed.toCSVEntry().size() == 3);
-		assertTrue(speed.toCSVEntry().get(0).equals("class gameplayModel.Speed"));
+		assertTrue(speed.toCSVEntry().get(0).equals("class gameplayModel.PowerUps.Speed"));
 		assertTrue(speed.toCSVEntry().get(1).equals(Integer.toString(speed.getXPosition())));
 		assertTrue(speed.toCSVEntry().get(2).equals(Integer.toString(speed.getYPosition())));
 	}

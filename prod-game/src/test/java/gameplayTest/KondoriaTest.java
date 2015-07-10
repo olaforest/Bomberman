@@ -1,9 +1,9 @@
 package gameplayTest;
 
+import gameplayModel.Enemies.Kondoria;
 import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
-import gameplayModel.Kondoria;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class KondoriaTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(kondoria.toCSVEntry().size() == 4);
-		assertTrue(kondoria.toCSVEntry().get(0).equals("class gameplayModel.Kondoria"));
+		assertTrue(kondoria.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Kondoria"));
 		assertTrue(kondoria.toCSVEntry().get(1).equals(Integer.toString(kondoria.getXPosition())));
 		assertTrue(kondoria.toCSVEntry().get(2).equals(Integer.toString(kondoria.getYPosition())));
 		assertTrue(kondoria.toCSVEntry().get(3).equals(Integer.toString(kondoria.getDirection())));
