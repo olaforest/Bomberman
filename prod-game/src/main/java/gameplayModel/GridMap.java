@@ -1,8 +1,14 @@
 package gameplayModel;
 
 import gameplayController.GameplayController;
-import gameplayModel.Enemies.*;
-import gameplayModel.PowerUps.*;
+import gameplayModel.GridObjects.AnimatedObjects.Bomb;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Brick;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.*;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
+import gameplayModel.GridObjects.Concrete;
+import gameplayModel.GridObjects.Exitway;
+import gameplayModel.GridObjects.PowerUps.*;
 import lombok.Getter;
 
 import java.util.ArrayList;

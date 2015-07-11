@@ -1,5 +1,6 @@
-package gameplayModel;
+package gameplayModel.GridObjects;
 
+import gameplayModel.GridObject;
 import lombok.Getter;
 
 import java.awt.image.BufferedImage;
@@ -19,13 +20,11 @@ public class Exitway extends GridObject {
 	public void setXPosition(int xPosition) { this.xPosition = xPosition; }
 
     @Override
-	public void setYPosition(int yPosition) {
-        this.yPosition = yPosition;
-    }
+	public void setYPosition(int yPosition) { this.yPosition = yPosition; }
     
     public ArrayList<String> toCSVEntry() {
 		
-		ArrayList<String> entryList = new ArrayList<String>();
+		ArrayList<String> entryList = new ArrayList<>();
 		
 		entryList.add(Integer.toString(xPosition));
 		entryList.add(Integer.toString(yPosition));

@@ -2,8 +2,13 @@ package gameplayControllerTest;
 
 import gameplayController.ArtificialIntelligence;
 import gameplayController.CollisionDetector;
-import gameplayModel.*;
-import gameplayModel.Enemies.Balloom;
+import gameplayModel.GameContext;
+import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Bomb;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Brick;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 

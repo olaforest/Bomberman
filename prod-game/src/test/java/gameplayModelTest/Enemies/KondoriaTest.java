@@ -1,9 +1,9 @@
 package gameplayModelTest.Enemies;
 
-import gameplayModel.Enemies.Kondoria;
-import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.Kondoria;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class KondoriaTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(kondoria.toCSVEntry().size() == 4);
-		assertTrue(kondoria.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Kondoria"));
+		assertTrue(kondoria.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Kondoria"));
 		assertTrue(kondoria.toCSVEntry().get(1).equals(Integer.toString(kondoria.getXPosition())));
 		assertTrue(kondoria.toCSVEntry().get(2).equals(Integer.toString(kondoria.getYPosition())));
 		assertTrue(kondoria.toCSVEntry().get(3).equals(Integer.toString(kondoria.getDirection())));
@@ -77,7 +77,7 @@ public class KondoriaTest {
 	@Test
 	public void testGetAndSetCurrentAnimation() {
 		
-		int animationNumber = (int) Math.random() * Enemy.AnimationType.values().length;
+		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
 		
 		kondoria.setCurrentAnimation(animationNumber);
 		
@@ -177,11 +177,5 @@ public class KondoriaTest {
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Kondoria.MISALIGNMENT_ALLOWED - 4, kondoria.getXPosition());
 	}
 	
-	private boolean isDirectionCorrect() {
-		
-		if (kondoria.getDirection() >= 0 && kondoria.getDirection() <= 3)
-			return true;
-		else
-			return false;
-	}
+	private boolean isDirectionCorrect() { return kondoria.getDirection() >= 0 && kondoria.getDirection() <= 3; }
 }

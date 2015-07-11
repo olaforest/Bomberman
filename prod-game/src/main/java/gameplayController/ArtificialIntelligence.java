@@ -1,6 +1,10 @@
 package gameplayController;
 
-import gameplayModel.*;
+import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Bomb;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Brick;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import utility.Node;
 
 import java.util.ArrayList;
@@ -317,8 +321,8 @@ public class ArtificialIntelligence {
 	*/
 	private Node AStar(Enemy e, Bomberman b){
 		
-		LinkedList<Node> openList = new LinkedList<Node>();
-		LinkedList<Node> closedList = new LinkedList<Node>();
+		LinkedList<Node> openList = new LinkedList<>();
+		LinkedList<Node> closedList = new LinkedList<>();
 		
 		int correctedX = ((e.getXPosition() + GridObject.EFFECTIVE_PIXEL_WIDTH / 2) / GridObject.EFFECTIVE_PIXEL_WIDTH) * (GridObject.EFFECTIVE_PIXEL_WIDTH);
 		int correctedY = ((e.getYPosition() + GridObject.EFFECTIVE_PIXEL_HEIGHT / 2) / GridObject.EFFECTIVE_PIXEL_HEIGHT) * (GridObject.EFFECTIVE_PIXEL_HEIGHT);

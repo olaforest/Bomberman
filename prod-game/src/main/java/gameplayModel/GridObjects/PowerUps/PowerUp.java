@@ -1,5 +1,6 @@
-package gameplayModel;
+package gameplayModel.GridObjects.PowerUps;
 
+import gameplayModel.GridObject;
 import lombok.Getter;
 
 import java.awt.image.BufferedImage;
@@ -28,13 +29,10 @@ public class PowerUp extends GridObject {
     }
     
 	public ArrayList<String> toCSVEntry() {
-		
-		ArrayList<String> entryList = new ArrayList<String>();
-		
+		ArrayList<String> entryList = new ArrayList<>();
 		entryList.add(this.getClass().toString());
 		entryList.add(Integer.toString(xPosition));
 		entryList.add(Integer.toString(yPosition));
-
-		return entryList; 
+		return entryList;
 	}
 }

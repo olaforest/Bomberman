@@ -1,9 +1,9 @@
 package gameplayModelTest.Enemies;
 
-import gameplayModel.Enemies.Doll;
-import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.Doll;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class DollTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(doll.toCSVEntry().size() == 4);
-		assertTrue(doll.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Doll"));
+		assertTrue(doll.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Doll"));
 		assertTrue(doll.toCSVEntry().get(1).equals(Integer.toString(doll.getXPosition())));
 		assertTrue(doll.toCSVEntry().get(2).equals(Integer.toString(doll.getYPosition())));
 		assertTrue(doll.toCSVEntry().get(3).equals(Integer.toString(doll.getDirection())));
@@ -77,7 +77,7 @@ public class DollTest {
 	@Test
 	public void testGetAndSetCurrentAnimation() {
 		
-		int animationNumber = (int) Math.random() * Enemy.AnimationType.values().length;
+		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
 		
 		doll.setCurrentAnimation(animationNumber);
 		
@@ -177,11 +177,5 @@ public class DollTest {
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Doll.MISALIGNMENT_ALLOWED - 4, doll.getXPosition());
 	}
 	
-	private boolean isDirectionCorrect() {
-		
-		if (doll.getDirection() >= 0 && doll.getDirection() <= 3)
-			return true;
-		else
-			return false;
-	}
+	private boolean isDirectionCorrect() { return doll.getDirection() >= 0 && doll.getDirection() <= 3; }
 }

@@ -1,9 +1,9 @@
 package gameplayModelTest;
 
-import gameplayModel.Brick;
-import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Brick;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,7 +46,7 @@ public class BrickTest {
 	@Test
 	public void testGetAndSetCurrentAnimation() {
 		
-		int animationNumber = (int) Math.random() * Enemy.AnimationType.values().length;
+		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
 		
 		brick.setCurrentAnimation(animationNumber);
 		

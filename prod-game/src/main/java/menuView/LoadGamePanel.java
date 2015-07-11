@@ -1,6 +1,6 @@
 package menuView;
 
-import gameplayModel.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 import menuModel.Player;
 
 import javax.imageio.ImageIO;
@@ -63,7 +63,7 @@ public class LoadGamePanel extends JPanel {
 			}
 		};
 		
-		model = new DefaultListModel<String>();
+		model = new DefaultListModel<>();
 		
 		list = new JList(model);
 		list.setModel(model);
@@ -82,17 +82,17 @@ public class LoadGamePanel extends JPanel {
 		loadGame.addActionListener(listener);
 		
 		savename = new JLabel();
-        savename.setFont(new Font("Eurostile", 1, 15)); // NOI18N
+        savename.setFont(new Font("Eurostile", Font.BOLD, 15)); // NOI18N
         savename.setText("Save Name:");
         savename.setForeground(Color.white);
         
 		level = new JLabel();
-        level.setFont(new Font("Eurostile", 1, 15)); // NOI18N
+        level.setFont(new Font("Eurostile", Font.BOLD, 15)); // NOI18N
         level.setText("Level:");
         level.setForeground(Color.white);
         
 		datesaved = new JLabel();
-		datesaved.setFont(new Font("Eurostile", 1, 15)); // NOI18N
+		datesaved.setFont(new Font("Eurostile", Font.BOLD, 15)); // NOI18N
 		datesaved.setText("Date Saved:");
 		datesaved.setForeground(Color.white);
 		

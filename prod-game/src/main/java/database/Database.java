@@ -2,9 +2,15 @@ package database;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import gameplayModel.*;
-import gameplayModel.Enemies.*;
-import gameplayModel.PowerUps.*;
+import gameplayModel.GameContext;
+import gameplayModel.GridMap;
+import gameplayModel.GridObjects.AnimatedObjects.Bomb;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Brick;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.*;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
+import gameplayModel.GridObjects.Exitway;
+import gameplayModel.GridObjects.PowerUps.*;
 import menuModel.Player;
 import menuModel.SavedGame;
 
@@ -32,7 +38,7 @@ public class Database {
 	 */
 	public Database() {
 		
-		players = new ArrayList<Player>();
+		players = new ArrayList<>();
 		currentLoggedPlayer = null;
 		
 		try {
@@ -92,22 +98,20 @@ public class Database {
 		
 		while (nextLine != null) {
 			
-			ArrayList<String> data = new ArrayList<String>();
-	    	
-			for (String token : nextLine) {
-				data.add(token);
-			}
+			ArrayList<String> data = new ArrayList<>();
+
+			Collections.addAll(data, nextLine);
 			
 			players.add(new Player(data.get(0), data.get(1), data.get(2), Integer.parseInt(data.get(3)), Integer.parseInt(data.get(4)), Integer.parseInt(data.get(5))));
 			
 			while (data.contains("SavedGame")) {
 				
-				data = new ArrayList<String>(data.subList(data.indexOf("SavedGame") + 1, data.size()));
+				data = new ArrayList<>(data.subList(data.indexOf("SavedGame") + 1, data.size()));
 				
 				SavedGame savedGame;
 				
 				if (data.contains("SavedGame"))
-					savedGame = generateSavedGame(new ArrayList<String>(data.subList(0, data.indexOf("SavedGame"))));
+					savedGame = generateSavedGame(new ArrayList<>(data.subList(0, data.indexOf("SavedGame"))));
 				else
 					savedGame = generateSavedGame(data);
 				
@@ -124,7 +128,7 @@ public class Database {
 		
 		String gameName, gameDate;
 		
-		GameContext gameContext = generateGameContext(new ArrayList<String>(data.subList(data.indexOf("GameContext") + 1, data.size())));
+		GameContext gameContext = generateGameContext(new ArrayList<>(data.subList(data.indexOf("GameContext") + 1, data.size())));
 		
 		gameName = data.get(0);
 		gameDate = data.get(1);
@@ -136,7 +140,7 @@ public class Database {
 		
 		int gameTime, livesLeft, score, level;
 		
-		GridMap gridMap = generateGridMap(new ArrayList<String>(context.subList(context.indexOf("GridMap") + 1, context.size())));
+		GridMap gridMap = generateGridMap(new ArrayList<>(context.subList(context.indexOf("GridMap") + 1, context.size())));
 		
 		gameTime = Integer.parseInt(context.get(0));
 		livesLeft = Integer.parseInt(context.get(1));
@@ -150,12 +154,12 @@ public class Database {
 		
 		int spawnTimer = Integer.parseInt(map.get(0));
 		
-		ArrayList<Brick> bricks = generateBricks(new ArrayList<String>(map.subList(map.indexOf("Bricks") + 1, map.indexOf("Bombs"))));
-		ArrayList<Bomb> bombs = generateBombs(new ArrayList<String>(map.subList(map.indexOf("Bombs") + 1, map.indexOf("Enemies"))));
-		ArrayList<Enemy> enemies = generateEnemies(new ArrayList<String>(map.subList(map.indexOf("Enemies") + 1, map.indexOf("Exitway"))));
-		Exitway exitway = generateExitway(new ArrayList<String>(map.subList(map.indexOf("Exitway") + 1, map.indexOf("PowerUp"))));
-		PowerUp powerup = generatePowerUp(new ArrayList<String>(map.subList(map.indexOf("PowerUp") + 1, map.indexOf("Bomberman"))));
-		Bomberman bomberman = generateBomberman(new ArrayList<String>(map.subList(map.indexOf("Bomberman") + 1, map.size())));
+		ArrayList<Brick> bricks = generateBricks(new ArrayList<>(map.subList(map.indexOf("Bricks") + 1, map.indexOf("Bombs"))));
+		ArrayList<Bomb> bombs = generateBombs(new ArrayList<>(map.subList(map.indexOf("Bombs") + 1, map.indexOf("Enemies"))));
+		ArrayList<Enemy> enemies = generateEnemies(new ArrayList<>(map.subList(map.indexOf("Enemies") + 1, map.indexOf("Exitway"))));
+		Exitway exitway = generateExitway(new ArrayList<>(map.subList(map.indexOf("Exitway") + 1, map.indexOf("PowerUp"))));
+		PowerUp powerup = generatePowerUp(new ArrayList<>(map.subList(map.indexOf("PowerUp") + 1, map.indexOf("Bomberman"))));
+		Bomberman bomberman = generateBomberman(new ArrayList<>(map.subList(map.indexOf("Bomberman") + 1, map.size())));
 		
 		return new GridMap(spawnTimer, bricks, bombs, enemies, exitway, powerup, bomberman);
 	}
@@ -164,7 +168,7 @@ public class Database {
 		
 		int xPosition, yPosition;
 		
-		ArrayList<Brick> bricks = new ArrayList<Brick>();
+		ArrayList<Brick> bricks = new ArrayList<>();
 		
 		while (data.size() != 0) {
 			
@@ -182,7 +186,7 @@ public class Database {
 		
 		int range, xPosition, yPosition, timer, rightRange, leftRange, downRange, upRange;
 		
-		ArrayList<Bomb> bombs = new ArrayList<Bomb>();
+		ArrayList<Bomb> bombs = new ArrayList<>();
 		
 		range = Integer.parseInt(data.remove(0));
 		
@@ -207,7 +211,7 @@ public class Database {
 		int xPosition, yPosition, direction;
 		String type;
 		
-		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+		ArrayList<Enemy> enemies = new ArrayList<>();
 		
 		while (data.size() != 0) {
 			
@@ -218,28 +222,28 @@ public class Database {
 			direction = Integer.parseInt(data.remove(0));
 			
 			switch (type) {
-			case "class gameplayModel.Enemies.Balloom":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom":
 				enemies.add(new Balloom(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Enemies.Oneal":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Oneal":
 				enemies.add(new Oneal(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Enemies.Doll":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Doll":
 				enemies.add(new Doll(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Enemies.Minvo":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Minvo":
 				enemies.add(new Minvo(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Enemies.Kondoria":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Kondoria":
 				enemies.add(new Kondoria(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Enemies.Ovapi":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Ovapi":
 				enemies.add(new Ovapi(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Enemies.Pass":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Pass":
 				enemies.add(new Pass(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Enemies.Pontan":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Pontan":
 				enemies.add(new Pontan(xPosition, yPosition, direction));
 				break;
 			}
@@ -274,7 +278,7 @@ public class Database {
 		invincibilityTimer = Integer.parseInt(data.remove(0));
 		bombsLeft = Integer.parseInt(data.remove(0));
 
-		ArrayList<PowerUp> powerUpsAcquired = generatePowerUpsAcquired(new ArrayList<String>(data.subList(data.indexOf("PowerUpAcquired") + 1, data.size())));
+		ArrayList<PowerUp> powerUpsAcquired = generatePowerUpsAcquired(new ArrayList<>(data.subList(data.indexOf("PowerUpAcquired") + 1, data.size())));
 		
 		
 		return new Bomberman(xPosition, yPosition, invincibilityTimer, bombsLeft, powerUpsAcquired);
@@ -286,7 +290,7 @@ public class Database {
 		
 		String type;
 		
-		ArrayList<PowerUp> powerups = new ArrayList<PowerUp>();
+		ArrayList<PowerUp> powerups = new ArrayList<>();
 		
 		while (data.size() != 0) {
 			
@@ -305,28 +309,28 @@ public class Database {
 		PowerUp powerup = new PowerUp(xPosition, yPosition);
 		
 		switch (type) {
-		case "class gameplayModel.PowerUps.BombPU":
+		case "class gameplayModel.GridObjects.PowerUps.BombPU":
 			powerup = new BombPU(xPosition, yPosition);
 			break;
-		case "class gameplayModel.PowerUps.Flames":
+		case "class gameplayModel.GridObjects.PowerUps.Flames":
 			powerup = new Flames(xPosition, yPosition);
 			break;
-		case "class gameplayModel.PowerUps.Speed":
+		case "class gameplayModel.GridObjects.PowerUps.Speed":
 			powerup = new Speed(xPosition, yPosition);
 			break;
-		case "class gameplayModel.PowerUps.Wallpass":
+		case "class gameplayModel.GridObjects.PowerUps.Wallpass":
 			powerup = new Wallpass(xPosition, yPosition);
 			break;
-		case "class gameplayModel.PowerUps.Detonator":
+		case "class gameplayModel.GridObjects.PowerUps.Detonator":
 			powerup = new Detonator(xPosition, yPosition);
 			break;
-		case "class gameplayModel.PowerUps.Bombpass":
+		case "class gameplayModel.GridObjects.PowerUps.Bombpass":
 			powerup = new Bombpass(xPosition, yPosition);
 			break;
-		case "class gameplayModel.PowerUps.Flamepass":
+		case "class gameplayModel.GridObjects.PowerUps.Flamepass":
 			powerup = new Flamepass(xPosition, yPosition);
 			break;
-		case "class gameplayModel.PowerUps.Mystery":
+		case "class gameplayModel.GridObjects.PowerUps.Mystery":
 			powerup = new Mystery(xPosition, yPosition);
 			break;
 		}
@@ -412,7 +416,7 @@ public class Database {
 		
 		Collections.sort(topPlayers);
 		
-		topPlayers = new ArrayList<Player>(topPlayers.subList(0, 10));
+		topPlayers = new ArrayList<>(topPlayers.subList(0, 10));
 				
 		return topPlayers;
 	}

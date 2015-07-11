@@ -36,9 +36,9 @@ public class GridMapTest {
 		gridMap.generateEnemies(testLevelSpec2);
 		
 		assertEquals(19, gridMap.getEnemies().size());
-		assertTrue(gridMap.getEnemies().get(16).getClass().toString().equals("class gameplayModel.Enemies.Doll"));
-		assertTrue(gridMap.getEnemies().get(17).getClass().toString().equals("class gameplayModel.Enemies.Doll"));
-		assertTrue(gridMap.getEnemies().get(18).getClass().toString().equals("class gameplayModel.Enemies.Doll"));
+		assertTrue(gridMap.getEnemies().get(16).getClass().toString().equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Doll"));
+		assertTrue(gridMap.getEnemies().get(17).getClass().toString().equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Doll"));
+		assertTrue(gridMap.getEnemies().get(18).getClass().toString().equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Doll"));
 		
 		/* Test irrelevant input, last number in the array corresponds to the power up type in the level, therefore 
 		should not be taken into account for generating new enemies.*/
@@ -69,7 +69,7 @@ public class GridMapTest {
 	
 	@Test
 	public void testGetBomberman() {
-		assertTrue(gridMap.getBomberman().getClass().toString().equals("class gameplayModel.Bomberman"));
+		assertTrue(gridMap.getBomberman().getClass().toString().equals("class gameplayModel.GridObjects.AnimatedObjects.Bomberman"));
 	}
 	
 	@Test
@@ -85,7 +85,7 @@ public class GridMapTest {
 	
 	@Test
 	public void testGetPowerUp() {
-		assertTrue(gridMap.getPowerUp().getClass().toString().equals("class gameplayModel.PowerUps.Flames"));
+		assertTrue(gridMap.getPowerUp().getClass().toString().equals("class gameplayModel.GridObjects.PowerUps.Flames"));
 	}
 	
 	@Test
@@ -102,7 +102,7 @@ public class GridMapTest {
 	
 	@Test
 	public void testGetExitway() {
-		assertTrue(gridMap.getExitway().getClass().toString().equals("class gameplayModel.Exitway"));
+		assertTrue(gridMap.getExitway().getClass().toString().equals("class gameplayModel.GridObjects.Exitway"));
 	}
 	
 	@Test

@@ -1,22 +1,22 @@
-package gameplayModel.Enemies;
+package gameplayModel.GridObjects.AnimatedObjects.Enemies;
 
 import gameplayModel.Animation;
-import gameplayModel.Enemy;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 
-public class Ovapi extends Enemy {
+public class Minvo extends Enemy {
 	
-	public final int POINTS = 2000;
-	public final int SPEED = 2;
+	public final int POINTS = 800;
+	public final int SPEED = 4;
 	public final int SMARTNESS = 2;
-	public final boolean WALLPASS = true;
+	public final boolean WALLPASS = false;
 	
-	public Ovapi(int x, int y) {
+	public Minvo (int x, int y) {
 		super(x, y);
 		initialize();
 	}
 	
-	public Ovapi(int x, int y, int dir) {
+	public Minvo (int x, int y, int dir) {
 		super(x, y, dir);
 		initialize();
 	}
@@ -30,9 +30,9 @@ public class Ovapi extends Enemy {
 
 	public void generateAnimationList() {
 		
-		int[][] animParam = {	{55, 164, 3},
-								{1, 164, 3},
-								{109, 164, 5}};
+		int[][] animParam = {	{56, 128, 3},
+								{2, 128, 3},
+								{110, 128, 5}};
 
 		animationList = new Animation[AnimationType.values().length];
 

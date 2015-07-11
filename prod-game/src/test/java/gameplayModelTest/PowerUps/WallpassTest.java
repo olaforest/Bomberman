@@ -1,7 +1,7 @@
 package gameplayModelTest.PowerUps;
 
 import gameplayModel.GridObject;
-import gameplayModel.PowerUps.Wallpass;
+import gameplayModel.GridObjects.PowerUps.Wallpass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,7 +63,7 @@ public class WallpassTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(wallpass.toCSVEntry().size() == 3);
-		assertTrue(wallpass.toCSVEntry().get(0).equals("class gameplayModel.PowerUps.Wallpass"));
+		assertTrue(wallpass.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUps.Wallpass"));
 		assertTrue(wallpass.toCSVEntry().get(1).equals(Integer.toString(wallpass.getXPosition())));
 		assertTrue(wallpass.toCSVEntry().get(2).equals(Integer.toString(wallpass.getYPosition())));
 	}

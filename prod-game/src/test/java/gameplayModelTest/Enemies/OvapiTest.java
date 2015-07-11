@@ -1,9 +1,9 @@
 package gameplayModelTest.Enemies;
 
-import gameplayModel.Enemies.Ovapi;
-import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.Ovapi;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class OvapiTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(ovapi.toCSVEntry().size() == 4);
-		assertTrue(ovapi.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Ovapi"));
+		assertTrue(ovapi.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Ovapi"));
 		assertTrue(ovapi.toCSVEntry().get(1).equals(Integer.toString(ovapi.getXPosition())));
 		assertTrue(ovapi.toCSVEntry().get(2).equals(Integer.toString(ovapi.getYPosition())));
 		assertTrue(ovapi.toCSVEntry().get(3).equals(Integer.toString(ovapi.getDirection())));
@@ -77,7 +77,7 @@ public class OvapiTest {
 	@Test
 	public void testGetAndSetCurrentAnimation() {
 		
-		int animationNumber = (int) Math.random() * Enemy.AnimationType.values().length;
+		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
 		
 		ovapi.setCurrentAnimation(animationNumber);
 		
@@ -177,11 +177,5 @@ public class OvapiTest {
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Ovapi.MISALIGNMENT_ALLOWED - 4, ovapi.getXPosition());
 	}
 	
-	private boolean isDirectionCorrect() {
-		
-		if (ovapi.getDirection() >= 0 && ovapi.getDirection() <= 3)
-			return true;
-		else
-			return false;
-	}
+	private boolean isDirectionCorrect() { return ovapi.getDirection() >= 0 && ovapi.getDirection() <= 3; }
 }

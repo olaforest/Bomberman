@@ -1,7 +1,7 @@
 package gameplayModelTest;
 
-import gameplayModel.Exitway;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.Exitway;
 import org.junit.Before;
 import org.junit.Test;
 

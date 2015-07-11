@@ -1,7 +1,7 @@
 package gameplayModelTest.PowerUps;
 
 import gameplayModel.GridObject;
-import gameplayModel.PowerUps.Mystery;
+import gameplayModel.GridObjects.PowerUps.Mystery;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,7 +63,7 @@ public class MysteryTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(mystery.toCSVEntry().size() == 3);
-		assertTrue(mystery.toCSVEntry().get(0).equals("class gameplayModel.PowerUps.Mystery"));
+		assertTrue(mystery.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUps.Mystery"));
 		assertTrue(mystery.toCSVEntry().get(1).equals(Integer.toString(mystery.getXPosition())));
 		assertTrue(mystery.toCSVEntry().get(2).equals(Integer.toString(mystery.getYPosition())));
 	}

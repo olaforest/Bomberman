@@ -1,10 +1,10 @@
 package gameplayControllerTest;
 
 import gameplayController.CollisionDetector;
-import gameplayModel.Bomb;
-import gameplayModel.Bomberman;
 import gameplayModel.GameContext;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Bomb;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

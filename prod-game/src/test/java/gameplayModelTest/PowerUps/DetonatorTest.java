@@ -1,7 +1,7 @@
 package gameplayModelTest.PowerUps;
 
 import gameplayModel.GridObject;
-import gameplayModel.PowerUps.Detonator;
+import gameplayModel.GridObjects.PowerUps.Detonator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,7 +63,7 @@ public class DetonatorTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(detonator.toCSVEntry().size() == 3);
-		assertTrue(detonator.toCSVEntry().get(0).equals("class gameplayModel.PowerUps.Detonator"));
+		assertTrue(detonator.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUps.Detonator"));
 		assertTrue(detonator.toCSVEntry().get(1).equals(Integer.toString(detonator.getXPosition())));
 		assertTrue(detonator.toCSVEntry().get(2).equals(Integer.toString(detonator.getYPosition())));
 	}

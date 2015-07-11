@@ -1,7 +1,17 @@
 package gameplayController;
 
-import gameplayModel.*;
-import gameplayModel.Enemies.*;
+import gameplayModel.GameContext;
+import gameplayModel.GridMap;
+import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObject;
+import gameplayModel.GridObjects.AnimatedObjects.Bomb;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Brick;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.*;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
+import gameplayModel.GridObjects.Concrete;
+import gameplayModel.GridObjects.Exitway;
+import gameplayModel.GridObjects.PowerUps.PowerUp;
 import gameplayView.GameStatusPanel;
 import gameplayView.GameplayPanel;
 import menuController.MenuController;
@@ -145,11 +155,11 @@ public class GameplayController implements ActionListener {
 		
     	gridMap = gameContext.getGridMap();
     	
-    	activeDirectionKeys = new ArrayDeque<Integer>();
+    	activeDirectionKeys = new ArrayDeque<>();
     	concreteLayout = gameContext.getGridMap().getConcreteLayout();
     	bricks = gameContext.getGridMap().getBricks();
     	bombs = gameContext.getGridMap().getBombs();
-    	unexplodedBombs = new ArrayList<Bomb>();
+    	unexplodedBombs = new ArrayList<>();
     	enemies = gameContext.getGridMap().getEnemies();
     	bomberman = gameContext.getGridMap().getBomberman();
     	exitway = gameContext.getGridMap().getExitway();
@@ -203,13 +213,13 @@ public class GameplayController implements ActionListener {
 				activeDirectionKeys.remove(KeyEvent.VK_UP);
 				break;
 			case KeyEvent.VK_DOWN:
-				activeDirectionKeys.remove(KeyEvent.VK_DOWN);;
+				activeDirectionKeys.remove(KeyEvent.VK_DOWN);
 				break;
 			case KeyEvent.VK_LEFT:
-				activeDirectionKeys.remove(KeyEvent.VK_LEFT);;
+				activeDirectionKeys.remove(KeyEvent.VK_LEFT);
 				break;
 			case KeyEvent.VK_RIGHT:
-				activeDirectionKeys.remove(KeyEvent.VK_RIGHT);;
+				activeDirectionKeys.remove(KeyEvent.VK_RIGHT);
 				break;
 			case KeyEvent.VK_ENTER:
 				
@@ -423,16 +433,15 @@ public class GameplayController implements ActionListener {
     			for (AnimatedObject destBrick : destBricks) {
     				
     				if (destBrick != null) {
-	    				for (int i = 0 ; i < bricks.size() ; i++) {
-	    					if ((destBrick.getXPosition() == bricks.get(i).getXPosition()) && (destBrick.getYPosition() == bricks.get(i).getYPosition()) && !bricks.get(i).isDead())
-	    						bricks.get(i).triggerDeath();
-	    				}
-	    				
-	    				for (int i = 0 ; i < bombs.size() ; i++) {
-	    					
-	    					if ((destBrick.getXPosition() == bombs.get(i).getXPosition()) && (destBrick.getYPosition() == bombs.get(i).getYPosition()) && !bombs.get(i).isDead())
-	    						bombs.get(i).setTimer(TIMEOUT * 2);
-	    				}
+						for (Brick brick : bricks) {
+							if ((destBrick.getXPosition() == brick.getXPosition()) && (destBrick.getYPosition() == brick.getYPosition()) && !brick.isDead())
+								brick.triggerDeath();
+						}
+
+						for (Bomb bomb1 : bombs) {
+							if ((destBrick.getXPosition() == bomb1.getXPosition()) && (destBrick.getYPosition() == bomb1.getYPosition()) && !bomb1.isDead())
+								bomb1.setTimer(TIMEOUT * 2);
+						}
     				}
     			}
     			
@@ -445,12 +454,12 @@ public class GameplayController implements ActionListener {
     			for (Enemy enemy : destEnemies) {
     				
     				if (enemy != null) {
-	    				for (int i = 0 ; i < enemies.size() ; i++) {
-	    					if ((enemy.getXPosition() == enemies.get(i).getXPosition()) && (enemy.getYPosition() == enemies.get(i).getYPosition()) && !enemies.get(i).isDead()) {
-	    						enemies.get(i).triggerDeath();
-	    						gameContext.increaseScore(enemies.get(i).getPoints() * ((int) Math.pow(2, pointsMultiplier)));
-	    					}
-	    				}
+						for (Enemy enemy1 : enemies) {
+							if ((enemy.getXPosition() == enemy1.getXPosition()) && (enemy.getYPosition() == enemy1.getYPosition()) && !enemy1.isDead()) {
+								enemy1.triggerDeath();
+								gameContext.increaseScore(enemy1.getPoints() * ((int) Math.pow(2, pointsMultiplier)));
+							}
+						}
     				}
     				pointsMultiplier--;
     			}
@@ -672,7 +681,7 @@ public class GameplayController implements ActionListener {
     	gameView.setView(gamePanel);
     	
     	gameFrame = new JFrame("Bomberman");
-    	gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     	gameFrame.setResizable(false);
     	gameFrame.getContentPane().setLayout(new BorderLayout());
     	gameFrame.getContentPane().add(gameStatusPanel, BorderLayout.NORTH);

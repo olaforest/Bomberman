@@ -1,6 +1,4 @@
-package gameplayModel.PowerUps;
-
-import gameplayModel.PowerUp;
+package gameplayModel.GridObjects.PowerUps;
 
 public class Speed extends PowerUp {
 	

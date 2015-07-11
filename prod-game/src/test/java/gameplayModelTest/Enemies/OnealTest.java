@@ -1,9 +1,9 @@
 package gameplayModelTest.Enemies;
 
-import gameplayModel.Enemies.Oneal;
-import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.Oneal;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class OnealTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(oneal.toCSVEntry().size() == 4);
-		assertTrue(oneal.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Oneal"));
+		assertTrue(oneal.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Oneal"));
 		assertTrue(oneal.toCSVEntry().get(1).equals(Integer.toString(oneal.getXPosition())));
 		assertTrue(oneal.toCSVEntry().get(2).equals(Integer.toString(oneal.getYPosition())));
 		assertTrue(oneal.toCSVEntry().get(3).equals(Integer.toString(oneal.getDirection())));
@@ -77,7 +77,7 @@ public class OnealTest {
 	@Test
 	public void testGetAndSetCurrentAnimation() {
 		
-		int animationNumber = (int) Math.random() * Enemy.AnimationType.values().length;
+		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
 		
 		oneal.setCurrentAnimation(animationNumber);
 		
@@ -177,11 +177,5 @@ public class OnealTest {
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Oneal.MISALIGNMENT_ALLOWED - 4, oneal.getXPosition());
 	}
 	
-	private boolean isDirectionCorrect() {
-		
-		if (oneal.getDirection() >= 0 && oneal.getDirection() <= 3)
-			return true;
-		else
-			return false;
-	}
+	private boolean isDirectionCorrect() { return oneal.getDirection() >= 0 && oneal.getDirection() <= 3; }
 }

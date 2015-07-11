@@ -1,24 +1,25 @@
-package gameplayModel.Enemies;
+package gameplayModel.GridObjects.AnimatedObjects.Enemies;
 
 import gameplayModel.Animation;
-import gameplayModel.Enemy;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 
-public class Minvo extends Enemy {
+public class Oneal extends Enemy {
 	
-	public final int POINTS = 800;
-	public final int SPEED = 4;
+	public final int POINTS = 200;
+	public final int SPEED = 3;
 	public final int SMARTNESS = 2;
 	public final boolean WALLPASS = false;
 	
-	public Minvo (int x, int y) {
+	public Oneal(int x, int y) {
 		super(x, y);
 		initialize();
 	}
 	
-	public Minvo (int x, int y, int dir) {
+	public Oneal(int x, int y, int dir) {
 		super(x, y, dir);
 		initialize();
+		animCycleParam = 1;
 	}
 	
 	public void initialize() {
@@ -30,9 +31,9 @@ public class Minvo extends Enemy {
 
 	public void generateAnimationList() {
 		
-		int[][] animParam = {	{56, 128, 3},
-								{2, 128, 3},
-								{110, 128, 5}};
+		int[][] animParam = {	{56, 57, 3},
+								{2, 57, 3},
+								{110, 57, 5}};
 
 		animationList = new Animation[AnimationType.values().length];
 

@@ -1,5 +1,6 @@
 package gameplayModel;
 
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 import lombok.Getter;
 
 import javax.imageio.ImageIO;

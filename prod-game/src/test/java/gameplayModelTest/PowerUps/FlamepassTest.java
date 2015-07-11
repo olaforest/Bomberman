@@ -1,7 +1,7 @@
 package gameplayModelTest.PowerUps;
 
 import gameplayModel.GridObject;
-import gameplayModel.PowerUps.Flamepass;
+import gameplayModel.GridObjects.PowerUps.Flamepass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,7 +63,7 @@ public class FlamepassTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(flamepass.toCSVEntry().size() == 3);
-		assertTrue(flamepass.toCSVEntry().get(0).equals("class gameplayModel.PowerUps.Flamepass"));
+		assertTrue(flamepass.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUps.Flamepass"));
 		assertTrue(flamepass.toCSVEntry().get(1).equals(Integer.toString(flamepass.getXPosition())));
 		assertTrue(flamepass.toCSVEntry().get(2).equals(Integer.toString(flamepass.getYPosition())));
 	}

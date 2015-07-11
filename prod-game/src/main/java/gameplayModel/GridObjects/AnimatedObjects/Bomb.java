@@ -1,6 +1,10 @@
-package gameplayModel;
+package gameplayModel.GridObjects.AnimatedObjects;
 
 import gameplayController.GameplayController;
+import gameplayModel.Animation;
+import gameplayModel.GridMap;
+import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObject;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -87,10 +91,10 @@ public class Bomb extends AnimatedObject {
 			animationList[i] = new Animation(animParam[i][2]);
 			
 			for (int j = 0 ; j < animParam[i][3] ; j++)
-                animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + animParam[i][4] * j, animParam[i][1], GridObject.PIXELWIDTH, GridObject.PIXELHEIGHT), ZOOM), j);
+                animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + animParam[i][4] * j, animParam[i][1], GridObject.PIXELWIDTH, PIXELHEIGHT), ZOOM), j);
 			
 			for (int n = (animParam[i][2] - animParam[i][3]) ; n > 0 ; n--)
-                animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + animParam[i][4] * n, animParam[i][1], GridObject.PIXELWIDTH, GridObject.PIXELHEIGHT), ZOOM), animParam[i][3] - n);
+                animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + animParam[i][4] * n, animParam[i][1], PIXELWIDTH, PIXELHEIGHT), ZOOM), animParam[i][3] - n);
 		}
 	}
 	
@@ -262,7 +266,7 @@ public class Bomb extends AnimatedObject {
 	
 	public ArrayList<String> toCSVEntry() {
 		
-		ArrayList<String> entryList = new ArrayList<String>();
+		ArrayList<String> entryList = new ArrayList<>();
 		
 		entryList.add(Integer.toString(xPosition));
 		entryList.add(Integer.toString(yPosition));

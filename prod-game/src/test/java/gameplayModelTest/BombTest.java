@@ -1,10 +1,10 @@
 package gameplayModelTest;
 
 import gameplayController.GameplayController;
-import gameplayModel.Bomb;
-import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Bomb;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -90,7 +90,7 @@ public class BombTest {
 	@Test
 	public void testGetAndSetCurrentAnimation() {
 		
-		int animationNumber = (int) Math.random() * Enemy.AnimationType.values().length;
+		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
 		
 		bomb.setCurrentAnimation(animationNumber);
 		
@@ -162,7 +162,7 @@ public class BombTest {
 	@Test 
 	public void testResetRange() {
 		
-		for (int i = 0 ; i < ((int) Math.random()* 8 + 1) ; i++)
+		for (int i = 0 ; i < ((int) (Math.random() * 8) + 1) ; i++)
 			Bomb.increaseRange();
 		
 		Bomb.resetRange();

@@ -1,5 +1,7 @@
-package gameplayModel;
+package gameplayModel.GridObjects;
 
+import gameplayModel.Animation;
+import gameplayModel.GridObject;
 import lombok.Getter;
 
 public abstract class AnimatedObject extends GridObject {

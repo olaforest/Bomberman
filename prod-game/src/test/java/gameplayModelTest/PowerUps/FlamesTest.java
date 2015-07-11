@@ -1,7 +1,7 @@
 package gameplayModelTest.PowerUps;
 
 import gameplayModel.GridObject;
-import gameplayModel.PowerUps.Flames;
+import gameplayModel.GridObjects.PowerUps.Flames;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,7 +63,7 @@ public class FlamesTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(flames.toCSVEntry().size() == 3);
-		assertTrue(flames.toCSVEntry().get(0).equals("class gameplayModel.PowerUps.Flames"));
+		assertTrue(flames.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUps.Flames"));
 		assertTrue(flames.toCSVEntry().get(1).equals(Integer.toString(flames.getXPosition())));
 		assertTrue(flames.toCSVEntry().get(2).equals(Integer.toString(flames.getYPosition())));
 	}

@@ -1,5 +1,6 @@
-package gameplayModel;
+package gameplayModel.GridObjects.AnimatedObjects;
 
+import gameplayModel.GridObjects.AnimatedObject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 @Getter
 public abstract class Enemy extends AnimatedObject {
 
-	public enum AnimationType {right, left, death};
+	public enum AnimationType {right, left, death}
 	
 	public final int SPEED_MULTIPLIER = 1;
 	
@@ -31,14 +32,11 @@ public abstract class Enemy extends AnimatedObject {
 	public abstract void generateAnimationList();
 	
 	public ArrayList<String> toCSVEntry() {
-		
-		ArrayList<String> entryList = new ArrayList<String>();
-		
+		ArrayList<String> entryList = new ArrayList<>();
 		entryList.add(this.getClass().toString());
 		entryList.add(Integer.toString(xPosition));
 		entryList.add(Integer.toString(yPosition));
 		entryList.add(Integer.toString(direction));
-
-		return entryList; 
+		return entryList;
 	}
 }

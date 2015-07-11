@@ -1,9 +1,9 @@
 package gameplayModelTest.Enemies;
 
-import gameplayModel.Enemies.Pass;
-import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.Pass;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class PassTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(pass.toCSVEntry().size() == 4);
-		assertTrue(pass.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Pass"));
+		assertTrue(pass.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Pass"));
 		assertTrue(pass.toCSVEntry().get(1).equals(Integer.toString(pass.getXPosition())));
 		assertTrue(pass.toCSVEntry().get(2).equals(Integer.toString(pass.getYPosition())));
 		assertTrue(pass.toCSVEntry().get(3).equals(Integer.toString(pass.getDirection())));
@@ -77,7 +77,7 @@ public class PassTest {
 	@Test
 	public void testGetAndSetCurrentAnimation() {
 		
-		int animationNumber = (int) Math.random() * Enemy.AnimationType.values().length;
+		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
 		
 		pass.setCurrentAnimation(animationNumber);
 		
@@ -177,11 +177,5 @@ public class PassTest {
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Pass.MISALIGNMENT_ALLOWED - 4, pass.getXPosition());
 	}
 	
-	private boolean isDirectionCorrect() {
-		
-		if (pass.getDirection() >= 0 && pass.getDirection() <= 3)
-			return true;
-		else
-			return false;
-	}
+	private boolean isDirectionCorrect() { return pass.getDirection() >= 0 && pass.getDirection() <= 3; }
 }

@@ -1,5 +1,6 @@
-package gameplayModel;
+package gameplayModel.GridObjects;
 
+import gameplayModel.GridObject;
 import lombok.Getter;
 
 import java.awt.image.BufferedImage;
@@ -10,11 +11,8 @@ public class Concrete extends GridObject {
 	final private int[] imageParameter = {2, 259};
 
 	public Concrete(int x, int y) {
-		
 		super(x, y);
-		
 		image = resizeImage(image.getSubimage(imageParameter[0], imageParameter[1], PIXELWIDTH, PIXELHEIGHT), ZOOM);
-		
 	}
 	
     @Override

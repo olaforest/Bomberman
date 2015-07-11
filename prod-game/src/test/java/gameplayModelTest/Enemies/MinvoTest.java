@@ -1,9 +1,9 @@
 package gameplayModelTest.Enemies;
 
-import gameplayModel.Enemies.Minvo;
-import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.Minvo;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class MinvoTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(minvo.toCSVEntry().size() == 4);
-		assertTrue(minvo.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Minvo"));
+		assertTrue(minvo.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Minvo"));
 		assertTrue(minvo.toCSVEntry().get(1).equals(Integer.toString(minvo.getXPosition())));
 		assertTrue(minvo.toCSVEntry().get(2).equals(Integer.toString(minvo.getYPosition())));
 		assertTrue(minvo.toCSVEntry().get(3).equals(Integer.toString(minvo.getDirection())));
@@ -77,7 +77,7 @@ public class MinvoTest {
 	@Test
 	public void testGetAndSetCurrentAnimation() {
 		
-		int animationNumber = (int) Math.random() * Enemy.AnimationType.values().length;
+		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
 		
 		minvo.setCurrentAnimation(animationNumber);
 		
@@ -177,11 +177,5 @@ public class MinvoTest {
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Minvo.MISALIGNMENT_ALLOWED - 4, minvo.getXPosition());
 	}
 	
-	private boolean isDirectionCorrect() {
-		
-		if (minvo.getDirection() >= 0 && minvo.getDirection() <= 3)
-			return true;
-		else
-			return false;
-	}
+	private boolean isDirectionCorrect() { return minvo.getDirection() >= 0 && minvo.getDirection() <= 3; }
 }

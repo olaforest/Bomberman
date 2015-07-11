@@ -1,22 +1,22 @@
-package gameplayModel.Enemies;
+package gameplayModel.GridObjects.AnimatedObjects.Enemies;
 
 import gameplayModel.Animation;
-import gameplayModel.Enemy;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 
-public class Kondoria extends Enemy {
-	
-	public final int POINTS = 1000;
-	public final int SPEED = 1;
+public class Pass extends Enemy {
+
+	public final int POINTS = 4000;
+	public final int SPEED = 4;
 	public final int SMARTNESS = 3;
-	public final boolean WALLPASS = true;
+	public final boolean WALLPASS = false;
 	
-	public Kondoria(int x, int y) {
+	public Pass(int x, int y) {
 		super(x, y);
 		initialize();
 	}
 	
-	public Kondoria(int x, int y, int dir) {
+	public Pass(int x, int y, int dir) {
 		super(x, y, dir);
 		initialize();
 	}
@@ -30,12 +30,12 @@ public class Kondoria extends Enemy {
 
 	public void generateAnimationList() {
 		
-		int[][] animParam = {	{56, 146, 3},
-								{2, 146, 3},
-								{110, 146, 5}};
-
+		int[][] animParam = {	{56, 182, 3},
+								{2, 182, 3},
+								{110, 182, 5}};
+		
 		animationList = new Animation[AnimationType.values().length];
-
+		
 		for (AnimationType type : AnimationType.values()){
 			int i = type.ordinal();
 			animationList[i] = new Animation(animParam[i][2]);

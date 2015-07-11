@@ -1,6 +1,6 @@
 package menuView;
 
-import gameplayModel.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -72,7 +72,7 @@ public class PauseMenuPanel extends JPanel {
 		exit.addActionListener(listener);
 		
 		gamepaused = new JLabel();
-		gamepaused.setFont(new java.awt.Font("Eurostile", 1, 28)); // NOI18N
+		gamepaused.setFont(new java.awt.Font("Eurostile", Font.BOLD, 28)); // NOI18N
         gamepaused.setText("Game Paused");
         
         setupLayout();

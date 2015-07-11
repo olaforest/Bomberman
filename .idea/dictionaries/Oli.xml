@@ -6,12 +6,14 @@
       <w>bomberman</w>
       <w>bombpass</w>
       <w>exitway</w>
+      <w>expl</w>
       <w>flamepass</w>
       <w>gameplay</w>
       <w>kondoria</w>
       <w>mapheight</w>
       <w>mapwidth</w>
       <w>minvo</w>
+      <w>objs</w>
       <w>ovapi</w>
       <w>pixelheight</w>
       <w>pixelwidth</w>

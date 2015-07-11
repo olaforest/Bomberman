@@ -1,22 +1,22 @@
-package gameplayModel.Enemies;
+package gameplayModel.GridObjects.AnimatedObjects.Enemies;
 
 import gameplayModel.Animation;
-import gameplayModel.Enemy;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 
-public class Pass extends Enemy {
-
-	public final int POINTS = 4000;
-	public final int SPEED = 4;
-	public final int SMARTNESS = 3;
-	public final boolean WALLPASS = false;
+public class Ovapi extends Enemy {
 	
-	public Pass(int x, int y) {
+	public final int POINTS = 2000;
+	public final int SPEED = 2;
+	public final int SMARTNESS = 2;
+	public final boolean WALLPASS = true;
+	
+	public Ovapi(int x, int y) {
 		super(x, y);
 		initialize();
 	}
 	
-	public Pass(int x, int y, int dir) {
+	public Ovapi(int x, int y, int dir) {
 		super(x, y, dir);
 		initialize();
 	}
@@ -30,12 +30,12 @@ public class Pass extends Enemy {
 
 	public void generateAnimationList() {
 		
-		int[][] animParam = {	{56, 182, 3},
-								{2, 182, 3},
-								{110, 182, 5}};
-		
+		int[][] animParam = {	{55, 164, 3},
+								{1, 164, 3},
+								{109, 164, 5}};
+
 		animationList = new Animation[AnimationType.values().length];
-		
+
 		for (AnimationType type : AnimationType.values()){
 			int i = type.ordinal();
 			animationList[i] = new Animation(animParam[i][2]);

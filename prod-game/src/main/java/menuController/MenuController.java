@@ -2,7 +2,7 @@ package menuController;
 
 import database.Database;
 import gameplayController.GameplayController;
-import gameplayModel.Bomb;
+import gameplayModel.GridObjects.AnimatedObjects.Bomb;
 import menuModel.Leaderboard;
 import menuModel.Player;
 import menuModel.SavedGame;
@@ -81,7 +81,7 @@ public class MenuController implements ActionListener {
 		
 
 		menuFrame = new JFrame("Bomberman");
-		menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		menuFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		menuFrame.getContentPane().add(mainPanel);
 		menuFrame.pack();
 		menuFrame.setLocation(400, 200);
@@ -274,7 +274,7 @@ public class MenuController implements ActionListener {
  * 
  */
 		else if(event.getSource() == optionsPanel.getSaveButton()){
-			if(checkPassword(optionsPanel.getNewPassword()) == false){
+			if(!checkPassword(optionsPanel.getNewPassword())){
 				JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long and include the following: a digit, an uppercase and lowercase character, and a special character",null, JOptionPane.INFORMATION_MESSAGE);
 				optionsPanel.resetTextFields();
 			} else if(!optionsPanel.getNewPassword().equals(optionsPanel.getNewConfirmPassword())){
@@ -298,9 +298,9 @@ public class MenuController implements ActionListener {
 	
 	private void verifyNewAccount() {
 
-		if(checkUser(createAccPanel.getUsername()) == false) {
+		if(!checkUser(createAccPanel.getUsername())) {
 			JOptionPane.showMessageDialog(null, "Username must be at least 6 characters and consist of only digits and characters",null, JOptionPane.INFORMATION_MESSAGE);
-		} else if(checkPassword(createAccPanel.getPassword()) == false)
+		} else if(!checkPassword(createAccPanel.getPassword()))
 			JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long and include the following: a digit, an uppercase and lowercase character, and a special character",null, JOptionPane.INFORMATION_MESSAGE);
 		else if(!createAccPanel.getPassword().equals(createAccPanel.getConfirmedPassword()))
 			JOptionPane.showMessageDialog(null, "Confirmed password does not match",null, JOptionPane.ERROR_MESSAGE);
@@ -325,22 +325,18 @@ public class MenuController implements ActionListener {
     	return (!b && !(user.length()<6));
     }
     //Checks any password input for validity(at least 8 characters and contains: one upper and one lower-case letter, one digit, one special character)
-    private boolean checkPassword(String password){
-        if (!password.matches(".*[A-Z].*")) return false;
+    private boolean checkPassword(String password) {
+		if (!password.matches(".*[A-Z].*")) return false;
 
-        if (!password.matches(".*[a-z].*")) return false;
+		if (!password.matches(".*[a-z].*")) return false;
 
-        if (!password.matches(".*\\d.*")) return false;
-    	
-        Pattern p = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
-    	Matcher m = p.matcher(password);
-    	boolean b = m.find();
-        if (!b) return false;
-        
-        if(password.length()<8) return false;
-        		
-        return true;
-    }
+		if (!password.matches(".*\\d.*")) return false;
+
+		Pattern p = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(password);
+		boolean b = m.find();
+		return b && password.length() >= 8;
+	}
     
     /**
      * Pauses current game by stopping the game timer
@@ -388,13 +384,7 @@ public class MenuController implements ActionListener {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MenuController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 	}

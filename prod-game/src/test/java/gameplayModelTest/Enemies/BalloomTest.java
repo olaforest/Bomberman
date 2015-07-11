@@ -1,9 +1,9 @@
 package gameplayModelTest.Enemies;
 
-import gameplayModel.Enemies.Balloom;
-import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class BalloomTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(balloom.toCSVEntry().size() == 4);
-		assertTrue(balloom.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Balloom"));
+		assertTrue(balloom.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom"));
 		assertTrue(balloom.toCSVEntry().get(1).equals(Integer.toString(balloom.getXPosition())));
 		assertTrue(balloom.toCSVEntry().get(2).equals(Integer.toString(balloom.getYPosition())));
 		assertTrue(balloom.toCSVEntry().get(3).equals(Integer.toString(balloom.getDirection())));
@@ -77,7 +77,7 @@ public class BalloomTest {
 	@Test
 	public void testGetAndSetCurrentAnimation() {
 		
-		int animationNumber = (int) Math.random() * Enemy.AnimationType.values().length;
+		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
 		
 		balloom.setCurrentAnimation(animationNumber);
 		
@@ -177,11 +177,5 @@ public class BalloomTest {
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Balloom.MISALIGNMENT_ALLOWED - 4, balloom.getXPosition());
 	}
 	
-	private boolean isDirectionCorrect() {
-		
-		if (balloom.getDirection() >= 0 && balloom.getDirection() <= 3)
-			return true;
-		else
-			return false;
-	}
+	private boolean isDirectionCorrect() { return balloom.getDirection() >= 0 && balloom.getDirection() <= 3; }
 }

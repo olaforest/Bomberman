@@ -1,6 +1,6 @@
 package menuView;
 
-import gameplayModel.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -51,15 +51,15 @@ public class OptionsPanel extends JPanel {
 		
 		newName = new JLabel("New Name:");
 		newName.setForeground(Color.white);
-		newName.setFont(new Font("Eurostile", 1, 15));
+		newName.setFont(new Font("Eurostile", Font.BOLD, 15));
 		
 		password = new JLabel("New Password:");
 		password.setForeground(Color.white);
-		password.setFont(new Font("Eurostile", 1, 15));
+		password.setFont(new Font("Eurostile", Font.BOLD, 15));
 		
 		confirmPassword = new JLabel("Confirm Password:");
 		confirmPassword.setForeground(Color.white);
-		confirmPassword.setFont(new Font("Eurostile", 1, 15));
+		confirmPassword.setFont(new Font("Eurostile", Font.BOLD, 15));
 		
 		name = new JTextField(TEXTFIELD_LENGTH);
 		name.addActionListener(listener);
@@ -97,15 +97,13 @@ public class OptionsPanel extends JPanel {
 	 * @return Data within "New Password:" text field as a String
 	 */
 	public String getNewPassword(){
-		String stringPas = new String(pw.getPassword());
-		return stringPas;
+		return new String(pw.getPassword());
 	}
 	/**
 	 * @return Data within "Confirm Password:" text field as a String
 	 */
 	public String getNewConfirmPassword(){
-		String stringConfirmPas = new String(confirmPw.getPassword());
-		return stringConfirmPas;
+		return new String(confirmPw.getPassword());
 	}
 	
 	/**

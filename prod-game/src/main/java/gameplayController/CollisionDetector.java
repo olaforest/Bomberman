@@ -1,6 +1,12 @@
 package gameplayController;
 
-import gameplayModel.*;
+import gameplayModel.GameContext;
+import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObject;
+import gameplayModel.GridObjects.AnimatedObjects.Bomb;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Brick;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 
 import java.util.ArrayList;
 
@@ -66,7 +72,7 @@ public class CollisionDetector {
 	}
 
 	public ArrayList<Enemy> checkExplEnemies(Bomb bomb) {
-		ArrayList<Enemy> destroyedEnemies = new ArrayList<Enemy>();
+		ArrayList<Enemy> destroyedEnemies = new ArrayList<>();
 
 		for (Enemy enemy : enemies) {
 			if (Math.abs(bomb.getYPosition() - enemy.getYPosition()) < GridObject.EFFECTIVE_PIXEL_HEIGHT) {
@@ -156,11 +162,10 @@ public class CollisionDetector {
 	}
 
 	public boolean checkExactCollision(Bomberman bomberman, GridObject b) {
-		if (bomberman != null && b != null)
-			return (Math.abs(bomberman.getXPosition() - b.getXPosition()) < Bomberman.MISALIGNMENT_ALLOWED
-					&& (bomberman.getYPosition() == b.getYPosition()))
-					|| (Math.abs(bomberman.getYPosition() - b.getYPosition()) < Bomberman.MISALIGNMENT_ALLOWED
-					&& (bomberman.getXPosition() == b.getXPosition()));
-		return false;
+		return bomberman != null
+				&& b != null
+				&& ((Math.abs(bomberman.getXPosition() - b.getXPosition()) < Bomberman.MISALIGNMENT_ALLOWED
+				&& (bomberman.getYPosition() == b.getYPosition())) || (Math.abs(bomberman.getYPosition() - b.getYPosition()) < Bomberman.MISALIGNMENT_ALLOWED
+				&& (bomberman.getXPosition() == b.getXPosition())));
 	}
 }

@@ -1,4 +1,8 @@
-package gameplayModel;
+package gameplayModel.GridObjects.AnimatedObjects;
+
+import gameplayModel.Animation;
+import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObject;
 
 import java.util.ArrayList;
 
@@ -23,18 +27,15 @@ public class Brick extends AnimatedObject {
 			
 			for (int j = 0 ; j < animParam[i][2] ; j++){
 				animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + (GridObject.PIXELWIDTH + 2) * j,
-						animParam[i][1], GridObject.PIXELWIDTH, GridObject.PIXELHEIGHT), ZOOM), j);
+						animParam[i][1], PIXELWIDTH, PIXELHEIGHT), ZOOM), j);
 			}
 		}
 	}
 	
     public ArrayList<String> toCSVEntry() {
-		
-		ArrayList<String> entryList = new ArrayList<String>();
-		
+		ArrayList<String> entryList = new ArrayList<>();
 		entryList.add(Integer.toString(xPosition));
 		entryList.add(Integer.toString(yPosition));
-
-		return entryList; 
+		return entryList;
 	}
 }

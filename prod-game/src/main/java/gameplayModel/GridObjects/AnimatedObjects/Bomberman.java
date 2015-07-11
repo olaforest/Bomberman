@@ -1,6 +1,11 @@
-package gameplayModel;
+package gameplayModel.GridObjects.AnimatedObjects;
 
 import gameplayController.GameplayController;
+import gameplayModel.Animation;
+import gameplayModel.GridMap;
+import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObject;
+import gameplayModel.GridObjects.PowerUps.PowerUp;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -52,7 +57,7 @@ public class Bomberman extends AnimatedObject {
 			
 			for (int j = 0 ; j < animParam[i][2] ; j++){
 				animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + GridObject.PIXELWIDTH * j,
-                        animParam[i][1], GridObject.PIXELWIDTH, GridObject.PIXELHEIGHT), ZOOM), j);
+                        animParam[i][1], PIXELWIDTH, PIXELHEIGHT), ZOOM), j);
 			}
 		}
 	}
@@ -138,29 +143,29 @@ public class Bomberman extends AnimatedObject {
 		for (PowerUp powerup : powerUpsAcquired) {
 			
 			switch (powerup.getClass().toString()) {
-			case "class gameplayModel.PowerUps.BombPU":
+			case "class gameplayModel.GridObjects.PowerUps.BombPU":
 				bombsAvailable++;
 				bombsLeft++;
 				break;
-			case "class gameplayModel.PowerUps.Flames":
+			case "class gameplayModel.GridObjects.PowerUps.Flames":
 				Bomb.increaseRange();
 				break;
-			case "class gameplayModel.PowerUps.Speed":
+			case "class gameplayModel.GridObjects.PowerUps.Speed":
 				speed += SPEED_INCREMENT;
 				break;
-			case "class gameplayModel.PowerUps.Wallpass":
+			case "class gameplayModel.GridObjects.PowerUps.Wallpass":
 				canWallpass = true;
 				break;
-			case "class gameplayModel.PowerUps.Detonator":
+			case "class gameplayModel.GridObjects.PowerUps.Detonator":
 				canDetonateBombs = true;
 				break;
-			case "class gameplayModel.PowerUps.Bombpass":
+			case "class gameplayModel.GridObjects.PowerUps.Bombpass":
 				canBombpass = true;
 				break;
-			case "class gameplayModel.PowerUps.Flamepass":
+			case "class gameplayModel.GridObjects.PowerUps.Flamepass":
 				canFlamepass = true;
 				break;
-			case "class gameplayModel.PowerUps.Mystery":
+			case "class gameplayModel.GridObjects.PowerUps.Mystery":
 				isInvincible = true;
 				invincibilityTimer = INVINCIBILITY_TIMEOUT;
 				break;
@@ -194,7 +199,7 @@ public class Bomberman extends AnimatedObject {
 
 	public ArrayList<String> toCSVEntry() {
 		
-		ArrayList<String> entryList = new ArrayList<String>();
+		ArrayList<String> entryList = new ArrayList<>();
 		
 		entryList.add(Integer.toString(xPosition));
 		entryList.add(Integer.toString(yPosition));

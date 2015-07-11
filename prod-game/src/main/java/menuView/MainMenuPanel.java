@@ -1,6 +1,6 @@
 package menuView;
 
-import gameplayModel.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -59,7 +59,7 @@ public class MainMenuPanel extends JPanel {
         edit.addActionListener(listener);
         
         bombermanLabel = new JLabel("Bomberman");
-        bombermanLabel.setFont(new Font("Eurostile", 1, 48)); // NOI18N
+        bombermanLabel.setFont(new Font("Eurostile", Font.BOLD, 48)); // NOI18N
         bombermanLabel.setForeground(Color.white);
 
        

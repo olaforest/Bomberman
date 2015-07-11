@@ -1,9 +1,9 @@
 package gameplayModelTest.Enemies;
 
-import gameplayModel.Enemies.Pontan;
-import gameplayModel.Enemy;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.Pontan;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +51,7 @@ public class PontanTest {
 	public void testToCSVEntry() {
 		
 		assertTrue(pontan.toCSVEntry().size() == 4);
-		assertTrue(pontan.toCSVEntry().get(0).equals("class gameplayModel.Enemies.Pontan"));
+		assertTrue(pontan.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Pontan"));
 		assertTrue(pontan.toCSVEntry().get(1).equals(Integer.toString(pontan.getXPosition())));
 		assertTrue(pontan.toCSVEntry().get(2).equals(Integer.toString(pontan.getYPosition())));
 		assertTrue(pontan.toCSVEntry().get(3).equals(Integer.toString(pontan.getDirection())));
@@ -77,7 +77,7 @@ public class PontanTest {
 	@Test
 	public void testGetAndSetCurrentAnimation() {
 		
-		int animationNumber = (int) Math.random() * Enemy.AnimationType.values().length;
+		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
 		
 		pontan.setCurrentAnimation(animationNumber);
 		
@@ -177,11 +177,5 @@ public class PontanTest {
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Pontan.MISALIGNMENT_ALLOWED - 4, pontan.getXPosition());
 	}
 	
-	private boolean isDirectionCorrect() {
-		
-		if (pontan.getDirection() >= 0 && pontan.getDirection() <= 3)
-			return true;
-		else
-			return false;
-	}
+	private boolean isDirectionCorrect() { return pontan.getDirection() >= 0 && pontan.getDirection() <= 3; }
 }

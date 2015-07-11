@@ -1,26 +1,25 @@
-package gameplayModel.Enemies;
+package gameplayModel.GridObjects.AnimatedObjects.Enemies;
 
 import gameplayModel.Animation;
-import gameplayModel.Enemy;
 import gameplayModel.GridObject;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 
-public class Pontan extends Enemy {
+public class Doll extends Enemy {
 	
-	public final int POINTS = 8000;
-	public final int SPEED = 4;
-	public final int SMARTNESS = 3;
-	public final boolean WALLPASS = true;
+	public final int POINTS = 400;
+	public final int SPEED = 3;
+	public final int SMARTNESS = 1;
+	public final boolean WALLPASS = false;
 	
-	public Pontan(int x, int y) {
+	public Doll(int x, int y) {
 		super(x, y);
 		initialize();
 	}
 	
-	public Pontan(int x, int y, int dir) {
+	public Doll(int x, int y, int dir) {
 		super(x, y, dir);
 		initialize();
 	}
-
 	
 	public void initialize() {
 		points = POINTS;
@@ -31,12 +30,12 @@ public class Pontan extends Enemy {
 
 	public void generateAnimationList() {
 		
-		int[][] animParam = {	{73, 92, 4},
-								{1, 92, 4},
-								{146, 92, 5}};
-		
+		int[][] animParam = {	{55, 110, 3},
+								{1, 110, 3},
+								{107, 110, 5}};
+
 		animationList = new Animation[AnimationType.values().length];
-		
+
 		for (AnimationType type : AnimationType.values()){
 			int i = type.ordinal();
 			animationList[i] = new Animation(animParam[i][2]);
