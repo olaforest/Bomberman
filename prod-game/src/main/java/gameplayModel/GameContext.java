@@ -1,15 +1,19 @@
 package gameplayModel;
 
 import gameplayController.GameplayController;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 
+@Getter
 public class GameContext {
 
-	public final int MAX_GAME_TIME = 200 * 1000;
-	public final int INITIAL_LIVES_LEFT = 2;
+	public static final int MAX_GAME_TIME = 200 * 1000;
+	public static final int INITIAL_LIVES_LEFT = 2;
 	
+	@Getter(AccessLevel.NONE)
 	private int[][] levelSpec = {	{6, 0, 0, 0, 0, 0, 0, 0, 2},
 									{3, 3, 0, 0, 0, 0, 0, 0, 1},
 									{2, 2, 2, 0, 0, 0, 0, 0, 5},
@@ -71,9 +75,9 @@ public class GameContext {
 									{0, 0, 0, 0, 0, 0, 0, -1, 0},
 									{0, 0, 0, 0, 1, 2, 5, 2, 8}};
 	
-	@Getter private int gameTime, livesLeft, score, level, actualLevel;
-	private boolean endGameEnemiesSpawned;
-	@Getter private GridMap gridMap;
+	private int gameTime, livesLeft, score, level, actualLevel;
+	@Setter private boolean isEndGameEnemiesSpawned;
+	private GridMap gridMap;
 
 	public GameContext() {
 		gameTime = MAX_GAME_TIME;
@@ -81,8 +85,7 @@ public class GameContext {
 		score = 0;
 		level = 0;
 		actualLevel = 0;
-		
-		endGameEnemiesSpawned = false;
+		isEndGameEnemiesSpawned = false;
 		gridMap = new GridMap(levelSpec[level]);
 
 	}
@@ -93,8 +96,7 @@ public class GameContext {
 		score = 0;
 		actualLevel = selectedLevel;
 		level = computeLevel();
-				
-		endGameEnemiesSpawned = false;
+		isEndGameEnemiesSpawned = false;
 		gridMap = new GridMap(levelSpec[level]);
 	}
 
@@ -103,10 +105,8 @@ public class GameContext {
 		livesLeft = lives;
 		this.score = score;
 		this.level = level;
-		
 		computeActualLevel();
-		endGameEnemiesSpawned = false;
-		
+		isEndGameEnemiesSpawned = false;
 		this.gridMap = gridMap;
 	}
 
@@ -141,10 +141,6 @@ public class GameContext {
 		this.level = level;
 		computeActualLevel();
 	}
-
-	public boolean getEndGameEnemiesStatus() { return endGameEnemiesSpawned; }
-
-	public void setEndGameEnemiesStatus(boolean status) { endGameEnemiesSpawned = status; }
 
 	//This method calculates the level of the current game not including the special levels
 	private void computeActualLevel() {

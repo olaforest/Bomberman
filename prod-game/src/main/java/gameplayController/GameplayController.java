@@ -117,9 +117,9 @@ public class GameplayController implements ActionListener {
     	}
     	
     	
-    	if (gameContext.getGameTime() <= 0 && !gameContext.getEndGameEnemiesStatus()) {
+    	if (gameContext.getGameTime() <= 0 && !gameContext.isEndGameEnemiesSpawned()) {
     		
-    		gameContext.setEndGameEnemiesStatus(true);
+    		gameContext.setEndGameEnemiesSpawned(true);
     		
     		int[] newEnemies = {0, 0, 0, 0, 0, 0, 0, 12};
     		

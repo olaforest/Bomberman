@@ -126,12 +126,9 @@ public class GameContextTest {
 	
 	@Test
 	public void testIncreaseLevel() {
-		
 		int test = (int) (Math.random() * 59);
-		
 		gameContext.setLevel(test);
 		gameContext.increaseLevel();
-		
 		assertEquals(test + 1, gameContext.getLevel());
 	}
 	
@@ -140,7 +137,6 @@ public class GameContextTest {
 		assertTrue(gameContext.getLevel() >= 0 && gameContext.getLevel() <= 59);
 		
 		gameContext.setLevel(40);
-		
 		assertEquals(40, gameContext.getLevel());
 		assertEquals(34, gameContext.getActualLevel());
 	}
@@ -152,19 +148,14 @@ public class GameContextTest {
 	
 	@Test
 	public void testSetAndGetEndGameEnemiesStatus() {
-		
-		assertFalse(gameContext.getEndGameEnemiesStatus());
-		
-		gameContext.setEndGameEnemiesStatus(true);
-		
-		assertTrue(gameContext.getEndGameEnemiesStatus());
+		assertFalse(gameContext.isEndGameEnemiesSpawned());
+		gameContext.setEndGameEnemiesSpawned(true);
+		assertTrue(gameContext.isEndGameEnemiesSpawned());
 	}
 	
 	@Test
 	public void testToCSVEntry() {
-		
 		assertTrue(gameContext.toCSVEntry().getClass().toString().equals("class java.util.ArrayList"));
-		
 		assertTrue(gameContext.toCSVEntry().size() == (5 + gameContext.getGridMap().toCSVEntry().size()));
 		assertTrue(gameContext.toCSVEntry().get(0).equals(Integer.toString(gameContext.getGameTime())));
 		assertTrue(gameContext.toCSVEntry().get(1).equals(Integer.toString(gameContext.getLivesLeft())));
