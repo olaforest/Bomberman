@@ -54,19 +54,19 @@ public class CollisionDetector {
 		if (Math.abs(bomb.getYPosition() - gridObj.getYPosition()) < GridObject.EFFECTIVE_PIXEL_HEIGHT) {
 			boolean isInRightRange = (bomb.getXPosition() + (bomb.getRightRange() + 1) * GridObject.EFFECTIVE_PIXEL_WIDTH) >= (gridObj.getXPosition() + 6) && bomb.getXPosition() < gridObj.getXPosition();
 
-			if (isInRightRange) { return true; }
+			if (isInRightRange) return true;
 
 			boolean isInLeftRange = (bomb.getXPosition() - (bomb.getLeftRange() + 1) * GridObject.EFFECTIVE_PIXEL_WIDTH) <= (gridObj.getXPosition() - 6) && bomb.getXPosition() > gridObj.getXPosition();
 
-			if (isInLeftRange) { return true; }
+			if (isInLeftRange) return true;
 		}
 
 		if (Math.abs(bomb.getXPosition() - gridObj.getXPosition()) < GridObject.EFFECTIVE_PIXEL_WIDTH) {
 			boolean isInDownRange = (bomb.getYPosition() + (bomb.getDownRange() + 1) * GridObject.EFFECTIVE_PIXEL_HEIGHT) >= (gridObj.getYPosition() + 4) && bomb.getYPosition() < gridObj.getYPosition();
-			if (isInDownRange) { return true; }
+			if (isInDownRange) return true;
 
 			boolean isInUpRange = (bomb.getYPosition() - (bomb.getUpRange() + 1) * GridObject.EFFECTIVE_PIXEL_HEIGHT) <= (gridObj.getYPosition() - 4) && bomb.getYPosition() > gridObj.getYPosition();
-			if (isInUpRange) { return true; }
+			if (isInUpRange) return true;
 		}
 		return false;
 	}
@@ -77,18 +77,18 @@ public class CollisionDetector {
 		for (Enemy enemy : enemies) {
 			if (Math.abs(bomb.getYPosition() - enemy.getYPosition()) < GridObject.EFFECTIVE_PIXEL_HEIGHT) {
 				boolean isInRightRange = (bomb.getXPosition() + (bomb.getRightRange() + 1) * GridObject.EFFECTIVE_PIXEL_WIDTH) >= (enemy.getXPosition() + 1) && bomb.getXPosition() < enemy.getXPosition();
-				if (isInRightRange) { destroyedEnemies.add(enemy); }
+				if (isInRightRange) destroyedEnemies.add(enemy);
 
 				boolean isInLeftRange = (bomb.getXPosition() - (bomb.getLeftRange() + 1) * GridObject.EFFECTIVE_PIXEL_WIDTH) <= (enemy.getXPosition() - 1) && bomb.getXPosition() > enemy.getXPosition();
-				if (isInLeftRange) { destroyedEnemies.add(enemy); }
+				if (isInLeftRange) destroyedEnemies.add(enemy);
 			}
 
 			if (Math.abs(bomb.getXPosition() - enemy.getXPosition()) < GridObject.EFFECTIVE_PIXEL_WIDTH) {
 				boolean isInDownRange = (bomb.getYPosition() + (bomb.getDownRange() + 1) * GridObject.EFFECTIVE_PIXEL_HEIGHT) >= (enemy.getYPosition() + 1) && bomb.getYPosition() < enemy.getYPosition();
-				if (isInDownRange) { destroyedEnemies.add(enemy); }
+				if (isInDownRange) destroyedEnemies.add(enemy);
 
 				boolean isInUpRange = (bomb.getYPosition() - (bomb.getUpRange() + 1) * GridObject.EFFECTIVE_PIXEL_HEIGHT) <= (enemy.getYPosition() - 1) && bomb.getYPosition() > enemy.getYPosition();
-				if (isInUpRange) { destroyedEnemies.add(enemy); }
+				if (isInUpRange) destroyedEnemies.add(enemy);
 			}
 		}
 		return destroyedEnemies;
@@ -101,7 +101,7 @@ public class CollisionDetector {
 		destroyedObjs.add(null);
 		destroyedObjs.add(null);
 
-		for (Brick brick : bricks) { adjustRanges(bomb, brick, destroyedObjs); }
+		for (Brick brick : bricks) adjustRanges(bomb, brick, destroyedObjs);
 
 		for (Bomb bombOnMap : gameContext.getGridMap().getBombs()) {
 			if (!bombOnMap.isDead() && !(bombOnMap.getXPosition() == bomb.getXPosition() && bombOnMap.getYPosition() == bomb.getYPosition()))
