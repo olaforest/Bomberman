@@ -9,6 +9,7 @@
       <w>expl</w>
       <w>flamepass</w>
       <w>gameplay</w>
+      <w>horz</w>
       <w>kondoria</w>
       <w>mapheight</w>
       <w>mapwidth</w>
@@ -19,6 +20,7 @@
       <w>pixelwidth</w>
       <w>pontan</w>
       <w>powerup</w>
+      <w>vert</w>
       <w>wallpass</w>
     </words>
   </dictionary>
