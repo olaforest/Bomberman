@@ -365,19 +365,18 @@ public class GameplayController implements ActionListener {
 
 				ArrayList<AnimatedObject> destBricks = colDetect.checkExplBricks(bomb);
 
-				for (AnimatedObject destBrick : destBricks) {
-					if (destBrick != null) {
-						for (Brick brick : bricks) {
-							if ((destBrick.getXPosition() == brick.getXPosition()) && (destBrick.getYPosition() == brick.getYPosition()) && !brick.isDead())
-								brick.triggerDeath();
-						}
+				destBricks.stream()
+						.filter(destBrick -> destBrick != null)
+						.forEach(destBrick -> {
 
-						for (Bomb bomb1 : bombs) {
-							if ((destBrick.getXPosition() == bomb1.getXPosition()) && (destBrick.getYPosition() == bomb1.getYPosition()) && !bomb1.isDead())
-								bomb1.setTimer(TIMEOUT * 2);
-						}
-					}
-				}
+							bricks.stream()
+									.filter(brick -> destBrick.isSamePosition(brick) && !brick.isDead())
+									.forEach(AnimatedObject::triggerDeath);
+
+							bombs.stream()
+									.filter(bomb1 -> destBrick.isSamePosition(bomb1) && !bomb1.isDead())
+									.forEach(bomb1 -> bomb1.setTimer(TIMEOUT * 2));
+				});
 
 				ArrayList<Enemy> destEnemies = colDetect.checkExplEnemies(bomb);
 

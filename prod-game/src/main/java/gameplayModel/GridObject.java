@@ -82,21 +82,25 @@ public class GridObject {
     	} else 
     		isConcreteCollision = true;
     }
-    
+
+	public boolean isSamePosition(GridObject object) {
+		return xPosition == object.getXPosition() && yPosition == object.getYPosition();
+	}
+
 	public static BufferedImage resizeImage(BufferedImage imageIn, int factor) {
-        
+
 		final BufferedImage imageOut = new BufferedImage(imageIn.getWidth() * factor, imageIn.getHeight() * factor, BufferedImage.TYPE_INT_RGB);
         final Graphics2D graphics2D = imageOut.createGraphics();
         graphics2D.setComposite(AlphaComposite.Src);
-        
+
         //The three lines below are for RenderingHints for better image quality at cost of higher processing time.
         graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-        
+
         graphics2D.drawImage(imageIn, 0, 0, imageIn.getWidth()*factor, imageIn.getHeight()*factor, null);
         graphics2D.dispose();
-        
+
         return imageOut;
     }
 }

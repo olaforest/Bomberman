@@ -18,14 +18,6 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * This class manages all menu navigation through a common ActionListener which is passed to all display Panels.
- * Any user action generates an event whose source is determined and the associated outcome is executed by this class.
- * 
- * @author Eric Liou
- * @author Olivier Laforest
- *
- */
 public class MenuController implements ActionListener {
 	
 	private Player currentPlayer;
@@ -48,9 +40,6 @@ public class MenuController implements ActionListener {
 	private int leaderboardReturn, loadGameReturn, chosenLevel;
 	private int prePauseScore;
 	
-	/**
-	 * Constructs a new Menu Controller, with all menu display panels added to a common JFrame
-	 */
 	public MenuController() {
 		
 		database = new Database();
