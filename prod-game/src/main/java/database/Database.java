@@ -2,7 +2,15 @@ package database;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import gameplayModel.*;
+import gameplayModel.GameContext;
+import gameplayModel.GridMap;
+import gameplayModel.GridObjects.AnimatedObjects.Bomb;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Brick;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.*;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
+import gameplayModel.GridObjects.Exitway;
+import gameplayModel.GridObjects.PowerUps.*;
 import menuModel.Player;
 import menuModel.SavedGame;
 
@@ -11,52 +19,30 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * This class stores all information of the user for gameplay, account management, and interface interactions
- * by generating a CSV. All account information is read and written to and from the CSV. Internal methods format and 
- * manage the data to be modified or displayed elsewhere.
- * 
- * @author Olivier Laforest
- * @author Eric Liou
- */
 public class Database {
 	
 	private ArrayList<Player> players;
 	private Player currentLoggedPlayer;
 	
-	/**
-	 * Constructs a new database where the information of all accounts is read from the CSV
-	 * and stored within the instance.
-	 */
 	public Database() {
-		
-		players = new ArrayList<Player>();
+		players = new ArrayList<>();
 		currentLoggedPlayer = null;
 		
 		try {
 			readCSV();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		sortPlayers();
 	}
 
-	/**
-	 * Creates a new CSV
-	 * @throws IOException thrown when data from or to the CSV is invalid(null)
-	 * @throws URISyntaxException thrown when data to or from the CSV is imporperly formated
-	 */
 	public void generateCSV() throws IOException, URISyntaxException {
 		
 		File file = new File("Bomberman.CSV");
-
 		FileWriter fileWriter = new FileWriter(file, false);
-		
 		CSVWriter writer = new CSVWriter(fileWriter);
 		
 		for (Player player : players) {
-			
 			ArrayList<String> temp = player.toCSVEntry();
 			
 			String[] csvEntries = new String[temp.size()];
@@ -70,48 +56,35 @@ public class Database {
 	}
 	
 	private void readCSV() throws IOException {
-		
 		CSVReader reader;
 		
 		try {
 			reader = new CSVReader(new FileReader(new File("Bomberman.CSV")));
 		} catch (FileNotFoundException e) {
-			
 			InputStream in = Bomberman.class.getResourceAsStream("/database.csv");
-			
 			reader = new CSVReader(new InputStreamReader(in));
 		}
 		
 		String[] nextLine;
-		
 		int index = 0;
-		
 		nextLine = reader.readNext();
 		
 		while (nextLine != null) {
-			
-			ArrayList<String> data = new ArrayList<String>();
-	    	
-			for (String token : nextLine) {
-				data.add(token);
-			}
-			
+			ArrayList<String> data = new ArrayList<>();
+			Collections.addAll(data, nextLine);
 			players.add(new Player(data.get(0), data.get(1), data.get(2), Integer.parseInt(data.get(3)), Integer.parseInt(data.get(4)), Integer.parseInt(data.get(5))));
 			
 			while (data.contains("SavedGame")) {
-				
-				data = new ArrayList<String>(data.subList(data.indexOf("SavedGame") + 1, data.size()));
-				
+				data = new ArrayList<>(data.subList(data.indexOf("SavedGame") + 1, data.size()));
 				SavedGame savedGame;
 				
 				if (data.contains("SavedGame"))
-					savedGame = generateSavedGame(new ArrayList<String>(data.subList(0, data.indexOf("SavedGame"))));
+					savedGame = generateSavedGame(new ArrayList<>(data.subList(0, data.indexOf("SavedGame"))));
 				else
 					savedGame = generateSavedGame(data);
 				
 				players.get(index).addSavedGame(savedGame);
 			}
-			
 	        index++;
 	        nextLine = reader.readNext();
 	    }
@@ -119,10 +92,8 @@ public class Database {
 	}
 	
 	private SavedGame generateSavedGame(ArrayList<String> data) {
-		
 		String gameName, gameDate;
-		
-		GameContext gameContext = generateGameContext(new ArrayList<String>(data.subList(data.indexOf("GameContext") + 1, data.size())));
+		GameContext gameContext = generateGameContext(new ArrayList<>(data.subList(data.indexOf("GameContext") + 1, data.size())));
 		
 		gameName = data.get(0);
 		gameDate = data.get(1);
@@ -131,10 +102,9 @@ public class Database {
 	}
 	
 	private GameContext generateGameContext(ArrayList<String> context) {
-		
 		int gameTime, livesLeft, score, level;
 		
-		GridMap gridMap = generateGridMap(new ArrayList<String>(context.subList(context.indexOf("GridMap") + 1, context.size())));
+		GridMap gridMap = generateGridMap(new ArrayList<>(context.subList(context.indexOf("GridMap") + 1, context.size())));
 		
 		gameTime = Integer.parseInt(context.get(0));
 		livesLeft = Integer.parseInt(context.get(1));
@@ -145,47 +115,36 @@ public class Database {
 	}
 	
 	private GridMap generateGridMap(ArrayList<String> map) {
-		
 		int spawnTimer = Integer.parseInt(map.get(0));
 		
-		ArrayList<Brick> bricks = generateBricks(new ArrayList<String>(map.subList(map.indexOf("Bricks") + 1, map.indexOf("Bombs"))));
-		ArrayList<Bomb> bombs = generateBombs(new ArrayList<String>(map.subList(map.indexOf("Bombs") + 1, map.indexOf("Enemies"))));
-		ArrayList<Enemy> enemies = generateEnemies(new ArrayList<String>(map.subList(map.indexOf("Enemies") + 1, map.indexOf("Exitway"))));
-		Exitway exitway = generateExitway(new ArrayList<String>(map.subList(map.indexOf("Exitway") + 1, map.indexOf("PowerUp"))));
-		PowerUp powerup = generatePowerUp(new ArrayList<String>(map.subList(map.indexOf("PowerUp") + 1, map.indexOf("Bomberman"))));
-		Bomberman bomberman = generateBomberman(new ArrayList<String>(map.subList(map.indexOf("Bomberman") + 1, map.size())));
+		ArrayList<Brick> bricks = generateBricks(new ArrayList<>(map.subList(map.indexOf("Bricks") + 1, map.indexOf("Bombs"))));
+		ArrayList<Bomb> bombs = generateBombs(new ArrayList<>(map.subList(map.indexOf("Bombs") + 1, map.indexOf("Enemies"))));
+		ArrayList<Enemy> enemies = generateEnemies(new ArrayList<>(map.subList(map.indexOf("Enemies") + 1, map.indexOf("Exitway"))));
+		Exitway exitway = generateExitway(new ArrayList<>(map.subList(map.indexOf("Exitway") + 1, map.indexOf("PowerUp"))));
+		PowerUp powerup = generatePowerUp(new ArrayList<>(map.subList(map.indexOf("PowerUp") + 1, map.indexOf("Bomberman"))));
+		Bomberman bomberman = generateBomberman(new ArrayList<>(map.subList(map.indexOf("Bomberman") + 1, map.size())));
 		
 		return new GridMap(spawnTimer, bricks, bombs, enemies, exitway, powerup, bomberman);
 	}
 	
 	private ArrayList<Brick> generateBricks(ArrayList<String> data) {
-		
 		int xPosition, yPosition;
-		
-		ArrayList<Brick> bricks = new ArrayList<Brick>();
+		ArrayList<Brick> bricks = new ArrayList<>();
 		
 		while (data.size() != 0) {
-			
 			xPosition = Integer.parseInt(data.remove(0));
 			yPosition = Integer.parseInt(data.remove(0));
-
-			
 			bricks.add(new Brick(xPosition, yPosition));
 		}
-		
 		return bricks;
 	}
 	
 	private ArrayList<Bomb> generateBombs(ArrayList<String> data) {
-		
 		int range, xPosition, yPosition, timer, rightRange, leftRange, downRange, upRange;
-		
-		ArrayList<Bomb> bombs = new ArrayList<Bomb>();
-		
+		ArrayList<Bomb> bombs = new ArrayList<>();
 		range = Integer.parseInt(data.remove(0));
 		
 		while (data.size() != 0) {
-			
 			xPosition = Integer.parseInt(data.remove(0));
 			yPosition = Integer.parseInt(data.remove(0));
 			timer = Integer.parseInt(data.remove(0));
@@ -193,51 +152,45 @@ public class Database {
 			leftRange = Integer.parseInt(data.remove(0));
 			downRange = Integer.parseInt(data.remove(0));
 			upRange = Integer.parseInt(data.remove(0));
-			
 			bombs.add(new Bomb(range, xPosition, yPosition, timer, rightRange, leftRange, downRange, upRange));
 		}
-		
 		return bombs;
 	}
 	
 	private ArrayList<Enemy> generateEnemies(ArrayList<String> data) {
-		
 		int xPosition, yPosition, direction;
 		String type;
-		
-		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+		ArrayList<Enemy> enemies = new ArrayList<>();
 		
 		while (data.size() != 0) {
-			
 			type = data.remove(0);
-			
 			xPosition = Integer.parseInt(data.remove(0));
 			yPosition = Integer.parseInt(data.remove(0));
 			direction = Integer.parseInt(data.remove(0));
 			
 			switch (type) {
-			case "class gameplayModel.Balloom":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom":
 				enemies.add(new Balloom(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Oneal":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Oneal":
 				enemies.add(new Oneal(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Doll":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Doll":
 				enemies.add(new Doll(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Minvo":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Minvo":
 				enemies.add(new Minvo(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Kondoria":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Kondoria":
 				enemies.add(new Kondoria(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Ovapi":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Ovapi":
 				enemies.add(new Ovapi(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Pass":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Pass":
 				enemies.add(new Pass(xPosition, yPosition, direction));
 				break;
-			case "class gameplayModel.Pontan":
+			case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Pontan":
 				enemies.add(new Pontan(xPosition, yPosition, direction));
 				break;
 			}
@@ -246,153 +199,106 @@ public class Database {
 	}
 	
 	private Exitway generateExitway(ArrayList<String> data) {
-		
 		int xPosition = Integer.parseInt(data.remove(0));
 		int yPosition = Integer.parseInt(data.remove(0));
-		
 		return new Exitway(xPosition, yPosition);
 	}
 	
 	private PowerUp generatePowerUp(ArrayList<String> data) {
-		
 		String type = data.remove(0);
-		
 		int xPosition = Integer.parseInt(data.remove(0));
 		int yPosition = Integer.parseInt(data.remove(0));
-		
 		return determinePowerUp(type, xPosition, yPosition);
 	}
 	
 	private Bomberman generateBomberman(ArrayList<String> data) {
-		
 		int xPosition, yPosition, invincibilityTimer, bombsLeft;
-		
 		xPosition = Integer.parseInt(data.remove(0));
 		yPosition = Integer.parseInt(data.remove(0));
 		invincibilityTimer = Integer.parseInt(data.remove(0));
 		bombsLeft = Integer.parseInt(data.remove(0));
 
-		ArrayList<PowerUp> powerUpsAcquired = generatePowerUpsAcquired(new ArrayList<String>(data.subList(data.indexOf("PowerUpAcquired") + 1, data.size())));
-		
-		
+		ArrayList<PowerUp> powerUpsAcquired = generatePowerUpsAcquired(new ArrayList<>(data.subList(data.indexOf("PowerUpAcquired") + 1, data.size())));
+
 		return new Bomberman(xPosition, yPosition, invincibilityTimer, bombsLeft, powerUpsAcquired);
 	}
 	
 	private ArrayList<PowerUp> generatePowerUpsAcquired(ArrayList<String> data) {
-		
 		int xPosition, yPosition;
-		
 		String type;
-		
-		ArrayList<PowerUp> powerups = new ArrayList<PowerUp>();
+		ArrayList<PowerUp> powerUps = new ArrayList<>();
 		
 		while (data.size() != 0) {
-			
 			type = data.remove(0);
 			xPosition = Integer.parseInt(data.remove(0));
 			yPosition = Integer.parseInt(data.remove(0));
-			
-			powerups.add(determinePowerUp(type, xPosition, yPosition));
+			powerUps.add(determinePowerUp(type, xPosition, yPosition));
 		}
-		
-		return powerups;
+		return powerUps;
 	}
 	
 	private PowerUp determinePowerUp(String type, int xPosition, int yPosition) {
-		
 		PowerUp powerup = new PowerUp(xPosition, yPosition);
 		
 		switch (type) {
-		case "class gameplayModel.BombPU":
+		case "class gameplayModel.GridObjects.PowerUps.BombPU":
 			powerup = new BombPU(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Flames":
+		case "class gameplayModel.GridObjects.PowerUps.Flames":
 			powerup = new Flames(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Speed":
+		case "class gameplayModel.GridObjects.PowerUps.Speed":
 			powerup = new Speed(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Wallpass":
+		case "class gameplayModel.GridObjects.PowerUps.Wallpass":
 			powerup = new Wallpass(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Detonator":
+		case "class gameplayModel.GridObjects.PowerUps.Detonator":
 			powerup = new Detonator(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Bombpass":
+		case "class gameplayModel.GridObjects.PowerUps.Bombpass":
 			powerup = new Bombpass(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Flamepass":
+		case "class gameplayModel.GridObjects.PowerUps.Flamepass":
 			powerup = new Flamepass(xPosition, yPosition);
 			break;
-		case "class gameplayModel.Mystery":
+		case "class gameplayModel.GridObjects.PowerUps.Mystery":
 			powerup = new Mystery(xPosition, yPosition);
 			break;
 		}
 		return powerup;
 	}
 	
-	/**
-	 * Adds newPlayer into the database
-	 * @param newPlayer New player to be stored
-	 * @return newPlayer as the currently logged in account
-	 */
 	public Player addPlayer(Player newPlayer) {
-		
 		if (findPlayer(newPlayer) == -1) {
 			players.add(newPlayer);
 			currentLoggedPlayer = newPlayer;
 			return newPlayer;
-		} else {
-			return null;
 		}
+		else return null;
 	}
 	
-	/**
-	 * Removes a player account from the database
-	 */
 	public void deletePlayer() {
-		
 		int index = findPlayer(currentLoggedPlayer);
-		
 		players.remove(index);
 	}
 	
-	/**
-	 * Modifies the real name of the current player
-	 * @param realName New name which current player's name is updated to
-	 */
 	public void editRealName(String realName) {
-		
 		int index = findPlayer(currentLoggedPlayer);
-		
 		players.get(index).setRealName(realName);
 	}
 	
-	/**
-	 * Modifies the password of the current logged in player
-	 * @param password New password which current player's password is updated to
-	 */
 	public void editPassword(String password) {
-
 		int index = findPlayer(currentLoggedPlayer);
-		
 		players.get(index).setPassword(password);
 	}
 	
-	/**
-	 * Searches the database for an existing account that has the same username and password as input parameters
-	 * @param username The username which is searched
-	 * @param password The password which is searched
-	 * @return Returns the player if an account exists that contains the input parameters. Else returns null
-	 */
 	public Player getPlayer(String username, String password) {
-		
 		int index = findPlayer(new Player(null, username, password));
 		
 		if (index == -1) {
 			return null;
 		} else {
-			
 			if (players.get(index).getPassword().equals(password))
 				return players.get(index);
 			else
@@ -400,29 +306,18 @@ public class Database {
 		}
 	}
 	
-	/**
-	 * Sorts all players and returns the top 10 players with the highest cumulative score
-	 * @return an ArrayList of the top 10 highest scoring players
-	 */
 	public ArrayList<Player> sortPlayers() {
-		
 		ArrayList<Player> topPlayers = players;
-		
 		Collections.sort(topPlayers);
-		
-		topPlayers = new ArrayList<Player>(topPlayers.subList(0, 10));
-				
+		topPlayers = new ArrayList<>(topPlayers.subList(0, 10));
 		return topPlayers;
 	}
 	
 	private int findPlayer(Player pl) {
-		
 		int index = 0;
 		
 		for (Player player : players) {
-			
-			if (pl.getUsername().equals(player.getUsername()))
-				return index;
+			if (pl.getUsername().equals(player.getUsername())) return index;
 			index++;
 		}
 		return -1;

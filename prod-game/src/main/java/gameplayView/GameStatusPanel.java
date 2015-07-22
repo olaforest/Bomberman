@@ -7,28 +7,13 @@ import gameplayModel.GridObject;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * This class generates the panel where the game time, score and lives left of the player are displayed over the game panel.
- * 
- * @author Olivier Laforest
- *
- */
-@SuppressWarnings("serial")
 public class GameStatusPanel extends JPanel {
 	
 	public static final int HEADERHEIGHT = GridObject.EFFECTIVE_PIXEL_HEIGHT/2 + GridObject.EFFECTIVE_PIXEL_HEIGHT;
-	
 	private int stdHeight;
-	
-	private JLabel timeLabel, timeNumLabel, scoreLabel, livesLeftLabel, livesLeftNumLabel;
-	
+	private JLabel timeLabel, timeNumLabel, scoreLabel, livesLeftNumLabel;
 	private GameContext gameContext;
 	
-	/**
-	 * This constructor sets up the different panel GUI elements as well as their placement, text dimension, font and color.
-	 * 
-	 * @param context
-	 */
 	public GameStatusPanel(GameContext context) {
 		
 		gameContext = context;
@@ -41,8 +26,8 @@ public class GameStatusPanel extends JPanel {
 		
 		scoreLabel = new JLabel(Integer.toString(gameContext.getScore()));
 		scoreLabel.setFont(new Font("Monospace 821 BT", 0, 28));
-		
-		livesLeftLabel = new JLabel("LEFT ");
+
+		JLabel livesLeftLabel = new JLabel("LEFT ");
 		livesLeftLabel.setFont(new Font("Monospace 821 BT", 0, 28));
 		
 		livesLeftNumLabel = new JLabel(Integer.toString(gameContext.getLivesLeft()));
@@ -73,11 +58,7 @@ public class GameStatusPanel extends JPanel {
 		add(livesLeftNumLabel);
 	}
 	
-	/**
-	 * This method updates the game time, the game score and the number of lives left with the new values coming from the gameContext.
-	 */
 	public void updateGameStatus() {
-		
 		timeNumLabel.setText(Integer.toString(gameContext.getGameTime()/1000));
 		timeNumLabel.setBounds(((int) timeLabel.getLocation().getX()) + timeLabel.getWidth() + 55 - timeNumLabel.getPreferredSize().width,
 				stdHeight, timeNumLabel.getPreferredSize().width, timeNumLabel.getPreferredSize().height);

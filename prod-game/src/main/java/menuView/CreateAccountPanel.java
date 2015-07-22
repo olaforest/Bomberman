@@ -1,6 +1,6 @@
 package menuView;
 
-import gameplayModel.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -138,15 +138,13 @@ public class CreateAccountPanel extends JPanel {
 	 * @return Data within the "Password:" text field as a String
 	 */
 	public String getPassword() {
-		String stringPas = new String(password.getPassword());
-		return stringPas;
+		return new String(password.getPassword());
 	}
 	/**
 	 * @return Data within the "Confirm Password:" text field as a String
 	 */
 	public String getConfirmedPassword(){
-		String stringConfirmedPas = new String(confirmPassword.getPassword());
-		return stringConfirmedPas;
+		return new String(confirmPassword.getPassword());
 	}
 	
 	private void setupLayout() {

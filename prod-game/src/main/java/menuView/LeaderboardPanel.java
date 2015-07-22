@@ -1,6 +1,6 @@
 package menuView;
 
-import gameplayModel.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 import menuModel.Leaderboard;
 
 import javax.imageio.ImageIO;
@@ -60,87 +60,87 @@ public class LeaderboardPanel extends JPanel{
 		    }
 		
 		user1 = new JLabel("A");
-		user1.setFont(new Font("Eurostile", 1, 16));
+		user1.setFont(new Font("Eurostile", Font.BOLD, 16));
 		user1.setForeground(Color.white);
 		
 		user2 = new JLabel("A");
-		user2.setFont(new Font("Eurostile", 1, 16));
+		user2.setFont(new Font("Eurostile", Font.BOLD, 16));
 		user2.setForeground(Color.white);
 		
 		user3 = new JLabel("A");
-		user3.setFont(new Font("Eurostile", 1, 16));
+		user3.setFont(new Font("Eurostile", Font.BOLD, 16));
 		user3.setForeground(Color.white);
 		
 		user4 = new JLabel("A");
-		user4.setFont(new Font("Eurostile", 1, 16));
+		user4.setFont(new Font("Eurostile", Font.BOLD, 16));
 		user4.setForeground(Color.white);
 		
 		user5 = new JLabel("A");
-		user5.setFont(new Font("Eurostile", 1, 16));
+		user5.setFont(new Font("Eurostile", Font.BOLD, 16));
 		user5.setForeground(Color.white);
 		
 		user6 = new JLabel("A");
-		user6.setFont(new Font("Eurostile", 1, 16));
+		user6.setFont(new Font("Eurostile", Font.BOLD, 16));
 		user6.setForeground(Color.white);
 		
 		user7 = new JLabel("A");
-		user7.setFont(new Font("Eurostile", 1, 16));
+		user7.setFont(new Font("Eurostile", Font.BOLD, 16));
 		user7.setForeground(Color.white);
 		
 		user8 = new JLabel("A");
-		user8.setFont(new Font("Eurostile", 1, 16));
+		user8.setFont(new Font("Eurostile", Font.BOLD, 16));
 		user8.setForeground(Color.white);
 		
 		user9 = new JLabel("A");
-		user9.setFont(new Font("Eurostile", 1, 16));
+		user9.setFont(new Font("Eurostile", Font.BOLD, 16));
 		user9.setForeground(Color.white);
 		
 		user10 = new JLabel(" ");
-		user10.setFont(new Font("Eurostile", 1, 16));
+		user10.setFont(new Font("Eurostile", Font.BOLD, 16));
 		user10.setForeground(Color.white);
 		
 		score1 = new JLabel("000");
-		score1.setFont(new Font("Eurostile", 1, 16));
+		score1.setFont(new Font("Eurostile", Font.BOLD, 16));
 		score1.setForeground(Color.white);
 		
 		score2 = new JLabel("000");
-		score2.setFont(new Font("Eurostile", 1, 16));
+		score2.setFont(new Font("Eurostile", Font.BOLD, 16));
 		score2.setForeground(Color.white);
 		
 		score3 = new JLabel("000");
-		score3.setFont(new Font("Eurostile", 1, 16));
+		score3.setFont(new Font("Eurostile", Font.BOLD, 16));
 		score3.setForeground(Color.white);
 		
 		score4 = new JLabel("000");
-		score4.setFont(new Font("Eurostile", 1, 16));
+		score4.setFont(new Font("Eurostile", Font.BOLD, 16));
 		score4.setForeground(Color.white);
 		
 		score5 = new JLabel("000");
-		score5.setFont(new Font("Eurostile", 1, 16));
+		score5.setFont(new Font("Eurostile", Font.BOLD, 16));
 		score5.setForeground(Color.white);
 		
 		score6 = new JLabel("000");
-		score6.setFont(new Font("Eurostile", 1, 16));
+		score6.setFont(new Font("Eurostile", Font.BOLD, 16));
 		score6.setForeground(Color.white);
 		
 		score7 = new JLabel("000");
-		score7.setFont(new Font("Eurostile", 1, 16));
+		score7.setFont(new Font("Eurostile", Font.BOLD, 16));
 		score7.setForeground(Color.white);
 		
 		score8 = new JLabel("000");
-		score8.setFont(new Font("Eurostile", 1, 16));
+		score8.setFont(new Font("Eurostile", Font.BOLD, 16));
 		score8.setForeground(Color.white);
 		
 		score9 = new JLabel("000");
-		score9.setFont(new Font("Eurostile", 1, 16));
+		score9.setFont(new Font("Eurostile", Font.BOLD, 16));
 		score9.setForeground(Color.white);
 		
 		score10 = new JLabel("   ");
-		score10.setFont(new Font("Eurostile", 1, 16));
+		score10.setFont(new Font("Eurostile", Font.BOLD, 16));
 		score10.setForeground(Color.white);
 		
 		title = new JLabel();
-        title.setFont(new Font("Eurostile", 1, 28));
+        title.setFont(new Font("Eurostile", Font.BOLD, 28));
         title.setForeground(new Color(255, 255, 255));
         title.setText("Top 10 Players");
 		

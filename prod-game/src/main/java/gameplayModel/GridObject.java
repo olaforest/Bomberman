@@ -1,5 +1,7 @@
-
 package gameplayModel;
+
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import lombok.Getter;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -7,14 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * This class as as the SuperClass of all different type of GridObject.
- * It controls each object's location, zooming, size, and what happens if they collide with concrete
- * 
- * @author Olivier Laforest
- *
- */
-
+@Getter
 public class GridObject {
     
 	public static BufferedImage image;
@@ -28,19 +23,13 @@ public class GridObject {
 	
 	protected int xPosition;
 	protected int yPosition;
-    protected boolean concreteCollision;
+	protected boolean isConcreteCollision;
 
-    /**
-     * Initialize each GridObject
-     * 
-     * @param x the x-coordinate of the GridObject
-     * @param y the y-coordinate of the GridObject
-     */
     public GridObject(int x, int y) {
-    	
+
     	xPosition = x;
     	yPosition = y;
-        concreteCollision = false;
+        isConcreteCollision = false;
     	
     	try {
     		InputStream in = Bomberman.class.getResourceAsStream("/spritesheet.png");
@@ -53,16 +42,8 @@ public class GridObject {
         }
     }
 
-    public boolean isConcreteCollision() {
-        return concreteCollision;
-    }
-
-    public int getXPosition() {
-        return xPosition;
-    }
-
     public void setXPosition(int xPosition) {
-    	concreteCollision = false;
+    	isConcreteCollision = false;
     	boolean isInXRange = (xPosition >= EFFECTIVE_PIXEL_WIDTH) && (xPosition <= EFFECTIVE_PIXEL_WIDTH * (GridMap.MAPWIDTH - 2));
     	boolean isAlignedWithRow = ((this.yPosition - EFFECTIVE_PIXEL_HEIGHT) % (EFFECTIVE_PIXEL_HEIGHT * 2)) == 0;
     	boolean isBelowRow = ((this.yPosition - EFFECTIVE_PIXEL_HEIGHT) % (EFFECTIVE_PIXEL_HEIGHT * 2)) <= MISALIGNMENT_ALLOWED;
@@ -77,16 +58,12 @@ public class GridObject {
     		this.xPosition = xPosition;
     		this.yPosition -= 4;
     	}else 
-    		concreteCollision = true;
-    }
-
-    public int getYPosition() {
-        return yPosition;
+    		isConcreteCollision = true;
     }
 
     public void setYPosition(int yPosition) {
     	
-        concreteCollision = false;
+        isConcreteCollision = false;
     	int xError = (this.xPosition - EFFECTIVE_PIXEL_WIDTH) % (EFFECTIVE_PIXEL_WIDTH * 2);
     	
     	boolean isInYRange = (yPosition >= EFFECTIVE_PIXEL_HEIGHT) && (yPosition <= EFFECTIVE_PIXEL_HEIGHT * (GridMap.MAPHEIGHT - 2));
@@ -103,31 +80,27 @@ public class GridObject {
     		this.yPosition = yPosition;
     		this.xPosition += 4;
     	} else 
-    		concreteCollision = true;
+    		isConcreteCollision = true;
     }
-    
-	/**
-	 * This method draw each GridObjects on the GridMap in  2D Graphics
-	 * It uses image buffering to load the drawing onto the Map
-	 * 
-	 * @param imageIn the input image being buffered
-	 * @param factor the enlargement factor used for input image
-	 * @return the output image
-	 */
+
+	public boolean isSamePosition(GridObject object) {
+		return xPosition == object.getXPosition() && yPosition == object.getYPosition();
+	}
+
 	public static BufferedImage resizeImage(BufferedImage imageIn, int factor) {
-        
+
 		final BufferedImage imageOut = new BufferedImage(imageIn.getWidth() * factor, imageIn.getHeight() * factor, BufferedImage.TYPE_INT_RGB);
         final Graphics2D graphics2D = imageOut.createGraphics();
         graphics2D.setComposite(AlphaComposite.Src);
-        
+
         //The three lines below are for RenderingHints for better image quality at cost of higher processing time.
         graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-        
+
         graphics2D.drawImage(imageIn, 0, 0, imageIn.getWidth()*factor, imageIn.getHeight()*factor, null);
         graphics2D.dispose();
-        
+
         return imageOut;
     }
 }

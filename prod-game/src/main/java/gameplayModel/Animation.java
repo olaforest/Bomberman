@@ -1,61 +1,39 @@
-//*****************************************************************************************************
-//  Animation.java
-//
-//*****************************************************************************************************
-
 package gameplayModel;
 
 import lombok.Getter;
 
 import java.awt.image.BufferedImage;
 
-/**
- *
- * @author Olivier Laforest
- */
 public class Animation {
 
-	@Getter
-    private BufferedImage[] frames;
-    private int counter;
-    private boolean isAnimDone;
-    
-    public Animation(int frameNumber) {
+	@Getter private BufferedImage[] frames;
+	@Getter private boolean isAnimDone;
+	private int counter;
 
-        frames = new BufferedImage[frameNumber];
-        counter = 0;
-        isAnimDone = false;
-    }
-    
-    public Animation(Animation anim) {
-    	
-    	frames = anim.getFrames();
-    	counter = 0;
-    	isAnimDone = false;
-    }
-    
-    public void setFrame(BufferedImage img, int index) {
-    	frames[index] = img;
+	public Animation(int frameNumber) {
+		frames = new BufferedImage[frameNumber];
+		isAnimDone = false;
+		counter = 0;
 	}
-    
-	public BufferedImage getCurrentFrame() {return frames[counter];}
-	
-//	private BufferedImage[] getFrames() {
-//		return frames;
-//	}
-	
+
+	public Animation(Animation anim) {
+		frames = anim.getFrames();
+		isAnimDone = false;
+		counter = 0;
+	}
+
+	public void setFrame(BufferedImage img, int index) { frames[index] = img; }
+
+	public BufferedImage getCurrentFrame() { return frames[counter]; }
+
 	public void cycleFrame() {
 		counter = ((counter + 1) % frames.length);
-		
+
 		if (counter == frames.length - 1)
 			isAnimDone = true;
 	}
-	
+
 	public void setToInitialFrame(){
 		counter = 0;
-	}
-	
-	public boolean isAnimDone() {
-		return isAnimDone;
 	}
 }

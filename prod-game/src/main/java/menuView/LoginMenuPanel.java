@@ -1,6 +1,6 @@
 package menuView;
 
-import gameplayModel.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -164,8 +164,7 @@ public class LoginMenuPanel extends JPanel {
 	 * @return Data within "Password" text field as a String
 	 */
 	public String getPassword() {
-		String stringPas = new String(password.getPassword());
-		return stringPas;
+		return new String(password.getPassword());
 	}
 	
 }

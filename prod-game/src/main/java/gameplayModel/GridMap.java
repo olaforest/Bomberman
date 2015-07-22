@@ -1,83 +1,60 @@
-
 package gameplayModel;
 
 import gameplayController.GameplayController;
+import gameplayModel.GridObjects.AnimatedObjects.Bomb;
+import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.GridObjects.AnimatedObjects.Brick;
+import gameplayModel.GridObjects.AnimatedObjects.Enemies.*;
+import gameplayModel.GridObjects.AnimatedObjects.Enemy;
+import gameplayModel.GridObjects.Concrete;
+import gameplayModel.GridObjects.Exitway;
+import gameplayModel.GridObjects.PowerUps.*;
+import lombok.Getter;
 
 import java.util.ArrayList;
-
-/**
- * This class defines the underlying map during game play. 
- * It contains all the methods used to initialize the maps for gameplay.
- * It will generate all of the GridObject and place them on the map according to level specification
- * 
- * @author Olivier Laforest
- */
 
 public class GridMap {
 	
     public static final int MAPWIDTH = 31;
     public static final int MAPHEIGHT = 13;
-    
-    public final int SPAWN_TIMEOUT = 10*1000;
+	public final int SPAWN_TIMEOUT = 10*1000;
     
     private int width = GridObject.EFFECTIVE_PIXEL_WIDTH;
 	private int height = GridObject.EFFECTIVE_PIXEL_HEIGHT;
 	private int brickExitIndex, spawnTimer;
-	
 	private int[] levelSpec;
 	
-	private ArrayList<Concrete> concreteLayout;
-	private ArrayList<Brick> bricks;
-	private ArrayList<Bomb> bombs;
-	private ArrayList<Enemy> enemies;
-	private Exitway exitway;
-	private PowerUp powerup;
+	@Getter private ArrayList<Concrete> concreteLayout;
+	@Getter private ArrayList<Brick> bricks;
+	@Getter private ArrayList<Bomb> bombs;
+	@Getter private ArrayList<Enemy> enemies;
+	@Getter private Exitway exitway;
+	@Getter private PowerUp powerUp;
+	@Getter private Bomberman bomberman;
 	
-	private Bomberman bomberman;
-	
-	/**
-	 * Used for GridMap Initialization based on the specification of each level
-	 *
-	 * @param levelSpecification the number and the types of GridObjects in each level
-	 */
 	public GridMap(int[] levelSpecification) {
 		
 		levelSpec = levelSpecification;
-		
 		spawnTimer = SPAWN_TIMEOUT;
-        
-        concreteLayout = new ArrayList<Concrete>();
-        bricks = new ArrayList<Brick>();
-        bombs = new ArrayList<Bomb>();
-        enemies = new ArrayList<Enemy>();
+        concreteLayout = new ArrayList<>();
+        bricks = new ArrayList<>();
+        bombs = new ArrayList<>();
+        enemies = new ArrayList<>();
         
         generateMap();
-        
         populateMap(levelSpec);
 	}
 	
-	/**
-	 * Used for GridMap Initialization based on a series of level specification
-	 * 
-	 * @param spawnTimer sync with the gameplay timer
-	 * @param bricks the location and number of bricks on each level
-	 * @param bombs the location, number and types of bombs on each level
-	 * @param enemies the location, number and types of enemies on each level
-	 * @param exitway the location of exitway on each level
-	 * @param powerup the location, number and types of PowerUps on each level
-	 * @param bomberman the location of bomberman object
-	 */
 	public GridMap(int spawnTimer, ArrayList<Brick> bricks, ArrayList<Bomb> bombs, ArrayList<Enemy> enemies, Exitway exitway, PowerUp powerup, Bomberman bomberman) {
 		
 		this.spawnTimer = spawnTimer;
-        
-        concreteLayout = new ArrayList<Concrete>();
+        concreteLayout = new ArrayList<>();
         this.bricks = bricks;
         this.bombs = bombs;
         this.enemies = enemies;
         this.bomberman = bomberman;
         this.exitway = exitway;
-        this.powerup = powerup;
+        this.powerUp = powerup;
         
         generateMap();
 	}
@@ -108,16 +85,13 @@ public class GridMap {
 		this.bomberman = new Bomberman(width, height);
 		
 		if (levelSpec[8] != 0) {
-			
 			distributeBricks();
 			addExitway();
 			addPowerup(levelSpec[8]);
 			generateEnemies(levelSpec);
-		} else {
-			spawnMoreEnemies(levelSpec);
 		}
-		
-		
+		else
+			spawnMoreEnemies(levelSpec);
 	}
     
 	private void distributeBricks () {
@@ -125,18 +99,14 @@ public class GridMap {
 		double p = 0.225;
 		
 		for (int i = 1 ; i < MAPHEIGHT ; i += 2) {
-			
 			for(int j = 1 ; j < MAPWIDTH - 1 ; j++) {
-				
 				if (Math.random() < p && !(i == 1 && j == 1) && !(i == 1 && j == 2))
 					bricks.add(new Brick(width * j, height * i));
 			}
 		}
 		
 		for (int i = 2 ; i < MAPHEIGHT - 1 ; i += 2) {
-			
 			for (int j = 1 ; j < MAPWIDTH - 1 ; j += 2) {
-				
 				if (Math.random() < p && !(i == 2 && j == 1))
 					bricks.add(new Brick(width * j, height * i));
 			}
@@ -144,15 +114,11 @@ public class GridMap {
 	}
 	
 	private void addExitway() {
-		
 		brickExitIndex = (int) (Math.random() * bricks.size());
-		
 		exitway = new Exitway(bricks.get(brickExitIndex).getXPosition(), bricks.get(brickExitIndex).getYPosition());
 	}
 	
 	private void addPowerup(int type) {
-		
-		
 		int brickPowerupIndex = (int) (Math.random() * bricks.size());
 		
 		while (brickPowerupIndex == brickExitIndex)
@@ -160,41 +126,36 @@ public class GridMap {
 		
 		switch (type) {
 		case 1:
-			powerup = new BombPU(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
+			powerUp = new BombPU(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
 			break;
 		case 2:
-			powerup = new Flames(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
+			powerUp = new Flames(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
 			break;
 		case 3:
-			powerup = new Speed(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
+			powerUp = new Speed(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
 			break;
 		case 4:
-			powerup = new Wallpass(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
+			powerUp = new Wallpass(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
 			break;
 		case 5:
-			powerup = new Detonator(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
+			powerUp = new Detonator(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
 			break;
 		case 6:
-			powerup = new Bombpass(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
+			powerUp = new Bombpass(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
 			break;
 		case 7:
-			powerup = new Flamepass(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
+			powerUp = new Flamepass(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
 			break;
 		case 8:
-			powerup = new Mystery(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
+			powerUp = new Mystery(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
 			break;
 		}
 	}
 	
-	/**
-	 * generate the enemies on GridMap
-	 * 
-	 * @param levelSpec level specification regulating the numbers and types of enemies
-	 */
 	public void generateEnemies(int[] levelSpec) {
 		
-		int[] position = new int[2];
-		
+		int[] position;
+
 		for (int i = 0 ; i < levelSpec[0] ; i++) {
 			position = findEnemyLocation();
 			enemies.add(new Balloom(position[0] * width, position[1] * height));
@@ -234,48 +195,35 @@ public class GridMap {
 			position = findEnemyLocation();
 			enemies.add(new Pontan(position[0] * width, position[1] * height));
 		}
-			
 	}
 	
 	private void spawnMoreEnemies(int[] levelSpec) {
-		
 		int i = 0;
 		
-		while (levelSpec[i] >= 0) {
-			i++;
-		}
+		while (levelSpec[i] >= 0) { i++; }
 		
 		int[] spec = new int[8];
-		
 		spec[i] = 8;
-		
 		generateEnemies(spec);
 	}
 	
 	private int[] findEnemyLocation() {
-		
-		int[] location = new int[2];
-		
-		location = generateRandomLocation();
-		
+		int[] location = generateRandomLocation();
 		int i = 0;
 		
 		while (i < bricks.size()) {
-			
 			if (location[0] * width == bricks.get(i).getXPosition() && location[1] * height == bricks.get(i).getYPosition()) {
 				location = generateRandomLocation();
 				i = 0;
-			} else {
-				i++;
 			}
+			else
+				i++;
 		}
 		return location;
 	}
 	
 	private int[] generateRandomLocation() {
-		
 		int[] location = new int[2];
-		
 		double row = Math.random();
 		
 		if (row >= 0.5) {
@@ -288,10 +236,6 @@ public class GridMap {
 		return location;
 	}
 	
-	/**
-	 * Controls the SpawneTimer in sync with gameplay timer
-	 */
-	
 	public void decreaseSpawnTimer() {
 		spawnTimer -= GameplayController.TIMEOUT;
 		
@@ -300,57 +244,22 @@ public class GridMap {
 			spawnTimer = SPAWN_TIMEOUT;
 		}
 	}
-	
-	public Bomberman getBomberman(){
-		return bomberman;
-	}
-	
-	public ArrayList<Concrete> getConcreteLayout(){
-		return concreteLayout;
-	}
-	
-	public ArrayList<Brick> getBricks() {
-		return bricks;
-	}
-	
-	public PowerUp getPowerUps(){
-		return powerup;
-	}
-	
-	public ArrayList<Bomb> getBombs() {
-		return bombs;
-	}
-	
-	public ArrayList<Enemy> getEnemies() {
-		return enemies;
-	}
-	
-	public Exitway getExitway() {
-		return exitway;
-	}
-	
-	/**
-	 * Prepare each GridObject for saving into CSV files
-	 * 
-	 * @return an array list of different array lists of GridObject eg. enemy, powerup, etc... ready for CSV writing
-	 */
-	
+
 	public ArrayList<String> toCSVEntry() {
 		
-		ArrayList<String> entryList = new ArrayList<String>();
+		ArrayList<String> entryList = new ArrayList<>();
 		
 		entryList.add(Integer.toString(spawnTimer));
 		entryList.add("Bricks");
 		
 		for (Brick brick : bricks) {
-			
 			for (String token : brick.toCSVEntry())
 				entryList.add(token);
 		}
 		
 		entryList.add("Bombs");
 		entryList.add(Integer.toString(Bomb.getRange()));
-		
+
 		for (Bomb bomb : bombs) {
 			if (!bomb.isDead()) {
 				for (String token : bomb.toCSVEntry())
@@ -373,7 +282,7 @@ public class GridMap {
 		
 		entryList.add("PowerUp");
 		
-		for (String token : powerup.toCSVEntry())
+		for (String token : powerUp.toCSVEntry())
 			entryList.add(token);
 		
 		entryList.add("Bomberman");
