@@ -18,7 +18,7 @@ public class ConcreteTest {
 	
 	@Test
 	public void testGetImage() {
-		assertTrue(concrete.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(concrete.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, concrete.getImage().getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, concrete.getImage().getHeight());
 	}

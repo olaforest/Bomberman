@@ -26,7 +26,7 @@ public class Brick extends AnimatedObject {
 			animationList[i] = new Animation(animParam[i][2]);
 			
 			for (int j = 0 ; j < animParam[i][2] ; j++){
-				animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + (GridObject.PIXELWIDTH + 2) * j,
+				animationList[i].setFrame(resizeImage(sprite.getSubimage(animParam[i][0] + (GridObject.PIXELWIDTH + 2) * j,
 						animParam[i][1], PIXELWIDTH, PIXELHEIGHT), ZOOM), j);
 			}
 		}

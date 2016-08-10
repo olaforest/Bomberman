@@ -40,11 +40,11 @@ public class LoginMenuPanel extends JPanel {
 		
 		try {
 			InputStream in = Bomberman.class.getResourceAsStream("/bomber.png");
-		      img = ImageIO.read(in);
-		    } catch(IOException e) {
-		      e.printStackTrace();
-		    }
-		
+			img = ImageIO.read(in);
+		} catch(IOException e) {
+		     e.printStackTrace();
+		}
+
 		password = new JPasswordField();
 		password.setEchoChar('*');
 		password.addActionListener(listener);
@@ -75,7 +75,7 @@ public class LoginMenuPanel extends JPanel {
 	
 	 protected void paintComponent(Graphics g) {
 		    super.paintComponent(g);
-		    // paint the background image and scale it to fill the entire space
+		    // paint the background sprite and scale it to fill the entire space
 		    g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
 	 }
 	

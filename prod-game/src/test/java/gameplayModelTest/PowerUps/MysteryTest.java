@@ -21,14 +21,14 @@ public class MysteryTest {
 		
 		int[] imageParam = {217, 223};
 		
-		assertTrue(mystery.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(mystery.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, mystery.generateImage(imageParam).getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, mystery.generateImage(imageParam).getHeight());
 	}
 	
 	@Test
 	public void testGetImage() {
-		assertTrue(mystery.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(mystery.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, mystery.getImage().getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, mystery.getImage().getHeight());
 	}

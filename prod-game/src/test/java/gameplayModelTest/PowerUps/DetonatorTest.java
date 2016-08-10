@@ -21,14 +21,14 @@ public class DetonatorTest {
 		
 		int[] imageParam = {198, 259};
 		
-		assertTrue(detonator.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(detonator.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, detonator.generateImage(imageParam).getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, detonator.generateImage(imageParam).getHeight());
 	}
 	
 	@Test
 	public void testGetImage() {
-		assertTrue(detonator.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(detonator.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, detonator.getImage().getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, detonator.getImage().getHeight());
 	}

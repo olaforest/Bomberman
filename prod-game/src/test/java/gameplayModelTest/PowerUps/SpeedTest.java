@@ -21,14 +21,14 @@ public class SpeedTest {
 		
 		int[] imageParam = {180, 259};
 		
-		assertTrue(speed.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(speed.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, speed.generateImage(imageParam).getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, speed.generateImage(imageParam).getHeight());
 	}
 	
 	@Test
 	public void testGetImage() {
-		assertTrue(speed.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(speed.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, speed.getImage().getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, speed.getImage().getHeight());
 	}

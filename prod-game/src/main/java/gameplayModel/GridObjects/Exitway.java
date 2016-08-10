@@ -13,7 +13,7 @@ public class Exitway extends GridObject {
 
 	public Exitway(int x, int y) {
 		super(x, y);
-		image = resizeImage(image.getSubimage(imageParameter[0], imageParameter[1], PIXELWIDTH, PIXELHEIGHT), ZOOM);
+		image = resizeImage(sprite.getSubimage(imageParameter[0], imageParameter[1], PIXELWIDTH, PIXELHEIGHT), ZOOM);
 	}
 	
     @Override

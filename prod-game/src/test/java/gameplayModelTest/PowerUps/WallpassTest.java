@@ -21,14 +21,14 @@ public class WallpassTest {
 		
 		int[] imageParam = {217, 241};
 		
-		assertTrue(wallpass.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(wallpass.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, wallpass.generateImage(imageParam).getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, wallpass.generateImage(imageParam).getHeight());
 	}
 	
 	@Test
 	public void testGetImage() {
-		assertTrue(wallpass.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(wallpass.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, wallpass.getImage().getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, wallpass.getImage().getHeight());
 	}

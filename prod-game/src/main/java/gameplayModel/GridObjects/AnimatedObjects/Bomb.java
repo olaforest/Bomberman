@@ -91,10 +91,10 @@ public class Bomb extends AnimatedObject {
 			animationList[i] = new Animation(animParam[i][2]);
 			
 			for (int j = 0 ; j < animParam[i][3] ; j++)
-                animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + animParam[i][4] * j, animParam[i][1], GridObject.PIXELWIDTH, PIXELHEIGHT), ZOOM), j);
+                animationList[i].setFrame(resizeImage(sprite.getSubimage(animParam[i][0] + animParam[i][4] * j, animParam[i][1], GridObject.PIXELWIDTH, PIXELHEIGHT), ZOOM), j);
 			
 			for (int n = (animParam[i][2] - animParam[i][3]) ; n > 0 ; n--)
-                animationList[i].setFrame(resizeImage(image.getSubimage(animParam[i][0] + animParam[i][4] * n, animParam[i][1], PIXELWIDTH, PIXELHEIGHT), ZOOM), animParam[i][3] - n);
+                animationList[i].setFrame(resizeImage(sprite.getSubimage(animParam[i][0] + animParam[i][4] * n, animParam[i][1], PIXELWIDTH, PIXELHEIGHT), ZOOM), animParam[i][3] - n);
 		}
 	}
 	

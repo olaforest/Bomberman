@@ -21,14 +21,14 @@ public class BombpassTest {
 		
 		int[] imageParam = {216, 259};
 		
-		assertTrue(bombpass.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(bombpass.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, bombpass.generateImage(imageParam).getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, bombpass.generateImage(imageParam).getHeight());
 	}
 	
 	@Test
 	public void testGetImage() {
-		assertTrue(bombpass.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(bombpass.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, bombpass.getImage().getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, bombpass.getImage().getHeight());
 	}

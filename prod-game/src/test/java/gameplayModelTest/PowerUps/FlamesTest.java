@@ -21,14 +21,14 @@ public class FlamesTest {
 		
 		int[] imageParam = {145, 259};
 		
-		assertTrue(flames.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(flames.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, flames.generateImage(imageParam).getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, flames.generateImage(imageParam).getHeight());
 	}
 	
 	@Test
 	public void testGetImage() {
-		assertTrue(flames.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(flames.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, flames.getImage().getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, flames.getImage().getHeight());
 	}

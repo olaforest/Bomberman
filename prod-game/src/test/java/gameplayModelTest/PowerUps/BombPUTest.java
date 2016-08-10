@@ -21,14 +21,14 @@ public class BombPUTest {
 		
 		int[] imageParam = {163, 259};
 		
-		assertTrue(bombPU.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(bombPU.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, bombPU.generateImage(imageParam).getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, bombPU.generateImage(imageParam).getHeight());
 	}
 	
 	@Test
 	public void testGetImage() {
-		assertTrue(bombPU.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(bombPU.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, bombPU.getImage().getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, bombPU.getImage().getHeight());
 	}

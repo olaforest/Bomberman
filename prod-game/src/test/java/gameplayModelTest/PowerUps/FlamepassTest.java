@@ -21,14 +21,14 @@ public class FlamepassTest {
 		
 		int[] imageParam = {217, 204};
 		
-		assertTrue(flamepass.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(flamepass.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, flamepass.generateImage(imageParam).getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, flamepass.generateImage(imageParam).getHeight());
 	}
 	
 	@Test
 	public void testGetImage() {
-		assertTrue(flamepass.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(flamepass.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, flamepass.getImage().getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, flamepass.getImage().getHeight());
 	}

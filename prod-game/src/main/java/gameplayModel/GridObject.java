@@ -12,7 +12,7 @@ import java.io.InputStream;
 @Getter
 public class GridObject {
     
-	public static BufferedImage image;
+	public static BufferedImage sprite;
 	
 	public static final int ZOOM = 2;
     public static final int PIXELWIDTH = 16;
@@ -20,26 +20,25 @@ public class GridObject {
     public static final int EFFECTIVE_PIXEL_WIDTH = PIXELWIDTH * ZOOM;
     public static final int EFFECTIVE_PIXEL_HEIGHT = PIXELHEIGHT * ZOOM;
     public static final int MISALIGNMENT_ALLOWED = 16;
+
+	static {
+		try {
+			InputStream in = Bomberman.class.getResourceAsStream("/spritesheet.png");
+			sprite = ImageIO.read(in);
+		} catch (IOException e) {
+			sprite = null;
+			e.printStackTrace();
+		}
+	}
 	
 	protected int xPosition;
 	protected int yPosition;
 	protected boolean isConcreteCollision;
 
     public GridObject(int x, int y) {
-
     	xPosition = x;
     	yPosition = y;
         isConcreteCollision = false;
-    	
-    	try {
-    		InputStream in = Bomberman.class.getResourceAsStream("/spritesheet.png");
-    		image = ImageIO.read(in);
-        } 
-    	catch (IOException e) {
-    		System.out.println("LOLOLO");
-    		image = null;
-    		e.printStackTrace();
-        }
     }
 
     public void setXPosition(int xPosition) {
@@ -93,7 +92,7 @@ public class GridObject {
         final Graphics2D graphics2D = imageOut.createGraphics();
         graphics2D.setComposite(AlphaComposite.Src);
 
-        //The three lines below are for RenderingHints for better image quality at cost of higher processing time.
+        //The three lines below are for RenderingHints for better sprite quality at cost of higher processing time.
         graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);

@@ -18,7 +18,7 @@ public class ExitwayTest {
 	
 	@Test
 	public void testGetImage() {
-		assertTrue(exitway.getImage().getClass().toString().equals("class java.awt.image.BufferedImage"));
+		assertTrue(exitway.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
 		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, exitway.getImage().getWidth());
 		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, exitway.getImage().getHeight());
 	}
