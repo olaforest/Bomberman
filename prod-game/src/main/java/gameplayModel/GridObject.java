@@ -16,8 +16,6 @@ public class GridObject {
 	public static final BufferedImage sprite = loadSpriteSheet();
 
 	public static final int ZOOM = 2;
-//	public static final int PIXELWIDTH = 16;
-//	public static final int PIXELHEIGHT = 16;
 	public static final int PIXEL_DIMENSION = 16;
 	public static final int EFFECTIVE_PIXEL_WIDTH = PIXEL_DIMENSION * ZOOM;
 	public static final int EFFECTIVE_PIXEL_HEIGHT = PIXEL_DIMENSION * ZOOM;

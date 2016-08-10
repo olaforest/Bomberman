@@ -13,10 +13,17 @@ import java.util.ArrayList;
 
 @Getter
 public class Bomb extends AnimatedObject {
+	public enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp, expVertical, expHorizontal;}
 
-	public enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp, expVertical, expHorizontal}
-
-	public final int TIME_TO_EXPLOSION = 2500;
+	public static final int TIME_TO_EXPLOSION = 2500;
+	public static final int[][] ANIM_PARAM = new int[][]{{113, 21, 4, 4, PIXEL_DIMENSION},
+			{19, 223, 7, 4, 54},
+			{37, 223, 7, 4, 54},
+			{1, 223, 7, 4, 54},
+			{19, 241, 7, 4, 54},
+			{19, 205, 7, 4, 54},
+			{37, 205, 7, 4, 54},
+			{37, 241, 7, 4, 54}};
 
 	private ArrayList<Animation> currentAnimations;
 	private ArrayList<Integer> animXOffset, animYOffset;
@@ -75,28 +82,17 @@ public class Bomb extends AnimatedObject {
 
 	@Override
 	public void generateAnimationList() {
-
-		int[][] animParam = {{113, 21, 4, 4, PIXEL_DIMENSION},
-				{19, 223, 7, 4, 54},
-				{37, 223, 7, 4, 54},
-				{1, 223, 7, 4, 54},
-				{19, 241, 7, 4, 54},
-				{19, 205, 7, 4, 54},
-				{37, 205, 7, 4, 54},
-				{37, 241, 7, 4, 54}};
-
 		animationList = new Animation[AnimationType.values().length];
 
 		for (AnimationType type : AnimationType.values()) {
-
 			int i = type.ordinal();
-			animationList[i] = new Animation(animParam[i][2]);
+			animationList[i] = new Animation(ANIM_PARAM[i][2]);
 
-			for (int j = 0; j < animParam[i][3]; j++)
-				animationList[i].setFrame(resizeImage(animParam[i][0] + animParam[i][4] * j, animParam[i][1], ZOOM), j);
+			for (int j = 0; j < ANIM_PARAM[i][3]; j++)
+				animationList[i].setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * j, ANIM_PARAM[i][1], ZOOM), j);
 
-			for (int n = (animParam[i][2] - animParam[i][3]); n > 0; n--)
-				animationList[i].setFrame(resizeImage(animParam[i][0] + animParam[i][4] * n, animParam[i][1], ZOOM), animParam[i][3] - n);
+			for (int n = (ANIM_PARAM[i][2] - ANIM_PARAM[i][3]); n > 0; n--)
+				animationList[i].setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * n, ANIM_PARAM[i][1], ZOOM), ANIM_PARAM[i][3] - n);
 		}
 	}
 

@@ -4,11 +4,11 @@ import gameplayModel.Animation;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 
 public class Balloom extends Enemy {
-
-	public final int POINTS = 100;
-	public final int SPEED = 2;
-	public final int SMARTNESS = 1;
-	public final boolean WALLPASS = false;
+	public static final int POINTS = 100;
+	public static final int SPEED = 2;
+	public static final int SMARTNESS = 1;
+	public static final boolean WALLPASS = false;
+	public static final int[][] ANIM_PARAM = new int[][]{{72, 39, 4}, {1, 39, 4}, {144, 39, 5}};
 
 	public Balloom(int x, int y) {
 		super(x, y);
@@ -28,19 +28,14 @@ public class Balloom extends Enemy {
 	}
 
 	public void generateAnimationList() {
-
-		int[][] animParam = {{72, 39, 4},
-				{1, 39, 4},
-				{144, 39, 5}};
-
 		animationList = new Animation[AnimationType.values().length];
 
 		for (AnimationType type : AnimationType.values()) {
 			int i = type.ordinal();
-			animationList[i] = new Animation(animParam[i][2]);
+			animationList[i] = new Animation(ANIM_PARAM[i][2]);
 
-			for (int j = 0; j < animParam[i][2]; j++) {
-				animationList[i].setFrame(resizeImage(animParam[i][0] + (PIXEL_DIMENSION + 2) * j, animParam[i][1], ZOOM), j);
+			for (int j = 0; j < ANIM_PARAM[i][2]; j++) {
+				animationList[i].setFrame(resizeImage(ANIM_PARAM[i][0] + (PIXEL_DIMENSION + 2) * j, ANIM_PARAM[i][1], ZOOM), j);
 			}
 		}
 	}

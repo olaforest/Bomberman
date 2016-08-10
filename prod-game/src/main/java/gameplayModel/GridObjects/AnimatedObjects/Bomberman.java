@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 @Getter
 public class Bomberman extends AnimatedObject {
-
 	public enum AnimationType {right, left, down, up, death}
 
+	public static final int[][] ANIM_PARAM = new int[][]{{50, 3, 4}, {50, 21, 4}, {2, 3, 3}, {2, 21, 3}, {113, 3, 7}};
 	public static final int INITIAL_SPEED = 4, SPEED_INCREMENT = 2, MISALIGNMENT_ALLOWED = 16, INVINCIBILITY_TIMEOUT = 10000;
 
 	private ArrayList<PowerUp> powerUpsAcquired;
@@ -42,21 +42,14 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void generateAnimationList() {
-
-		int[][] animParam = {{50, 3, 4},
-				{50, 21, 4},
-				{2, 3, 3},
-				{2, 21, 3},
-				{113, 3, 7}};
-
 		animationList = new Animation[AnimationType.values().length];
 
 		for (AnimationType type : AnimationType.values()) {
 			int i = type.ordinal();
-			animationList[i] = new Animation(animParam[i][2]);
+			animationList[i] = new Animation(ANIM_PARAM[i][2]);
 
-			for (int j = 0; j < animParam[i][2]; j++) {
-				animationList[i].setFrame(resizeImage(animParam[i][0] + PIXEL_DIMENSION * j, animParam[i][1], ZOOM), j);
+			for (int j = 0; j < ANIM_PARAM[i][2]; j++) {
+				animationList[i].setFrame(resizeImage(ANIM_PARAM[i][0] + PIXEL_DIMENSION * j, ANIM_PARAM[i][1], ZOOM), j);
 			}
 		}
 	}
