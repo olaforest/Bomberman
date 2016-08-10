@@ -16,10 +16,11 @@ public class GridObject {
 	public static final BufferedImage sprite = loadSpriteSheet();
 
 	public static final int ZOOM = 2;
-	public static final int PIXELWIDTH = 16;
-	public static final int PIXELHEIGHT = 16;
-	public static final int EFFECTIVE_PIXEL_WIDTH = PIXELWIDTH * ZOOM;
-	public static final int EFFECTIVE_PIXEL_HEIGHT = PIXELHEIGHT * ZOOM;
+//	public static final int PIXELWIDTH = 16;
+//	public static final int PIXELHEIGHT = 16;
+	public static final int PIXEL_DIMENSION = 16;
+	public static final int EFFECTIVE_PIXEL_WIDTH = PIXEL_DIMENSION * ZOOM;
+	public static final int EFFECTIVE_PIXEL_HEIGHT = PIXEL_DIMENSION * ZOOM;
 	public static final int MISALIGNMENT_ALLOWED = 16;
 	public static final int ADJUSTMENT = 4;
 
@@ -79,7 +80,11 @@ public class GridObject {
 		return xPosition == object.getXPosition() && yPosition == object.getYPosition();
 	}
 
-	public static BufferedImage resizeImage(BufferedImage imageIn, int factor) {
+	public static BufferedImage resizeImage(int xCoordinate, int yCoordinate, int zoom) {
+		return resizeImage(sprite.getSubimage(xCoordinate, yCoordinate, PIXEL_DIMENSION, PIXEL_DIMENSION), zoom);
+	}
+
+	private static BufferedImage resizeImage(BufferedImage imageIn, int factor) {
 		final BufferedImage imageOut = new BufferedImage(imageIn.getWidth() * factor, imageIn.getHeight() * factor, BufferedImage.TYPE_INT_RGB);
 		final Graphics2D graphics2D = imageOut.createGraphics();
 		graphics2D.setComposite(AlphaComposite.Src);
