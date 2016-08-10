@@ -13,7 +13,7 @@ public class Concrete extends GridObject {
 
 	public Concrete(int x, int y) {
 		super(x, y);
-		image = resizeImage(imageParameter[0], imageParameter[1], ZOOM);
+		image = resizeImage(imageParameter[0], imageParameter[1]);
 	}
 
 	@Override

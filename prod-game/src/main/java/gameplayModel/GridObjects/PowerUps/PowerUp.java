@@ -17,7 +17,7 @@ public class PowerUp extends GridObject {
 	}
 
 	public BufferedImage generateImage(int[] imageParameter) {
-		return resizeImage(imageParameter[0], imageParameter[1], ZOOM);
+		return resizeImage(imageParameter[0], imageParameter[1]);
 	}
 
 	@Override

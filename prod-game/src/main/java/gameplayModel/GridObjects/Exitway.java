@@ -14,7 +14,7 @@ public class Exitway extends GridObject {
 
 	public Exitway(int x, int y) {
 		super(x, y);
-		image = resizeImage(imageParameter[0], imageParameter[1], ZOOM);
+		image = resizeImage(imageParameter[0], imageParameter[1]);
 	}
 
 	@Override

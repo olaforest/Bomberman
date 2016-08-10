@@ -35,7 +35,7 @@ public class Ovapi extends Enemy {
 			animationList[i] = new Animation(ANIM_PARAM[i][2]);
 
 			for (int j = 0; j < ANIM_PARAM[i][2]; j++) {
-				animationList[i].setFrame(resizeImage(ANIM_PARAM[i][0] + (PIXEL_DIMENSION + 2) * j, ANIM_PARAM[i][1], ZOOM), j);
+				animationList[i].setFrame(resizeImage(ANIM_PARAM[i][0] + (PIXEL_DIMENSION + 2) * j, ANIM_PARAM[i][1]), j);
 			}
 		}
 	}
