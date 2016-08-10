@@ -12,11 +12,11 @@ import static org.junit.Assert.*;
 public class DatabaseTest {
 	private Database database;
 	private Player player;
-	private Player arrayPlayer1,arrayPlayer2,arrayPlayer3,arrayPlayer4,arrayPlayer5,arrayPlayer6,arrayPlayer7,arrayPlayer8,arrayPlayer9,arrayPlayer10;
+	private Player arrayPlayer1, arrayPlayer2, arrayPlayer3, arrayPlayer4, arrayPlayer5, arrayPlayer6, arrayPlayer7, arrayPlayer8, arrayPlayer9, arrayPlayer10;
 	private ArrayList<Player> sorted;
-	
+
 	@Before
-	public void setup(){
+	public void setup() {
 		database = new Database();
 		player = new Player("testName", "testUsername", "testPassword");
 		arrayPlayer1 = new Player("name1", "user1", "pw1", 1, 100000, 1);
@@ -29,7 +29,7 @@ public class DatabaseTest {
 		arrayPlayer8 = new Player("name8", "user8", "pw8", 8, 800000, 8);
 		arrayPlayer9 = new Player("name9", "user9", "pw9", 9, 900000, 9);
 		arrayPlayer10 = new Player("name10", "user10", "pw10", 10, 1000000, 10);
-		
+
 		sorted = new ArrayList<Player>();
 		sorted.add(arrayPlayer10);
 		sorted.add(arrayPlayer9);
@@ -42,41 +42,41 @@ public class DatabaseTest {
 		sorted.add(arrayPlayer2);
 		sorted.add(arrayPlayer1);
 	}
-	
+
 	@Test
-	public void testPlayerAdd(){
+	public void testPlayerAdd() {
 		assertNotNull(database.addPlayer(player));
 	}
-	
+
 	@Test
-	public void testPlayerDelete(){
+	public void testPlayerDelete() {
 		database.addPlayer(player);
 		database.deletePlayer();
 		assertNull(database.getPlayer("testUsername", "testPassword"));
 	}
-	
+
 	@Test
-	public void testEditPlayerName(){
+	public void testEditPlayerName() {
 		database.addPlayer(player);
 		database.editRealName("newTestName");
-		assertSame(player.getRealName(),"newTestName");
+		assertSame(player.getRealName(), "newTestName");
 	}
-	
+
 	@Test
-	public void testEditPassword(){
+	public void testEditPassword() {
 		database.addPlayer(player);
 		database.editPassword("newTestPassword");
-		assertNotNull(player.getPassword(),"newTestPassword");
+		assertNotNull(player.getPassword(), "newTestPassword");
 	}
-	
+
 	@Test
-	public void testfindPlayer(){
+	public void testfindPlayer() {
 		database.addPlayer(player);
 		assertNotNull(database.getPlayer("testUsername", "testPassword"));
 	}
-	
+
 	@Test
-	public void testPlayerSort(){
+	public void testPlayerSort() {
 		database.addPlayer(arrayPlayer1);
 		database.addPlayer(arrayPlayer2);
 		database.addPlayer(arrayPlayer3);
@@ -88,8 +88,8 @@ public class DatabaseTest {
 		database.addPlayer(arrayPlayer9);
 		database.addPlayer(arrayPlayer10);
 
-		assertEquals(database.sortPlayers(),sorted);
+		assertEquals(database.sortPlayers(), sorted);
 	}
-	
+
 
 }

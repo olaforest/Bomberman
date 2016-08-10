@@ -23,31 +23,31 @@ public class CollisionDetector {
 	}
 
 	public boolean checkUpCollision(GridObject a, GridObject b) {
-		if((a != null) && (b != null))
-	                if (Math.abs(a.getXPosition() - b.getXPosition()) < GridObject.MISALIGNMENT_ALLOWED)
-	                    return ((b.getYPosition() + GridObject.EFFECTIVE_PIXEL_HEIGHT > a.getYPosition()) && (b.getYPosition() <= a.getYPosition()));
+		if ((a != null) && (b != null))
+			if (Math.abs(a.getXPosition() - b.getXPosition()) < GridObject.MISALIGNMENT_ALLOWED)
+				return ((b.getYPosition() + GridObject.EFFECTIVE_PIXEL_HEIGHT > a.getYPosition()) && (b.getYPosition() <= a.getYPosition()));
 		return false;
 	}
 
 	public boolean checkDownCollision(GridObject a, GridObject b) {
-		if((a != null) && (b != null))
-	                if (Math.abs(a.getXPosition() - b.getXPosition()) < GridObject.MISALIGNMENT_ALLOWED)
-			return ((a.getYPosition() + GridObject.EFFECTIVE_PIXEL_HEIGHT > b.getYPosition()) && (a.getYPosition() <= b.getYPosition()));
+		if ((a != null) && (b != null))
+			if (Math.abs(a.getXPosition() - b.getXPosition()) < GridObject.MISALIGNMENT_ALLOWED)
+				return ((a.getYPosition() + GridObject.EFFECTIVE_PIXEL_HEIGHT > b.getYPosition()) && (a.getYPosition() <= b.getYPosition()));
 		return false;
 	}
 
 	public boolean checkLeftCollision(GridObject a, GridObject b) {
-		if((a != null) && (b != null))
-	                if (Math.abs(a.getYPosition() - b.getYPosition()) < GridObject.MISALIGNMENT_ALLOWED)
-			return((b.getXPosition() + GridObject.EFFECTIVE_PIXEL_WIDTH > a.getXPosition()) && (b.getXPosition() <= a.getXPosition()));
+		if ((a != null) && (b != null))
+			if (Math.abs(a.getYPosition() - b.getYPosition()) < GridObject.MISALIGNMENT_ALLOWED)
+				return ((b.getXPosition() + GridObject.EFFECTIVE_PIXEL_WIDTH > a.getXPosition()) && (b.getXPosition() <= a.getXPosition()));
 		return false;
 	}
 
 	public boolean checkRightCollision(GridObject a, GridObject b) {
-	        if((a != null) && (b != null))
-	            if (Math.abs(a.getYPosition() - b.getYPosition()) < GridObject.MISALIGNMENT_ALLOWED)
-	                return ((a.getXPosition() + GridObject.EFFECTIVE_PIXEL_WIDTH > b.getXPosition()) && (a.getXPosition() <= b.getXPosition()));
-	        return false;
+		if ((a != null) && (b != null))
+			if (Math.abs(a.getYPosition() - b.getYPosition()) < GridObject.MISALIGNMENT_ALLOWED)
+				return ((a.getXPosition() + GridObject.EFFECTIVE_PIXEL_WIDTH > b.getXPosition()) && (a.getXPosition() <= b.getXPosition()));
+		return false;
 	}
 
 	public boolean checkExplGridObject(Bomb bomb, GridObject gridObj) {
@@ -110,7 +110,7 @@ public class CollisionDetector {
 		return destroyedObjs;
 	}
 
-	private void adjustRanges(Bomb bomb, AnimatedObject animObj,ArrayList<AnimatedObject> destroyedObjs) {
+	private void adjustRanges(Bomb bomb, AnimatedObject animObj, ArrayList<AnimatedObject> destroyedObjs) {
 		if (bomb.getYPosition() == animObj.getYPosition()) {
 
 			boolean isInRightRange = (bomb.getXPosition() + (bomb.getRightRange() + 1) * GridObject.EFFECTIVE_PIXEL_WIDTH) >= animObj.getXPosition() && bomb.getXPosition() < animObj.getXPosition();

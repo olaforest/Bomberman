@@ -19,10 +19,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MenuController implements ActionListener {
-	
+
 	private Player currentPlayer;
 	private GameplayController gameplayCtrl;
-	
+
 	private JFrame menuFrame;
 	private JPanel mainPanel;
 	private CardLayout layout;
@@ -34,22 +34,22 @@ public class MenuController implements ActionListener {
 	private PauseMenuPanel pauseMenuPanel;
 	private LoadGamePanel loadGamePanel;
 	private OptionsPanel optionsPanel;
-	
+
 	private Database database;
-	
+
 	private int leaderboardReturn, loadGameReturn, chosenLevel;
 	private int prePauseScore;
-	
+
 	public MenuController() {
-		
+
 		database = new Database();
-		
+
 		setupLookAndFeel();
-		
+
 		layout = new CardLayout();
-		
+
 		updater = new Leaderboard(database);
-		
+
 		loginPanel = new LoginMenuPanel(this);
 		createAccPanel = new CreateAccountPanel(this);
 		mainMenuPanel = new MainMenuPanel(this);
@@ -67,7 +67,7 @@ public class MenuController implements ActionListener {
 		mainPanel.add(pauseMenuPanel, "Pause");
 		mainPanel.add(optionsPanel, "Options");
 		mainPanel.add(loadGamePanel, "LoadGame");
-		
+
 
 		menuFrame = new JFrame("Bomberman");
 		menuFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -75,17 +75,17 @@ public class MenuController implements ActionListener {
 		menuFrame.pack();
 		menuFrame.setLocation(400, 200);
 		menuFrame.setVisible(true);
-		
+
 		leaderboardReturn = 0;
 		loadGameReturn = 0;
 		chosenLevel = 0;
-		
+
 		prePauseScore = 0;
 	}
-	
-	
+
+
 	public void actionPerformed(ActionEvent event) {
-		
+
 //***********************Login Panel Buttons****************************
 /* If the event source is from the "Login" button: The Textfields are checked to see if there is an existing user that matches the user input
  * 												   If the textfields are valid, display panel is changed to the Main Menu Panel
@@ -93,27 +93,25 @@ public class MenuController implements ActionListener {
  */
 		if (event.getSource() == loginPanel.getLoginButton()) {
 
-				if((currentPlayer = database.getPlayer(loginPanel.getUsername(), loginPanel.getPassword())) != null)
-					layout.show(mainPanel, "Main");
-				else {
-					JOptionPane.showMessageDialog(null, "Incorrect Password Or Username",null, JOptionPane.ERROR_MESSAGE);
-					loginPanel.resetTextFields();
-				}
-		}
-		
-		else if (event.getSource() == loginPanel.getCreateAccButton()) {
+			if ((currentPlayer = database.getPlayer(loginPanel.getUsername(), loginPanel.getPassword())) != null)
+				layout.show(mainPanel, "Main");
+			else {
+				JOptionPane.showMessageDialog(null, "Incorrect Password Or Username", null, JOptionPane.ERROR_MESSAGE);
+				loginPanel.resetTextFields();
+			}
+		} else if (event.getSource() == loginPanel.getCreateAccButton()) {
 			layout.show(mainPanel, "Create");
-		
+
 //*********************Create Account buttons****************************	
 /* If the event source is from the "Create Account" button: Textfield input is stored and passed to verifyAccount()
  * If the event source is from the "Return to Login" button: The display panel is changed to the Login Panel			
  */
 		} else if (event.getSource() == createAccPanel.getBackButton()) {
 			layout.show(mainPanel, "Login");
-			
+
 		} else if (event.getSource() == createAccPanel.getCreateAccButton()) {
 			verifyNewAccount();
-		
+
 //*************************MainMenu Buttons******************************	
 /* If the event source is from the "New Game" button: The current player's unlocked level is checked. If 0, a new game
  * 													  at level one is created. Else, an OptionPane is generated which
@@ -128,36 +126,35 @@ public class MenuController implements ActionListener {
  * If the event source is from the "Exit" button: the current player's data is written to the CSV and the game exits
  * 
  */
-		} else if (event.getSource() == mainMenuPanel.getResumeButton()){
+		} else if (event.getSource() == mainMenuPanel.getResumeButton()) {
 			loadGamePanel.updateLoad(currentPlayer);
 			layout.show(mainPanel, "LoadGame");
 			loadGameReturn = 0;
-			
-		} else if (event.getSource() == mainMenuPanel.getNewGameButton()){
-			
+
+		} else if (event.getSource() == mainMenuPanel.getNewGameButton()) {
+
 			Bomb.resetRange();
-			int maxLevel = currentPlayer.getLevelUnlocked(); 
-				if(maxLevel!=0){
-					String[] levelArray = new String[maxLevel];
-					for(int i = 0; i<maxLevel; i++)
-						levelArray[i] = String.valueOf(i+1);
-					String selectedLevel = (String) JOptionPane.showInputDialog(null, "Level Select", "Choose Starting Level:", JOptionPane.QUESTION_MESSAGE, null, levelArray,  levelArray[0]);
-					chosenLevel = Integer.parseInt(selectedLevel)-1;
-			}
-				else
-					chosenLevel = 0;
+			int maxLevel = currentPlayer.getLevelUnlocked();
+			if (maxLevel != 0) {
+				String[] levelArray = new String[maxLevel];
+				for (int i = 0; i < maxLevel; i++)
+					levelArray[i] = String.valueOf(i + 1);
+				String selectedLevel = (String) JOptionPane.showInputDialog(null, "Level Select", "Choose Starting Level:", JOptionPane.QUESTION_MESSAGE, null, levelArray, levelArray[0]);
+				chosenLevel = Integer.parseInt(selectedLevel) - 1;
+			} else
+				chosenLevel = 0;
 			menuFrame.setVisible(false);
 			gameplayCtrl = new GameplayController(this);
-			
-		} else if (event.getSource() == mainMenuPanel.getLeaderboardButton()){
+
+		} else if (event.getSource() == mainMenuPanel.getLeaderboardButton()) {
 			leaderboard.updateLeaderboard();
 			layout.show(mainPanel, "Leaderboard");
 			leaderboardReturn = 0;
-			
-		} else if (event.getSource() == mainMenuPanel.getOptionsButton()){
+
+		} else if (event.getSource() == mainMenuPanel.getOptionsButton()) {
 			layout.show(mainPanel, "Options");
-			
-		} else if (event.getSource() == mainMenuPanel.getLogoutButton()){
+
+		} else if (event.getSource() == mainMenuPanel.getLogoutButton()) {
 			try {
 				database.generateCSV();
 				currentPlayer = null;
@@ -166,26 +163,26 @@ public class MenuController implements ActionListener {
 			}
 			layout.show(mainPanel, "Login");
 			loginPanel.resetTextFields();
-			
-		} else if (event.getSource() == mainMenuPanel.getExitButton()){
+
+		} else if (event.getSource() == mainMenuPanel.getExitButton()) {
 			try {
 				database.generateCSV();
 			} catch (IOException | URISyntaxException e) {
 				e.printStackTrace();
 			}
 			System.exit(0);
-			
+
 //************************Leaderboard buttons**************************
 /* When "Return" is pressed, the value of leaderboardReturn is checked. If 0, the display panel is changed to
  * the Main Menu. If 1, the display panel is changed to the Pause Menu.
  * 
  */
-		} else if (event.getSource() == leaderboard.getReturnButton()){
-			if(leaderboardReturn == 0)
+		} else if (event.getSource() == leaderboard.getReturnButton()) {
+			if (leaderboardReturn == 0)
 				layout.show(mainPanel, "Main");
-			else if(leaderboardReturn == 1)
+			else if (leaderboardReturn == 1)
 				layout.show(mainPanel, "Pause");
-			
+
 //***************************Load buttons*******************************	
 /* If the event source is from the "Return" button: loadGameReturn is checked and the display panel is changed 
  * 													depending on the value
@@ -193,13 +190,13 @@ public class MenuController implements ActionListener {
  * 													   game save number is generated by hiding the MenuFrame and generating the 
  * 													   correct GameplayFrame
  */
-		} else if(event.getSource() == loadGamePanel.getReturn()){
-			if(loadGameReturn == 0)
+		} else if (event.getSource() == loadGamePanel.getReturn()) {
+			if (loadGameReturn == 0)
 				layout.show(mainPanel, "Main");
-			else if (loadGameReturn ==1)
+			else if (loadGameReturn == 1)
 				layout.show(mainPanel, "Pause");
-			
-		} else if(event.getSource() == loadGamePanel.getLoad()){
+
+		} else if (event.getSource() == loadGamePanel.getLoad()) {
 			menuFrame.setVisible(false);
 			gameplayCtrl = new GameplayController(this, currentPlayer.getSavedGameList().get(loadGamePanel.getSaveIndex()).getGameContext());
 			prePauseScore = gameplayCtrl.getGameContext().getScore();
@@ -220,22 +217,22 @@ public class MenuController implements ActionListener {
 		} else if (event.getSource() == pauseMenuPanel.getResumeGame()) {
 			menuFrame.setVisible(false);
 			gameplayCtrl.resumeGame();
-			
+
 		} else if (event.getSource() == pauseMenuPanel.getSave()) {
 			String saveName = JOptionPane.showInputDialog(null, "Enter Save Name: ", "Save Game", JOptionPane.QUESTION_MESSAGE);
 			currentPlayer.addSavedGame(new SavedGame(saveName, new Date().toString(), gameplayCtrl.getGameContext()));
-			
-		} else if (event.getSource() == pauseMenuPanel.getExit()){
+
+		} else if (event.getSource() == pauseMenuPanel.getExit()) {
 			try {
 				database.generateCSV();
 			} catch (IOException | URISyntaxException e) {
 				e.printStackTrace();
 			}
 			System.exit(0);
-			
-		} else if(event.getSource() == pauseMenuPanel.getMainMenu()){
+
+		} else if (event.getSource() == pauseMenuPanel.getMainMenu()) {
 			int choice = JOptionPane.showConfirmDialog(null, "All unsaved progress will be lost. Continue?", null, JOptionPane.OK_CANCEL_OPTION);
-			if(choice == 0){
+			if (choice == 0) {
 				try {
 					database.generateCSV();
 				} catch (IOException | URISyntaxException e) {
@@ -243,18 +240,18 @@ public class MenuController implements ActionListener {
 				}
 				layout.show(mainPanel, "Main");
 			}
-				
-		} else if(event.getSource() == pauseMenuPanel.getLeaderboard()){
+
+		} else if (event.getSource() == pauseMenuPanel.getLeaderboard()) {
 			leaderboard.updateLeaderboard();
 			layout.show(mainPanel, "Leaderboard");
 			leaderboardReturn = 1;
-			
-		} else if(event.getSource() == pauseMenuPanel.getLoad()){
+
+		} else if (event.getSource() == pauseMenuPanel.getLoad()) {
 			loadGamePanel.updateLoad(currentPlayer);
 			layout.show(mainPanel, "LoadGame");
 			loadGameReturn = 1;
 		}
-		
+
 //************************Options Buttons*************************************
 /* If the event source is from the "Save and Return" button: Textfield input is checked for validity. If invalid, warning message 
  * 															 is generated. Else, current player's information is updated and saved
@@ -262,59 +259,56 @@ public class MenuController implements ActionListener {
  * If the event event source is from the "Return to Main Menu" button: The display panel is changed to the Main Menu Panel
  * 
  */
-		else if(event.getSource() == optionsPanel.getSaveButton()){
-			if(!checkPassword(optionsPanel.getNewPassword())){
-				JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long and include the following: a digit, an uppercase and lowercase character, and a special character",null, JOptionPane.INFORMATION_MESSAGE);
+		else if (event.getSource() == optionsPanel.getSaveButton()) {
+			if (!checkPassword(optionsPanel.getNewPassword())) {
+				JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long and include the following: a digit, an uppercase and lowercase character, and a special character", null, JOptionPane.INFORMATION_MESSAGE);
 				optionsPanel.resetTextFields();
-			} else if(!optionsPanel.getNewPassword().equals(optionsPanel.getNewConfirmPassword())){
-				JOptionPane.showMessageDialog(null, "Confirmed password does not match",null, JOptionPane.ERROR_MESSAGE);
+			} else if (!optionsPanel.getNewPassword().equals(optionsPanel.getNewConfirmPassword())) {
+				JOptionPane.showMessageDialog(null, "Confirmed password does not match", null, JOptionPane.ERROR_MESSAGE);
 				optionsPanel.resetTextFields();
-			}
-			else{
+			} else {
 				currentPlayer.setRealName(optionsPanel.getNewName());
 				currentPlayer.setPassword(optionsPanel.getNewPassword());
-				JOptionPane.showMessageDialog(null, "Account Updated!",null, JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Account Updated!", null, JOptionPane.INFORMATION_MESSAGE);
 				layout.show(mainPanel, "Main");
 			}
-		}
-		
-		else if(event.getSource() == optionsPanel.getReturnButton()){
+		} else if (event.getSource() == optionsPanel.getReturnButton()) {
 			layout.show(mainPanel, "Main");
 		}
-}
-	
-	
-	
+	}
+
+
 	private void verifyNewAccount() {
 
-		if(!checkUser(createAccPanel.getUsername())) {
-			JOptionPane.showMessageDialog(null, "Username must be at least 6 characters and consist of only digits and characters",null, JOptionPane.INFORMATION_MESSAGE);
-		} else if(!checkPassword(createAccPanel.getPassword()))
-			JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long and include the following: a digit, an uppercase and lowercase character, and a special character",null, JOptionPane.INFORMATION_MESSAGE);
-		else if(!createAccPanel.getPassword().equals(createAccPanel.getConfirmedPassword()))
-			JOptionPane.showMessageDialog(null, "Confirmed password does not match",null, JOptionPane.ERROR_MESSAGE);
+		if (!checkUser(createAccPanel.getUsername())) {
+			JOptionPane.showMessageDialog(null, "Username must be at least 6 characters and consist of only digits and characters", null, JOptionPane.INFORMATION_MESSAGE);
+		} else if (!checkPassword(createAccPanel.getPassword()))
+			JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long and include the following: a digit, an uppercase and lowercase character, and a special character", null, JOptionPane.INFORMATION_MESSAGE);
+		else if (!createAccPanel.getPassword().equals(createAccPanel.getConfirmedPassword()))
+			JOptionPane.showMessageDialog(null, "Confirmed password does not match", null, JOptionPane.ERROR_MESSAGE);
 		else {
 			//New player is generated and added to the database. If the user already exists, database returns null.
-			if (database.addPlayer(new Player(createAccPanel.getRealName(),createAccPanel.getUsername(), createAccPanel.getPassword())) == null) {
-				JOptionPane.showMessageDialog(null, "Username already exists",null, JOptionPane.ERROR_MESSAGE);
+			if (database.addPlayer(new Player(createAccPanel.getRealName(), createAccPanel.getUsername(), createAccPanel.getPassword())) == null) {
+				JOptionPane.showMessageDialog(null, "Username already exists", null, JOptionPane.ERROR_MESSAGE);
 			} else {
-				JOptionPane.showMessageDialog(null, "Account Created!",null, JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Account Created!", null, JOptionPane.INFORMATION_MESSAGE);
 				currentPlayer = database.getPlayer(createAccPanel.getUsername(), createAccPanel.getPassword());
 				layout.show(mainPanel, "Main");
 			}
 		}
 		createAccPanel.resetTextFields();
 	}
-    
+
 	//Checks any username input for validity(at least 6 characters; can only contain digits and letters)
-    private boolean checkUser(String user){
-    	Pattern p = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
-    	Matcher m = p.matcher(user);
-    	boolean b = m.find();
-    	return (!b && !(user.length()<6));
-    }
-    //Checks any password input for validity(at least 8 characters and contains: one upper and one lower-case letter, one digit, one special character)
-    private boolean checkPassword(String password) {
+	private boolean checkUser(String user) {
+		Pattern p = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(user);
+		boolean b = m.find();
+		return (!b && !(user.length() < 6));
+	}
+
+	//Checks any password input for validity(at least 8 characters and contains: one upper and one lower-case letter, one digit, one special character)
+	private boolean checkPassword(String password) {
 		if (!password.matches(".*[A-Z].*")) return false;
 
 		if (!password.matches(".*[a-z].*")) return false;
@@ -326,36 +320,36 @@ public class MenuController implements ActionListener {
 		boolean b = m.find();
 		return b && password.length() >= 8;
 	}
-    
-    /**
-     * Pauses current game by stopping the game timer
-     */
-    public void pause() {
-    	menuFrame.setVisible(true);
-    	layout.show(mainPanel, "Pause");
-    	int newPauseScore = gameplayCtrl.getGameContext().getScore();
-    	currentPlayer.updateScore(newPauseScore-prePauseScore);
-    	prePauseScore = newPauseScore;
-    }
-    
-    /**
-     * Ends the current game and returns to the Main Menu Panel
-     */
-    public void gameOver() {
-    	menuFrame.setVisible(true);
-    	layout.show(mainPanel, "Main");
-    	int newPauseScore = gameplayCtrl.getGameContext().getScore();
-    	currentPlayer.updateScore(newPauseScore-prePauseScore);
-    	prePauseScore = 0;
-    }
-    
-    /**
-     * @return The selected level of a new game by the current player
-     */
-    public int getSelectedLevel(){
-    	return chosenLevel;
-    }
-	
+
+	/**
+	 * Pauses current game by stopping the game timer
+	 */
+	public void pause() {
+		menuFrame.setVisible(true);
+		layout.show(mainPanel, "Pause");
+		int newPauseScore = gameplayCtrl.getGameContext().getScore();
+		currentPlayer.updateScore(newPauseScore - prePauseScore);
+		prePauseScore = newPauseScore;
+	}
+
+	/**
+	 * Ends the current game and returns to the Main Menu Panel
+	 */
+	public void gameOver() {
+		menuFrame.setVisible(true);
+		layout.show(mainPanel, "Main");
+		int newPauseScore = gameplayCtrl.getGameContext().getScore();
+		currentPlayer.updateScore(newPauseScore - prePauseScore);
+		prePauseScore = 0;
+	}
+
+	/**
+	 * @return The selected level of a new game by the current player
+	 */
+	public int getSelectedLevel() {
+		return chosenLevel;
+	}
+
 	/**
 	 * @return The current logged in player
 	 */
@@ -365,17 +359,17 @@ public class MenuController implements ActionListener {
 
 
 	private void setupLookAndFeel() {
-		
+
 		try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+			java.util.logging.Logger.getLogger(MenuController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		}
 	}
 }
 

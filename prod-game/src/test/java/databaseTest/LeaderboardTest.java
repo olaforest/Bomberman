@@ -8,30 +8,30 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class LeaderboardTest {
-	
+
 	private Leaderboard leaderboard;
 	private Database database;
-	
+
 	@Before
-	public void setup(){
+	public void setup() {
 		database = new Database();
 		leaderboard = new Leaderboard(database);
 	}
-	
+
 	@Test
-	public void testGetScores(){
+	public void testGetScores() {
 		int[] scores = new int[10];
 		scores = leaderboard.generateScores();
-		for(int i=0; i<10; i++)
-			assertEquals(scores[i],database.sortPlayers().get(i).getCumulativeScore());	
+		for (int i = 0; i < 10; i++)
+			assertEquals(scores[i], database.sortPlayers().get(i).getCumulativeScore());
 	}
-	
+
 	@Test
-	public void testGetNames(){
+	public void testGetNames() {
 		String[] names = new String[10];
 		names = leaderboard.generateNames();
-		for(int i=0; i<10; i++)
-			assertEquals(names[i],database.sortPlayers().get(i).getUsername());	
+		for (int i = 0; i < 10; i++)
+			assertEquals(names[i], database.sortPlayers().get(i).getUsername());
 	}
 
 }

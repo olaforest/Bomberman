@@ -14,51 +14,54 @@ import java.util.ArrayList;
 
 @Getter
 public class Bomb extends AnimatedObject {
-	
-	public enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp,expVertical, expHorizontal}
 
-    public final int TIME_TO_EXPLOSION = 2500;
-	
+	public enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp, expVertical, expHorizontal}
+
+	public final int TIME_TO_EXPLOSION = 2500;
+
 	private ArrayList<Animation> currentAnimations;
 	private ArrayList<Integer> animXOffset, animYOffset;
 
-	@Getter private static int range = 1;
-    @Setter private int timer;
-    private int rightRange, leftRange, downRange, upRange;
-    @Getter(AccessLevel.NONE) private int counter, animCycleParam;
+	@Getter
+	private static int range = 1;
+	@Setter
+	private int timer;
+	private int rightRange, leftRange, downRange, upRange;
+	@Getter(AccessLevel.NONE)
+	private int counter, animCycleParam;
 
-    @Accessors(fluent = true)
-    private boolean wasTrigByBomb;
+	@Accessors(fluent = true)
+	private boolean wasTrigByBomb;
 
 	@Getter(AccessLevel.NONE)
 	private boolean wasRightRangeChg, wasLeftRangeChg, wasDownRangeChg, wasUpRangeChg;
-	
+
 	public Bomb(int x, int y) {
 		super(x, y);
-		
+
 		currentAnimations = new ArrayList<>();
 		animXOffset = new ArrayList<>();
 		animYOffset = new ArrayList<>();
-		
+
 		timer = TIME_TO_EXPLOSION;
 		counter = 0;
 		animCycleParam = 3;
 
 		rightRange = leftRange = downRange = upRange = range;
 		setRanges();
-		
+
 		wasTrigByBomb = wasRightRangeChg = wasLeftRangeChg = wasDownRangeChg = wasUpRangeChg = false;
-		
+
 		addAnimation(Bomb.AnimationType.unexploded.ordinal(), 0, 0);
 	}
-	
+
 	public Bomb(int range, int x, int y, int timer, int right, int left, int down, int up) {
 		super(x, y);
-		
+
 		currentAnimations = new ArrayList<>();
 		animXOffset = new ArrayList<>();
 		animYOffset = new ArrayList<>();
-		
+
 		this.timer = timer;
 		counter = 0;
 		animCycleParam = 3;
@@ -67,52 +70,52 @@ public class Bomb extends AnimatedObject {
 		leftRange = left;
 		downRange = down;
 		upRange = up;
-		
+
 		addAnimation(Bomb.AnimationType.unexploded.ordinal(), 0, 0);
 	}
 
 	@Override
 	public void generateAnimationList() {
-		
-		int[][] animParam = {	{113, 21, 4, 4, PIXELWIDTH},
-								{19, 223, 7, 4, 54},
-								{37, 223, 7, 4, 54},
-								{1, 223, 7, 4, 54},
-								{19, 241, 7, 4, 54},
-								{19, 205, 7, 4, 54},
-								{37, 205, 7, 4, 54},
-								{37, 241, 7, 4, 54}};
-		
+
+		int[][] animParam = {{113, 21, 4, 4, PIXELWIDTH},
+				{19, 223, 7, 4, 54},
+				{37, 223, 7, 4, 54},
+				{1, 223, 7, 4, 54},
+				{19, 241, 7, 4, 54},
+				{19, 205, 7, 4, 54},
+				{37, 205, 7, 4, 54},
+				{37, 241, 7, 4, 54}};
+
 		animationList = new Animation[AnimationType.values().length];
-		
-		for (AnimationType type : AnimationType.values()){
-			
+
+		for (AnimationType type : AnimationType.values()) {
+
 			int i = type.ordinal();
 			animationList[i] = new Animation(animParam[i][2]);
-			
-			for (int j = 0 ; j < animParam[i][3] ; j++)
-                animationList[i].setFrame(resizeImage(sprite.getSubimage(animParam[i][0] + animParam[i][4] * j, animParam[i][1], GridObject.PIXELWIDTH, PIXELHEIGHT), ZOOM), j);
-			
-			for (int n = (animParam[i][2] - animParam[i][3]) ; n > 0 ; n--)
-                animationList[i].setFrame(resizeImage(sprite.getSubimage(animParam[i][0] + animParam[i][4] * n, animParam[i][1], PIXELWIDTH, PIXELHEIGHT), ZOOM), animParam[i][3] - n);
+
+			for (int j = 0; j < animParam[i][3]; j++)
+				animationList[i].setFrame(resizeImage(sprite.getSubimage(animParam[i][0] + animParam[i][4] * j, animParam[i][1], GridObject.PIXELWIDTH, PIXELHEIGHT), ZOOM), j);
+
+			for (int n = (animParam[i][2] - animParam[i][3]); n > 0; n--)
+				animationList[i].setFrame(resizeImage(sprite.getSubimage(animParam[i][0] + animParam[i][4] * n, animParam[i][1], PIXELWIDTH, PIXELHEIGHT), ZOOM), animParam[i][3] - n);
 		}
 	}
-	
+
 	public void cycleAnimation() {
-		
+
 		if (counter % animCycleParam == 0) {
 			if (!isDead) {
 				for (Animation animation : currentAnimations)
 					animation.cycleFrame();
-			
+
 			} else {
-				for (int i = 0 ; i < currentAnimations.size() ;) {
+				for (int i = 0; i < currentAnimations.size(); ) {
 					if (currentAnimations.get(i).isAnimDone()) {
 						removeAnimation(i);
-						
+
 						if (currentAnimations.size() == 0)
 							isObsolete = true;
-						
+
 					} else {
 						currentAnimations.get(i).cycleFrame();
 						i++;
@@ -122,75 +125,75 @@ public class Bomb extends AnimatedObject {
 		}
 		counter++;
 	}
-	
+
 	public void decreaseTimer() {
 		timer -= GameplayController.TIMEOUT;
-		
+
 		if (timer <= 0 && !isDead)
 			triggerExplosion();
 	}
-	
+
 	public void triggerExplosion() {
-		
+
 		isDead = true;
 		timer = 0;
-        animCycleParam = 2;
-        clearAnimation();
-        addAnimation(Bomb.AnimationType.expCenter.ordinal(), 0, 0);
-		
+		animCycleParam = 2;
+		clearAnimation();
+		addAnimation(Bomb.AnimationType.expCenter.ordinal(), 0, 0);
+
 		if (leftRange > 0) {
 			if (wasLeftRangeChg) {
-				for (int i = 1 ; i <= leftRange ; i++)
+				for (int i = 1; i <= leftRange; i++)
 					addAnimation(Bomb.AnimationType.expHorizontal.ordinal(), -i, 0);
 			} else {
 				addAnimation(Bomb.AnimationType.expLeft.ordinal(), -leftRange, 0);
-				
-				for (int i = 1 ; i < leftRange ; i++)
+
+				for (int i = 1; i < leftRange; i++)
 					addAnimation(Bomb.AnimationType.expHorizontal.ordinal(), -i, 0);
 			}
 		}
-		
+
 		if (rightRange > 0) {
 			if (wasRightRangeChg) {
-				for (int i = 1 ; i <= rightRange ; i++)
+				for (int i = 1; i <= rightRange; i++)
 					addAnimation(Bomb.AnimationType.expHorizontal.ordinal(), i, 0);
 			} else {
 				addAnimation(Bomb.AnimationType.expRight.ordinal(), rightRange, 0);
-				
-				for (int i = 1 ; i < rightRange ; i++)
+
+				for (int i = 1; i < rightRange; i++)
 					addAnimation(Bomb.AnimationType.expHorizontal.ordinal(), i, 0);
 			}
 		}
-		
+
 		if (upRange > 0) {
 			if (wasUpRangeChg) {
-				for (int i = 1 ; i <= upRange ; i++)
+				for (int i = 1; i <= upRange; i++)
 					addAnimation(Bomb.AnimationType.expVertical.ordinal(), 0, -i);
 			} else {
 				addAnimation(Bomb.AnimationType.expUp.ordinal(), 0, -upRange);
-				
-				for (int i = 1 ; i < upRange ; i++)
+
+				for (int i = 1; i < upRange; i++)
 					addAnimation(Bomb.AnimationType.expVertical.ordinal(), 0, -i);
 			}
 		}
-		
+
 		if (downRange > 0) {
 			if (wasDownRangeChg) {
-				for (int i = 1 ; i <= downRange ; i++)
+				for (int i = 1; i <= downRange; i++)
 					addAnimation(Bomb.AnimationType.expVertical.ordinal(), 0, i);
 			} else {
 				addAnimation(Bomb.AnimationType.expDown.ordinal(), 0, downRange);
-				
-				for (int i = 1 ; i < downRange ; i++)
+
+				for (int i = 1; i < downRange; i++)
 					addAnimation(Bomb.AnimationType.expVertical.ordinal(), 0, i);
 			}
 		}
 	}
-	
+
 	private void setRanges() {
-		
+
 		boolean isNotAlignedWithRow = (yPosition % (EFFECTIVE_PIXEL_HEIGHT * 2)) == 0;
-		
+
 		if (isNotAlignedWithRow) {
 			rightRange = 0;
 			leftRange = 0;
@@ -202,7 +205,7 @@ public class Bomb extends AnimatedObject {
 		}
 
 		boolean isNotAlignedWithColumn = (xPosition % (EFFECTIVE_PIXEL_WIDTH * 2)) == 0;
-		
+
 		if (isNotAlignedWithColumn) {
 			downRange = 0;
 			upRange = 0;
@@ -213,25 +216,25 @@ public class Bomb extends AnimatedObject {
 				upRange = yPosition / EFFECTIVE_PIXEL_HEIGHT - 1;
 		}
 	}
-	
+
 	private void addAnimation(int animType, int xOffset, int yOffset) {
 		currentAnimations.add(new Animation(animationList[animType]));
 		animXOffset.add(xOffset);
-		animYOffset.add(yOffset);	
+		animYOffset.add(yOffset);
 	}
-	
+
 	private void removeAnimation(int index) {
 		currentAnimations.remove(index);
 		animXOffset.remove(index);
 		animYOffset.remove(index);
 	}
-	
+
 	private void clearAnimation() {
 		currentAnimations.clear();
 		animXOffset.clear();
 		animYOffset.clear();
 	}
-	
+
 	public void setWasTrigByBomb() {
 		wasTrigByBomb = true;
 	}
@@ -239,11 +242,11 @@ public class Bomb extends AnimatedObject {
 	public static void increaseRange() {
 		range++;
 	}
-	
+
 	public static void resetRange() {
 		range = 1;
 	}
-	
+
 	public void setRightRange(int rightRange) {
 		wasRightRangeChg = true;
 		this.rightRange = rightRange;
@@ -263,11 +266,11 @@ public class Bomb extends AnimatedObject {
 		wasUpRangeChg = true;
 		this.upRange = upRange;
 	}
-	
+
 	public ArrayList<String> toCSVEntry() {
-		
+
 		ArrayList<String> entryList = new ArrayList<>();
-		
+
 		entryList.add(Integer.toString(xPosition));
 		entryList.add(Integer.toString(yPosition));
 		entryList.add(Integer.toString(timer));
@@ -276,7 +279,7 @@ public class Bomb extends AnimatedObject {
 		entryList.add(Integer.toString(downRange));
 		entryList.add(Integer.toString(upRange));
 
-		return entryList; 
+		return entryList;
 	}
 }
 

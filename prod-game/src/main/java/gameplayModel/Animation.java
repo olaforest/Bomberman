@@ -6,8 +6,10 @@ import java.awt.image.BufferedImage;
 
 public class Animation {
 
-	@Getter private BufferedImage[] frames;
-	@Getter private boolean isAnimDone;
+	@Getter
+	private BufferedImage[] frames;
+	@Getter
+	private boolean isAnimDone;
 	private int counter;
 
 	public Animation(int frameNumber) {
@@ -22,9 +24,13 @@ public class Animation {
 		counter = 0;
 	}
 
-	public void setFrame(BufferedImage img, int index) { frames[index] = img; }
+	public void setFrame(BufferedImage img, int index) {
+		frames[index] = img;
+	}
 
-	public BufferedImage getCurrentFrame() { return frames[counter]; }
+	public BufferedImage getCurrentFrame() {
+		return frames[counter];
+	}
 
 	public void cycleFrame() {
 		counter = ((counter + 1) % frames.length);
@@ -33,7 +39,7 @@ public class Animation {
 			isAnimDone = true;
 	}
 
-	public void setToInitialFrame(){
+	public void setToInitialFrame() {
 		counter = 0;
 	}
 }

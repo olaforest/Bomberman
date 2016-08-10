@@ -34,7 +34,8 @@ public class GameplayController implements ActionListener {
 	private boolean placeBomb;
 
 	private MenuController menuCtrl;
-	@Getter private GameContext gameContext;
+	@Getter
+	private GameContext gameContext;
 	private GridMap gridMap;
 	private ArtificialIntelligence AI;
 	private CollisionDetector colDetect;
@@ -74,7 +75,7 @@ public class GameplayController implements ActionListener {
 		timer = new Timer(TIMEOUT, this);
 	}
 
-	public void actionPerformed(ActionEvent event){
+	public void actionPerformed(ActionEvent event) {
 
 		updateBombermanStatus();
 		AI.updateEnemiesPosition();
@@ -127,72 +128,73 @@ public class GameplayController implements ActionListener {
 		powerup = gameContext.getGridMap().getPowerUp();
 
 		colDetect = new CollisionDetector(gameContext);
-		AI = new ArtificialIntelligence(bomberman,enemies, bricks, bombs,colDetect);
+		AI = new ArtificialIntelligence(bomberman, enemies, bricks, bombs, colDetect);
 	}
 
 	private class GameplayKeyListener implements KeyListener {
 
-		public void keyPressed(KeyEvent event){
+		public void keyPressed(KeyEvent event) {
 
 			if (!activeDirectionKeys.contains(event.getKeyCode())) {
 
 				switch (event.getKeyCode()) {
-				case KeyEvent.VK_UP:
-					activeDirectionKeys.addFirst(KeyEvent.VK_UP);
-					break;
-				case KeyEvent.VK_DOWN:
-					activeDirectionKeys.addFirst(KeyEvent.VK_DOWN);
-					break;
-				case KeyEvent.VK_LEFT:
-					activeDirectionKeys.addFirst(KeyEvent.VK_LEFT);
-					break;
-				case KeyEvent.VK_RIGHT:
-					activeDirectionKeys.addFirst(KeyEvent.VK_RIGHT);
-					break;
-				case KeyEvent.VK_ENTER:
-					if (timer.isRunning()) {
-						timer.stop();
-						gameFrame.setVisible(false);
-						menuCtrl.pause();
-					}
-					break;
-				case KeyEvent.VK_X:
-					placeBomb = true;
-					break;
-				case KeyEvent.VK_Z:
-					if (bomberman.canDetonateBombs() && bombs.size() != 0)
-						bombs.get(0).setTimer(TIMEOUT*2);
-					break;
+					case KeyEvent.VK_UP:
+						activeDirectionKeys.addFirst(KeyEvent.VK_UP);
+						break;
+					case KeyEvent.VK_DOWN:
+						activeDirectionKeys.addFirst(KeyEvent.VK_DOWN);
+						break;
+					case KeyEvent.VK_LEFT:
+						activeDirectionKeys.addFirst(KeyEvent.VK_LEFT);
+						break;
+					case KeyEvent.VK_RIGHT:
+						activeDirectionKeys.addFirst(KeyEvent.VK_RIGHT);
+						break;
+					case KeyEvent.VK_ENTER:
+						if (timer.isRunning()) {
+							timer.stop();
+							gameFrame.setVisible(false);
+							menuCtrl.pause();
+						}
+						break;
+					case KeyEvent.VK_X:
+						placeBomb = true;
+						break;
+					case KeyEvent.VK_Z:
+						if (bomberman.canDetonateBombs() && bombs.size() != 0)
+							bombs.get(0).setTimer(TIMEOUT * 2);
+						break;
 				}
 			}
 		}
 
-		public void keyReleased(KeyEvent event){
+		public void keyReleased(KeyEvent event) {
 
 			switch (event.getKeyCode()) {
-			case KeyEvent.VK_UP:
-				activeDirectionKeys.remove(KeyEvent.VK_UP);
-				break;
-			case KeyEvent.VK_DOWN:
-				activeDirectionKeys.remove(KeyEvent.VK_DOWN);
-				break;
-			case KeyEvent.VK_LEFT:
-				activeDirectionKeys.remove(KeyEvent.VK_LEFT);
-				break;
-			case KeyEvent.VK_RIGHT:
-				activeDirectionKeys.remove(KeyEvent.VK_RIGHT);
-				break;
-			case KeyEvent.VK_ENTER:
-				break;
-			case KeyEvent.VK_X:
-				placeBomb = false;
-				break;
-			case KeyEvent.VK_Z:
-				break;
+				case KeyEvent.VK_UP:
+					activeDirectionKeys.remove(KeyEvent.VK_UP);
+					break;
+				case KeyEvent.VK_DOWN:
+					activeDirectionKeys.remove(KeyEvent.VK_DOWN);
+					break;
+				case KeyEvent.VK_LEFT:
+					activeDirectionKeys.remove(KeyEvent.VK_LEFT);
+					break;
+				case KeyEvent.VK_RIGHT:
+					activeDirectionKeys.remove(KeyEvent.VK_RIGHT);
+					break;
+				case KeyEvent.VK_ENTER:
+					break;
+				case KeyEvent.VK_X:
+					placeBomb = false;
+					break;
+				case KeyEvent.VK_Z:
+					break;
 			}
 		}
 
-		public void keyTyped(KeyEvent event){}
+		public void keyTyped(KeyEvent event) {
+		}
 	}
 
 	private void updateBombermanStatus() {
@@ -201,72 +203,72 @@ public class GameplayController implements ActionListener {
 
 			if (activeDirectionKeys.size() != 0) {
 
-		    	switch (activeDirectionKeys.getFirst()) {
-				case KeyEvent.VK_UP:
-					if (bomberman.getAnimationNumber() != Bomberman.AnimationType.up.ordinal())
-						bomberman.setCurrentAnimation(Bomberman.AnimationType.up.ordinal());
-					else
-						bomberman.getCurrentAnimation().cycleFrame();
+				switch (activeDirectionKeys.getFirst()) {
+					case KeyEvent.VK_UP:
+						if (bomberman.getAnimationNumber() != Bomberman.AnimationType.up.ordinal())
+							bomberman.setCurrentAnimation(Bomberman.AnimationType.up.ordinal());
+						else
+							bomberman.getCurrentAnimation().cycleFrame();
 
-					boolean canMoveUp = true;
+						boolean canMoveUp = true;
 
-					for (Bomb bomb : bombs) {
-						if (colDetect.checkUpCollision(bomberman, bomb) && !bomberman.canBombpass())
-							canMoveUp = false;
-					}
+						for (Bomb bomb : bombs) {
+							if (colDetect.checkUpCollision(bomberman, bomb) && !bomberman.canBombpass())
+								canMoveUp = false;
+						}
 
-					if (canMoveUp) bomberman.setYPosition(bomberman.getYPosition() - bomberman.getSpeed());
+						if (canMoveUp) bomberman.setYPosition(bomberman.getYPosition() - bomberman.getSpeed());
 
-					break;
-				case KeyEvent.VK_DOWN:
-					if (bomberman.getAnimationNumber() != Bomberman.AnimationType.down.ordinal())
-						bomberman.setCurrentAnimation(Bomberman.AnimationType.down.ordinal());
-					else
-						bomberman.getCurrentAnimation().cycleFrame();
+						break;
+					case KeyEvent.VK_DOWN:
+						if (bomberman.getAnimationNumber() != Bomberman.AnimationType.down.ordinal())
+							bomberman.setCurrentAnimation(Bomberman.AnimationType.down.ordinal());
+						else
+							bomberman.getCurrentAnimation().cycleFrame();
 
-					boolean canMoveDown = true;
+						boolean canMoveDown = true;
 
-					for (Bomb bomb : bombs) {
-						if (colDetect.checkDownCollision(bomberman, bomb) && !bomberman.canBombpass())
-							canMoveDown = false;
-					}
+						for (Bomb bomb : bombs) {
+							if (colDetect.checkDownCollision(bomberman, bomb) && !bomberman.canBombpass())
+								canMoveDown = false;
+						}
 
-					if (canMoveDown) bomberman.setYPosition(bomberman.getYPosition() + bomberman.getSpeed());
+						if (canMoveDown) bomberman.setYPosition(bomberman.getYPosition() + bomberman.getSpeed());
 
-					break;
-				case KeyEvent.VK_LEFT:
-					if (bomberman.getAnimationNumber() != Bomberman.AnimationType.left.ordinal())
-						bomberman.setCurrentAnimation(Bomberman.AnimationType.left.ordinal());
-					else
-						bomberman.getCurrentAnimation().cycleFrame();
+						break;
+					case KeyEvent.VK_LEFT:
+						if (bomberman.getAnimationNumber() != Bomberman.AnimationType.left.ordinal())
+							bomberman.setCurrentAnimation(Bomberman.AnimationType.left.ordinal());
+						else
+							bomberman.getCurrentAnimation().cycleFrame();
 
-					boolean canMoveLeft = true;
+						boolean canMoveLeft = true;
 
-					for (Bomb bomb : bombs) {
-						if (colDetect.checkLeftCollision(bomberman, bomb) && !bomberman.canBombpass())
-							canMoveLeft = false;
-					}
+						for (Bomb bomb : bombs) {
+							if (colDetect.checkLeftCollision(bomberman, bomb) && !bomberman.canBombpass())
+								canMoveLeft = false;
+						}
 
-					if (canMoveLeft) bomberman.setXPosition(bomberman.getXPosition() - bomberman.getSpeed());
+						if (canMoveLeft) bomberman.setXPosition(bomberman.getXPosition() - bomberman.getSpeed());
 
-					break;
-				case KeyEvent.VK_RIGHT:
-					if (bomberman.getAnimationNumber()!= Bomberman.AnimationType.right.ordinal())
-						bomberman.setCurrentAnimation(Bomberman.AnimationType.right.ordinal());
-					else
-						bomberman.getCurrentAnimation().cycleFrame();
+						break;
+					case KeyEvent.VK_RIGHT:
+						if (bomberman.getAnimationNumber() != Bomberman.AnimationType.right.ordinal())
+							bomberman.setCurrentAnimation(Bomberman.AnimationType.right.ordinal());
+						else
+							bomberman.getCurrentAnimation().cycleFrame();
 
-					boolean canMoveRight = true;
+						boolean canMoveRight = true;
 
-					for (Bomb bomb : bombs) {
-						if (colDetect.checkRightCollision(bomberman, bomb) && !bomberman.canBombpass())
-							canMoveRight = false;
-					}
+						for (Bomb bomb : bombs) {
+							if (colDetect.checkRightCollision(bomberman, bomb) && !bomberman.canBombpass())
+								canMoveRight = false;
+						}
 
-					if (canMoveRight) bomberman.setXPosition(bomberman.getXPosition() + bomberman.getSpeed());
+						if (canMoveRight) bomberman.setXPosition(bomberman.getXPosition() + bomberman.getSpeed());
 
-					break;
-		    	}
+						break;
+				}
 			}
 
 		} else if (bomberman.isObsolete()) {
@@ -282,7 +284,7 @@ public class GameplayController implements ActionListener {
 					powerUpsAcquired.remove(powerUpsAcquired.size() - 1);
 
 				// Removes the non permanent power ups acquired
-				for (int i = 0 ; i < powerUpsAcquired.size() ;) {
+				for (int i = 0; i < powerUpsAcquired.size(); ) {
 					if (!powerUpsAcquired.get(i).isPermanent())
 						powerUpsAcquired.remove(i);
 					else
@@ -313,7 +315,7 @@ public class GameplayController implements ActionListener {
 	}
 
 	private void updateEnemiesAnim() {
-		for (int i = 0 ; i < enemies.size() ;) {
+		for (int i = 0; i < enemies.size(); ) {
 			if (!enemies.get(i).isDead()) {
 
 				if (enemies.get(i).getDirection() == 1 || enemies.get(i).getDirection() == 2) {
@@ -336,24 +338,23 @@ public class GameplayController implements ActionListener {
 	}
 
 	private void updateBombsStatus() {
-		for (int i = 0 ; i < bombs.size() ;) {
+		for (int i = 0; i < bombs.size(); ) {
 			if (bombs.get(i).isObsolete()) {
 				bombs.remove(i);
 			} else {
 				bombs.get(i).cycleAnimation();
 
-				if (!bomberman.canDetonateBombs() || bombs.get(i).getTimer() <= TIMEOUT*2)
+				if (!bomberman.canDetonateBombs() || bombs.get(i).getTimer() <= TIMEOUT * 2)
 					bombs.get(i).decreaseTimer();
 				i++;
 			}
 		}
 
-		for (int i = 0 ; i < unexplodedBombs.size() ;) {
+		for (int i = 0; i < unexplodedBombs.size(); ) {
 			if (unexplodedBombs.get(i).isDead()) {
 				unexplodedBombs.remove(i);
 				bomberman.increaseBombsLeft();
-			}
-			else i++;
+			} else i++;
 		}
 	}
 
@@ -376,7 +377,7 @@ public class GameplayController implements ActionListener {
 							bombs.stream()
 									.filter(bomb1 -> destBrick.isSamePosition(bomb1) && !bomb1.isDead())
 									.forEach(bomb1 -> bomb1.setTimer(TIMEOUT * 2));
-				});
+						});
 
 				ArrayList<Enemy> destEnemies = colDetect.checkExplEnemies(bomb);
 
@@ -462,7 +463,7 @@ public class GameplayController implements ActionListener {
 	}
 
 	private void updateBricksStatus() {
-		for (int i = 0 ; i < bricks.size() ;) {
+		for (int i = 0; i < bricks.size(); ) {
 			if (bricks.get(i).isObsolete()) {
 				bricks.remove(i);
 			} else if (bricks.get(i).isDead()) {
@@ -478,15 +479,15 @@ public class GameplayController implements ActionListener {
 
 		int xPosition, yPosition;
 
-		if ((bomberman.getXPosition() % GridObject.EFFECTIVE_PIXEL_WIDTH) < (GridObject.EFFECTIVE_PIXEL_WIDTH/2))
-			xPosition = GridObject.EFFECTIVE_PIXEL_WIDTH * (bomberman.getXPosition()/GridObject.EFFECTIVE_PIXEL_WIDTH);
+		if ((bomberman.getXPosition() % GridObject.EFFECTIVE_PIXEL_WIDTH) < (GridObject.EFFECTIVE_PIXEL_WIDTH / 2))
+			xPosition = GridObject.EFFECTIVE_PIXEL_WIDTH * (bomberman.getXPosition() / GridObject.EFFECTIVE_PIXEL_WIDTH);
 		else
-			xPosition = GridObject.EFFECTIVE_PIXEL_WIDTH * (bomberman.getXPosition()/GridObject.EFFECTIVE_PIXEL_WIDTH + 1);
+			xPosition = GridObject.EFFECTIVE_PIXEL_WIDTH * (bomberman.getXPosition() / GridObject.EFFECTIVE_PIXEL_WIDTH + 1);
 
-		if ((bomberman.getYPosition() % GridObject.EFFECTIVE_PIXEL_HEIGHT) < (GridObject.EFFECTIVE_PIXEL_HEIGHT/2))
-			yPosition = GridObject.EFFECTIVE_PIXEL_HEIGHT * (bomberman.getYPosition()/GridObject.EFFECTIVE_PIXEL_HEIGHT);
+		if ((bomberman.getYPosition() % GridObject.EFFECTIVE_PIXEL_HEIGHT) < (GridObject.EFFECTIVE_PIXEL_HEIGHT / 2))
+			yPosition = GridObject.EFFECTIVE_PIXEL_HEIGHT * (bomberman.getYPosition() / GridObject.EFFECTIVE_PIXEL_HEIGHT);
 		else
-			yPosition = GridObject.EFFECTIVE_PIXEL_HEIGHT * (bomberman.getYPosition()/GridObject.EFFECTIVE_PIXEL_HEIGHT + 1);
+			yPosition = GridObject.EFFECTIVE_PIXEL_HEIGHT * (bomberman.getYPosition() / GridObject.EFFECTIVE_PIXEL_HEIGHT + 1);
 
 		boolean canAddBomb = true;
 
@@ -503,7 +504,7 @@ public class GameplayController implements ActionListener {
 		}
 
 		if (canAddBomb && bomberman.getBombsLeft() != 0) {
-			Bomb tempBomb = new Bomb(xPosition,yPosition);
+			Bomb tempBomb = new Bomb(xPosition, yPosition);
 
 			bombs.add(tempBomb);
 			unexplodedBombs.add(tempBomb);
@@ -519,32 +520,32 @@ public class GameplayController implements ActionListener {
 
 		enemies.clear();
 
-		for (int n = 0 ; n < 8 ; n++) {
+		for (int n = 0; n < 8; n++) {
 			switch (enemyType) {
-			case 0:
-				enemies.add(new Oneal(gridObj.getXPosition(), gridObj.getYPosition()));
-				break;
-			case 1:
-				enemies.add(new Doll(gridObj.getXPosition(), gridObj.getYPosition()));
-				break;
-			case 2:
-				enemies.add(new Minvo(gridObj.getXPosition(), gridObj.getYPosition()));
-				break;
-			case 3:
-				enemies.add(new Kondoria(gridObj.getXPosition(), gridObj.getYPosition()));
-				break;
-			case 4:
-				enemies.add(new Ovapi(gridObj.getXPosition(), gridObj.getYPosition()));
-				break;
-			case 5:
-				enemies.add(new Pass(gridObj.getXPosition(), gridObj.getYPosition()));
-				break;
-			case 6:
-				enemies.add(new Pontan(gridObj.getXPosition(), gridObj.getYPosition()));
-				break;
-			case 7:
-				enemies.add(new Pontan(gridObj.getXPosition(), gridObj.getYPosition()));
-				break;
+				case 0:
+					enemies.add(new Oneal(gridObj.getXPosition(), gridObj.getYPosition()));
+					break;
+				case 1:
+					enemies.add(new Doll(gridObj.getXPosition(), gridObj.getYPosition()));
+					break;
+				case 2:
+					enemies.add(new Minvo(gridObj.getXPosition(), gridObj.getYPosition()));
+					break;
+				case 3:
+					enemies.add(new Kondoria(gridObj.getXPosition(), gridObj.getYPosition()));
+					break;
+				case 4:
+					enemies.add(new Ovapi(gridObj.getXPosition(), gridObj.getYPosition()));
+					break;
+				case 5:
+					enemies.add(new Pass(gridObj.getXPosition(), gridObj.getYPosition()));
+					break;
+				case 6:
+					enemies.add(new Pontan(gridObj.getXPosition(), gridObj.getYPosition()));
+					break;
+				case 7:
+					enemies.add(new Pontan(gridObj.getXPosition(), gridObj.getYPosition()));
+					break;
 			}
 		}
 	}
@@ -553,34 +554,34 @@ public class GameplayController implements ActionListener {
 
 		gamePanel = new GameplayPanel(keyListener) {
 
-			public void paintComponent(Graphics page){
+			public void paintComponent(Graphics page) {
 
 				super.paintComponent(page);
-				Graphics2D g2d=(Graphics2D)page;
+				Graphics2D g2d = (Graphics2D) page;
 
 				if (exitway != null)
-					g2d.drawImage(exitway.getImage(), exitway.getXPosition(), exitway.getYPosition(),gamePanel);
+					g2d.drawImage(exitway.getImage(), exitway.getXPosition(), exitway.getYPosition(), gamePanel);
 
 				if (powerup != null)
-					g2d.drawImage(powerup.getImage(), powerup.getXPosition(), powerup.getYPosition(),gamePanel);
+					g2d.drawImage(powerup.getImage(), powerup.getXPosition(), powerup.getYPosition(), gamePanel);
 
 				for (Bomb bomb : bombs) {
-					for (int i = 0 ; i < bomb.getCurrentAnimations().size() ; i++)
+					for (int i = 0; i < bomb.getCurrentAnimations().size(); i++)
 						g2d.drawImage(bomb.getCurrentAnimations().get(i).getCurrentFrame(),
-								bomb.getXPosition() + bomb.getAnimXOffset().get(i)*GridObject.EFFECTIVE_PIXEL_WIDTH,
-								bomb.getYPosition() + bomb.getAnimYOffset().get(i)*GridObject.EFFECTIVE_PIXEL_HEIGHT, gamePanel);
+								bomb.getXPosition() + bomb.getAnimXOffset().get(i) * GridObject.EFFECTIVE_PIXEL_WIDTH,
+								bomb.getYPosition() + bomb.getAnimYOffset().get(i) * GridObject.EFFECTIVE_PIXEL_HEIGHT, gamePanel);
 				}
 
 				for (Brick brick : bricks)
-					g2d.drawImage(brick.getCurrentAnimation().getCurrentFrame(),brick.getXPosition(),brick.getYPosition(),gamePanel);
+					g2d.drawImage(brick.getCurrentAnimation().getCurrentFrame(), brick.getXPosition(), brick.getYPosition(), gamePanel);
 
 				for (Enemy enemy : enemies)
-					g2d.drawImage(enemy.getCurrentAnimation().getCurrentFrame(),enemy.getXPosition(),enemy.getYPosition(),gamePanel);
+					g2d.drawImage(enemy.getCurrentAnimation().getCurrentFrame(), enemy.getXPosition(), enemy.getYPosition(), gamePanel);
 
-				g2d.drawImage(bomberman.getCurrentAnimation().getCurrentFrame(),bomberman.getXPosition(),bomberman.getYPosition(),gamePanel);
+				g2d.drawImage(bomberman.getCurrentAnimation().getCurrentFrame(), bomberman.getXPosition(), bomberman.getYPosition(), gamePanel);
 
 				for (Concrete block : concreteLayout)
-					g2d.drawImage(block.getImage(),block.getXPosition(),block.getYPosition(), gamePanel);
+					g2d.drawImage(block.getImage(), block.getXPosition(), block.getYPosition(), gamePanel);
 			}
 		};
 
@@ -602,14 +603,14 @@ public class GameplayController implements ActionListener {
 	}
 
 	private void updateViewport() {
-		if (bomberman.getXPosition() + GridObject.EFFECTIVE_PIXEL_WIDTH/2 <= VIEW_PORT_WIDTH/2) {
+		if (bomberman.getXPosition() + GridObject.EFFECTIVE_PIXEL_WIDTH / 2 <= VIEW_PORT_WIDTH / 2) {
 			gamePanel.setLocation(0, 0);
 			gamePanel.repaint();
-		} else if (bomberman.getXPosition() + GridObject.EFFECTIVE_PIXEL_WIDTH/2 >= GameplayPanel.WIDTH - VIEW_PORT_WIDTH/2) {
+		} else if (bomberman.getXPosition() + GridObject.EFFECTIVE_PIXEL_WIDTH / 2 >= GameplayPanel.WIDTH - VIEW_PORT_WIDTH / 2) {
 			gamePanel.setLocation(VIEW_PORT_WIDTH - GameplayPanel.WIDTH, 0);
 			gamePanel.repaint();
 		} else {
-			gamePanel.setLocation(VIEW_PORT_WIDTH/2 - bomberman.getXPosition() - GridObject.EFFECTIVE_PIXEL_WIDTH/2, 0);
+			gamePanel.setLocation(VIEW_PORT_WIDTH / 2 - bomberman.getXPosition() - GridObject.EFFECTIVE_PIXEL_WIDTH / 2, 0);
 			gamePanel.repaint();
 		}
 	}
