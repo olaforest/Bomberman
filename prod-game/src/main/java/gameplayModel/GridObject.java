@@ -11,9 +11,8 @@ import java.io.InputStream;
 
 @Getter
 public class GridObject {
-    
-	public static BufferedImage sprite;
-	
+	public static final BufferedImage sprite = loadSpriteSheet();
+
 	public static final int ZOOM = 2;
     public static final int PIXELWIDTH = 16;
     public static final int PIXELHEIGHT = 16;
@@ -21,20 +20,10 @@ public class GridObject {
     public static final int EFFECTIVE_PIXEL_HEIGHT = PIXELHEIGHT * ZOOM;
     public static final int MISALIGNMENT_ALLOWED = 16;
 
-	static {
-		try {
-			InputStream in = Bomberman.class.getResourceAsStream("/spritesheet.png");
-			sprite = ImageIO.read(in);
-		} catch (IOException e) {
-			sprite = null;
-			e.printStackTrace();
-		}
-	}
-	
 	protected int xPosition;
+
 	protected int yPosition;
 	protected boolean isConcreteCollision;
-
     public GridObject(int x, int y) {
     	xPosition = x;
     	yPosition = y;
@@ -47,7 +36,7 @@ public class GridObject {
     	boolean isAlignedWithRow = ((this.yPosition - EFFECTIVE_PIXEL_HEIGHT) % (EFFECTIVE_PIXEL_HEIGHT * 2)) == 0;
     	boolean isBelowRow = ((this.yPosition - EFFECTIVE_PIXEL_HEIGHT) % (EFFECTIVE_PIXEL_HEIGHT * 2)) <= MISALIGNMENT_ALLOWED;
     	boolean isAboveRow = ((this.yPosition - EFFECTIVE_PIXEL_HEIGHT) % (EFFECTIVE_PIXEL_HEIGHT * 2)) >= (EFFECTIVE_PIXEL_HEIGHT * 2 - MISALIGNMENT_ALLOWED);
-    	
+
     	if (isAlignedWithRow && isInXRange) {
 			this.xPosition = xPosition;
     	} else if (isAboveRow && isInXRange) {
@@ -56,20 +45,20 @@ public class GridObject {
     	} else if (isBelowRow && isInXRange) {
     		this.xPosition = xPosition;
     		this.yPosition -= 4;
-    	}else 
+    	} else
     		isConcreteCollision = true;
     }
 
     public void setYPosition(int yPosition) {
-    	
+
         isConcreteCollision = false;
     	int xError = (this.xPosition - EFFECTIVE_PIXEL_WIDTH) % (EFFECTIVE_PIXEL_WIDTH * 2);
-    	
+
     	boolean isInYRange = (yPosition >= EFFECTIVE_PIXEL_HEIGHT) && (yPosition <= EFFECTIVE_PIXEL_HEIGHT * (GridMap.MAPHEIGHT - 2));
     	boolean isAlignedWithColumn = ((xError) == 0);
     	boolean isRightFromColumn = (xError) <= MISALIGNMENT_ALLOWED;
     	boolean isLeftFromColumn = (xError) >= (EFFECTIVE_PIXEL_HEIGHT * 2 - MISALIGNMENT_ALLOWED);
-    	
+
     	if (isAlignedWithColumn && isInYRange) {
     		this.yPosition = yPosition;
     	} else if (isRightFromColumn && isInYRange) {
@@ -78,7 +67,7 @@ public class GridObject {
     	} else if (isLeftFromColumn && isInYRange) {
     		this.yPosition = yPosition;
     		this.xPosition += 4;
-    	} else 
+    	} else
     		isConcreteCollision = true;
     }
 
@@ -102,6 +91,16 @@ public class GridObject {
 
         return imageOut;
     }
+
+	private static BufferedImage loadSpriteSheet() {
+		try {
+			InputStream in = Bomberman.class.getResourceAsStream("/spritesheet.png");
+			return ImageIO.read(in);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
     
     
