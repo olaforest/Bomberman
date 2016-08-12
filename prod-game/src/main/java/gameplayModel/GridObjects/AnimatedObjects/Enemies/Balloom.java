@@ -1,10 +1,8 @@
 package gameplayModel.GridObjects.AnimatedObjects.Enemies;
 
-import gameplayModel.Animation;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 
-import java.util.ArrayList;
-import java.util.List;
+import static java.util.Arrays.asList;
 
 public class Balloom extends Enemy {
 	public static final int POINTS = 100;
@@ -31,21 +29,6 @@ public class Balloom extends Enemy {
 	}
 
 	public void generateAnimationList() {
-//		animationList = new Animation[AnimationType.values().length];
-
-		animationList = generateAnimationList(AnimationType.values(), ANIM_PARAM);
-	}
-
-	private List<Animation> generateAnimationList(AnimationType[] animationTypes, int[][] animParam) {
-		List<Animation> animations = new ArrayList<>(animationTypes.length);
-		for (AnimationType type : animationTypes) {
-			int i = type.ordinal();
-//			animations[i] = new Animation(animParam[i][2]);
-			animations.add(i, new Animation(animParam[i][2]));
-
-			for (int j = 0; j < animParam[i][2]; j++)
-				animations.get(i).setFrame(resizeImage(animParam[i][0] + (PIXEL_DIMENSION + 2) * j, animParam[i][1]), j);
-		}
-		return animations;
+		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM);
 	}
 }

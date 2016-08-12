@@ -5,6 +5,9 @@ import gameplayModel.GridObject;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
 
 public abstract class AnimatedObject extends GridObject {
 
@@ -58,6 +61,19 @@ public abstract class AnimatedObject extends GridObject {
 	}
 
 	public abstract void generateAnimationList();
+
+	protected List<Animation> generateAnimationList(List<?> animationTypes, int[][] animParam) {
+		return IntStream.range(0, animationTypes.size())
+				.mapToObj(i -> generateAnimation(i, animParam))
+				.collect(toList());
+	}
+
+	private Animation generateAnimation(int i, int[][] animParam) {
+		final Animation animation = new Animation(animParam[i][2]);
+		IntStream.range(0, animParam[i][2])
+				.forEach(j -> animation.setFrame(resizeImage(animParam[i][0] + (PIXEL_DIMENSION + 2) * j, animParam[i][1]), j));
+		return animation;
+	}
 
 	public void setCurrentAnimation(int aT) {
 		currentAnimation = animationList.get(aT);
