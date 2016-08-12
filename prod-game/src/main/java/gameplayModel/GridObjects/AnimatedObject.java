@@ -4,11 +4,13 @@ import gameplayModel.Animation;
 import gameplayModel.GridObject;
 import lombok.Getter;
 
+import java.util.List;
+
 public abstract class AnimatedObject extends GridObject {
 
 	public final int INITIAL_ANIMATION = 0;
 
-	protected Animation[] animationList;
+	protected List<Animation> animationList;
 	@Getter
 	private Animation currentAnimation;
 	@Getter
@@ -24,7 +26,7 @@ public abstract class AnimatedObject extends GridObject {
 
 		generateAnimationList();
 
-		currentAnimation = animationList[INITIAL_ANIMATION];
+		currentAnimation = animationList.get(INITIAL_ANIMATION);
 		animationNumber = INITIAL_ANIMATION;
 
 		counter = 0;
@@ -51,14 +53,14 @@ public abstract class AnimatedObject extends GridObject {
 	}
 
 	public void triggerDeath() {
-		currentAnimation = animationList[animationList.length - 1];
+		currentAnimation = animationList.get(animationList.size() - 1);
 		isDead = true;
 	}
 
 	public abstract void generateAnimationList();
 
 	public void setCurrentAnimation(int aT) {
-		currentAnimation = animationList[aT];
+		currentAnimation = animationList.get(aT);
 		currentAnimation.setToInitialFrame();
 		animationNumber = aT;
 	}

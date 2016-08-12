@@ -17,14 +17,14 @@ public class Brick extends AnimatedObject {
 	}
 
 	public void generateAnimationList() {
-		animationList = new Animation[AnimationType.values().length];
+		animationList = new ArrayList<>(AnimationType.values().length);
 
 		for (AnimationType type : AnimationType.values()) {
 			int i = type.ordinal();
-			animationList[i] = new Animation(ANIM_PARAM[i][2]);
+			animationList.add(i, new Animation(ANIM_PARAM[i][2]));
 
 			for (int j = 0; j < ANIM_PARAM[i][2]; j++) {
-				animationList[i].setFrame(resizeImage(ANIM_PARAM[i][0] + (PIXEL_DIMENSION + 2) * j, ANIM_PARAM[i][1]), j);
+				animationList.get(i).setFrame(resizeImage(ANIM_PARAM[i][0] + (PIXEL_DIMENSION + 2) * j, ANIM_PARAM[i][1]), j);
 			}
 		}
 	}

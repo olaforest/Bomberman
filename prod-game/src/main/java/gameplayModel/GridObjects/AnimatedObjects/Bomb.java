@@ -82,17 +82,17 @@ public class Bomb extends AnimatedObject {
 
 	@Override
 	public void generateAnimationList() {
-		animationList = new Animation[AnimationType.values().length];
+		animationList = new ArrayList<>(AnimationType.values().length);
 
 		for (AnimationType type : AnimationType.values()) {
 			int i = type.ordinal();
-			animationList[i] = new Animation(ANIM_PARAM[i][2]);
+			animationList.add(i, new Animation(ANIM_PARAM[i][2]));
 
 			for (int j = 0; j < ANIM_PARAM[i][3]; j++)
-				animationList[i].setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * j, ANIM_PARAM[i][1]), j);
+				animationList.get(i).setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * j, ANIM_PARAM[i][1]), j);
 
 			for (int n = (ANIM_PARAM[i][2] - ANIM_PARAM[i][3]); n > 0; n--)
-				animationList[i].setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * n, ANIM_PARAM[i][1]), ANIM_PARAM[i][3] - n);
+				animationList.get(i).setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * n, ANIM_PARAM[i][1]), ANIM_PARAM[i][3] - n);
 		}
 	}
 
@@ -213,7 +213,7 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private void addAnimation(int animType, int xOffset, int yOffset) {
-		currentAnimations.add(new Animation(animationList[animType]));
+		currentAnimations.add(new Animation(animationList.get(animType)));
 		animXOffset.add(xOffset);
 		animYOffset.add(yOffset);
 	}
