@@ -48,7 +48,6 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void setXPosition(int xPosition) {
-
 		int yError = (this.yPosition - EFFECTIVE_PIXEL_HEIGHT) % (EFFECTIVE_PIXEL_HEIGHT * 2);
 
 		boolean isInXRange = (xPosition >= EFFECTIVE_PIXEL_WIDTH) && (xPosition <= EFFECTIVE_PIXEL_WIDTH * (GridMap.MAPWIDTH - 2));
@@ -74,7 +73,6 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void setYPosition(int yPosition) {
-
 		int xError = (this.xPosition - EFFECTIVE_PIXEL_WIDTH) % (EFFECTIVE_PIXEL_WIDTH * 2);
 
 		boolean isInYRange = (yPosition >= EFFECTIVE_PIXEL_HEIGHT) && (yPosition <= EFFECTIVE_PIXEL_HEIGHT * (GridMap.MAPHEIGHT - 2));
@@ -115,7 +113,6 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	private void setBombermanAbilities() {
-
 		bombsAvailable = 1;
 		Bomb.resetRange();
 		speed = INITIAL_SPEED;
@@ -126,7 +123,6 @@ public class Bomberman extends AnimatedObject {
 		isInvincible = false;
 
 		for (PowerUp powerup : powerUpsAcquired) {
-
 			switch (powerup.getClass().toString()) {
 				case "class gameplayModel.GridObjects.PowerUps.BombPU":
 					bombsAvailable++;
@@ -183,7 +179,6 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public ArrayList<String> toCSVEntry() {
-
 		ArrayList<String> entryList = new ArrayList<>();
 
 		entryList.add(Integer.toString(xPosition));
