@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 @Getter
 public abstract class Enemy extends AnimatedObject {
-
 	public enum AnimationType {right, left, death}
 
 	public final int SPEED_MULTIPLIER = 1;

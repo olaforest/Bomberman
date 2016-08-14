@@ -1,9 +1,6 @@
 package gameplayModel.GridObjects.AnimatedObjects.Enemies;
 
-import gameplayModel.Animation;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
-
-import java.util.ArrayList;
 
 import static java.util.Arrays.asList;
 
@@ -32,6 +29,6 @@ public class Pass extends Enemy {
 	}
 
 	public void generateAnimationList() {
-		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM);
+		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 2);
 	}
 }

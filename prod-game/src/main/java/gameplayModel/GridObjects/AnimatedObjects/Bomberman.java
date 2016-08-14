@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 
+import static java.util.Arrays.asList;
+
 @Getter
 public class Bomberman extends AnimatedObject {
 	public enum AnimationType {right, left, down, up, death}
@@ -42,16 +44,7 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void generateAnimationList() {
-		animationList = new ArrayList<>(AnimationType.values().length);
-
-		for (AnimationType type : AnimationType.values()) {
-			int i = type.ordinal();
-			animationList.add(i, new Animation(ANIM_PARAM[i][2]));
-
-			for (int j = 0; j < ANIM_PARAM[i][2]; j++) {
-				animationList.get(i).setFrame(resizeImage(ANIM_PARAM[i][0] + PIXEL_DIMENSION * j, ANIM_PARAM[i][1]), j);
-			}
-		}
+		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 0);
 	}
 
 	public void setXPosition(int xPosition) {

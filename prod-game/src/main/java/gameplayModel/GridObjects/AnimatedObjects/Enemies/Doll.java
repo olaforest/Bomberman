@@ -2,8 +2,6 @@ package gameplayModel.GridObjects.AnimatedObjects.Enemies;
 
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 
-import java.util.Arrays;
-
 import static java.util.Arrays.asList;
 
 public class Doll extends Enemy {
@@ -31,6 +29,6 @@ public class Doll extends Enemy {
 	}
 
 	public void generateAnimationList() {
-		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM);
+		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 2);
 	}
 }

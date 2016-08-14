@@ -62,16 +62,16 @@ public abstract class AnimatedObject extends GridObject {
 
 	public abstract void generateAnimationList();
 
-	protected List<Animation> generateAnimationList(List<?> animationTypes, int[][] animParam) {
+	protected List<Animation> generateAnimationList(List<?> animationTypes, int[][] animParam, int adjustment) {
 		return IntStream.range(0, animationTypes.size())
-				.mapToObj(i -> generateAnimation(i, animParam))
+				.mapToObj(i -> generateAnimation(i, animParam, adjustment))
 				.collect(toList());
 	}
 
-	private Animation generateAnimation(int i, int[][] animParam) {
+	private Animation generateAnimation(int i, int[][] animParam, int adjustment) {
 		final Animation animation = new Animation(animParam[i][2]);
 		IntStream.range(0, animParam[i][2])
-				.forEach(j -> animation.setFrame(resizeImage(animParam[i][0] + (PIXEL_DIMENSION + 2) * j, animParam[i][1]), j));
+				.forEach(j -> animation.setFrame(resizeImage(animParam[i][0] + (PIXEL_DIMENSION + adjustment) * j, animParam[i][1]), j));
 		return animation;
 	}
 

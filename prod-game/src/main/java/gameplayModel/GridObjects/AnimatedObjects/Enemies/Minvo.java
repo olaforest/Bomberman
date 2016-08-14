@@ -29,6 +29,6 @@ public class Minvo extends Enemy {
 	}
 
 	public void generateAnimationList() {
-		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM);
+		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 2);
 	}
 }
