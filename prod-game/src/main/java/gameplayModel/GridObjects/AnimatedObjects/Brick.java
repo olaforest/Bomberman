@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import static java.util.Arrays.asList;
 
 public class Brick extends AnimatedObject {
-
 	public enum AnimationType {destruction}
 
 	public static final int[][] ANIM_PARAM = new int[][]{{19, 259, 7}};

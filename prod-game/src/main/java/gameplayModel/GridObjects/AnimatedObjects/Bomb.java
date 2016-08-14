@@ -10,6 +10,11 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
+
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 
 @Getter
 public class Bomb extends AnimatedObject {
@@ -80,24 +85,29 @@ public class Bomb extends AnimatedObject {
 		addAnimation(Bomb.AnimationType.unexploded.ordinal(), 0, 0);
 	}
 
-	@Override
 	public void generateAnimationList() {
-		animationList = new ArrayList<>(AnimationType.values().length);
+		animationList = generateAnimationList(asList(AnimationType.values()));
+	}
 
-		for (AnimationType type : AnimationType.values()) {
-			int i = type.ordinal();
-			animationList.add(i, new Animation(ANIM_PARAM[i][2]));
+	private List<Animation> generateAnimationList(List<?> animationType) {
+		return IntStream.range(0, animationType.size())
+				.mapToObj(this::generateAnimation)
+				.collect(toList());
+	}
 
-			for (int j = 0; j < ANIM_PARAM[i][3]; j++)
-				animationList.get(i).setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * j, ANIM_PARAM[i][1]), j);
+	private Animation generateAnimation(int i) {
+		final Animation animation = new Animation(ANIM_PARAM[i][2]);
 
-			for (int n = (ANIM_PARAM[i][2] - ANIM_PARAM[i][3]); n > 0; n--)
-				animationList.get(i).setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * n, ANIM_PARAM[i][1]), ANIM_PARAM[i][3] - n);
-		}
+		for (int j = 0; j < ANIM_PARAM[i][3]; j++)
+			animation.setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * j, ANIM_PARAM[i][1]), j);
+
+		for (int n = (ANIM_PARAM[i][2] - ANIM_PARAM[i][3]); n > 0; n--)
+			animation.setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * n, ANIM_PARAM[i][1]), ANIM_PARAM[i][3] - n);
+
+		return animation;
 	}
 
 	public void cycleAnimation() {
-
 		if (counter % animCycleParam == 0) {
 			if (!isDead) {
 				for (Animation animation : currentAnimations)
@@ -124,12 +134,10 @@ public class Bomb extends AnimatedObject {
 	public void decreaseTimer() {
 		timer -= GameplayController.TIMEOUT;
 
-		if (timer <= 0 && !isDead)
-			triggerExplosion();
+		if (timer <= 0 && !isDead) triggerExplosion();
 	}
 
 	public void triggerExplosion() {
-
 		isDead = true;
 		timer = 0;
 		animCycleParam = 2;
