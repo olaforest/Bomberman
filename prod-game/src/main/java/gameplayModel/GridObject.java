@@ -78,7 +78,7 @@ public class GridObject {
 		return xPosition == object.getXPosition() && yPosition == object.getYPosition();
 	}
 
-	public static BufferedImage resizeImage(int xCoordinate, int yCoordinate) {
+	protected static BufferedImage resizeImage(int xCoordinate, int yCoordinate) {
 		return resizeImage(sprite.getSubimage(xCoordinate, yCoordinate, PIXEL_DIMENSION, PIXEL_DIMENSION), ZOOM);
 	}
 
