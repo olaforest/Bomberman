@@ -10,8 +10,7 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toList;
 
 public abstract class AnimatedObject extends GridObject {
-
-	public final int INITIAL_ANIMATION = 0;
+	private static final int INITIAL_ANIMATION = 0;
 
 	protected List<Animation> animationList;
 	@Getter
@@ -20,13 +19,10 @@ public abstract class AnimatedObject extends GridObject {
 	protected boolean isDead, isObsolete;
 	@Getter
 	private int animationNumber;
-	protected int animCycleParam;
-	protected int counter;
+	protected int counter, animCycleParam;
 
 	public AnimatedObject(int x, int y) {
-
 		super(x, y);
-
 		generateAnimationList();
 
 		currentAnimation = animationList.get(INITIAL_ANIMATION);
@@ -40,19 +36,20 @@ public abstract class AnimatedObject extends GridObject {
 	}
 
 	public void cycleAnimation() {
-
 		if (counter % animCycleParam == 0) {
-			if (!isDead) {
+			if (!isDead)
 				currentAnimation.cycleFrame();
-
-			} else {
-				if (currentAnimation.isAnimDone())
-					isObsolete = true;
-				else
-					currentAnimation.cycleFrame();
-			}
+			else
+				cycleDeathAnimation();
 		}
 		counter++;
+	}
+
+	private void cycleDeathAnimation() {
+		if (currentAnimation.isAnimDone())
+			isObsolete = true;
+		else
+			currentAnimation.cycleFrame();
 	}
 
 	public void triggerDeath() {

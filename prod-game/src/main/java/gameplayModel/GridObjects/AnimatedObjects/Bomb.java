@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.toList;
 
 @Getter
 public class Bomb extends AnimatedObject {
-	public enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp, expVertical, expHorizontal;}
+	public enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp, expVertical, expHorizontal}
 
 	public static final int TIME_TO_EXPLOSION = 2500;
 	public static final int[][] ANIM_PARAM = new int[][]{{113, 21, 4, 4, PIXEL_DIMENSION},
@@ -30,16 +30,14 @@ public class Bomb extends AnimatedObject {
 			{37, 205, 7, 4, 54},
 			{37, 241, 7, 4, 54}};
 
-	private ArrayList<Animation> currentAnimations;
-	private ArrayList<Integer> animXOffset, animYOffset;
-
 	@Getter
 	private static int range = 1;
+
+	private List<Animation> currentAnimations;
+	private List<Integer> animXOffset, animYOffset;
 	@Setter
 	private int timer;
 	private int rightRange, leftRange, downRange, upRange;
-	@Getter(AccessLevel.NONE)
-	private int counter, animCycleParam;
 
 	@Accessors(fluent = true)
 	private boolean wasTrigByBomb;
@@ -55,12 +53,8 @@ public class Bomb extends AnimatedObject {
 		animYOffset = new ArrayList<>();
 
 		timer = TIME_TO_EXPLOSION;
-		counter = 0;
-		animCycleParam = 3;
-
 		rightRange = leftRange = downRange = upRange = range;
 		setRanges();
-
 		wasTrigByBomb = wasRightRangeChg = wasLeftRangeChg = wasDownRangeChg = wasUpRangeChg = false;
 
 		addAnimation(Bomb.AnimationType.unexploded.ordinal(), 0, 0);
@@ -74,8 +68,6 @@ public class Bomb extends AnimatedObject {
 		animYOffset = new ArrayList<>();
 
 		this.timer = timer;
-		counter = 0;
-		animCycleParam = 3;
 		Bomb.range = range;
 		rightRange = right;
 		leftRange = left;
@@ -97,38 +89,34 @@ public class Bomb extends AnimatedObject {
 
 	private Animation generateAnimation(int i) {
 		final Animation animation = new Animation(ANIM_PARAM[i][2]);
-
 		for (int j = 0; j < ANIM_PARAM[i][3]; j++)
 			animation.setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * j, ANIM_PARAM[i][1]), j);
 
 		for (int n = (ANIM_PARAM[i][2] - ANIM_PARAM[i][3]); n > 0; n--)
 			animation.setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * n, ANIM_PARAM[i][1]), ANIM_PARAM[i][3] - n);
-
 		return animation;
 	}
 
-	public void cycleAnimation() {
+	public void cycleAnimations() {
 		if (counter % animCycleParam == 0) {
-			if (!isDead) {
-				for (Animation animation : currentAnimations)
-					animation.cycleFrame();
-
-			} else {
-				for (int i = 0; i < currentAnimations.size(); ) {
-					if (currentAnimations.get(i).isAnimDone()) {
-						removeAnimation(i);
-
-						if (currentAnimations.size() == 0)
-							isObsolete = true;
-
-					} else {
-						currentAnimations.get(i).cycleFrame();
-						i++;
-					}
-				}
-			}
+			if (!isDead)
+				currentAnimations.forEach(Animation::cycleFrame);
+			else
+				cycleDeathAnimations();
 		}
 		counter++;
+	}
+
+	private void cycleDeathAnimations() {
+		for (int i = 0; i < currentAnimations.size(); ) {
+			if (currentAnimations.get(i).isAnimDone()) {
+				removeAnimation(i);
+				if (currentAnimations.size() == 0) isObsolete = true;
+			} else {
+				currentAnimations.get(i).cycleFrame();
+				i++;
+			}
+		}
 	}
 
 	public void decreaseTimer() {

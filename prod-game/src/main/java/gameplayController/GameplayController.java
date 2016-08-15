@@ -342,7 +342,7 @@ public class GameplayController implements ActionListener {
 			if (bombs.get(i).isObsolete()) {
 				bombs.remove(i);
 			} else {
-				bombs.get(i).cycleAnimation();
+				bombs.get(i).cycleAnimations();
 
 				if (!bomberman.canDetonateBombs() || bombs.get(i).getTimer() <= TIMEOUT * 2)
 					bombs.get(i).decreaseTimer();

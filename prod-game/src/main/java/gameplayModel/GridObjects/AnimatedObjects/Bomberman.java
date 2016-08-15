@@ -1,7 +1,6 @@
 package gameplayModel.GridObjects.AnimatedObjects;
 
 import gameplayController.GameplayController;
-import gameplayModel.Animation;
 import gameplayModel.GridMap;
 import gameplayModel.GridObjects.AnimatedObject;
 import gameplayModel.GridObjects.PowerUps.PowerUp;
@@ -17,8 +16,8 @@ import static java.util.Arrays.asList;
 public class Bomberman extends AnimatedObject {
 	public enum AnimationType {right, left, down, up, death}
 
-	public static final int[][] ANIM_PARAM = new int[][]{{50, 3, 4}, {50, 21, 4}, {2, 3, 3}, {2, 21, 3}, {113, 3, 7}};
 	public static final int INITIAL_SPEED = 4, SPEED_INCREMENT = 2, MISALIGNMENT_ALLOWED = 16, INVINCIBILITY_TIMEOUT = 10000;
+	public static final int[][] ANIM_PARAM = new int[][]{{50, 3, 4}, {50, 21, 4}, {2, 3, 3}, {2, 21, 3}, {113, 3, 7}};
 
 	private ArrayList<PowerUp> powerUpsAcquired;
 	private int speed, bombsAvailable, bombsLeft;

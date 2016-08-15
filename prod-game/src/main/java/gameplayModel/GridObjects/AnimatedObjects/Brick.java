@@ -11,10 +11,7 @@ public class Brick extends AnimatedObject {
 
 	public static final int[][] ANIM_PARAM = new int[][]{{19, 259, 7}};
 
-	public Brick(int x, int y) {
-		super(x, y);
-		animCycleParam = 3;
-	}
+	public Brick(int x, int y) { super(x, y); }
 
 	public void generateAnimationList() {
 		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 2);
