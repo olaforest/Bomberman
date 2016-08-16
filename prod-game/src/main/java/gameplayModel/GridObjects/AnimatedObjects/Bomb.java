@@ -11,12 +11,12 @@ import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.UnaryOperator;
+import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 
 import static gameplayModel.GridObjects.AnimatedObjects.Bomb.AnimationType.*;
 import static java.util.Arrays.asList;
-import static java.util.function.UnaryOperator.identity;
+import static java.util.function.IntUnaryOperator.identity;
 import static java.util.stream.Collectors.toList;
 
 @Getter
@@ -144,30 +144,30 @@ public class Bomb extends AnimatedObject {
 		processVerticalRange(downRange, wasDownRangeChg, expDown, identity());
 	}
 
-	private void processHorizontalRange(int rangeSize, boolean wasRangeChg, AnimationType animationType, UnaryOperator<Integer> direction) {
+	private void processHorizontalRange(int rangeSize, boolean wasRangeChg, AnimationType animationType, IntUnaryOperator direction) {
 		if (rangeSize > 0) {
 			if (wasRangeChg) {
 				for (int i = 1; i <= rangeSize; i++)
-					addAnimation(expHorizontal.ordinal(), direction.apply(i), 0);
+					addAnimation(expHorizontal.ordinal(), direction.applyAsInt(i), 0);
 			} else {
-				addAnimation(animationType.ordinal(), direction.apply(rangeSize), 0);
+				addAnimation(animationType.ordinal(), direction.applyAsInt(rangeSize), 0);
 
 				for (int i = 1; i < rangeSize; i++)
-					addAnimation(expHorizontal.ordinal(), direction.apply(i), 0);
+					addAnimation(expHorizontal.ordinal(), direction.applyAsInt(i), 0);
 			}
 		}
 	}
 
-	private void processVerticalRange(int rangeSize, boolean wasRangeChg, AnimationType animationType, UnaryOperator<Integer> direction) {
+	private void processVerticalRange(int rangeSize, boolean wasRangeChg, AnimationType animationType, IntUnaryOperator direction) {
 		if (rangeSize > 0) {
 			if (wasRangeChg) {
 				for (int i = 1; i <= rangeSize; i++)
-					addAnimation(expVertical.ordinal(), 0, direction.apply(i));
+					addAnimation(expVertical.ordinal(), 0, direction.applyAsInt(i));
 			} else {
-				addAnimation(animationType.ordinal(), 0, direction.apply(rangeSize));
+				addAnimation(animationType.ordinal(), 0, direction.applyAsInt(rangeSize));
 
 				for (int i = 1; i < rangeSize; i++)
-					addAnimation(expVertical.ordinal(), 0, direction.apply(i));
+					addAnimation(expVertical.ordinal(), 0, direction.applyAsInt(i));
 			}
 		}
 	}
