@@ -11,9 +11,12 @@ import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.UnaryOperator;
 import java.util.stream.IntStream;
 
+import static gameplayModel.GridObjects.AnimatedObjects.Bomb.AnimationType.*;
 import static java.util.Arrays.asList;
+import static java.util.function.UnaryOperator.identity;
 import static java.util.stream.Collectors.toList;
 
 @Getter
@@ -57,7 +60,7 @@ public class Bomb extends AnimatedObject {
 		setRanges();
 		wasTrigByBomb = wasRightRangeChg = wasLeftRangeChg = wasDownRangeChg = wasUpRangeChg = false;
 
-		addAnimation(Bomb.AnimationType.unexploded.ordinal(), 0, 0);
+		addAnimation(unexploded.ordinal(), 0, 0);
 	}
 
 	public Bomb(int range, int x, int y, int timer, int right, int left, int down, int up) {
@@ -74,11 +77,11 @@ public class Bomb extends AnimatedObject {
 		downRange = down;
 		upRange = up;
 
-		addAnimation(Bomb.AnimationType.unexploded.ordinal(), 0, 0);
+		addAnimation(unexploded.ordinal(), 0, 0);
 	}
 
 	public void generateAnimationList() {
-		animationList = generateAnimationList(asList(AnimationType.values()));
+		animationList = generateAnimationList(asList(values()));
 	}
 
 	private List<Animation> generateAnimationList(List<?> animationType) {
@@ -130,53 +133,41 @@ public class Bomb extends AnimatedObject {
 		timer = 0;
 		animCycleParam = 2;
 		clearAnimation();
-		addAnimation(Bomb.AnimationType.expCenter.ordinal(), 0, 0);
+		addAnimation(expCenter.ordinal(), 0, 0);
+		processRanges();
+	}
 
-		if (leftRange > 0) {
-			if (wasLeftRangeChg) {
-				for (int i = 1; i <= leftRange; i++)
-					addAnimation(Bomb.AnimationType.expHorizontal.ordinal(), -i, 0);
+	private void processRanges() {
+		processHorizontalRange(leftRange, wasLeftRangeChg, expLeft, i -> -i);
+		processHorizontalRange(rightRange, wasRightRangeChg, expRight, identity());
+		processVerticalRange(upRange, wasUpRangeChg, expUp, i -> -i);
+		processVerticalRange(downRange, wasDownRangeChg, expDown, identity());
+	}
+
+	private void processHorizontalRange(int rangeSize, boolean wasRangeChg, AnimationType animationType, UnaryOperator<Integer> direction) {
+		if (rangeSize > 0) {
+			if (wasRangeChg) {
+				for (int i = 1; i <= rangeSize; i++)
+					addAnimation(expHorizontal.ordinal(), direction.apply(i), 0);
 			} else {
-				addAnimation(Bomb.AnimationType.expLeft.ordinal(), -leftRange, 0);
+				addAnimation(animationType.ordinal(), direction.apply(rangeSize), 0);
 
-				for (int i = 1; i < leftRange; i++)
-					addAnimation(Bomb.AnimationType.expHorizontal.ordinal(), -i, 0);
+				for (int i = 1; i < rangeSize; i++)
+					addAnimation(expHorizontal.ordinal(), direction.apply(i), 0);
 			}
 		}
+	}
 
-		if (rightRange > 0) {
-			if (wasRightRangeChg) {
-				for (int i = 1; i <= rightRange; i++)
-					addAnimation(Bomb.AnimationType.expHorizontal.ordinal(), i, 0);
+	private void processVerticalRange(int rangeSize, boolean wasRangeChg, AnimationType animationType, UnaryOperator<Integer> direction) {
+		if (rangeSize > 0) {
+			if (wasRangeChg) {
+				for (int i = 1; i <= rangeSize; i++)
+					addAnimation(expVertical.ordinal(), 0, direction.apply(i));
 			} else {
-				addAnimation(Bomb.AnimationType.expRight.ordinal(), rightRange, 0);
+				addAnimation(animationType.ordinal(), 0, direction.apply(rangeSize));
 
-				for (int i = 1; i < rightRange; i++)
-					addAnimation(Bomb.AnimationType.expHorizontal.ordinal(), i, 0);
-			}
-		}
-
-		if (upRange > 0) {
-			if (wasUpRangeChg) {
-				for (int i = 1; i <= upRange; i++)
-					addAnimation(Bomb.AnimationType.expVertical.ordinal(), 0, -i);
-			} else {
-				addAnimation(Bomb.AnimationType.expUp.ordinal(), 0, -upRange);
-
-				for (int i = 1; i < upRange; i++)
-					addAnimation(Bomb.AnimationType.expVertical.ordinal(), 0, -i);
-			}
-		}
-
-		if (downRange > 0) {
-			if (wasDownRangeChg) {
-				for (int i = 1; i <= downRange; i++)
-					addAnimation(Bomb.AnimationType.expVertical.ordinal(), 0, i);
-			} else {
-				addAnimation(Bomb.AnimationType.expDown.ordinal(), 0, downRange);
-
-				for (int i = 1; i < downRange; i++)
-					addAnimation(Bomb.AnimationType.expVertical.ordinal(), 0, i);
+				for (int i = 1; i < rangeSize; i++)
+					addAnimation(expVertical.ordinal(), 0, direction.apply(i));
 			}
 		}
 	}
