@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntConsumer;
 import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 
@@ -171,6 +172,26 @@ public class Bomb extends AnimatedObject {
 			}
 		}
 	}
+
+	private void processRange(int rangeSize, boolean wasRangeChg, AnimationType animationType, IntConsumer addAnim,
+							  IntUnaryOperator direction) {
+		if (rangeSize > 0) {
+			if (wasRangeChg) {
+				for (int i = 1; i <= rangeSize; i++)
+					addAnim.accept(direction.applyAsInt(i));
+					addAnimation(expVertical.ordinal(), 0, direction.applyAsInt(i));
+			} else {
+				addAnimation(animationType.ordinal(), 0, direction.applyAsInt(rangeSize));
+
+				for (int i = 1; i < rangeSize; i++)
+					addAnimation(expVertical.ordinal(), 0, direction.applyAsInt(i));
+			}
+		}
+	}
+
+	private IntConsumer addVerticalAnimation = offset -> addAnimation(expVertical.ordinal(), 0, offset);
+
+	private IntConsumer addHorizontalAnimation = offset -> addAnimation(expHorizontal.ordinal(), offset, 0);
 
 	private void setRanges() {
 
