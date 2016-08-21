@@ -145,27 +145,35 @@ public class Bomb extends AnimatedObject {
 		processVerticalRange(downRange, wasDownRangeChg, addDownAnimation, identity());
 	}
 
-	private void processHorizontalRange(int rangeSize, boolean wasRangeChg, IntConsumer animationType, IntUnaryOperator direction) {
-		processRange(rangeSize, wasRangeChg, animationType, addHorizontalAnimation, direction);
+	private void processHorizontalRange(int size, boolean wasRangeChg, IntConsumer animType, IntUnaryOperator direction) {
+		processRange(size, wasRangeChg, animType, addHorizontalAnimation, direction);
 	}
 
-	private void processVerticalRange(int rangeSize, boolean wasRangeChg, IntConsumer animationType, IntUnaryOperator direction) {
-		processRange(rangeSize, wasRangeChg, animationType, addVerticalAnimation, direction);
+	private void processVerticalRange(int size, boolean wasRangeChg, IntConsumer animType, IntUnaryOperator direction) {
+		processRange(size, wasRangeChg, animType, addVerticalAnimation, direction);
 	}
 
-	private void processRange(int rangeSize, boolean wasRangeChg, IntConsumer addEndAnim, IntConsumer addIntermediateAnim,
+	private void processRange(int size, boolean wasRangeChg, IntConsumer addEndAnim, IntConsumer addIntermediateAnim,
 							  IntUnaryOperator direction) {
-		if (rangeSize > 0) {
-			if (wasRangeChg) {
-				for (int i = 1; i <= rangeSize; i++)
-					addIntermediateAnim.accept(direction.applyAsInt(i));
-			} else {
-				addEndAnim.accept(direction.applyAsInt(rangeSize));
-
-				for (int i = 1; i < rangeSize; i++)
-					addIntermediateAnim.accept(direction.applyAsInt(i));
-			}
+		if (size > 0) {
+			if (wasRangeChg)
+				addChangedRangeAnim(size, addIntermediateAnim, direction);
+			else
+				addRangeAnim(size, addEndAnim, addIntermediateAnim, direction);
 		}
+	}
+
+	private void addChangedRangeAnim(int rangeSize, IntConsumer addIntermediateAnim, IntUnaryOperator direction) {
+		IntStream.rangeClosed(1, rangeSize)
+				.map(direction)
+				.forEach(addIntermediateAnim);
+	}
+
+	private void addRangeAnim(int rangeSize, IntConsumer addEndAnim, IntConsumer addIntermediateAnim, IntUnaryOperator direction) {
+		addEndAnim.accept(direction.applyAsInt(rangeSize));
+		IntStream.range(1, rangeSize)
+				.map(direction)
+				.forEach(addIntermediateAnim);
 	}
 
 	private IntConsumer addHorizontalAnimation = offset -> addAnimation(expHorizontal.ordinal(), offset, 0);
