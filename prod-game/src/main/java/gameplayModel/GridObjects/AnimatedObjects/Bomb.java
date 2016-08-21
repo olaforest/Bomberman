@@ -139,59 +139,42 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private void processRanges() {
-		processHorizontalRange(leftRange, wasLeftRangeChg, expLeft, i -> -i);
-		processHorizontalRange(rightRange, wasRightRangeChg, expRight, identity());
-		processVerticalRange(upRange, wasUpRangeChg, expUp, i -> -i);
-		processVerticalRange(downRange, wasDownRangeChg, expDown, identity());
+		processHorizontalRange(leftRange, wasLeftRangeChg, addLeftAnimation, i -> -i);
+		processHorizontalRange(rightRange, wasRightRangeChg, addRightAnimation, identity());
+		processVerticalRange(upRange, wasUpRangeChg, addUpAnimation, i -> -i);
+		processVerticalRange(downRange, wasDownRangeChg, addDownAnimation, identity());
 	}
 
-	private void processHorizontalRange(int rangeSize, boolean wasRangeChg, AnimationType animationType, IntUnaryOperator direction) {
-		if (rangeSize > 0) {
-			if (wasRangeChg) {
-				for (int i = 1; i <= rangeSize; i++)
-					addAnimation(expHorizontal.ordinal(), direction.applyAsInt(i), 0);
-			} else {
-				addAnimation(animationType.ordinal(), direction.applyAsInt(rangeSize), 0);
-
-				for (int i = 1; i < rangeSize; i++)
-					addAnimation(expHorizontal.ordinal(), direction.applyAsInt(i), 0);
-			}
-		}
+	private void processHorizontalRange(int rangeSize, boolean wasRangeChg, IntConsumer animationType, IntUnaryOperator direction) {
+		processRange(rangeSize, wasRangeChg, animationType, addHorizontalAnimation, direction);
 	}
 
-	private void processVerticalRange(int rangeSize, boolean wasRangeChg, AnimationType animationType, IntUnaryOperator direction) {
-		if (rangeSize > 0) {
-			if (wasRangeChg) {
-				for (int i = 1; i <= rangeSize; i++)
-					addAnimation(expVertical.ordinal(), 0, direction.applyAsInt(i));
-			} else {
-				addAnimation(animationType.ordinal(), 0, direction.applyAsInt(rangeSize));
-
-				for (int i = 1; i < rangeSize; i++)
-					addAnimation(expVertical.ordinal(), 0, direction.applyAsInt(i));
-			}
-		}
+	private void processVerticalRange(int rangeSize, boolean wasRangeChg, IntConsumer animationType, IntUnaryOperator direction) {
+		processRange(rangeSize, wasRangeChg, animationType, addVerticalAnimation, direction);
 	}
 
-	private void processRange(int rangeSize, boolean wasRangeChg, AnimationType animationType, IntConsumer addAnim,
+	private void processRange(int rangeSize, boolean wasRangeChg, IntConsumer addEndAnim, IntConsumer addIntermediateAnim,
 							  IntUnaryOperator direction) {
 		if (rangeSize > 0) {
 			if (wasRangeChg) {
 				for (int i = 1; i <= rangeSize; i++)
-					addAnim.accept(direction.applyAsInt(i));
-					addAnimation(expVertical.ordinal(), 0, direction.applyAsInt(i));
+					addIntermediateAnim.accept(direction.applyAsInt(i));
 			} else {
-				addAnimation(animationType.ordinal(), 0, direction.applyAsInt(rangeSize));
+				addEndAnim.accept(direction.applyAsInt(rangeSize));
 
 				for (int i = 1; i < rangeSize; i++)
-					addAnimation(expVertical.ordinal(), 0, direction.applyAsInt(i));
+					addIntermediateAnim.accept(direction.applyAsInt(i));
 			}
 		}
 	}
 
-	private IntConsumer addVerticalAnimation = offset -> addAnimation(expVertical.ordinal(), 0, offset);
-
 	private IntConsumer addHorizontalAnimation = offset -> addAnimation(expHorizontal.ordinal(), offset, 0);
+	private IntConsumer addLeftAnimation = offset -> addAnimation(expLeft.ordinal(), offset, 0);
+	private IntConsumer addRightAnimation = offset -> addAnimation(expRight.ordinal(), offset, 0);
+
+	private IntConsumer addVerticalAnimation = offset -> addAnimation(expVertical.ordinal(), 0, offset);
+	private IntConsumer addUpAnimation = offset -> addAnimation(expUp.ordinal(), 0, offset);
+	private IntConsumer addDownAnimation = offset -> addAnimation(expDown.ordinal(), 0, offset);
 
 	private void setRanges() {
 
