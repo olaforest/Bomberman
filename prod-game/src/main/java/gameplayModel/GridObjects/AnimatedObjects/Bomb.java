@@ -11,7 +11,9 @@ import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
 import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 
@@ -22,6 +24,7 @@ import static java.util.stream.Collectors.toList;
 
 @Getter
 public class Bomb extends AnimatedObject {
+
 	public enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp, expVertical, expHorizontal}
 
 	public static final int TIME_TO_EXPLOSION = 2500;
@@ -185,9 +188,7 @@ public class Bomb extends AnimatedObject {
 	private IntConsumer addDownAnimation = offset -> addAnimation(expDown.ordinal(), 0, offset);
 
 	private void setRanges() {
-		boolean isNotAlignedWithRow = (yPosition % (EFFECTIVE_PIXEL_DIMENSION * 2)) == 0;
-
-		if (isNotAlignedWithRow) {
+		if (isNotAlignedWithRow.getAsBoolean()) {
 			rightRange = 0;
 			leftRange = 0;
 		} else {
@@ -197,9 +198,7 @@ public class Bomb extends AnimatedObject {
 				leftRange = xPosition / EFFECTIVE_PIXEL_DIMENSION - 1;
 		}
 
-		boolean isNotAlignedWithColumn = (xPosition % (EFFECTIVE_PIXEL_DIMENSION * 2)) == 0;
-
-		if (isNotAlignedWithColumn) {
+		if (isNotAlignedWithColumn.getAsBoolean()) {
 			downRange = 0;
 			upRange = 0;
 		} else {
@@ -209,6 +208,10 @@ public class Bomb extends AnimatedObject {
 				upRange = yPosition / EFFECTIVE_PIXEL_DIMENSION - 1;
 		}
 	}
+
+	private IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0;
+	private BooleanSupplier isNotAlignedWithRow = () -> isNotAlignedWithRowOrColumn.test(yPosition);
+	private BooleanSupplier isNotAlignedWithColumn = () -> isNotAlignedWithRowOrColumn.test(xPosition);
 
 	private void addAnimation(int animType, int xOffset, int yOffset) {
 		currentAnimations.add(new Animation(animationList.get(animType)));
