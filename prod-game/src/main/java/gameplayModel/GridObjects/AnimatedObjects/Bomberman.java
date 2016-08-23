@@ -47,19 +47,19 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void setXPosition(int xPosition) {
-		int yError = (this.yPosition - EFFECTIVE_PIXEL_HEIGHT) % (EFFECTIVE_PIXEL_HEIGHT * 2);
+		int yError = (this.yPosition - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
 
-		boolean isInXRange = (xPosition >= EFFECTIVE_PIXEL_WIDTH) && (xPosition <= EFFECTIVE_PIXEL_WIDTH * (GridMap.MAPWIDTH - 2));
+		boolean isInXRange = (xPosition >= EFFECTIVE_PIXEL_DIMENSION) && (xPosition <= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPWIDTH - 2));
 		boolean isAlignedWithRow = yError == 0;
 		boolean isBelowRow = yError <= MISALIGNMENT_ALLOWED;
-		boolean isAboveRow = yError >= (EFFECTIVE_PIXEL_HEIGHT * 2 - MISALIGNMENT_ALLOWED);
+		boolean isAboveRow = yError >= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED);
 
 		if (isAlignedWithRow && isInXRange) {
 			this.xPosition = xPosition;
-		} else if (isAboveRow && isInXRange && yError <= (EFFECTIVE_PIXEL_HEIGHT * 2 - MISALIGNMENT_ALLOWED + speed)) {
+		} else if (isAboveRow && isInXRange && yError <= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
 			this.xPosition = xPosition;
 			this.yPosition += speed;
-		} else if (isAboveRow && isInXRange && yError > (EFFECTIVE_PIXEL_HEIGHT * 2 - MISALIGNMENT_ALLOWED + speed)) {
+		} else if (isAboveRow && isInXRange && yError > (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
 			this.xPosition = xPosition;
 			this.yPosition += 2;
 		} else if (isBelowRow && isInXRange && yError >= speed) {
@@ -72,12 +72,12 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void setYPosition(int yPosition) {
-		int xError = (this.xPosition - EFFECTIVE_PIXEL_WIDTH) % (EFFECTIVE_PIXEL_WIDTH * 2);
+		int xError = (this.xPosition - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
 
-		boolean isInYRange = (yPosition >= EFFECTIVE_PIXEL_HEIGHT) && (yPosition <= EFFECTIVE_PIXEL_HEIGHT * (GridMap.MAPHEIGHT - 2));
+		boolean isInYRange = (yPosition >= EFFECTIVE_PIXEL_DIMENSION) && (yPosition <= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPHEIGHT - 2));
 		boolean isAlignedWithColumn = xError == 0;
 		boolean isRightFromColumn = xError <= MISALIGNMENT_ALLOWED;
-		boolean isLeftFromColumn = xError >= (EFFECTIVE_PIXEL_HEIGHT * 2 - MISALIGNMENT_ALLOWED);
+		boolean isLeftFromColumn = xError >= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED);
 
 		if (isAlignedWithColumn && isInYRange) {
 			this.yPosition = yPosition;
@@ -87,10 +87,10 @@ public class Bomberman extends AnimatedObject {
 		} else if (isRightFromColumn && isInYRange && xError < speed) {
 			this.yPosition = yPosition;
 			this.xPosition -= 2;
-		} else if (isLeftFromColumn && isInYRange && xError <= (EFFECTIVE_PIXEL_HEIGHT * 2 - MISALIGNMENT_ALLOWED + speed)) {
+		} else if (isLeftFromColumn && isInYRange && xError <= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
 			this.yPosition = yPosition;
 			this.xPosition += speed;
-		} else if (isLeftFromColumn && isInYRange && xError > (EFFECTIVE_PIXEL_HEIGHT * 2 - MISALIGNMENT_ALLOWED + speed)) {
+		} else if (isLeftFromColumn && isInYRange && xError > (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
 			this.yPosition = yPosition;
 			this.xPosition += 2;
 		}

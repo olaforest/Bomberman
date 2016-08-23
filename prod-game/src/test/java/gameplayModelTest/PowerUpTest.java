@@ -1,10 +1,10 @@
 package gameplayModelTest;
 
-import gameplayModel.GridObject;
 import gameplayModel.GridObjects.PowerUps.PowerUp;
 import org.junit.Before;
 import org.junit.Test;
 
+import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 
 public class PowerUpTest {
@@ -13,7 +13,7 @@ public class PowerUpTest {
 
 	@Before
 	public void setUp() {
-		powerUp = new PowerUp(GridObject.EFFECTIVE_PIXEL_WIDTH, GridObject.EFFECTIVE_PIXEL_HEIGHT);
+		powerUp = new PowerUp(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test
@@ -22,8 +22,8 @@ public class PowerUpTest {
 		int[] imageParam = {217, 241};
 
 		assertTrue(powerUp.getImage() == null);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, powerUp.generateImage(imageParam).getWidth());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, powerUp.generateImage(imageParam).getHeight());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, powerUp.generateImage(imageParam).getWidth());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, powerUp.generateImage(imageParam).getHeight());
 	}
 
 	@Test
@@ -45,16 +45,16 @@ public class PowerUpTest {
 	public void testGetAndSetXPosition() {
 
 		//Tests if the inputed x position is valid.
-		powerUp.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, powerUp.getXPosition());
+		powerUp.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, powerUp.getXPosition());
 	}
 
 	@Test
 	public void testGetAndSetYPosition() {
 
 		//Tests if the inputed y position is valid.
-		powerUp.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, powerUp.getYPosition());
+		powerUp.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, powerUp.getYPosition());
 	}
 
 	@Test

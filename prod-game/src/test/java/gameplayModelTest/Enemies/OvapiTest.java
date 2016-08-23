@@ -1,12 +1,12 @@
 package gameplayModelTest.Enemies;
 
 import gameplayModel.GridMap;
-import gameplayModel.GridObject;
 import gameplayModel.GridObjects.AnimatedObjects.Enemies.Ovapi;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
+import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 
 public class OvapiTest {
@@ -15,7 +15,7 @@ public class OvapiTest {
 
 	@Before
 	public void setUp() {
-		ovapi = new Ovapi(GridObject.EFFECTIVE_PIXEL_WIDTH, GridObject.EFFECTIVE_PIXEL_HEIGHT);
+		ovapi = new Ovapi(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test
@@ -94,43 +94,43 @@ public class OvapiTest {
 
 		//Tests if the inputed x position is out of bounds on the left.
 		ovapi.setXPosition(0);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, ovapi.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, ovapi.getXPosition());
 
 		//Tests if the inputed x position is out of bounds on the right.
-		ovapi.setXPosition(GridMap.MAPWIDTH * GridObject.EFFECTIVE_PIXEL_WIDTH);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, ovapi.getXPosition());
+		ovapi.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, ovapi.getXPosition());
 
 		//Tests if the inputed x position is valid.
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, ovapi.getXPosition());
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, ovapi.getXPosition());
 
 		//Tests if the inputed x position is valid while the y position is above a row, outside of the misalignment tolerance.
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Ovapi.MISALIGNMENT_ALLOWED - 1);
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, ovapi.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Ovapi.MISALIGNMENT_ALLOWED - 1, ovapi.getYPosition());
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Ovapi.MISALIGNMENT_ALLOWED - 1);
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, ovapi.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Ovapi.MISALIGNMENT_ALLOWED - 1, ovapi.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is above a row, inside of the misalignment tolerance.
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Ovapi.MISALIGNMENT_ALLOWED);
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, ovapi.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Ovapi.MISALIGNMENT_ALLOWED + 4, ovapi.getYPosition());
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Ovapi.MISALIGNMENT_ALLOWED);
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, ovapi.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Ovapi.MISALIGNMENT_ALLOWED + 4, ovapi.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is below a row, outside of the misalignment tolerance.
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Ovapi.MISALIGNMENT_ALLOWED + 1);
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, ovapi.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Ovapi.MISALIGNMENT_ALLOWED + 1, ovapi.getYPosition());
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Ovapi.MISALIGNMENT_ALLOWED + 1);
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, ovapi.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Ovapi.MISALIGNMENT_ALLOWED + 1, ovapi.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is below a row, inside of the misalignment tolerance.
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Ovapi.MISALIGNMENT_ALLOWED);
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, ovapi.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Ovapi.MISALIGNMENT_ALLOWED - 4, ovapi.getYPosition());
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Ovapi.MISALIGNMENT_ALLOWED);
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, ovapi.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Ovapi.MISALIGNMENT_ALLOWED - 4, ovapi.getYPosition());
 	}
 
 	@Test
@@ -138,43 +138,43 @@ public class OvapiTest {
 
 		//Tests if the inputed y position is out of bounds on the top.
 		ovapi.setYPosition(0);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, ovapi.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, ovapi.getYPosition());
 
 		//Tests if the inputed y position is out of bounds on the bottom.
-		ovapi.setYPosition(GridMap.MAPWIDTH * GridObject.EFFECTIVE_PIXEL_WIDTH);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, ovapi.getYPosition());
+		ovapi.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, ovapi.getYPosition());
 
 		//Tests if the inputed y position is valid.
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, ovapi.getYPosition());
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, ovapi.getYPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, outside of the misalignment tolerance.
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Ovapi.MISALIGNMENT_ALLOWED - 1);
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, ovapi.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Ovapi.MISALIGNMENT_ALLOWED - 1, ovapi.getXPosition());
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Ovapi.MISALIGNMENT_ALLOWED - 1);
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, ovapi.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Ovapi.MISALIGNMENT_ALLOWED - 1, ovapi.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, inside of the misalignment tolerance.
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Ovapi.MISALIGNMENT_ALLOWED);
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, ovapi.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Ovapi.MISALIGNMENT_ALLOWED + 4, ovapi.getXPosition());
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Ovapi.MISALIGNMENT_ALLOWED);
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, ovapi.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Ovapi.MISALIGNMENT_ALLOWED + 4, ovapi.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, outside of the misalignment tolerance.
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Ovapi.MISALIGNMENT_ALLOWED + 1);
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, ovapi.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Ovapi.MISALIGNMENT_ALLOWED + 1, ovapi.getXPosition());
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Ovapi.MISALIGNMENT_ALLOWED + 1);
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, ovapi.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Ovapi.MISALIGNMENT_ALLOWED + 1, ovapi.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, inside of the misalignment tolerance.
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		ovapi.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Ovapi.MISALIGNMENT_ALLOWED);
-		ovapi.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, ovapi.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Ovapi.MISALIGNMENT_ALLOWED - 4, ovapi.getXPosition());
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		ovapi.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Ovapi.MISALIGNMENT_ALLOWED);
+		ovapi.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, ovapi.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Ovapi.MISALIGNMENT_ALLOWED - 4, ovapi.getXPosition());
 	}
 
 	private boolean isDirectionCorrect() {

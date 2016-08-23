@@ -1,12 +1,12 @@
 package gameplayModelTest.Enemies;
 
 import gameplayModel.GridMap;
-import gameplayModel.GridObject;
 import gameplayModel.GridObjects.AnimatedObjects.Enemies.Pass;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
+import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 
 public class PassTest {
@@ -15,7 +15,7 @@ public class PassTest {
 
 	@Before
 	public void setUp() {
-		pass = new Pass(GridObject.EFFECTIVE_PIXEL_WIDTH, GridObject.EFFECTIVE_PIXEL_HEIGHT);
+		pass = new Pass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test
@@ -94,43 +94,43 @@ public class PassTest {
 
 		//Tests if the inputed x position is out of bounds on the left.
 		pass.setXPosition(0);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, pass.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, pass.getXPosition());
 
 		//Tests if the inputed x position is out of bounds on the right.
-		pass.setXPosition(GridMap.MAPWIDTH * GridObject.EFFECTIVE_PIXEL_WIDTH);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, pass.getXPosition());
+		pass.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, pass.getXPosition());
 
 		//Tests if the inputed x position is valid.
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, pass.getXPosition());
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, pass.getXPosition());
 
 		//Tests if the inputed x position is valid while the y position is above a row, outside of the misalignment tolerance.
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Pass.MISALIGNMENT_ALLOWED - 1);
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, pass.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Pass.MISALIGNMENT_ALLOWED - 1, pass.getYPosition());
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Pass.MISALIGNMENT_ALLOWED - 1);
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, pass.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Pass.MISALIGNMENT_ALLOWED - 1, pass.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is above a row, inside of the misalignment tolerance.
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Pass.MISALIGNMENT_ALLOWED);
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, pass.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Pass.MISALIGNMENT_ALLOWED + 4, pass.getYPosition());
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Pass.MISALIGNMENT_ALLOWED);
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, pass.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Pass.MISALIGNMENT_ALLOWED + 4, pass.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is below a row, outside of the misalignment tolerance.
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Pass.MISALIGNMENT_ALLOWED + 1);
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, pass.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Pass.MISALIGNMENT_ALLOWED + 1, pass.getYPosition());
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Pass.MISALIGNMENT_ALLOWED + 1);
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, pass.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Pass.MISALIGNMENT_ALLOWED + 1, pass.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is below a row, inside of the misalignment tolerance.
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Pass.MISALIGNMENT_ALLOWED);
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, pass.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Pass.MISALIGNMENT_ALLOWED - 4, pass.getYPosition());
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Pass.MISALIGNMENT_ALLOWED);
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, pass.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Pass.MISALIGNMENT_ALLOWED - 4, pass.getYPosition());
 	}
 
 	@Test
@@ -138,43 +138,43 @@ public class PassTest {
 
 		//Tests if the inputed y position is out of bounds on the top.
 		pass.setYPosition(0);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, pass.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, pass.getYPosition());
 
 		//Tests if the inputed y position is out of bounds on the bottom.
-		pass.setYPosition(GridMap.MAPWIDTH * GridObject.EFFECTIVE_PIXEL_WIDTH);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, pass.getYPosition());
+		pass.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, pass.getYPosition());
 
 		//Tests if the inputed y position is valid.
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, pass.getYPosition());
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, pass.getYPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, outside of the misalignment tolerance.
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Pass.MISALIGNMENT_ALLOWED - 1);
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, pass.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Pass.MISALIGNMENT_ALLOWED - 1, pass.getXPosition());
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Pass.MISALIGNMENT_ALLOWED - 1);
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, pass.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Pass.MISALIGNMENT_ALLOWED - 1, pass.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, inside of the misalignment tolerance.
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Pass.MISALIGNMENT_ALLOWED);
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, pass.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Pass.MISALIGNMENT_ALLOWED + 4, pass.getXPosition());
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Pass.MISALIGNMENT_ALLOWED);
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, pass.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Pass.MISALIGNMENT_ALLOWED + 4, pass.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, outside of the misalignment tolerance.
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Pass.MISALIGNMENT_ALLOWED + 1);
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, pass.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Pass.MISALIGNMENT_ALLOWED + 1, pass.getXPosition());
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Pass.MISALIGNMENT_ALLOWED + 1);
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, pass.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Pass.MISALIGNMENT_ALLOWED + 1, pass.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, inside of the misalignment tolerance.
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		pass.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Pass.MISALIGNMENT_ALLOWED);
-		pass.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, pass.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Pass.MISALIGNMENT_ALLOWED - 4, pass.getXPosition());
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		pass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Pass.MISALIGNMENT_ALLOWED);
+		pass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, pass.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Pass.MISALIGNMENT_ALLOWED - 4, pass.getXPosition());
 	}
 
 	private boolean isDirectionCorrect() {

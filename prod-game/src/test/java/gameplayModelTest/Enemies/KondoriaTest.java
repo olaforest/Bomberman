@@ -1,12 +1,12 @@
 package gameplayModelTest.Enemies;
 
 import gameplayModel.GridMap;
-import gameplayModel.GridObject;
 import gameplayModel.GridObjects.AnimatedObjects.Enemies.Kondoria;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
+import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 
 public class KondoriaTest {
@@ -15,7 +15,7 @@ public class KondoriaTest {
 
 	@Before
 	public void setUp() {
-		kondoria = new Kondoria(GridObject.EFFECTIVE_PIXEL_WIDTH, GridObject.EFFECTIVE_PIXEL_HEIGHT);
+		kondoria = new Kondoria(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test
@@ -94,43 +94,43 @@ public class KondoriaTest {
 
 		//Tests if the inputed x position is out of bounds on the left.
 		kondoria.setXPosition(0);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, kondoria.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, kondoria.getXPosition());
 
 		//Tests if the inputed x position is out of bounds on the right.
-		kondoria.setXPosition(GridMap.MAPWIDTH * GridObject.EFFECTIVE_PIXEL_WIDTH);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, kondoria.getXPosition());
+		kondoria.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, kondoria.getXPosition());
 
 		//Tests if the inputed x position is valid.
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, kondoria.getXPosition());
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, kondoria.getXPosition());
 
 		//Tests if the inputed x position is valid while the y position is above a row, outside of the misalignment tolerance.
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Kondoria.MISALIGNMENT_ALLOWED - 1);
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, kondoria.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Kondoria.MISALIGNMENT_ALLOWED - 1, kondoria.getYPosition());
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Kondoria.MISALIGNMENT_ALLOWED - 1);
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, kondoria.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Kondoria.MISALIGNMENT_ALLOWED - 1, kondoria.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is above a row, inside of the misalignment tolerance.
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Kondoria.MISALIGNMENT_ALLOWED);
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, kondoria.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Kondoria.MISALIGNMENT_ALLOWED + 4, kondoria.getYPosition());
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Kondoria.MISALIGNMENT_ALLOWED);
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, kondoria.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Kondoria.MISALIGNMENT_ALLOWED + 4, kondoria.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is below a row, outside of the misalignment tolerance.
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Kondoria.MISALIGNMENT_ALLOWED + 1);
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, kondoria.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Kondoria.MISALIGNMENT_ALLOWED + 1, kondoria.getYPosition());
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Kondoria.MISALIGNMENT_ALLOWED + 1);
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, kondoria.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Kondoria.MISALIGNMENT_ALLOWED + 1, kondoria.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is below a row, inside of the misalignment tolerance.
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Kondoria.MISALIGNMENT_ALLOWED);
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, kondoria.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Kondoria.MISALIGNMENT_ALLOWED - 4, kondoria.getYPosition());
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Kondoria.MISALIGNMENT_ALLOWED);
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, kondoria.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Kondoria.MISALIGNMENT_ALLOWED - 4, kondoria.getYPosition());
 	}
 
 	@Test
@@ -138,43 +138,43 @@ public class KondoriaTest {
 
 		//Tests if the inputed y position is out of bounds on the top.
 		kondoria.setYPosition(0);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, kondoria.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, kondoria.getYPosition());
 
 		//Tests if the inputed y position is out of bounds on the bottom.
-		kondoria.setYPosition(GridMap.MAPWIDTH * GridObject.EFFECTIVE_PIXEL_WIDTH);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, kondoria.getYPosition());
+		kondoria.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, kondoria.getYPosition());
 
 		//Tests if the inputed y position is valid.
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, kondoria.getYPosition());
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, kondoria.getYPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, outside of the misalignment tolerance.
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Kondoria.MISALIGNMENT_ALLOWED - 1);
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, kondoria.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Kondoria.MISALIGNMENT_ALLOWED - 1, kondoria.getXPosition());
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Kondoria.MISALIGNMENT_ALLOWED - 1);
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, kondoria.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Kondoria.MISALIGNMENT_ALLOWED - 1, kondoria.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, inside of the misalignment tolerance.
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Kondoria.MISALIGNMENT_ALLOWED);
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, kondoria.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Kondoria.MISALIGNMENT_ALLOWED + 4, kondoria.getXPosition());
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Kondoria.MISALIGNMENT_ALLOWED);
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, kondoria.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Kondoria.MISALIGNMENT_ALLOWED + 4, kondoria.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, outside of the misalignment tolerance.
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Kondoria.MISALIGNMENT_ALLOWED + 1);
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, kondoria.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Kondoria.MISALIGNMENT_ALLOWED + 1, kondoria.getXPosition());
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Kondoria.MISALIGNMENT_ALLOWED + 1);
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, kondoria.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Kondoria.MISALIGNMENT_ALLOWED + 1, kondoria.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, inside of the misalignment tolerance.
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		kondoria.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Kondoria.MISALIGNMENT_ALLOWED);
-		kondoria.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, kondoria.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Kondoria.MISALIGNMENT_ALLOWED - 4, kondoria.getXPosition());
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		kondoria.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Kondoria.MISALIGNMENT_ALLOWED);
+		kondoria.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, kondoria.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Kondoria.MISALIGNMENT_ALLOWED - 4, kondoria.getXPosition());
 	}
 
 	private boolean isDirectionCorrect() {

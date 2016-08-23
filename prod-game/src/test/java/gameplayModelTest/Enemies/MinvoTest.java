@@ -1,12 +1,12 @@
 package gameplayModelTest.Enemies;
 
 import gameplayModel.GridMap;
-import gameplayModel.GridObject;
 import gameplayModel.GridObjects.AnimatedObjects.Enemies.Minvo;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
+import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 
 public class MinvoTest {
@@ -15,7 +15,7 @@ public class MinvoTest {
 
 	@Before
 	public void setUp() {
-		minvo = new Minvo(GridObject.EFFECTIVE_PIXEL_WIDTH, GridObject.EFFECTIVE_PIXEL_HEIGHT);
+		minvo = new Minvo(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test
@@ -94,43 +94,43 @@ public class MinvoTest {
 
 		//Tests if the inputed x position is out of bounds on the left.
 		minvo.setXPosition(0);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, minvo.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, minvo.getXPosition());
 
 		//Tests if the inputed x position is out of bounds on the right.
-		minvo.setXPosition(GridMap.MAPWIDTH * GridObject.EFFECTIVE_PIXEL_WIDTH);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, minvo.getXPosition());
+		minvo.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, minvo.getXPosition());
 
 		//Tests if the inputed x position is valid.
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, minvo.getXPosition());
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, minvo.getXPosition());
 
 		//Tests if the inputed x position is valid while the y position is above a row, outside of the misalignment tolerance.
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Minvo.MISALIGNMENT_ALLOWED - 1);
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, minvo.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Minvo.MISALIGNMENT_ALLOWED - 1, minvo.getYPosition());
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Minvo.MISALIGNMENT_ALLOWED - 1);
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, minvo.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Minvo.MISALIGNMENT_ALLOWED - 1, minvo.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is above a row, inside of the misalignment tolerance.
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Minvo.MISALIGNMENT_ALLOWED);
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, minvo.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Minvo.MISALIGNMENT_ALLOWED + 4, minvo.getYPosition());
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Minvo.MISALIGNMENT_ALLOWED);
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, minvo.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Minvo.MISALIGNMENT_ALLOWED + 4, minvo.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is below a row, outside of the misalignment tolerance.
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Minvo.MISALIGNMENT_ALLOWED + 1);
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, minvo.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Minvo.MISALIGNMENT_ALLOWED + 1, minvo.getYPosition());
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Minvo.MISALIGNMENT_ALLOWED + 1);
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, minvo.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Minvo.MISALIGNMENT_ALLOWED + 1, minvo.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is below a row, inside of the misalignment tolerance.
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Minvo.MISALIGNMENT_ALLOWED);
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, minvo.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Minvo.MISALIGNMENT_ALLOWED - 4, minvo.getYPosition());
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Minvo.MISALIGNMENT_ALLOWED);
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, minvo.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Minvo.MISALIGNMENT_ALLOWED - 4, minvo.getYPosition());
 	}
 
 	@Test
@@ -138,43 +138,43 @@ public class MinvoTest {
 
 		//Tests if the inputed y position is out of bounds on the top.
 		minvo.setYPosition(0);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, minvo.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, minvo.getYPosition());
 
 		//Tests if the inputed y position is out of bounds on the bottom.
-		minvo.setYPosition(GridMap.MAPWIDTH * GridObject.EFFECTIVE_PIXEL_WIDTH);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, minvo.getYPosition());
+		minvo.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, minvo.getYPosition());
 
 		//Tests if the inputed y position is valid.
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, minvo.getYPosition());
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, minvo.getYPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, outside of the misalignment tolerance.
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Minvo.MISALIGNMENT_ALLOWED - 1);
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, minvo.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Minvo.MISALIGNMENT_ALLOWED - 1, minvo.getXPosition());
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Minvo.MISALIGNMENT_ALLOWED - 1);
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, minvo.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Minvo.MISALIGNMENT_ALLOWED - 1, minvo.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, inside of the misalignment tolerance.
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Minvo.MISALIGNMENT_ALLOWED);
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, minvo.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Minvo.MISALIGNMENT_ALLOWED + 4, minvo.getXPosition());
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Minvo.MISALIGNMENT_ALLOWED);
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, minvo.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Minvo.MISALIGNMENT_ALLOWED + 4, minvo.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, outside of the misalignment tolerance.
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Minvo.MISALIGNMENT_ALLOWED + 1);
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, minvo.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Minvo.MISALIGNMENT_ALLOWED + 1, minvo.getXPosition());
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Minvo.MISALIGNMENT_ALLOWED + 1);
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, minvo.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Minvo.MISALIGNMENT_ALLOWED + 1, minvo.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, inside of the misalignment tolerance.
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		minvo.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Minvo.MISALIGNMENT_ALLOWED);
-		minvo.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, minvo.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Minvo.MISALIGNMENT_ALLOWED - 4, minvo.getXPosition());
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		minvo.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Minvo.MISALIGNMENT_ALLOWED);
+		minvo.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, minvo.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Minvo.MISALIGNMENT_ALLOWED - 4, minvo.getXPosition());
 	}
 
 	private boolean isDirectionCorrect() {

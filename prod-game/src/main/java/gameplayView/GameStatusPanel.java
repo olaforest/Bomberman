@@ -2,14 +2,15 @@ package gameplayView;
 
 import gameplayController.GameplayController;
 import gameplayModel.GameContext;
-import gameplayModel.GridObject;
 
 import javax.swing.*;
 import java.awt.*;
 
+import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
+
 public class GameStatusPanel extends JPanel {
 
-	public static final int HEADERHEIGHT = GridObject.EFFECTIVE_PIXEL_HEIGHT / 2 + GridObject.EFFECTIVE_PIXEL_HEIGHT;
+	public static final int HEADERHEIGHT = EFFECTIVE_PIXEL_DIMENSION / 2 + EFFECTIVE_PIXEL_DIMENSION;
 	private int stdHeight;
 	private JLabel timeLabel, timeNumLabel, scoreLabel, livesLeftNumLabel;
 	private GameContext gameContext;
@@ -35,7 +36,7 @@ public class GameStatusPanel extends JPanel {
 
 		stdHeight = (HEADERHEIGHT - timeLabel.getPreferredSize().height) / 2;
 
-		timeLabel.setBounds(GridObject.EFFECTIVE_PIXEL_WIDTH / 2, stdHeight, timeLabel.getPreferredSize().width + 10, timeLabel.getPreferredSize().height);
+		timeLabel.setBounds(EFFECTIVE_PIXEL_DIMENSION / 2, stdHeight, timeLabel.getPreferredSize().width + 10, timeLabel.getPreferredSize().height);
 
 		timeNumLabel.setBounds(((int) timeLabel.getLocation().getX()) + timeLabel.getWidth() + 55 - timeNumLabel.getPreferredSize().width,
 				stdHeight, timeNumLabel.getPreferredSize().width, timeNumLabel.getPreferredSize().height);
@@ -44,7 +45,7 @@ public class GameStatusPanel extends JPanel {
 
 		livesLeftLabel.setBounds(370, stdHeight, livesLeftLabel.getPreferredSize().width, livesLeftLabel.getPreferredSize().height);
 
-		livesLeftNumLabel.setBounds(GameplayController.VIEW_PORT_WIDTH - GridObject.EFFECTIVE_PIXEL_WIDTH / 2 - livesLeftNumLabel.getPreferredSize().width,
+		livesLeftNumLabel.setBounds(GameplayController.VIEW_PORT_WIDTH - EFFECTIVE_PIXEL_DIMENSION / 2 - livesLeftNumLabel.getPreferredSize().width,
 				stdHeight, livesLeftNumLabel.getPreferredSize().width, livesLeftNumLabel.getPreferredSize().height);
 
 		setBackground(new Color(173, 174, 173));
@@ -67,7 +68,7 @@ public class GameStatusPanel extends JPanel {
 		scoreLabel.setBounds(325 - scoreLabel.getPreferredSize().width, stdHeight, scoreLabel.getPreferredSize().width, scoreLabel.getPreferredSize().height);
 
 		livesLeftNumLabel.setText(Integer.toString(gameContext.getLivesLeft()));
-		livesLeftNumLabel.setBounds(GameplayController.VIEW_PORT_WIDTH - GridObject.EFFECTIVE_PIXEL_WIDTH / 2 - livesLeftNumLabel.getPreferredSize().width,
+		livesLeftNumLabel.setBounds(GameplayController.VIEW_PORT_WIDTH - EFFECTIVE_PIXEL_DIMENSION / 2 - livesLeftNumLabel.getPreferredSize().width,
 				stdHeight, livesLeftNumLabel.getPreferredSize().width, livesLeftNumLabel.getPreferredSize().height);
 	}
 }

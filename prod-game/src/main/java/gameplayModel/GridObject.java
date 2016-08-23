@@ -17,8 +17,7 @@ public class GridObject {
 
 	public static final int ZOOM = 2;
 	public static final int PIXEL_DIMENSION = 16;
-	public static final int EFFECTIVE_PIXEL_WIDTH = PIXEL_DIMENSION * ZOOM;
-	public static final int EFFECTIVE_PIXEL_HEIGHT = PIXEL_DIMENSION * ZOOM;
+	public static final int EFFECTIVE_PIXEL_DIMENSION = PIXEL_DIMENSION * ZOOM;
 	public static final int MISALIGNMENT_ALLOWED = 16;
 	public static final int ADJUSTMENT = 4;
 
@@ -34,12 +33,12 @@ public class GridObject {
 
 	public void setXPosition(int xPosition) {
 		isConcreteCollision = false;
-		final int yError = (this.yPosition - EFFECTIVE_PIXEL_HEIGHT) % (EFFECTIVE_PIXEL_HEIGHT * 2);
+		final int yError = (this.yPosition - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
 
-		boolean isInXRange = (xPosition >= EFFECTIVE_PIXEL_WIDTH) && (xPosition <= EFFECTIVE_PIXEL_WIDTH * (MAPWIDTH - 2));
+		boolean isInXRange = (xPosition >= EFFECTIVE_PIXEL_DIMENSION) && (xPosition <= EFFECTIVE_PIXEL_DIMENSION * (MAPWIDTH - 2));
 		boolean isAlignedWithRow = yError == 0;
 		boolean isBelowRow = yError <= MISALIGNMENT_ALLOWED;
-		boolean isAboveRow = yError >= (EFFECTIVE_PIXEL_HEIGHT * 2 - MISALIGNMENT_ALLOWED);
+		boolean isAboveRow = yError >= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED);
 
 		if (isAlignedWithRow && isInXRange) {
 			this.xPosition = xPosition;
@@ -55,12 +54,12 @@ public class GridObject {
 
 	public void setYPosition(int yPosition) {
 		isConcreteCollision = false;
-		final int xError = (this.xPosition - EFFECTIVE_PIXEL_WIDTH) % (EFFECTIVE_PIXEL_WIDTH * 2);
+		final int xError = (this.xPosition - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
 
-		boolean isInYRange = (yPosition >= EFFECTIVE_PIXEL_HEIGHT) && (yPosition <= EFFECTIVE_PIXEL_HEIGHT * (GridMap.MAPHEIGHT - 2));
+		boolean isInYRange = (yPosition >= EFFECTIVE_PIXEL_DIMENSION) && (yPosition <= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPHEIGHT - 2));
 		boolean isAlignedWithColumn = ((xError) == 0);
 		boolean isRightFromColumn = (xError) <= MISALIGNMENT_ALLOWED;
-		boolean isLeftFromColumn = (xError) >= (EFFECTIVE_PIXEL_HEIGHT * 2 - MISALIGNMENT_ALLOWED);
+		boolean isLeftFromColumn = (xError) >= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED);
 
 		if (isAlignedWithColumn && isInYRange) {
 			this.yPosition = yPosition;

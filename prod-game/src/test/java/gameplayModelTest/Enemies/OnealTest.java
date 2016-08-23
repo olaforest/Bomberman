@@ -1,12 +1,12 @@
 package gameplayModelTest.Enemies;
 
 import gameplayModel.GridMap;
-import gameplayModel.GridObject;
 import gameplayModel.GridObjects.AnimatedObjects.Enemies.Oneal;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
+import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 
 public class OnealTest {
@@ -15,7 +15,7 @@ public class OnealTest {
 
 	@Before
 	public void setUp() {
-		oneal = new Oneal(GridObject.EFFECTIVE_PIXEL_WIDTH, GridObject.EFFECTIVE_PIXEL_HEIGHT);
+		oneal = new Oneal(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test
@@ -94,43 +94,43 @@ public class OnealTest {
 
 		//Tests if the inputed x position is out of bounds on the left.
 		oneal.setXPosition(0);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, oneal.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, oneal.getXPosition());
 
 		//Tests if the inputed x position is out of bounds on the right.
-		oneal.setXPosition(GridMap.MAPWIDTH * GridObject.EFFECTIVE_PIXEL_WIDTH);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, oneal.getXPosition());
+		oneal.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, oneal.getXPosition());
 
 		//Tests if the inputed x position is valid.
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, oneal.getXPosition());
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, oneal.getXPosition());
 
 		//Tests if the inputed x position is valid while the y position is above a row, outside of the misalignment tolerance.
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Oneal.MISALIGNMENT_ALLOWED - 1);
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, oneal.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Oneal.MISALIGNMENT_ALLOWED - 1, oneal.getYPosition());
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Oneal.MISALIGNMENT_ALLOWED - 1);
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, oneal.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Oneal.MISALIGNMENT_ALLOWED - 1, oneal.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is above a row, inside of the misalignment tolerance.
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Oneal.MISALIGNMENT_ALLOWED);
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, oneal.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Oneal.MISALIGNMENT_ALLOWED + 4, oneal.getYPosition());
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Oneal.MISALIGNMENT_ALLOWED);
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, oneal.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Oneal.MISALIGNMENT_ALLOWED + 4, oneal.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is below a row, outside of the misalignment tolerance.
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Oneal.MISALIGNMENT_ALLOWED + 1);
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, oneal.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Oneal.MISALIGNMENT_ALLOWED + 1, oneal.getYPosition());
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Oneal.MISALIGNMENT_ALLOWED + 1);
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, oneal.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Oneal.MISALIGNMENT_ALLOWED + 1, oneal.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is below a row, inside of the misalignment tolerance.
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Oneal.MISALIGNMENT_ALLOWED);
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, oneal.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Oneal.MISALIGNMENT_ALLOWED - 4, oneal.getYPosition());
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Oneal.MISALIGNMENT_ALLOWED);
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, oneal.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Oneal.MISALIGNMENT_ALLOWED - 4, oneal.getYPosition());
 	}
 
 	@Test
@@ -138,43 +138,43 @@ public class OnealTest {
 
 		//Tests if the inputed y position is out of bounds on the top.
 		oneal.setYPosition(0);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, oneal.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, oneal.getYPosition());
 
 		//Tests if the inputed y position is out of bounds on the bottom.
-		oneal.setYPosition(GridMap.MAPWIDTH * GridObject.EFFECTIVE_PIXEL_WIDTH);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, oneal.getYPosition());
+		oneal.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, oneal.getYPosition());
 
 		//Tests if the inputed y position is valid.
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, oneal.getYPosition());
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, oneal.getYPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, outside of the misalignment tolerance.
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Oneal.MISALIGNMENT_ALLOWED - 1);
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, oneal.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Oneal.MISALIGNMENT_ALLOWED - 1, oneal.getXPosition());
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Oneal.MISALIGNMENT_ALLOWED - 1);
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, oneal.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Oneal.MISALIGNMENT_ALLOWED - 1, oneal.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, inside of the misalignment tolerance.
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Oneal.MISALIGNMENT_ALLOWED);
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, oneal.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Oneal.MISALIGNMENT_ALLOWED + 4, oneal.getXPosition());
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Oneal.MISALIGNMENT_ALLOWED);
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, oneal.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Oneal.MISALIGNMENT_ALLOWED + 4, oneal.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, outside of the misalignment tolerance.
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Oneal.MISALIGNMENT_ALLOWED + 1);
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, oneal.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Oneal.MISALIGNMENT_ALLOWED + 1, oneal.getXPosition());
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Oneal.MISALIGNMENT_ALLOWED + 1);
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, oneal.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Oneal.MISALIGNMENT_ALLOWED + 1, oneal.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, inside of the misalignment tolerance.
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		oneal.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Oneal.MISALIGNMENT_ALLOWED);
-		oneal.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, oneal.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Oneal.MISALIGNMENT_ALLOWED - 4, oneal.getXPosition());
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		oneal.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Oneal.MISALIGNMENT_ALLOWED);
+		oneal.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, oneal.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Oneal.MISALIGNMENT_ALLOWED - 4, oneal.getXPosition());
 	}
 
 	private boolean isDirectionCorrect() {

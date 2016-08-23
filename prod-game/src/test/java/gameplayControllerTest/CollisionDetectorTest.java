@@ -8,6 +8,7 @@ import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 
 public class CollisionDetectorTest {
@@ -132,7 +133,7 @@ public class CollisionDetectorTest {
 
 	@Test
 	public void testCheckExplBricks() {
-		Bomb bomb = new Bomb(GridObject.EFFECTIVE_PIXEL_WIDTH * 7, GridObject.EFFECTIVE_PIXEL_HEIGHT * 7);
+		Bomb bomb = new Bomb(EFFECTIVE_PIXEL_DIMENSION * 7, EFFECTIVE_PIXEL_DIMENSION * 7);
 
 		assertEquals((detector.checkExplBricks(bomb).indexOf(0)), -1);
 		assertEquals((detector.checkExplBricks(bomb).indexOf(1)), -1);

@@ -13,14 +13,16 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 
+import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
+
 public class GridMap {
 
 	public static final int MAPWIDTH = 31;
 	public static final int MAPHEIGHT = 13;
 	public final int SPAWN_TIMEOUT = 10 * 1000;
 
-	private int width = GridObject.EFFECTIVE_PIXEL_WIDTH;
-	private int height = GridObject.EFFECTIVE_PIXEL_HEIGHT;
+	private int width = EFFECTIVE_PIXEL_DIMENSION;
+	private int height = EFFECTIVE_PIXEL_DIMENSION;
 	private int brickExitIndex, spawnTimer;
 	private int[] levelSpec;
 
@@ -68,8 +70,8 @@ public class GridMap {
 
 	private void generateMap() {
 
-		int width = GridObject.EFFECTIVE_PIXEL_WIDTH;
-		int height = GridObject.EFFECTIVE_PIXEL_HEIGHT;
+		int width = EFFECTIVE_PIXEL_DIMENSION;
+		int height = EFFECTIVE_PIXEL_DIMENSION;
 
 		for (int i = 0; i < MAPWIDTH; i++) {
 			concreteLayout.add(new Concrete(i * width, 0));

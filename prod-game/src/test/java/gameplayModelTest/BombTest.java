@@ -2,12 +2,12 @@ package gameplayModelTest;
 
 import gameplayController.GameplayController;
 import gameplayModel.GridMap;
-import gameplayModel.GridObject;
 import gameplayModel.GridObjects.AnimatedObjects.Bomb;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 
+import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 
 public class BombTest {
@@ -16,14 +16,14 @@ public class BombTest {
 
 	@Before
 	public void setUp() {
-		bomb = new Bomb(GridObject.EFFECTIVE_PIXEL_WIDTH, GridObject.EFFECTIVE_PIXEL_HEIGHT);
+		bomb = new Bomb(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test
 	public void testBomb() {
 
-		int testXPosition = (((int) (Math.random() * (GridMap.MAPWIDTH / 2))) * 2 + 1) * GridObject.EFFECTIVE_PIXEL_WIDTH;
-		int testYPosition = (((int) (Math.random() * (GridMap.MAPHEIGHT / 2))) * 2 + 1) * GridObject.EFFECTIVE_PIXEL_HEIGHT;
+		int testXPosition = (((int) (Math.random() * (GridMap.MAPWIDTH / 2))) * 2 + 1) * EFFECTIVE_PIXEL_DIMENSION;
+		int testYPosition = (((int) (Math.random() * (GridMap.MAPHEIGHT / 2))) * 2 + 1) * EFFECTIVE_PIXEL_DIMENSION;
 		int testTimer = (int) (Math.random() * (bomb.TIME_TO_EXPLOSION / GameplayController.TIMEOUT));
 		int testRange = ((int) (Math.random() * 10)) + 1;
 		int testRightRange = ((int) (Math.random() * testRange)) + 1;
@@ -104,7 +104,7 @@ public class BombTest {
 		Bomb.increaseRange();
 		Bomb.increaseRange();
 
-		bomb = new Bomb(GridObject.EFFECTIVE_PIXEL_WIDTH * 5, GridObject.EFFECTIVE_PIXEL_HEIGHT * 5);
+		bomb = new Bomb(EFFECTIVE_PIXEL_DIMENSION * 5, EFFECTIVE_PIXEL_DIMENSION * 5);
 
 		bomb.setUpRange(1);
 		bomb.setDownRange(0);
@@ -119,7 +119,7 @@ public class BombTest {
 
 		Bomb.resetRange();
 
-		bomb = new Bomb(GridObject.EFFECTIVE_PIXEL_WIDTH, GridObject.EFFECTIVE_PIXEL_HEIGHT);
+		bomb = new Bomb(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 
 		bomb.triggerExplosion();
 
@@ -249,43 +249,43 @@ public class BombTest {
 
 		//Tests if the inputed x position is out of bounds on the left.
 		bomb.setXPosition(0);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, bomb.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomb.getXPosition());
 
 		//Tests if the inputed x position is out of bounds on the right.
-		bomb.setXPosition(GridMap.MAPWIDTH * GridObject.EFFECTIVE_PIXEL_WIDTH);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, bomb.getXPosition());
+		bomb.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomb.getXPosition());
 
 		//Tests if the inputed x position is valid.
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, bomb.getXPosition());
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bomb.getXPosition());
 
 		//Tests if the inputed x position is valid while the y position is above a row, outside of the misalignment tolerance.
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Bomb.MISALIGNMENT_ALLOWED - 1);
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, bomb.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Bomb.MISALIGNMENT_ALLOWED - 1, bomb.getYPosition());
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomb.MISALIGNMENT_ALLOWED - 1);
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomb.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomb.MISALIGNMENT_ALLOWED - 1, bomb.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is above a row, inside of the misalignment tolerance.
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Bomb.MISALIGNMENT_ALLOWED);
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, bomb.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Bomb.MISALIGNMENT_ALLOWED + 4, bomb.getYPosition());
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomb.MISALIGNMENT_ALLOWED);
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomb.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomb.MISALIGNMENT_ALLOWED + 4, bomb.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is below a row, outside of the misalignment tolerance.
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Bomb.MISALIGNMENT_ALLOWED + 1);
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, bomb.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Bomb.MISALIGNMENT_ALLOWED + 1, bomb.getYPosition());
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomb.MISALIGNMENT_ALLOWED + 1);
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomb.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomb.MISALIGNMENT_ALLOWED + 1, bomb.getYPosition());
 
 		//Tests if the inputed x position is valid while the y position is below a row, inside of the misalignment tolerance.
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Bomb.MISALIGNMENT_ALLOWED);
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, bomb.getXPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Bomb.MISALIGNMENT_ALLOWED - 4, bomb.getYPosition());
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomb.MISALIGNMENT_ALLOWED);
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomb.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomb.MISALIGNMENT_ALLOWED - 4, bomb.getYPosition());
 	}
 
 	@Test
@@ -293,43 +293,43 @@ public class BombTest {
 
 		//Tests if the inputed y position is out of bounds on the top.
 		bomb.setYPosition(0);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, bomb.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomb.getYPosition());
 
 		//Tests if the inputed y position is out of bounds on the bottom.
-		bomb.setYPosition(GridMap.MAPWIDTH * GridObject.EFFECTIVE_PIXEL_WIDTH);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, bomb.getYPosition());
+		bomb.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomb.getYPosition());
 
 		//Tests if the inputed y position is valid.
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, bomb.getYPosition());
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bomb.getYPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, outside of the misalignment tolerance.
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Bomb.MISALIGNMENT_ALLOWED - 1);
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, bomb.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Bomb.MISALIGNMENT_ALLOWED - 1, bomb.getXPosition());
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomb.MISALIGNMENT_ALLOWED - 1);
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomb.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomb.MISALIGNMENT_ALLOWED - 1, bomb.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, inside of the misalignment tolerance.
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Bomb.MISALIGNMENT_ALLOWED);
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, bomb.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 - Bomb.MISALIGNMENT_ALLOWED + 4, bomb.getXPosition());
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomb.MISALIGNMENT_ALLOWED);
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomb.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomb.MISALIGNMENT_ALLOWED + 4, bomb.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, outside of the misalignment tolerance.
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Bomb.MISALIGNMENT_ALLOWED + 1);
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3, bomb.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Bomb.MISALIGNMENT_ALLOWED + 1, bomb.getXPosition());
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomb.MISALIGNMENT_ALLOWED + 1);
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomb.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomb.MISALIGNMENT_ALLOWED + 1, bomb.getXPosition());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, inside of the misalignment tolerance.
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3);
-		bomb.setXPosition(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Bomb.MISALIGNMENT_ALLOWED);
-		bomb.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 3 + 4, bomb.getYPosition());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT * 3 + Bomb.MISALIGNMENT_ALLOWED - 4, bomb.getXPosition());
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
+		bomb.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomb.MISALIGNMENT_ALLOWED);
+		bomb.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomb.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomb.MISALIGNMENT_ALLOWED - 4, bomb.getXPosition());
 	}
 
 	@Test

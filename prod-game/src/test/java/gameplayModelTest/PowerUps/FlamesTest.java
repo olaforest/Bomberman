@@ -1,10 +1,10 @@
 package gameplayModelTest.PowerUps;
 
-import gameplayModel.GridObject;
 import gameplayModel.GridObjects.PowerUps.Flames;
 import org.junit.Before;
 import org.junit.Test;
 
+import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 
 public class FlamesTest {
@@ -13,7 +13,7 @@ public class FlamesTest {
 
 	@Before
 	public void setUp() {
-		flames = new Flames(GridObject.EFFECTIVE_PIXEL_WIDTH, GridObject.EFFECTIVE_PIXEL_HEIGHT);
+		flames = new Flames(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test
@@ -22,15 +22,15 @@ public class FlamesTest {
 		int[] imageParam = {145, 259};
 
 		assertTrue(flames.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, flames.generateImage(imageParam).getWidth());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, flames.generateImage(imageParam).getHeight());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, flames.generateImage(imageParam).getWidth());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, flames.generateImage(imageParam).getHeight());
 	}
 
 	@Test
 	public void testGetImage() {
 		assertTrue(flames.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, flames.getImage().getWidth());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, flames.getImage().getHeight());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, flames.getImage().getWidth());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, flames.getImage().getHeight());
 	}
 
 	@Test
@@ -47,16 +47,16 @@ public class FlamesTest {
 	public void testGetAndSetXPosition() {
 
 		//Tests if the inputed x position is valid.
-		flames.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, flames.getXPosition());
+		flames.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flames.getXPosition());
 	}
 
 	@Test
 	public void testGetAndSetYPosition() {
 
 		//Tests if the inputed y position is valid.
-		flames.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, flames.getYPosition());
+		flames.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flames.getYPosition());
 	}
 
 	@Test

@@ -1,10 +1,10 @@
 package gameplayModelTest.PowerUps;
 
-import gameplayModel.GridObject;
 import gameplayModel.GridObjects.PowerUps.BombPU;
 import org.junit.Before;
 import org.junit.Test;
 
+import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 
 public class BombPUTest {
@@ -13,7 +13,7 @@ public class BombPUTest {
 
 	@Before
 	public void setUp() {
-		bombPU = new BombPU(GridObject.EFFECTIVE_PIXEL_WIDTH, GridObject.EFFECTIVE_PIXEL_HEIGHT);
+		bombPU = new BombPU(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test
@@ -22,15 +22,15 @@ public class BombPUTest {
 		int[] imageParam = {163, 259};
 
 		assertTrue(bombPU.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, bombPU.generateImage(imageParam).getWidth());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, bombPU.generateImage(imageParam).getHeight());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bombPU.generateImage(imageParam).getWidth());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bombPU.generateImage(imageParam).getHeight());
 	}
 
 	@Test
 	public void testGetImage() {
 		assertTrue(bombPU.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH, bombPU.getImage().getWidth());
-		assertEquals(GridObject.EFFECTIVE_PIXEL_HEIGHT, bombPU.getImage().getHeight());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bombPU.getImage().getWidth());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bombPU.getImage().getHeight());
 	}
 
 	@Test
@@ -47,16 +47,16 @@ public class BombPUTest {
 	public void testGetAndSetXPosition() {
 
 		//Tests if the inputed x position is valid.
-		bombPU.setXPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, bombPU.getXPosition());
+		bombPU.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bombPU.getXPosition());
 	}
 
 	@Test
 	public void testGetAndSetYPosition() {
 
 		//Tests if the inputed y position is valid.
-		bombPU.setYPosition(GridObject.EFFECTIVE_PIXEL_WIDTH * 2);
-		assertEquals(GridObject.EFFECTIVE_PIXEL_WIDTH * 2, bombPU.getYPosition());
+		bombPU.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bombPU.getYPosition());
 	}
 
 	@Test

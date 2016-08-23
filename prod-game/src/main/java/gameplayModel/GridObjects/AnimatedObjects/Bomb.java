@@ -185,29 +185,28 @@ public class Bomb extends AnimatedObject {
 	private IntConsumer addDownAnimation = offset -> addAnimation(expDown.ordinal(), 0, offset);
 
 	private void setRanges() {
-
-		boolean isNotAlignedWithRow = (yPosition % (EFFECTIVE_PIXEL_HEIGHT * 2)) == 0;
+		boolean isNotAlignedWithRow = (yPosition % (EFFECTIVE_PIXEL_DIMENSION * 2)) == 0;
 
 		if (isNotAlignedWithRow) {
 			rightRange = 0;
 			leftRange = 0;
 		} else {
-			if ((xPosition + rightRange * EFFECTIVE_PIXEL_WIDTH) >= EFFECTIVE_PIXEL_WIDTH * (GridMap.MAPWIDTH - 2))
-				rightRange = (GridMap.MAPWIDTH - 2) - xPosition / EFFECTIVE_PIXEL_WIDTH;
-			if ((xPosition - leftRange * EFFECTIVE_PIXEL_WIDTH) <= EFFECTIVE_PIXEL_WIDTH)
-				leftRange = xPosition / EFFECTIVE_PIXEL_WIDTH - 1;
+			if ((xPosition + rightRange * EFFECTIVE_PIXEL_DIMENSION) >= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPWIDTH - 2))
+				rightRange = (GridMap.MAPWIDTH - 2) - xPosition / EFFECTIVE_PIXEL_DIMENSION;
+			if ((xPosition - leftRange * EFFECTIVE_PIXEL_DIMENSION) <= EFFECTIVE_PIXEL_DIMENSION)
+				leftRange = xPosition / EFFECTIVE_PIXEL_DIMENSION - 1;
 		}
 
-		boolean isNotAlignedWithColumn = (xPosition % (EFFECTIVE_PIXEL_WIDTH * 2)) == 0;
+		boolean isNotAlignedWithColumn = (xPosition % (EFFECTIVE_PIXEL_DIMENSION * 2)) == 0;
 
 		if (isNotAlignedWithColumn) {
 			downRange = 0;
 			upRange = 0;
 		} else {
-			if ((yPosition + downRange * EFFECTIVE_PIXEL_HEIGHT) >= EFFECTIVE_PIXEL_HEIGHT * (GridMap.MAPHEIGHT - 2))
-				downRange = (GridMap.MAPHEIGHT - 2) - yPosition / EFFECTIVE_PIXEL_HEIGHT;
-			if ((yPosition - upRange * EFFECTIVE_PIXEL_HEIGHT) <= EFFECTIVE_PIXEL_HEIGHT)
-				upRange = yPosition / EFFECTIVE_PIXEL_HEIGHT - 1;
+			if ((yPosition + downRange * EFFECTIVE_PIXEL_DIMENSION) >= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPHEIGHT - 2))
+				downRange = (GridMap.MAPHEIGHT - 2) - yPosition / EFFECTIVE_PIXEL_DIMENSION;
+			if ((yPosition - upRange * EFFECTIVE_PIXEL_DIMENSION) <= EFFECTIVE_PIXEL_DIMENSION)
+				upRange = yPosition / EFFECTIVE_PIXEL_DIMENSION - 1;
 		}
 	}
 
