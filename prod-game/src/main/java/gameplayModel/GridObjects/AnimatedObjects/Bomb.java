@@ -10,7 +10,10 @@ import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.*;
+import java.util.function.BooleanSupplier;
+import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
+import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 
 import static gameplayModel.GridMap.MAPHEIGHT;
@@ -197,6 +200,10 @@ public class Bomb extends AnimatedObject {
 			setAdjustedRanges.run();
 	}
 
+	private IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0;
+	private BooleanSupplier isNotAlignedWithRow = () -> isNotAlignedWithRowOrColumn.test(yPosition);
+	private BooleanSupplier isNotAlignedWithColumn = () -> isNotAlignedWithRowOrColumn.test(xPosition);
+
 	private void resetHorizontalRanges() {
 		rightRange = 0;
 		leftRange = 0;
@@ -208,28 +215,27 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private void setHorizontalRanges() {
-		if (maxRangePosition.applyAsInt(xPosition, rightRange) >= MAX_X_POSITION)
-			rightRange = adjustedMaxRangePosition.applyAsInt(xPosition, MAPWIDTH);
-		if (minRangePosition.applyAsInt(xPosition, leftRange) <= MIN_X_POSITION)
-			leftRange = adjustedMinRangePosition.applyAsInt(xPosition);
+		if (maxRangePosition(xPosition, rightRange) >= MAX_X_POSITION)
+			rightRange = adjustedMaxRangePosition(xPosition, MAPWIDTH);
+		if (minRangePosition(xPosition, leftRange) <= MIN_X_POSITION)
+			leftRange = adjustedMinRangePosition(xPosition);
 	}
 
 	private void setVerticalRanges() {
-		if (maxRangePosition.applyAsInt(yPosition, downRange) >= MAX_Y_POSITION)
-			downRange = adjustedMaxRangePosition.applyAsInt(yPosition, MAPHEIGHT);
-		if (minRangePosition.applyAsInt(yPosition, upRange) <= MIN_Y_POSITION)
-			upRange = adjustedMinRangePosition.applyAsInt(yPosition);
+		if (maxRangePosition(yPosition, downRange) >= MAX_Y_POSITION)
+			downRange = adjustedMaxRangePosition(yPosition, MAPHEIGHT);
+		if (minRangePosition(yPosition, upRange) <= MIN_Y_POSITION)
+			upRange = adjustedMinRangePosition(yPosition);
 	}
 
-	private IntBinaryOperator maxRangePosition = (position, maxRange) -> position + maxRange * EFFECTIVE_PIXEL_DIMENSION;
-	private IntBinaryOperator minRangePosition = (position, minRange) -> position - minRange * EFFECTIVE_PIXEL_DIMENSION;
+	private int maxRangePosition(int position, int maxRange) { return position + maxRange * EFFECTIVE_PIXEL_DIMENSION; }
+	private int minRangePosition(int position, int minRange) { return position - minRange * EFFECTIVE_PIXEL_DIMENSION; }
 
-	private IntBinaryOperator adjustedMaxRangePosition = (position, maxDimension) -> (maxDimension - 2) - position / EFFECTIVE_PIXEL_DIMENSION;
-	private IntUnaryOperator adjustedMinRangePosition = position -> position / EFFECTIVE_PIXEL_DIMENSION - 1;
+	private int adjustedMaxRangePosition(int position, int maxDimension) {
+		return (maxDimension - 2) - position / EFFECTIVE_PIXEL_DIMENSION;
+	}
 
-	private IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0;
-	private BooleanSupplier isNotAlignedWithRow = () -> isNotAlignedWithRowOrColumn.test(yPosition);
-	private BooleanSupplier isNotAlignedWithColumn = () -> isNotAlignedWithRowOrColumn.test(xPosition);
+	private int adjustedMinRangePosition(int position) { return position / EFFECTIVE_PIXEL_DIMENSION - 1; }
 
 	private void addAnimation(int animType, int xOffset, int yOffset) {
 		currentAnimations.add(new Animation(animationList.get(animType)));
