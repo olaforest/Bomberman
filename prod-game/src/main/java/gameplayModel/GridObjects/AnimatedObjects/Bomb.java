@@ -2,7 +2,6 @@ package gameplayModel.GridObjects.AnimatedObjects;
 
 import gameplayController.GameplayController;
 import gameplayModel.Animation;
-import gameplayModel.GridMap;
 import gameplayModel.GridObjects.AnimatedObject;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,12 +10,11 @@ import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BooleanSupplier;
-import java.util.function.IntConsumer;
-import java.util.function.IntPredicate;
-import java.util.function.IntUnaryOperator;
+import java.util.function.*;
 import java.util.stream.IntStream;
 
+import static gameplayModel.GridMap.MAPHEIGHT;
+import static gameplayModel.GridMap.MAPWIDTH;
 import static gameplayModel.GridObjects.AnimatedObjects.Bomb.AnimationType.*;
 import static java.util.Arrays.asList;
 import static java.util.function.IntUnaryOperator.identity;
@@ -188,26 +186,46 @@ public class Bomb extends AnimatedObject {
 	private IntConsumer addDownAnimation = offset -> addAnimation(expDown.ordinal(), 0, offset);
 
 	private void setRanges() {
-		if (isNotAlignedWithRow.getAsBoolean()) {
-			rightRange = 0;
-			leftRange = 0;
-		} else {
-			if ((xPosition + rightRange * EFFECTIVE_PIXEL_DIMENSION) >= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPWIDTH - 2))
-				rightRange = (GridMap.MAPWIDTH - 2) - xPosition / EFFECTIVE_PIXEL_DIMENSION;
-			if ((xPosition - leftRange * EFFECTIVE_PIXEL_DIMENSION) <= EFFECTIVE_PIXEL_DIMENSION)
-				leftRange = xPosition / EFFECTIVE_PIXEL_DIMENSION - 1;
-		}
-
-		if (isNotAlignedWithColumn.getAsBoolean()) {
-			downRange = 0;
-			upRange = 0;
-		} else {
-			if ((yPosition + downRange * EFFECTIVE_PIXEL_DIMENSION) >= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPHEIGHT - 2))
-				downRange = (GridMap.MAPHEIGHT - 2) - yPosition / EFFECTIVE_PIXEL_DIMENSION;
-			if ((yPosition - upRange * EFFECTIVE_PIXEL_DIMENSION) <= EFFECTIVE_PIXEL_DIMENSION)
-				upRange = yPosition / EFFECTIVE_PIXEL_DIMENSION - 1;
-		}
+		setRanges(isNotAlignedWithRow, this::resetHorizontalRanges, this::setHorizontalRanges);
+		setRanges(isNotAlignedWithColumn, this::resetVerticalRanges, this::setVerticalRanges);
 	}
+
+	private void setRanges(BooleanSupplier isNotAligned, Runnable resetRanges, Runnable setAdjustedRanges) {
+		if (isNotAligned.getAsBoolean())
+			resetRanges.run();
+		else
+			setAdjustedRanges.run();
+	}
+
+	private void resetHorizontalRanges() {
+		rightRange = 0;
+		leftRange = 0;
+	}
+
+	private void resetVerticalRanges() {
+		downRange = 0;
+		upRange = 0;
+	}
+
+	private void setHorizontalRanges() {
+		if (maxRangePosition.applyAsInt(xPosition, rightRange) >= MAX_X_POSITION)
+			rightRange = adjustedMaxRangePosition.applyAsInt(xPosition, MAPWIDTH);
+		if (minRangePosition.applyAsInt(xPosition, leftRange) <= MIN_X_POSITION)
+			leftRange = adjustedMinRangePosition.applyAsInt(xPosition);
+	}
+
+	private void setVerticalRanges() {
+		if (maxRangePosition.applyAsInt(yPosition, downRange) >= MAX_Y_POSITION)
+			downRange = adjustedMaxRangePosition.applyAsInt(yPosition, MAPHEIGHT);
+		if (minRangePosition.applyAsInt(yPosition, upRange) <= MIN_Y_POSITION)
+			upRange = adjustedMinRangePosition.applyAsInt(yPosition);
+	}
+
+	private IntBinaryOperator maxRangePosition = (position, maxRange) -> position + maxRange * EFFECTIVE_PIXEL_DIMENSION;
+	private IntBinaryOperator minRangePosition = (position, minRange) -> position - minRange * EFFECTIVE_PIXEL_DIMENSION;
+
+	private IntBinaryOperator adjustedMaxRangePosition = (position, maxDimension) -> (maxDimension - 2) - position / EFFECTIVE_PIXEL_DIMENSION;
+	private IntUnaryOperator adjustedMinRangePosition = position -> position / EFFECTIVE_PIXEL_DIMENSION - 1;
 
 	private IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0;
 	private BooleanSupplier isNotAlignedWithRow = () -> isNotAlignedWithRowOrColumn.test(yPosition);

@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static gameplayModel.GridMap.MAPHEIGHT;
 import static gameplayModel.GridMap.MAPWIDTH;
 
 @Getter
@@ -20,6 +21,10 @@ public class GridObject {
 	public static final int EFFECTIVE_PIXEL_DIMENSION = PIXEL_DIMENSION * ZOOM;
 	public static final int MISALIGNMENT_ALLOWED = 16;
 	public static final int ADJUSTMENT = 4;
+	protected static final int MIN_Y_POSITION = EFFECTIVE_PIXEL_DIMENSION;
+	protected static final int MIN_X_POSITION = EFFECTIVE_PIXEL_DIMENSION;
+	protected static final int MAX_X_POSITION = EFFECTIVE_PIXEL_DIMENSION * (MAPWIDTH - 2);
+	protected static final int MAX_Y_POSITION = EFFECTIVE_PIXEL_DIMENSION * (MAPHEIGHT - 2);
 
 	protected int xPosition;
 	protected int yPosition;
