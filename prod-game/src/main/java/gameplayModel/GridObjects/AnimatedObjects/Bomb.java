@@ -3,7 +3,6 @@ package gameplayModel.GridObjects.AnimatedObjects;
 import gameplayController.GameplayController;
 import gameplayModel.Animation;
 import gameplayModel.GridObjects.AnimatedObject;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -50,9 +49,6 @@ public class Bomb extends AnimatedObject {
 	@Accessors(fluent = true)
 	private boolean wasTrigByBomb;
 
-	@Getter(AccessLevel.NONE)
-	private boolean wasRightRangeChg, wasLeftRangeChg, wasDownRangeChg, wasUpRangeChg;
-
 	public Bomb(int x, int y) {
 		super(x, y);
 
@@ -63,7 +59,7 @@ public class Bomb extends AnimatedObject {
 		timer = TIME_TO_EXPLOSION;
 		rightRange = leftRange = downRange = upRange = range;
 		setRanges();
-		wasTrigByBomb = wasRightRangeChg = wasLeftRangeChg = wasDownRangeChg = wasUpRangeChg = false;
+		wasTrigByBomb = false;
 
 		addAnimation(unexploded.ordinal(), 0, 0);
 	}
@@ -143,29 +139,31 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private void processRanges() {
-		processHorizontalRange(leftRange, wasLeftRangeChg, addLeftAnimation, i -> -i);
-		processHorizontalRange(rightRange, wasRightRangeChg, addRightAnimation, identity());
-		processVerticalRange(upRange, wasUpRangeChg, addUpAnimation, i -> -i);
-		processVerticalRange(downRange, wasDownRangeChg, addDownAnimation, identity());
+		processHorizontalRange(leftRange, addLeftAnimation, i -> -i);
+		processHorizontalRange(rightRange, addRightAnimation, identity());
+		processVerticalRange(upRange, addUpAnimation, i -> -i);
+		processVerticalRange(downRange, addDownAnimation, identity());
 	}
 
-	private void processHorizontalRange(int size, boolean wasRangeChg, IntConsumer animType, IntUnaryOperator direction) {
-		processRange(size, wasRangeChg, animType, addHorizontalAnimation, direction);
+	private void processHorizontalRange(int size, IntConsumer animType, IntUnaryOperator direction) {
+		processRange(size, animType, addHorizontalAnimation, direction);
 	}
 
-	private void processVerticalRange(int size, boolean wasRangeChg, IntConsumer animType, IntUnaryOperator direction) {
-		processRange(size, wasRangeChg, animType, addVerticalAnimation, direction);
+	private void processVerticalRange(int size, IntConsumer animType, IntUnaryOperator direction) {
+		processRange(size, animType, addVerticalAnimation, direction);
 	}
 
-	private void processRange(int size, boolean wasRangeChg, IntConsumer addEndAnim, IntConsumer addIntermediateAnim,
+	private void processRange(int size, IntConsumer addEndAnim, IntConsumer addIntermediateAnim,
 							  IntUnaryOperator direction) {
 		if (size > 0) {
-			if (wasRangeChg)
+			if (isRangeChanged.test(size))
 				addChangedRangeAnim(size, addIntermediateAnim, direction);
 			else
 				addRangeAnim(size, addEndAnim, addIntermediateAnim, direction);
 		}
 	}
+
+	private IntPredicate isRangeChanged = (size) -> range != size;
 
 	private void addChangedRangeAnim(int rangeSize, IntConsumer addIntermediateAnim, IntUnaryOperator direction) {
 		IntStream.rangeClosed(1, rangeSize)
@@ -268,22 +266,18 @@ public class Bomb extends AnimatedObject {
 	}
 
 	public void setRightRange(int rightRange) {
-		wasRightRangeChg = true;
 		this.rightRange = rightRange;
 	}
 
 	public void setLeftRange(int leftRange) {
-		wasLeftRangeChg = true;
 		this.leftRange = leftRange;
 	}
 
 	public void setDownRange(int downRange) {
-		wasDownRangeChg = true;
 		this.downRange = downRange;
 	}
 
 	public void setUpRange(int upRange) {
-		wasUpRangeChg = true;
 		this.upRange = upRange;
 	}
 
