@@ -43,8 +43,7 @@ public class Bomb extends AnimatedObject {
 	private List<Animation> currentAnimations;
 	private List<Integer> animXOffset, animYOffset;
 	@Setter
-	private int timer;
-	private int rightRange, leftRange, downRange, upRange;
+	private int timer, rightRange, leftRange, downRange, upRange;
 
 	@Accessors(fluent = true)
 	private boolean wasTrigByBomb;
@@ -81,9 +80,7 @@ public class Bomb extends AnimatedObject {
 		addAnimation(unexploded.ordinal(), 0, 0);
 	}
 
-	public void generateAnimationList() {
-		animationList = generateAnimationList(asList(values()));
-	}
+	public void generateAnimationList() { animationList = generateAnimationList(asList(values())); }
 
 	private List<Animation> generateAnimationList(List<?> animationType) {
 		return IntStream.range(0, animationType.size())
@@ -253,36 +250,13 @@ public class Bomb extends AnimatedObject {
 		animYOffset.clear();
 	}
 
-	public void setWasTrigByBomb() {
-		wasTrigByBomb = true;
-	}
+	public void setWasTrigByBomb() { wasTrigByBomb = true; }
 
-	public static void increaseRange() {
-		range++;
-	}
+	public static void increaseRange() { range++; }
 
-	public static void resetRange() {
-		range = 1;
-	}
-
-	public void setRightRange(int rightRange) {
-		this.rightRange = rightRange;
-	}
-
-	public void setLeftRange(int leftRange) {
-		this.leftRange = leftRange;
-	}
-
-	public void setDownRange(int downRange) {
-		this.downRange = downRange;
-	}
-
-	public void setUpRange(int upRange) {
-		this.upRange = upRange;
-	}
+	public static void resetRange() { range = 1; }
 
 	public ArrayList<String> toCSVEntry() {
-
 		ArrayList<String> entryList = new ArrayList<>();
 
 		entryList.add(Integer.toString(xPosition));
@@ -296,5 +270,3 @@ public class Bomb extends AnimatedObject {
 		return entryList;
 	}
 }
-
-
