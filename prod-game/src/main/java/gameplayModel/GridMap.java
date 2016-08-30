@@ -12,11 +12,11 @@ import gameplayModel.GridObjects.PowerUps.*;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 
 public class GridMap {
-
 	public static final int MAPWIDTH = 31;
 	public static final int MAPHEIGHT = 13;
 	public final int SPAWN_TIMEOUT = 10 * 1000;
@@ -26,20 +26,13 @@ public class GridMap {
 	private int brickExitIndex, spawnTimer;
 	private int[] levelSpec;
 
-	@Getter
-	private ArrayList<Concrete> concreteLayout;
-	@Getter
-	private ArrayList<Brick> bricks;
-	@Getter
-	private ArrayList<Bomb> bombs;
-	@Getter
-	private ArrayList<Enemy> enemies;
-	@Getter
-	private Exitway exitway;
-	@Getter
-	private PowerUp powerUp;
-	@Getter
-	private Bomberman bomberman;
+	@Getter private List<Concrete> concreteLayout;
+	@Getter private List<Brick> bricks;
+	@Getter private List<Bomb> bombs;
+	@Getter private List<Enemy> enemies;
+	@Getter private Exitway exitway;
+	@Getter private PowerUp powerUp;
+	@Getter private Bomberman bomberman;
 
 	public GridMap(int[] levelSpecification) {
 
