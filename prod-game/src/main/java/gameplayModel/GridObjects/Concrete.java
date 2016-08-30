@@ -9,7 +9,7 @@ public class Concrete extends GridObject {
 
 	@Getter
 	private BufferedImage image;
-	final private int[] imageParameter = {2, 259};
+	private static final int[] imageParameter = {2, 259};
 
 	public Concrete(int x, int y) {
 		super(x, y);
@@ -17,12 +17,8 @@ public class Concrete extends GridObject {
 	}
 
 	@Override
-	public void setXPosition(int xPosition) {
-		this.xPosition = xPosition;
-	}
+	public void setXPosition(int xPosition) { this.xPosition = xPosition; }
 
 	@Override
-	public void setYPosition(int yPosition) {
-		this.yPosition = yPosition;
-	}
+	public void setYPosition(int yPosition) { this.yPosition = yPosition; }
 }

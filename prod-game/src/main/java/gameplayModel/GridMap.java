@@ -35,7 +35,6 @@ public class GridMap {
 	@Getter private Bomberman bomberman;
 
 	public GridMap(int[] levelSpecification) {
-
 		levelSpec = levelSpecification;
 		spawnTimer = SPAWN_TIMEOUT;
 		concreteLayout = new ArrayList<>();
@@ -47,8 +46,7 @@ public class GridMap {
 		populateMap(levelSpec);
 	}
 
-	public GridMap(int spawnTimer, ArrayList<Brick> bricks, ArrayList<Bomb> bombs, ArrayList<Enemy> enemies, Exitway exitway, PowerUp powerup, Bomberman bomberman) {
-
+	public GridMap(int spawnTimer, List<Brick> bricks, List<Bomb> bombs, List<Enemy> enemies, Exitway exitway, PowerUp powerup, Bomberman bomberman) {
 		this.spawnTimer = spawnTimer;
 		concreteLayout = new ArrayList<>();
 		this.bricks = bricks;
@@ -62,10 +60,6 @@ public class GridMap {
 	}
 
 	private void generateMap() {
-
-		int width = EFFECTIVE_PIXEL_DIMENSION;
-		int height = EFFECTIVE_PIXEL_DIMENSION;
-
 		for (int i = 0; i < MAPWIDTH; i++) {
 			concreteLayout.add(new Concrete(i * width, 0));
 			concreteLayout.add(new Concrete(i * width, (MAPHEIGHT - 1) * height));
