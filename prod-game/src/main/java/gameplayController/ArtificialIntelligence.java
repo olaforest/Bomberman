@@ -7,23 +7,23 @@ import gameplayModel.GridObjects.AnimatedObjects.Brick;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import utility.Node;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 
 public class ArtificialIntelligence {
 
-	private ArrayList<Enemy> enemies;
-	private ArrayList<Brick> bricks;
-	private ArrayList<Bomb> bombs;
+	private List<Enemy> enemies;
+	private List<Brick> bricks;
+	private List<Bomb> bombs;
 	private CollisionDetector detector;
 	private Bomberman bomberman;
-	boolean collision;
-	int collisionCount;
+	private boolean collision;
+	private int collisionCount;
 
-	public ArtificialIntelligence(Bomberman b, ArrayList<Enemy> e, ArrayList<Brick> br, ArrayList<Bomb> bo, CollisionDetector cD) {
+	public ArtificialIntelligence(Bomberman b, List<Enemy> e, List<Brick> br, List<Bomb> bo, CollisionDetector cD) {
 		enemies = e;
 		bricks = br;
 		bombs = bo;
@@ -73,9 +73,7 @@ public class ArtificialIntelligence {
 
 				moveEnemy(enemy);
 
-				collision = false;
-
-				if (enemy.isConcreteCollision()) collision = true;
+				collision = enemy.isConcreteCollision();
 
 				if (!(enemy.isWallpass())) {
 					// Now we check if any bricks or bombs are colliding with the enemy due to its initial movement

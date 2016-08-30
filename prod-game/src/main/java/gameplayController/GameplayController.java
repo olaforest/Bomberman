@@ -25,6 +25,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.List;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 
@@ -47,11 +48,11 @@ public class GameplayController implements ActionListener {
 	private GameStatusPanel gameStatusPanel;
 
 	private ArrayDeque<Integer> activeDirectionKeys;
-	private ArrayList<Concrete> concreteLayout;
-	private ArrayList<Brick> bricks;
-	private ArrayList<Bomb> bombs;
-	private ArrayList<Bomb> unexplodedBombs;
-	private ArrayList<Enemy> enemies;
+	private List<Concrete> concreteLayout;
+	private List<Brick> bricks;
+	private List<Bomb> bombs;
+	private List<Bomb> unexplodedBombs;
+	private List<Enemy> enemies;
 	private Bomberman bomberman;
 	private Exitway exitway;
 	private PowerUp powerup;

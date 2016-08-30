@@ -9,14 +9,15 @@ import gameplayModel.GridObjects.AnimatedObjects.Brick;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 
 public class CollisionDetector {
 
 	private GameContext gameContext;
-	private ArrayList<Brick> bricks;
-	private ArrayList<Enemy> enemies;
+	private List<Brick> bricks;
+	private List<Enemy> enemies;
 
 	public CollisionDetector(GameContext gC) {
 		gameContext = gC;
