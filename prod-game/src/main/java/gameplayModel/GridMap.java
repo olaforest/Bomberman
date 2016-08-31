@@ -60,16 +60,26 @@ public class GridMap {
 	}
 
 	private void generateMap() {
+		addHorizontalConcreteBoundary();
+		addVerticalConcreteBoundary();
+		addInnerConcreteBlocks();
+	}
+
+	private void addHorizontalConcreteBoundary() {
 		for (int i = 0; i < MAPWIDTH; i++) {
 			concreteLayout.add(new Concrete(i * width, 0));
 			concreteLayout.add(new Concrete(i * width, (MAPHEIGHT - 1) * height));
 		}
+	}
 
+	private void addVerticalConcreteBoundary() {
 		for (int i = 1; i < MAPHEIGHT - 1; i++) {
 			concreteLayout.add(new Concrete(0, i * height));
 			concreteLayout.add(new Concrete((MAPWIDTH - 1) * width, i * height));
 		}
+	}
 
+	private void addInnerConcreteBlocks() {
 		for (int i = 2; i < MAPWIDTH - 2; i += 2) {
 			for (int j = 2; j < MAPHEIGHT - 2; j += 2)
 				concreteLayout.add(new Concrete(i * width, j * height));
@@ -90,7 +100,6 @@ public class GridMap {
 	}
 
 	private void distributeBricks() {
-
 		double p = 0.225;
 
 		for (int i = 1; i < MAPHEIGHT; i += 2) {
