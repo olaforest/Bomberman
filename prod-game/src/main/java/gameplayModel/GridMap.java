@@ -13,6 +13,7 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 
@@ -66,24 +67,21 @@ public class GridMap {
 	}
 
 	private void addHorizontalConcreteBoundary() {
-		for (int i = 0; i < MAPWIDTH; i++) {
-			concreteLayout.add(new Concrete(i * width, 0));
-			concreteLayout.add(new Concrete(i * width, (MAPHEIGHT - 1) * height));
-		}
+		IntStream.range(0, MAPWIDTH)
+				.peek(i -> concreteLayout.add(new Concrete(i * width, 0)))
+				.forEach(i -> concreteLayout.add(new Concrete(i * width, (MAPHEIGHT - 1) * height)));
 	}
 
 	private void addVerticalConcreteBoundary() {
-		for (int i = 1; i < MAPHEIGHT - 1; i++) {
-			concreteLayout.add(new Concrete(0, i * height));
-			concreteLayout.add(new Concrete((MAPWIDTH - 1) * width, i * height));
-		}
+		IntStream.range(1, MAPHEIGHT - 1)
+				.peek(i -> concreteLayout.add(new Concrete(0, i * height)))
+				.forEach(i -> concreteLayout.add(new Concrete((MAPWIDTH - 1) * width, i * height)));
 	}
 
 	private void addInnerConcreteBlocks() {
-		for (int i = 2; i < MAPWIDTH - 2; i += 2) {
+		for (int i = 2; i < MAPWIDTH - 2; i += 2)
 			for (int j = 2; j < MAPHEIGHT - 2; j += 2)
 				concreteLayout.add(new Concrete(i * width, j * height));
-		}
 	}
 
 	private void populateMap(int[] levelSpec) {
