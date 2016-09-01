@@ -79,9 +79,12 @@ public class GridMap {
 	}
 
 	private void addInnerConcreteBlocks() {
-		for (int i = 2; i < MAPWIDTH - 2; i += 2)
-			for (int j = 2; j < MAPHEIGHT - 2; j += 2)
-				concreteLayout.add(new Concrete(i * width, j * height));
+		for (int i = 2; i < MAPWIDTH - 2; i += 2) addInnerConcreteBlockRow(i);
+	}
+
+	private void addInnerConcreteBlockRow(int i) {
+		for (int j = 2; j < MAPHEIGHT - 2; j += 2)
+			concreteLayout.add(new Concrete(i * width, j * height));
 	}
 
 	private void populateMap(int[] levelSpec) {
