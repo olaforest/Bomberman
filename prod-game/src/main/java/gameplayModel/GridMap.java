@@ -44,7 +44,7 @@ public class GridMap {
 		enemies = new ArrayList<>();
 
 		generateMap();
-		populateMap(levelSpec);
+		populateMap();
 	}
 
 	public GridMap(int spawnTimer, List<Brick> bricks, List<Bomb> bombs, List<Enemy> enemies, Exitway exitway, PowerUp powerup, Bomberman bomberman) {
@@ -87,8 +87,7 @@ public class GridMap {
 			concreteLayout.add(new Concrete(i * width, j * height));
 	}
 
-	private void populateMap(int[] levelSpec) {
-
+	private void populateMap() {
 		this.bomberman = new Bomberman(width, height);
 
 		if (levelSpec[8] != 0) {
