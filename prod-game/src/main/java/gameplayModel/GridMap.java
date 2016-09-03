@@ -20,7 +20,8 @@ import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 public class GridMap {
 	public static final int MAPWIDTH = 31;
 	public static final int MAPHEIGHT = 13;
-	public final int SPAWN_TIMEOUT = 10 * 1000;
+	public static final int SPAWN_TIMEOUT = 10 * 1000;
+	private static final double BRICK_FACTOR = 0.225;
 
 	private int width = EFFECTIVE_PIXEL_DIMENSION;
 	private int height = EFFECTIVE_PIXEL_DIMENSION;
@@ -89,29 +90,39 @@ public class GridMap {
 
 	private void populateMap() {
 		this.bomberman = new Bomberman(width, height);
-
-		if (levelSpec[8] != 0) {
-			distributeBricks();
-			addExitway();
-			addPowerup(levelSpec[8]);
-			generateEnemies(levelSpec);
-		} else
-			spawnMoreEnemies(levelSpec);
+		if (levelSpec[8] != 0)
+			populateStandardMap();
+		else
+			populateSpecialMap();
 	}
 
-	private void distributeBricks() {
-		double p = 0.225;
+	private void populateStandardMap() {
+		distributeBricks();
+		addExitway();
+		addPowerup(levelSpec[8]);
+		generateEnemies(levelSpec);
+	}
 
-		for (int i = 1; i < MAPHEIGHT; i += 2) {
-			for (int j = 1; j < MAPWIDTH - 1; j++) {
-				if (Math.random() < p && !(i == 1 && j == 1) && !(i == 1 && j == 2))
+	private void populateSpecialMap() {spawnMoreEnemies(levelSpec);}
+
+	private void distributeBricks() {
+		addBricksToOddRows();
+		addBricksToEvenRows();
+	}
+
+	private void addBricksToEvenRows() {
+		for (int i = 2; i < MAPHEIGHT - 1; i += 2) {
+			for (int j = 1; j < MAPWIDTH - 1; j += 2) {
+				if (Math.random() < BRICK_FACTOR && !(i == 2 && j == 1))
 					bricks.add(new Brick(width * j, height * i));
 			}
 		}
+	}
 
-		for (int i = 2; i < MAPHEIGHT - 1; i += 2) {
-			for (int j = 1; j < MAPWIDTH - 1; j += 2) {
-				if (Math.random() < p && !(i == 2 && j == 1))
+	private void addBricksToOddRows() {
+		for (int i = 1; i < MAPHEIGHT; i += 2) {
+			for (int j = 1; j < MAPWIDTH - 1; j++) {
+				if (Math.random() < BRICK_FACTOR && !(i == 1 && j == 1) && !(i == 1 && j == 2))
 					bricks.add(new Brick(width * j, height * i));
 			}
 		}
