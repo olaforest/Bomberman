@@ -13,7 +13,7 @@ public class BombPUTest {
 
 	@Before
 	public void setUp() {
-		bombPU = new BombPU(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		bombPU = new BombPU(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION, -1);
 	}
 
 	@Test

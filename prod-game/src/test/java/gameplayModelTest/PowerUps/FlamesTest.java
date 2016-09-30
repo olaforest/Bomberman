@@ -13,7 +13,7 @@ public class FlamesTest {
 
 	@Before
 	public void setUp() {
-		flames = new Flames(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		flames = new Flames(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION, -1);
 	}
 
 	@Test

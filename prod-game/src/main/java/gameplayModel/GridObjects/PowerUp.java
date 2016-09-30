@@ -1,18 +1,17 @@
 package gameplayModel.GridObjects;
 
-import gameplayModel.GridObject;
 import lombok.Getter;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public abstract class PowerUp extends GridObject {
+public abstract class PowerUp extends HiddenObject {
 	@Getter private BufferedImage image;
 	@Getter protected boolean isPermanent;
 	private final int[] imageParameter;
 
-	public PowerUp(int x, int y, int[] imageParameter) {
-		super(x, y);
+	protected PowerUp(int x, int y, int index, int[] imageParameter) {
+		super(x, y, index);
 		this.imageParameter = imageParameter;
 		image = generateImage();
 	}

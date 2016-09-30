@@ -13,7 +13,7 @@ public class BombpassTest {
 
 	@Before
 	public void setUp() {
-		bombpass = new Bombpass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		bombpass = new Bombpass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION, -1);
 	}
 
 	@Test

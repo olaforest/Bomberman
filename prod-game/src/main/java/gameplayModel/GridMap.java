@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayModel.GridObjects.HiddenObject.generateIndex;
 import static gameplayModel.GridObjects.factories.PowerUpFactory.createNewPowerUp;
 
 public class GridMap {
@@ -26,7 +27,7 @@ public class GridMap {
 
 	private int width = EFFECTIVE_PIXEL_DIMENSION;
 	private int height = EFFECTIVE_PIXEL_DIMENSION;
-	private int brickExitIndex, spawnTimer;
+	private int spawnTimer;
 	private int[] levelSpec;
 
 	@Getter private List<Concrete> concreteLayout;
@@ -129,17 +130,17 @@ public class GridMap {
 	}
 
 	private void addExitway() {
-		brickExitIndex = (int) (Math.random() * bricks.size());
-		exitway = new Exitway(bricks.get(brickExitIndex).getXPosition(), bricks.get(brickExitIndex).getYPosition());
+		int brickIndex = generateIndex(bricks.size());
+		exitway = new Exitway(bricks.get(brickIndex).getXPosition(), bricks.get(brickIndex).getYPosition(), brickIndex);
 	}
 
 	private void addPowerup(int type) {
-		int brickPowerUpIndex = (int) (Math.random() * bricks.size());
+		int brickUpIndex = generateIndex(bricks.size());
 
-		while (brickPowerUpIndex == brickExitIndex)
-			brickPowerUpIndex = (int) (Math.random() * bricks.size());
+		while (brickUpIndex == exitway.getBrickIndex())
+			brickUpIndex = generateIndex(bricks.size());
 
-		powerUp = createNewPowerUp(type, bricks.get(brickPowerUpIndex).getXPosition(), bricks.get(brickPowerUpIndex).getYPosition());
+		powerUp = createNewPowerUp(type, bricks.get(brickUpIndex).getXPosition(), bricks.get(brickUpIndex).getYPosition(), brickUpIndex);
 	}
 
 	public void generateEnemies(int[] levelSpec) {

@@ -13,7 +13,7 @@ public class DetonatorTest {
 
 	@Before
 	public void setUp() {
-		detonator = new Detonator(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		detonator = new Detonator(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION, -1);
 	}
 
 	@Test

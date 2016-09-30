@@ -13,7 +13,7 @@ public class ExitwayTest {
 
 	@Before
 	public void setUp() {
-		exitway = new Exitway(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		exitway = new Exitway(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION, -1);
 	}
 
 	@Test

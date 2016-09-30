@@ -1,19 +1,18 @@
 package gameplayModel.GridObjects;
 
-import gameplayModel.GridObject;
 import lombok.Getter;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Exitway extends GridObject {
+public class Exitway extends HiddenObject {
 
 	@Getter
 	private BufferedImage image;
 	private int[] imageParameter = {2, 241};
 
-	public Exitway(int x, int y) {
-		super(x, y);
+	public Exitway(int x, int y, int index) {
+		super(x, y, index);
 		image = resizeImage(imageParameter[0], imageParameter[1]);
 	}
 

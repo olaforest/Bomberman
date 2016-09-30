@@ -202,7 +202,7 @@ public class Database {
 	private Exitway generateExitway(ArrayList<String> data) {
 		int xPosition = Integer.parseInt(data.remove(0));
 		int yPosition = Integer.parseInt(data.remove(0));
-		return new Exitway(xPosition, yPosition);
+		return new Exitway(xPosition, yPosition, -1);
 	}
 
 	private PowerUp generatePowerUp(ArrayList<String> data) {
@@ -241,21 +241,21 @@ public class Database {
 	private PowerUp determinePowerUp(String type, int xPosition, int yPosition) {
 		switch (type) {
 			case "class gameplayModel.GridObjects.PowerUps.BombPU":
-				return new BombPU(xPosition, yPosition);
+				return new BombPU(xPosition, yPosition, -1);
 			case "class gameplayModel.GridObjects.PowerUps.Flames":
-				return new Flames(xPosition, yPosition);
+				return new Flames(xPosition, yPosition, -1);
 			case "class gameplayModel.GridObjects.PowerUps.Speed":
-				return new Speed(xPosition, yPosition);
+				return new Speed(xPosition, yPosition, -1);
 			case "class gameplayModel.GridObjects.PowerUps.Wallpass":
-				return new Wallpass(xPosition, yPosition);
+				return new Wallpass(xPosition, yPosition, -1);
 			case "class gameplayModel.GridObjects.PowerUps.Detonator":
-				return new Detonator(xPosition, yPosition);
+				return new Detonator(xPosition, yPosition, -1);
 			case "class gameplayModel.GridObjects.PowerUps.Bombpass":
-				return new Bombpass(xPosition, yPosition);
+				return new Bombpass(xPosition, yPosition, -1);
 			case "class gameplayModel.GridObjects.PowerUps.Flamepass":
-				return new Flamepass(xPosition, yPosition);
+				return new Flamepass(xPosition, yPosition, -1);
 			case "class gameplayModel.GridObjects.PowerUps.Mystery":
-				return new Mystery(xPosition, yPosition);
+				return new Mystery(xPosition, yPosition, -1);
 			default:
 				return null;
 		}

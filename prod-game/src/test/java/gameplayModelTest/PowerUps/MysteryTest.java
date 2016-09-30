@@ -13,7 +13,7 @@ public class MysteryTest {
 
 	@Before
 	public void setUp() {
-		mystery = new Mystery(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		mystery = new Mystery(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION, -1);
 	}
 
 	@Test
