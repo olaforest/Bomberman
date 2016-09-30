@@ -9,7 +9,6 @@ import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import gameplayModel.GridObjects.Concrete;
 import gameplayModel.GridObjects.Exitway;
 import gameplayModel.GridObjects.PowerUp;
-import gameplayModel.GridObjects.PowerUps.*;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -17,6 +16,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayModel.GridObjects.factories.PowerUpFactory.createNewPowerUp;
 
 public class GridMap {
 	public static final int MAPWIDTH = 31;
@@ -134,37 +134,12 @@ public class GridMap {
 	}
 
 	private void addPowerup(int type) {
-		int brickPowerupIndex = (int) (Math.random() * bricks.size());
+		int brickPowerUpIndex = (int) (Math.random() * bricks.size());
 
-		while (brickPowerupIndex == brickExitIndex)
-			brickPowerupIndex = (int) (Math.random() * bricks.size());
+		while (brickPowerUpIndex == brickExitIndex)
+			brickPowerUpIndex = (int) (Math.random() * bricks.size());
 
-		switch (type) {
-			case 1:
-				powerUp = new BombPU(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
-				break;
-			case 2:
-				powerUp = new Flames(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
-				break;
-			case 3:
-				powerUp = new Speed(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
-				break;
-			case 4:
-				powerUp = new Wallpass(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
-				break;
-			case 5:
-				powerUp = new Detonator(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
-				break;
-			case 6:
-				powerUp = new Bombpass(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
-				break;
-			case 7:
-				powerUp = new Flamepass(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
-				break;
-			case 8:
-				powerUp = new Mystery(bricks.get(brickPowerupIndex).getXPosition(), bricks.get(brickPowerupIndex).getYPosition());
-				break;
-		}
+		powerUp = createNewPowerUp(type, bricks.get(brickPowerUpIndex).getXPosition(), bricks.get(brickPowerUpIndex).getYPosition());
 	}
 
 	public void generateEnemies(int[] levelSpec) {
