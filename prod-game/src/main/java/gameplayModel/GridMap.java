@@ -48,7 +48,8 @@ public class GridMap {
 		populateMap();
 	}
 
-	public GridMap(int spawnTimer, List<Brick> bricks, List<Bomb> bombs, List<Enemy> enemies, Exitway exitway, PowerUp powerup, Bomberman bomberman) {
+	public GridMap(int spawnTimer, List<Brick> bricks, List<Bomb> bombs, List<Enemy> enemies, Exitway exitway,
+				   PowerUp powerup, Bomberman bomberman) {
 		this.spawnTimer = spawnTimer;
 		concreteLayout = new ArrayList<>();
 		this.bricks = bricks;
@@ -103,26 +104,24 @@ public class GridMap {
 		generateEnemies(levelSpec);
 	}
 
-	private void populateSpecialMap() {spawnMoreEnemies(levelSpec);}
-
 	private void distributeBricks() {
 		addBricksToOddRows();
 		addBricksToEvenRows();
-	}
-
-	private void addBricksToEvenRows() {
-		for (int i = 2; i < MAPHEIGHT - 1; i += 2) {
-			for (int j = 1; j < MAPWIDTH - 1; j += 2) {
-				if (Math.random() < BRICK_FACTOR && !(i == 2 && j == 1))
-					bricks.add(new Brick(width * j, height * i));
-			}
-		}
 	}
 
 	private void addBricksToOddRows() {
 		for (int i = 1; i < MAPHEIGHT; i += 2) {
 			for (int j = 1; j < MAPWIDTH - 1; j++) {
 				if (Math.random() < BRICK_FACTOR && !(i == 1 && j == 1) && !(i == 1 && j == 2))
+					bricks.add(new Brick(width * j, height * i));
+			}
+		}
+	}
+
+	private void addBricksToEvenRows() {
+		for (int i = 2; i < MAPHEIGHT - 1; i += 2) {
+			for (int j = 1; j < MAPWIDTH - 1; j += 2) {
+				if (Math.random() < BRICK_FACTOR && !(i == 2 && j == 1))
 					bricks.add(new Brick(width * j, height * i));
 			}
 		}
@@ -168,7 +167,6 @@ public class GridMap {
 	}
 
 	public void generateEnemies(int[] levelSpec) {
-
 		int[] position;
 
 		for (int i = 0; i < levelSpec[0]; i++) {
@@ -211,6 +209,8 @@ public class GridMap {
 			enemies.add(new Pontan(position[0] * width, position[1] * height));
 		}
 	}
+
+	private void populateSpecialMap() {spawnMoreEnemies(levelSpec);}
 
 	private void spawnMoreEnemies(int[] levelSpec) {
 		int i = 0;
