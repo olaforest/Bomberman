@@ -22,8 +22,8 @@ public class WallpassTest {
 		int[] imageParam = {217, 241};
 
 		assertTrue(wallpass.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, wallpass.generateImage(imageParam).getWidth());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, wallpass.generateImage(imageParam).getHeight());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, wallpass.generateImage().getWidth());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, wallpass.generateImage().getHeight());
 	}
 
 	@Test

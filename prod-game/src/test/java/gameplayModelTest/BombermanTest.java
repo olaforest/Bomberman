@@ -4,7 +4,6 @@ import gameplayController.GameplayController;
 import gameplayModel.GridMap;
 import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
-import gameplayModel.GridObjects.PowerUp;
 import gameplayModel.GridObjects.PowerUps.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -120,7 +119,6 @@ public class BombermanTest {
 		Bombpass bombpass = new Bombpass(0, 0);
 		Flamepass flamepass = new Flamepass(0, 0);
 		Mystery mystery = new Mystery(0, 0);
-		PowerUp powerUp = new PowerUp(0, 0);
 
 		bomberman.getPowerUpsAcquired().clear();
 
@@ -148,9 +146,6 @@ public class BombermanTest {
 		bomberman.addPowerUp(mystery);
 		assertTrue(bomberman.getPowerUpsAcquired().contains(mystery));
 
-		bomberman.addPowerUp(powerUp);
-		assertTrue(bomberman.getPowerUpsAcquired().contains(powerUp));
-
 		bomberman.getPowerUpsAcquired().clear();
 	}
 
@@ -166,7 +161,6 @@ public class BombermanTest {
 		Bombpass bombpass = new Bombpass(0, 0);
 		Flamepass flamepass = new Flamepass(0, 0);
 		Mystery mystery = new Mystery(0, 0);
-		PowerUp powerUp = new PowerUp(0, 0);
 
 		bomberman.addPowerUp(bombPU);
 		bomberman.addPowerUp(flames);
@@ -176,7 +170,6 @@ public class BombermanTest {
 		bomberman.addPowerUp(bombpass);
 		bomberman.addPowerUp(flamepass);
 		bomberman.addPowerUp(mystery);
-		bomberman.addPowerUp(powerUp);
 
 		bomberman.removePowerUp(bombPU);
 		assertFalse(bomberman.getPowerUpsAcquired().contains(bombPU));
@@ -201,9 +194,6 @@ public class BombermanTest {
 
 		bomberman.removePowerUp(mystery);
 		assertFalse(bomberman.getPowerUpsAcquired().contains(mystery));
-
-		bomberman.removePowerUp(powerUp);
-		assertFalse(bomberman.getPowerUpsAcquired().contains(powerUp));
 
 		bomberman.getPowerUpsAcquired().clear();
 	}

@@ -3,12 +3,10 @@ package gameplayModel.GridObjects.PowerUps;
 import gameplayModel.GridObjects.PowerUp;
 
 public class Flamepass extends PowerUp {
-
-	private int[] imageParam = {217, 204};
+	private static final int[] IMAGE_PARAM = {217, 204};
 
 	public Flamepass(int x, int y) {
-		super(x, y);
+		super(x, y, IMAGE_PARAM);
 		isPermanent = false;
-		image = generateImage(imageParam);
 	}
 }

@@ -22,8 +22,8 @@ public class FlamesTest {
 		int[] imageParam = {145, 259};
 
 		assertTrue(flames.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, flames.generateImage(imageParam).getWidth());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, flames.generateImage(imageParam).getHeight());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, flames.generateImage().getWidth());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, flames.generateImage().getHeight());
 	}
 
 	@Test

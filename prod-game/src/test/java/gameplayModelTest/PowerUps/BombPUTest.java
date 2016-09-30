@@ -22,8 +22,8 @@ public class BombPUTest {
 		int[] imageParam = {163, 259};
 
 		assertTrue(bombPU.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bombPU.generateImage(imageParam).getWidth());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bombPU.generateImage(imageParam).getHeight());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bombPU.generateImage().getWidth());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bombPU.generateImage().getHeight());
 	}
 
 	@Test

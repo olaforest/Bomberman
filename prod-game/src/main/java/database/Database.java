@@ -239,35 +239,26 @@ public class Database {
 	}
 
 	private PowerUp determinePowerUp(String type, int xPosition, int yPosition) {
-		PowerUp powerup = new PowerUp(xPosition, yPosition);
-
 		switch (type) {
 			case "class gameplayModel.GridObjects.PowerUps.BombPU":
-				powerup = new BombPU(xPosition, yPosition);
-				break;
+				return new BombPU(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Flames":
-				powerup = new Flames(xPosition, yPosition);
-				break;
+				return new Flames(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Speed":
-				powerup = new Speed(xPosition, yPosition);
-				break;
+				return new Speed(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Wallpass":
-				powerup = new Wallpass(xPosition, yPosition);
-				break;
+				return new Wallpass(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Detonator":
-				powerup = new Detonator(xPosition, yPosition);
-				break;
+				return new Detonator(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Bombpass":
-				powerup = new Bombpass(xPosition, yPosition);
-				break;
+				return new Bombpass(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Flamepass":
-				powerup = new Flamepass(xPosition, yPosition);
-				break;
+				return new Flamepass(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Mystery":
-				powerup = new Mystery(xPosition, yPosition);
-				break;
+				return new Mystery(xPosition, yPosition);
+			default:
+				return null;
 		}
-		return powerup;
 	}
 
 	public Player addPlayer(Player newPlayer) {

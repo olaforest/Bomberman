@@ -1,6 +1,7 @@
 package gameplayModelTest;
 
 import gameplayModel.GridObjects.PowerUp;
+import gameplayModel.GridObjects.PowerUps.Bombpass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ public class PowerUpTest {
 
 	@Before
 	public void setUp() {
-		powerUp = new PowerUp(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		powerUp = new Bombpass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test
@@ -22,8 +23,8 @@ public class PowerUpTest {
 		int[] imageParam = {217, 241};
 
 		assertTrue(powerUp.getImage() == null);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, powerUp.generateImage(imageParam).getWidth());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, powerUp.generateImage(imageParam).getHeight());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, powerUp.generateImage().getWidth());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, powerUp.generateImage().getHeight());
 	}
 
 	@Test

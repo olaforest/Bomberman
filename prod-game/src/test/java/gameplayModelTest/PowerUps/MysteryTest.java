@@ -22,8 +22,8 @@ public class MysteryTest {
 		int[] imageParam = {217, 223};
 
 		assertTrue(mystery.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, mystery.generateImage(imageParam).getWidth());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, mystery.generateImage(imageParam).getHeight());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, mystery.generateImage().getWidth());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, mystery.generateImage().getHeight());
 	}
 
 	@Test

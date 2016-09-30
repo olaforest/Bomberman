@@ -6,17 +6,18 @@ import lombok.Getter;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-@Getter
-public class PowerUp extends GridObject {
+public abstract class PowerUp extends GridObject {
+	@Getter private BufferedImage image;
+	@Getter protected boolean isPermanent;
+	private final int[] imageParameter;
 
-	protected BufferedImage image;
-	protected boolean isPermanent;
-
-	public PowerUp(int x, int y) {
+	public PowerUp(int x, int y, int[] imageParameter) {
 		super(x, y);
+		this.imageParameter = imageParameter;
+		image = generateImage();
 	}
 
-	public BufferedImage generateImage(int[] imageParameter) {
+	public BufferedImage generateImage() {
 		return resizeImage(imageParameter[0], imageParameter[1]);
 	}
 

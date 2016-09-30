@@ -22,8 +22,8 @@ public class SpeedTest {
 		int[] imageParam = {180, 259};
 
 		assertTrue(speed.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, speed.generateImage(imageParam).getWidth());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, speed.generateImage(imageParam).getHeight());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, speed.generateImage().getWidth());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, speed.generateImage().getHeight());
 	}
 
 	@Test

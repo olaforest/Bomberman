@@ -22,8 +22,8 @@ public class DetonatorTest {
 		int[] imageParam = {198, 259};
 
 		assertTrue(detonator.getImage().getClass().toString().equals("class java.awt.sprite.BufferedImage"));
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, detonator.generateImage(imageParam).getWidth());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, detonator.generateImage(imageParam).getHeight());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, detonator.generateImage().getWidth());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, detonator.generateImage().getHeight());
 	}
 
 	@Test
