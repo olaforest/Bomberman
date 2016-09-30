@@ -1,4 +1,4 @@
-package gameplayModel.GridObjects.PowerUps;
+package gameplayModel.GridObjects;
 
 import gameplayModel.GridObject;
 import lombok.Getter;

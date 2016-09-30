@@ -8,6 +8,7 @@ import gameplayModel.GridObjects.AnimatedObjects.Enemies.*;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import gameplayModel.GridObjects.Concrete;
 import gameplayModel.GridObjects.Exitway;
+import gameplayModel.GridObjects.PowerUp;
 import gameplayModel.GridObjects.PowerUps.*;
 import lombok.Getter;
 
@@ -210,7 +211,9 @@ public class GridMap {
 		}
 	}
 
-	private void populateSpecialMap() {spawnMoreEnemies(levelSpec);}
+	private void populateSpecialMap() {
+		spawnMoreEnemies(levelSpec);
+	}
 
 	private void spawnMoreEnemies(int[] levelSpec) {
 		int i = 0;

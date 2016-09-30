@@ -10,6 +10,7 @@ import gameplayModel.GridObjects.AnimatedObjects.Brick;
 import gameplayModel.GridObjects.AnimatedObjects.Enemies.*;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import gameplayModel.GridObjects.Exitway;
+import gameplayModel.GridObjects.PowerUp;
 import gameplayModel.GridObjects.PowerUps.*;
 import menuModel.Player;
 import menuModel.SavedGame;

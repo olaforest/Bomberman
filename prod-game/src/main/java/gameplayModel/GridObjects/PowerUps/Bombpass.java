@@ -1,5 +1,7 @@
 package gameplayModel.GridObjects.PowerUps;
 
+import gameplayModel.GridObjects.PowerUp;
+
 public class Bombpass extends PowerUp {
 
 	private int[] imageParam = {216, 259};

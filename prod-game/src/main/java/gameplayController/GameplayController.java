@@ -11,7 +11,7 @@ import gameplayModel.GridObjects.AnimatedObjects.Enemies.*;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import gameplayModel.GridObjects.Concrete;
 import gameplayModel.GridObjects.Exitway;
-import gameplayModel.GridObjects.PowerUps.PowerUp;
+import gameplayModel.GridObjects.PowerUp;
 import gameplayView.GameStatusPanel;
 import gameplayView.GameplayPanel;
 import lombok.Getter;
