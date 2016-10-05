@@ -239,50 +239,32 @@ public class GridMap {
 		}
 	}
 
-	public ArrayList<String> toCSVEntry() {
-
-		ArrayList<String> entryList = new ArrayList<>();
+	public List<String> toCSVEntry() {
+		List<String> entryList = new ArrayList<>();
 
 		entryList.add(Integer.toString(spawnTimer));
 		entryList.add("Bricks");
-
-		for (Brick brick : bricks) {
-			for (String token : brick.toCSVEntry())
-				entryList.add(token);
-		}
+		for (Brick brick : bricks)
+			entryList.addAll(brick.toCSVEntry());
 
 		entryList.add("Bombs");
 		entryList.add(Integer.toString(Bomb.getRange()));
-
-		for (Bomb bomb : bombs) {
-			if (!bomb.isDead()) {
-				for (String token : bomb.toCSVEntry())
-					entryList.add(token);
-			}
-		}
+		bombs.stream()
+				.filter(bomb -> !bomb.isDead())
+				.forEach(bomb -> entryList.addAll(bomb.toCSVEntry()));
 
 		entryList.add("Enemies");
-
-		for (Enemy enemy : enemies) {
-
-			for (String token : enemy.toCSVEntry())
-				entryList.add(token);
-		}
+		for (Enemy enemy : enemies)
+			entryList.addAll(enemy.toCSVEntry());
 
 		entryList.add("Exitway");
-
-		for (String token : exitway.toCSVEntry())
-			entryList.add(token);
+		entryList.addAll(exitway.toCSVEntry());
 
 		entryList.add("PowerUp");
-
-		for (String token : powerUp.toCSVEntry())
-			entryList.add(token);
+		entryList.addAll(powerUp.toCSVEntry());
 
 		entryList.add("Bomberman");
-
-		for (String token : bomberman.toCSVEntry())
-			entryList.add(token);
+		entryList.addAll(bomberman.toCSVEntry());
 
 		return entryList;
 	}
