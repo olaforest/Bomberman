@@ -241,21 +241,21 @@ public class Database {
 	private PowerUp determinePowerUp(String type, int xPosition, int yPosition) {
 		switch (type) {
 			case "class gameplayModel.GridObjects.PowerUps.BombPU":
-				return new BombPU(xPosition, yPosition, -1);
+				return new BombPU(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Flames":
-				return new Flames(xPosition, yPosition, -1);
+				return new Flames(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Speed":
-				return new Speed(xPosition, yPosition, -1);
+				return new Speed(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Wallpass":
-				return new Wallpass(xPosition, yPosition, -1);
+				return new Wallpass(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Detonator":
-				return new Detonator(xPosition, yPosition, -1);
+				return new Detonator(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Bombpass":
-				return new Bombpass(xPosition, yPosition, -1);
+				return new Bombpass(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Flamepass":
-				return new Flamepass(xPosition, yPosition, -1);
+				return new Flamepass(xPosition, yPosition);
 			case "class gameplayModel.GridObjects.PowerUps.Mystery":
-				return new Mystery(xPosition, yPosition, -1);
+				return new Mystery(xPosition, yPosition);
 			default:
 				return null;
 		}

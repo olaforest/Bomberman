@@ -13,7 +13,7 @@ public class FlamepassTest {
 
 	@Before
 	public void setUp() {
-		flamepass = new Flamepass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION, -1);
+		flamepass = new Flamepass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test

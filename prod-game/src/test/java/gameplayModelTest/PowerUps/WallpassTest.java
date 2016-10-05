@@ -13,7 +13,7 @@ public class WallpassTest {
 
 	@Before
 	public void setUp() {
-		wallpass = new Wallpass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION, -1);
+		wallpass = new Wallpass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test

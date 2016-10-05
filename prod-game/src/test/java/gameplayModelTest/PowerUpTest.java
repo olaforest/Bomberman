@@ -14,7 +14,7 @@ public class PowerUpTest {
 
 	@Before
 	public void setUp() {
-		powerUp = new Bombpass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION, -1);
+		powerUp = new Bombpass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test

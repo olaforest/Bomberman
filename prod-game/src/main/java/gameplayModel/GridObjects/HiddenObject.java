@@ -5,11 +5,9 @@ import lombok.Getter;
 
 @Getter
 public abstract class HiddenObject extends GridObject {
-	private final int brickIndex;
 
-	HiddenObject(int x, int y, int index) {
+	HiddenObject(int x, int y) {
 		super(x, y);
-		this.brickIndex = index;
 	}
 
 	public static int generateIndex(int size) {

@@ -140,7 +140,7 @@ public class GridMap {
 		while (brickUpIndex == exitway.getBrickIndex())
 			brickUpIndex = generateIndex(bricks.size());
 
-		powerUp = createNewPowerUp(type, bricks.get(brickUpIndex).getXPosition(), bricks.get(brickUpIndex).getYPosition(), brickUpIndex);
+		powerUp = createNewPowerUp(type, bricks.get(brickUpIndex).getXPosition(), bricks.get(brickUpIndex).getYPosition());
 	}
 
 	public void generateEnemies(int[] levelSpec) {

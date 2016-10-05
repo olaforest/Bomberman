@@ -13,7 +13,7 @@ public class SpeedTest {
 
 	@Before
 	public void setUp() {
-		speed = new Speed(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION, -1);
+		speed = new Speed(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
 	}
 
 	@Test

@@ -10,8 +10,8 @@ public abstract class PowerUp extends HiddenObject {
 	@Getter protected boolean isPermanent;
 	private final int[] imageParameter;
 
-	protected PowerUp(int x, int y, int index, int[] imageParameter) {
-		super(x, y, index);
+	protected PowerUp(int x, int y, int[] imageParameter) {
+		super(x, y);
 		this.imageParameter = imageParameter;
 		image = generateImage();
 	}
