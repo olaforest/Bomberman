@@ -135,11 +135,10 @@ public class GridMap {
 	}
 
 	private void addPowerup(int type) {
-		int brickUpIndex = generateIndex(bricks.size());
-
-		while (brickUpIndex == exitway.getBrickIndex())
+		int brickUpIndex;
+		do {
 			brickUpIndex = generateIndex(bricks.size());
-
+		} while (brickUpIndex == exitway.getBrickIndex());
 		powerUp = createNewPowerUp(type, bricks.get(brickUpIndex).getXPosition(), bricks.get(brickUpIndex).getYPosition());
 	}
 
