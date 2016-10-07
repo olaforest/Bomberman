@@ -4,7 +4,6 @@ import gameplayController.GameplayController;
 import gameplayModel.GridObjects.AnimatedObjects.Bomb;
 import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 import gameplayModel.GridObjects.AnimatedObjects.Brick;
-import gameplayModel.GridObjects.AnimatedObjects.Enemies.*;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import gameplayModel.GridObjects.Concrete;
 import gameplayModel.GridObjects.Exitway;
@@ -16,6 +15,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayModel.GridObjects.Factories.EnemyFactory.createEnemy;
 import static gameplayModel.GridObjects.Factories.PowerUpFactory.createPowerUp;
 import static gameplayModel.GridObjects.HiddenObject.generateIndex;
 
@@ -139,47 +139,18 @@ public class GridMap {
 	}
 
 	public void generateEnemies(int[] levelSpec) {
-		int[] position;
+		IntStream.range(0, levelSpec.length - 1)
+				.forEach(i -> addEnemiesFromType(i, levelSpec[i]));
+	}
 
-		for (int i = 0; i < levelSpec[0]; i++) {
-			position = findEnemyLocation();
-			enemies.add(new Balloom(position[0] * width, position[1] * height));
-		}
+	private void addEnemiesFromType(int type, int quantity) {
+		IntStream.range(0, quantity)
+				.forEach(i -> addEnemy(type));
+	}
 
-		for (int i = 0; i < levelSpec[1]; i++) {
-			position = findEnemyLocation();
-			enemies.add(new Oneal(position[0] * width, position[1] * height));
-		}
-
-		for (int i = 0; i < levelSpec[2]; i++) {
-			position = findEnemyLocation();
-			enemies.add(new Doll(position[0] * width, position[1] * height));
-		}
-
-		for (int i = 0; i < levelSpec[3]; i++) {
-			position = findEnemyLocation();
-			enemies.add(new Minvo(position[0] * width, position[1] * height));
-		}
-
-		for (int i = 0; i < levelSpec[4]; i++) {
-			position = findEnemyLocation();
-			enemies.add(new Kondoria(position[0] * width, position[1] * height));
-		}
-
-		for (int i = 0; i < levelSpec[5]; i++) {
-			position = findEnemyLocation();
-			enemies.add(new Ovapi(position[0] * width, position[1] * height));
-		}
-
-		for (int i = 0; i < levelSpec[6]; i++) {
-			position = findEnemyLocation();
-			enemies.add(new Pass(position[0] * width, position[1] * height));
-		}
-
-		for (int i = 0; i < levelSpec[7]; i++) {
-			position = findEnemyLocation();
-			enemies.add(new Pontan(position[0] * width, position[1] * height));
-		}
+	private void addEnemy(int type) {
+		final int[] position = findNewEnemyLocation();
+		enemies.add(createEnemy(type, position[0] * width, position[1] * height));
 	}
 
 	private void populateSpecialMap() {
@@ -198,7 +169,7 @@ public class GridMap {
 		generateEnemies(spec);
 	}
 
-	private int[] findEnemyLocation() {
+	private int[] findNewEnemyLocation() {
 		int[] location = generateRandomLocation();
 		int i = 0;
 
