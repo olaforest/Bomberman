@@ -1,10 +1,10 @@
-package gameplayModel.GridObjects.factories;
+package gameplayModel.GridObjects.Factories;
 
 import gameplayModel.GridObjects.PowerUp;
 import gameplayModel.GridObjects.PowerUps.*;
 
 public class PowerUpFactory {
-	public static PowerUp createNewPowerUp(int type, int xPosition, int yPosition) {
+	public static PowerUp createPowerUp(int type, int xPosition, int yPosition) {
 		switch (type) {
 			case 1:
 				return new BombPU(xPosition, yPosition);
