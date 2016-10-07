@@ -1,6 +1,5 @@
 package gameplayModel;
 
-import gameplayController.GameplayController;
 import gameplayModel.GridObjects.AnimatedObjects.Bomb;
 import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 import gameplayModel.GridObjects.AnimatedObjects.Brick;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static gameplayModel.GridObjects.Factories.EnemyFactory.createEnemy;
 import static gameplayModel.GridObjects.Factories.PowerUpFactory.createPowerUp;
@@ -83,7 +83,8 @@ public class GridMap {
 	}
 
 	private void addInnerConcreteBlocks() {
-		for (int i = 2; i < MAPWIDTH - 2; i += 2) addInnerConcreteBlockRow(i);
+		for (int i = 2; i < MAPWIDTH - 2; i += 2)
+			addInnerConcreteBlockRow(i);
 	}
 
 	private void addInnerConcreteBlockRow(int i) {
@@ -153,16 +154,6 @@ public class GridMap {
 		enemies.add(createEnemy(type, position[0] * width, position[1] * height));
 	}
 
-	private void populateSpecialMap() {
-		spawnMoreEnemies();
-	}
-
-	private void spawnMoreEnemies() {
-		int type = 0;
-		while (levelSpec[type] >= 0) type++;
-		addEnemiesFromType(type, 8);
-	}
-
 	private int[] findNewEnemyLocation() {
 		int[] location = generateRandomLocation();
 		int i = 0;
@@ -191,9 +182,18 @@ public class GridMap {
 		return location;
 	}
 
-	public void decreaseSpawnTimer() {
-		spawnTimer -= GameplayController.TIMEOUT;
+	private void populateSpecialMap() {
+		spawnMoreEnemies();
+	}
 
+	private void spawnMoreEnemies() {
+		int type = 0;
+		while (levelSpec[type] >= 0) type++;
+		addEnemiesFromType(type, 8);
+	}
+
+	public void decreaseSpawnTimer() {
+		spawnTimer -= TIMEOUT;
 		if (spawnTimer <= 0) {
 			spawnMoreEnemies();
 			spawnTimer = SPAWN_TIMEOUT;
