@@ -154,19 +154,13 @@ public class GridMap {
 	}
 
 	private void populateSpecialMap() {
-		spawnMoreEnemies(levelSpec);
+		spawnMoreEnemies();
 	}
 
-	private void spawnMoreEnemies(int[] levelSpec) {
-		int i = 0;
-
-		while (levelSpec[i] >= 0) {
-			i++;
-		}
-
-		int[] spec = new int[8];
-		spec[i] = 8;
-		generateEnemies(spec);
+	private void spawnMoreEnemies() {
+		int type = 0;
+		while (levelSpec[type] >= 0) type++;
+		addEnemiesFromType(type, 8);
 	}
 
 	private int[] findNewEnemyLocation() {
@@ -201,7 +195,7 @@ public class GridMap {
 		spawnTimer -= GameplayController.TIMEOUT;
 
 		if (spawnTimer <= 0) {
-			spawnMoreEnemies(levelSpec);
+			spawnMoreEnemies();
 			spawnTimer = SPAWN_TIMEOUT;
 		}
 	}
