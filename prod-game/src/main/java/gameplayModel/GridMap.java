@@ -165,12 +165,6 @@ public class GridMap {
 		return location;
 	}
 
-	private Optional<Brick> findMatchingBrick(int[] location) {
-		return bricks.stream()
-				.filter(brick -> brick.isSamePosition(location[0] * width, location[1] * height))
-				.findFirst();
-	}
-
 	private int[] generateRandomLocation() {
 		int[] location = new int[2];
 		double row = Math.random();
@@ -183,6 +177,12 @@ public class GridMap {
 			location[1] = ((int) (Math.random() * 5)) * 2 + 2;
 		}
 		return location;
+	}
+
+	private Optional<Brick> findMatchingBrick(int[] location) {
+		return bricks.stream()
+				.filter(brick -> brick.isSamePosition(location[0] * width, location[1] * height))
+				.findFirst();
 	}
 
 	private void populateSpecialMap() {
