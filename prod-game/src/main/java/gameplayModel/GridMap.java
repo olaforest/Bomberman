@@ -11,6 +11,7 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static gameplayController.GameplayController.TIMEOUT;
@@ -155,17 +156,19 @@ public class GridMap {
 	}
 
 	private int[] findNewEnemyLocation() {
-		int[] location = generateRandomLocation();
-		int i = 0;
-
-		while (i < bricks.size()) {
-			if (bricks.get(i).isSamePosition(location[0] * width, location[1] * height)) {
-				location = generateRandomLocation();
-				i = 0;
-			} else
-				i++;
-		}
+		int[] location;
+		Optional<Brick> matchedBrick;
+		do {
+			location = generateRandomLocation();
+			matchedBrick = findMatchingBrick(location);
+		} while (matchedBrick.isPresent());
 		return location;
+	}
+
+	private Optional<Brick> findMatchingBrick(int[] location) {
+		return bricks.stream()
+				.filter(brick -> brick.isSamePosition(location[0] * width, location[1] * height))
+				.findFirst();
 	}
 
 	private int[] generateRandomLocation() {
