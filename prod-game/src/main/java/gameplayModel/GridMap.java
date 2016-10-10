@@ -159,7 +159,7 @@ public class GridMap {
 		int i = 0;
 
 		while (i < bricks.size()) {
-			if (location[0] * width == bricks.get(i).getXPosition() && location[1] * height == bricks.get(i).getYPosition()) {
+			if (bricks.get(i).isSamePosition(location[0] * width, location[1] * height)) {
 				location = generateRandomLocation();
 				i = 0;
 			} else

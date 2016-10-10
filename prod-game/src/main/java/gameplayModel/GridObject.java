@@ -79,7 +79,11 @@ public class GridObject {
 	}
 
 	public boolean isSamePosition(GridObject object) {
-		return xPosition == object.getXPosition() && yPosition == object.getYPosition();
+		return isSamePosition(object.getXPosition(), object.getYPosition());
+	}
+
+	public boolean isSamePosition(int xPosition, int yPosition) {
+		return this.xPosition == xPosition && this.yPosition == yPosition;
 	}
 
 	protected static BufferedImage resizeImage(int xCoordinate, int yCoordinate) {
