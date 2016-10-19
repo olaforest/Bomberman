@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
 
 public class FlamesTest {
 
@@ -13,7 +14,7 @@ public class FlamesTest {
 
 	@Before
 	public void setUp() {
-		flames = new Flames(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		flames = new Flames(create(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION));
 	}
 
 	@Test
@@ -48,7 +49,7 @@ public class FlamesTest {
 
 		//Tests if the inputed x position is valid.
 		flames.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flames.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flames.getPosition().getX());
 	}
 
 	@Test
@@ -56,7 +57,7 @@ public class FlamesTest {
 
 		//Tests if the inputed y position is valid.
 		flames.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flames.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flames.getPosition().getY());
 	}
 
 	@Test
@@ -64,7 +65,7 @@ public class FlamesTest {
 
 		assertTrue(flames.toCSVEntry().size() == 3);
 		assertTrue(flames.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUps.Flames"));
-		assertTrue(flames.toCSVEntry().get(1).equals(Integer.toString(flames.getXPosition())));
-		assertTrue(flames.toCSVEntry().get(2).equals(Integer.toString(flames.getYPosition())));
+		assertTrue(flames.toCSVEntry().get(1).equals(Integer.toString(flames.getPosition().getX())));
+		assertTrue(flames.toCSVEntry().get(2).equals(Integer.toString(flames.getPosition().getY())));
 	}
 }

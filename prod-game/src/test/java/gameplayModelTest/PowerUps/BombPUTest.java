@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
 
 public class BombPUTest {
 
@@ -13,7 +14,7 @@ public class BombPUTest {
 
 	@Before
 	public void setUp() {
-		bombPU = new BombPU(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		bombPU = new BombPU(create(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION));
 	}
 
 	@Test
@@ -48,7 +49,7 @@ public class BombPUTest {
 
 		//Tests if the inputed x position is valid.
 		bombPU.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bombPU.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bombPU.getPosition().getX());
 	}
 
 	@Test
@@ -56,7 +57,7 @@ public class BombPUTest {
 
 		//Tests if the inputed y position is valid.
 		bombPU.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bombPU.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bombPU.getPosition().getY());
 	}
 
 	@Test
@@ -64,7 +65,7 @@ public class BombPUTest {
 
 		assertTrue(bombPU.toCSVEntry().size() == 3);
 		assertTrue(bombPU.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUps.BombPU"));
-		assertTrue(bombPU.toCSVEntry().get(1).equals(Integer.toString(bombPU.getXPosition())));
-		assertTrue(bombPU.toCSVEntry().get(2).equals(Integer.toString(bombPU.getYPosition())));
+		assertTrue(bombPU.toCSVEntry().get(1).equals(Integer.toString(bombPU.getPosition().getX())));
+		assertTrue(bombPU.toCSVEntry().get(2).equals(Integer.toString(bombPU.getPosition().getY())));
 	}
 }

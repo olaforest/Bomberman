@@ -19,6 +19,8 @@ import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static gameplayModel.GridObjects.Factories.EnemyFactory.createEnemy;
 import static gameplayModel.GridObjects.Factories.PowerUpFactory.createPowerUp;
 import static gameplayModel.GridObjects.HiddenObject.generateIndex;
+import static utility.Position.create;
+import static utility.Position.modulus;
 
 public class GridMap {
 	public static final int MAPWIDTH = 31;
@@ -73,14 +75,14 @@ public class GridMap {
 
 	private void addHorizontalConcreteBoundary() {
 		IntStream.range(0, MAPWIDTH)
-				.peek(i -> concreteLayout.add(new Concrete(i * width, 0)))
-				.forEach(i -> concreteLayout.add(new Concrete(i * width, (MAPHEIGHT - 1) * height)));
+				.peek(i -> concreteLayout.add(new Concrete(modulus(i, 0))))
+				.forEach(i -> concreteLayout.add(new Concrete(modulus(i, (MAPHEIGHT - 1)))));
 	}
 
 	private void addVerticalConcreteBoundary() {
 		IntStream.range(1, MAPHEIGHT - 1)
-				.peek(i -> concreteLayout.add(new Concrete(0, i * height)))
-				.forEach(i -> concreteLayout.add(new Concrete((MAPWIDTH - 1) * width, i * height)));
+				.peek(i -> concreteLayout.add(new Concrete(modulus(0, i))))
+				.forEach(i -> concreteLayout.add(new Concrete(modulus((MAPWIDTH - 1), i))));
 	}
 
 	private void addInnerConcreteBlocks() {
@@ -90,11 +92,11 @@ public class GridMap {
 
 	private void addInnerConcreteBlockRow(int i) {
 		for (int j = 2; j < MAPHEIGHT - 2; j += 2)
-			concreteLayout.add(new Concrete(i * width, j * height));
+			concreteLayout.add(new Concrete(modulus(i, j)));
 	}
 
 	private void populateMap() {
-		this.bomberman = new Bomberman(width, height);
+		this.bomberman = new Bomberman(modulus(1, 1));
 		if (levelSpec[8] != 0)
 			populateStandardMap();
 		else
@@ -117,19 +119,19 @@ public class GridMap {
 		for (int i = 1; i < MAPHEIGHT; i += 2)
 			for (int j = 1; j < MAPWIDTH - 1; j++)
 				if (Math.random() < BRICK_FACTOR && !(i == 1 && j == 1) && !(i == 1 && j == 2))
-					bricks.add(new Brick(width * j, height * i));
+					bricks.add(new Brick(modulus(j, i)));
 	}
 
 	private void addBricksToEvenRows() {
 		for (int i = 2; i < MAPHEIGHT - 1; i += 2)
 			for (int j = 1; j < MAPWIDTH - 1; j += 2)
 				if (Math.random() < BRICK_FACTOR && !(i == 2 && j == 1))
-					bricks.add(new Brick(width * j, height * i));
+					bricks.add(new Brick(modulus(j, i)));
 	}
 
 	private void addExitway() {
 		int brickIndex = generateIndex(bricks.size());
-		exitway = new Exitway(bricks.get(brickIndex).getXPosition(), bricks.get(brickIndex).getYPosition(), brickIndex);
+		exitway = new Exitway(create(bricks.get(brickIndex).getPosition().getX(), bricks.get(brickIndex).getPosition().getY()), brickIndex);
 	}
 
 	private void addPowerup(int type) {
@@ -137,7 +139,7 @@ public class GridMap {
 		do {
 			brickUpIndex = generateIndex(bricks.size());
 		} while (brickUpIndex == exitway.getBrickIndex());
-		powerUp = createPowerUp(type, bricks.get(brickUpIndex).getXPosition(), bricks.get(brickUpIndex).getYPosition());
+		powerUp = createPowerUp(type, bricks.get(brickUpIndex).getPosition().getX(), bricks.get(brickUpIndex).getPosition().getY());
 	}
 
 	public void generateEnemies(int[] levelSpec) {

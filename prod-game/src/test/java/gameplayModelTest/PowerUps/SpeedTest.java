@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
 
 public class SpeedTest {
 
@@ -13,7 +14,7 @@ public class SpeedTest {
 
 	@Before
 	public void setUp() {
-		speed = new Speed(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		speed = new Speed(create(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION));
 	}
 
 	@Test
@@ -48,7 +49,7 @@ public class SpeedTest {
 
 		//Tests if the inputed x position is valid.
 		speed.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, speed.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, speed.getPosition().getX());
 	}
 
 	@Test
@@ -56,7 +57,7 @@ public class SpeedTest {
 
 		//Tests if the inputed y position is valid.
 		speed.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, speed.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, speed.getPosition().getY());
 	}
 
 	@Test
@@ -64,7 +65,7 @@ public class SpeedTest {
 
 		assertTrue(speed.toCSVEntry().size() == 3);
 		assertTrue(speed.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUps.Speed"));
-		assertTrue(speed.toCSVEntry().get(1).equals(Integer.toString(speed.getXPosition())));
-		assertTrue(speed.toCSVEntry().get(2).equals(Integer.toString(speed.getYPosition())));
+		assertTrue(speed.toCSVEntry().get(1).equals(Integer.toString(speed.getPosition().getX())));
+		assertTrue(speed.toCSVEntry().get(2).equals(Integer.toString(speed.getPosition().getY())));
 	}
 }

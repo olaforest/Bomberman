@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
 
 public class PontanTest {
 
@@ -15,7 +16,7 @@ public class PontanTest {
 
 	@Before
 	public void setUp() {
-		pontan = new Pontan(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		pontan = new Pontan(create(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION));
 	}
 
 	@Test
@@ -52,8 +53,8 @@ public class PontanTest {
 
 		assertTrue(pontan.toCSVEntry().size() == 4);
 		assertTrue(pontan.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Pontan"));
-		assertTrue(pontan.toCSVEntry().get(1).equals(Integer.toString(pontan.getXPosition())));
-		assertTrue(pontan.toCSVEntry().get(2).equals(Integer.toString(pontan.getYPosition())));
+		assertTrue(pontan.toCSVEntry().get(1).equals(Integer.toString(pontan.getPosition().getX())));
+		assertTrue(pontan.toCSVEntry().get(2).equals(Integer.toString(pontan.getPosition().getY())));
 		assertTrue(pontan.toCSVEntry().get(3).equals(Integer.toString(pontan.getDirection())));
 	}
 
@@ -94,43 +95,43 @@ public class PontanTest {
 
 		//Tests if the inputed x position is out of bounds on the left.
 		pontan.setXPosition(0);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, pontan.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, pontan.getPosition().getX());
 
 		//Tests if the inputed x position is out of bounds on the right.
 		pontan.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, pontan.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, pontan.getPosition().getX());
 
 		//Tests if the inputed x position is valid.
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, pontan.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, pontan.getPosition().getX());
 
 		//Tests if the inputed x position is valid while the y position is above a row, outside of the misalignment tolerance.
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Pontan.MISALIGNMENT_ALLOWED - 1);
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, pontan.getXPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Pontan.MISALIGNMENT_ALLOWED - 1, pontan.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, pontan.getPosition().getX());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Pontan.MISALIGNMENT_ALLOWED - 1, pontan.getPosition().getY());
 
 		//Tests if the inputed x position is valid while the y position is above a row, inside of the misalignment tolerance.
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Pontan.MISALIGNMENT_ALLOWED);
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, pontan.getXPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Pontan.MISALIGNMENT_ALLOWED + 4, pontan.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, pontan.getPosition().getX());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Pontan.MISALIGNMENT_ALLOWED + 4, pontan.getPosition().getY());
 
 		//Tests if the inputed x position is valid while the y position is below a row, outside of the misalignment tolerance.
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Pontan.MISALIGNMENT_ALLOWED + 1);
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, pontan.getXPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Pontan.MISALIGNMENT_ALLOWED + 1, pontan.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, pontan.getPosition().getX());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Pontan.MISALIGNMENT_ALLOWED + 1, pontan.getPosition().getY());
 
 		//Tests if the inputed x position is valid while the y position is below a row, inside of the misalignment tolerance.
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Pontan.MISALIGNMENT_ALLOWED);
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, pontan.getXPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Pontan.MISALIGNMENT_ALLOWED - 4, pontan.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, pontan.getPosition().getX());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Pontan.MISALIGNMENT_ALLOWED - 4, pontan.getPosition().getY());
 	}
 
 	@Test
@@ -138,43 +139,43 @@ public class PontanTest {
 
 		//Tests if the inputed y position is out of bounds on the top.
 		pontan.setYPosition(0);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, pontan.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, pontan.getPosition().getY());
 
 		//Tests if the inputed y position is out of bounds on the bottom.
 		pontan.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, pontan.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, pontan.getPosition().getY());
 
 		//Tests if the inputed y position is valid.
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, pontan.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, pontan.getPosition().getY());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, outside of the misalignment tolerance.
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Pontan.MISALIGNMENT_ALLOWED - 1);
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, pontan.getYPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Pontan.MISALIGNMENT_ALLOWED - 1, pontan.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, pontan.getPosition().getY());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Pontan.MISALIGNMENT_ALLOWED - 1, pontan.getPosition().getX());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, inside of the misalignment tolerance.
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Pontan.MISALIGNMENT_ALLOWED);
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, pontan.getYPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Pontan.MISALIGNMENT_ALLOWED + 4, pontan.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, pontan.getPosition().getY());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Pontan.MISALIGNMENT_ALLOWED + 4, pontan.getPosition().getX());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, outside of the misalignment tolerance.
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Pontan.MISALIGNMENT_ALLOWED + 1);
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, pontan.getYPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Pontan.MISALIGNMENT_ALLOWED + 1, pontan.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, pontan.getPosition().getY());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Pontan.MISALIGNMENT_ALLOWED + 1, pontan.getPosition().getX());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, inside of the misalignment tolerance.
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		pontan.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Pontan.MISALIGNMENT_ALLOWED);
 		pontan.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, pontan.getYPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Pontan.MISALIGNMENT_ALLOWED - 4, pontan.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, pontan.getPosition().getY());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Pontan.MISALIGNMENT_ALLOWED - 4, pontan.getPosition().getX());
 	}
 
 	private boolean isDirectionCorrect() {

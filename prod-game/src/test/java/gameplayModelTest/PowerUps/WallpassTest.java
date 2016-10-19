@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
 
 public class WallpassTest {
 
@@ -13,7 +14,7 @@ public class WallpassTest {
 
 	@Before
 	public void setUp() {
-		wallpass = new Wallpass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		wallpass = new Wallpass(create(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION));
 	}
 
 	@Test
@@ -48,7 +49,7 @@ public class WallpassTest {
 
 		//Tests if the inputed x position is valid.
 		wallpass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, wallpass.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, wallpass.getPosition().getX());
 	}
 
 	@Test
@@ -56,7 +57,7 @@ public class WallpassTest {
 
 		//Tests if the inputed y position is valid.
 		wallpass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, wallpass.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, wallpass.getPosition().getY());
 	}
 
 	@Test
@@ -64,7 +65,7 @@ public class WallpassTest {
 
 		assertTrue(wallpass.toCSVEntry().size() == 3);
 		assertTrue(wallpass.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUps.Wallpass"));
-		assertTrue(wallpass.toCSVEntry().get(1).equals(Integer.toString(wallpass.getXPosition())));
-		assertTrue(wallpass.toCSVEntry().get(2).equals(Integer.toString(wallpass.getYPosition())));
+		assertTrue(wallpass.toCSVEntry().get(1).equals(Integer.toString(wallpass.getPosition().getX())));
+		assertTrue(wallpass.toCSVEntry().get(2).equals(Integer.toString(wallpass.getPosition().getY())));
 	}
 }

@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
 
 public class ExitwayTest {
 
@@ -13,7 +14,7 @@ public class ExitwayTest {
 
 	@Before
 	public void setUp() {
-		exitway = new Exitway(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION, -1);
+		exitway = new Exitway(create(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION), -1);
 	}
 
 	@Test
@@ -33,7 +34,7 @@ public class ExitwayTest {
 
 		//Tests if the inputed x position is valid.
 		exitway.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, exitway.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, exitway.getPosition().getX());
 	}
 
 	@Test
@@ -41,14 +42,14 @@ public class ExitwayTest {
 
 		//Tests if the inputed y position is valid.
 		exitway.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, exitway.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, exitway.getPosition().getY());
 	}
 
 	@Test
 	public void testToCSVEntry() {
 
 		assertTrue(exitway.toCSVEntry().size() == 2);
-		assertTrue(exitway.toCSVEntry().get(0).equals(Integer.toString(exitway.getXPosition())));
-		assertTrue(exitway.toCSVEntry().get(1).equals(Integer.toString(exitway.getYPosition())));
+		assertTrue(exitway.toCSVEntry().get(0).equals(Integer.toString(exitway.getPosition().getX())));
+		assertTrue(exitway.toCSVEntry().get(1).equals(Integer.toString(exitway.getPosition().getY())));
 	}
 }

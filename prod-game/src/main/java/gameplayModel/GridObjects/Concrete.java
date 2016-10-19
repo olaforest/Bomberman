@@ -2,6 +2,7 @@ package gameplayModel.GridObjects;
 
 import gameplayModel.GridObject;
 import lombok.Getter;
+import utility.Position;
 
 import java.awt.image.BufferedImage;
 
@@ -11,14 +12,18 @@ public class Concrete extends GridObject {
 	private BufferedImage image;
 	private static final int[] imageParameter = {2, 259};
 
-	public Concrete(int x, int y) {
-		super(x, y);
+	public Concrete(Position position) {
+		super(position);
 		image = resizeImage(imageParameter[0], imageParameter[1]);
 	}
 
 	@Override
-	public void setXPosition(int xPosition) { this.xPosition = xPosition; }
+	public void setXPosition(int xPos) {
+		position.setX(xPos);
+	}
 
 	@Override
-	public void setYPosition(int yPosition) { this.yPosition = yPosition; }
+	public void setYPosition(int yPos) {
+		position.setY(yPos);
+	}
 }

@@ -3,6 +3,7 @@ package gameplayModel.GridObjects;
 import gameplayModel.Animation;
 import gameplayModel.GridObject;
 import lombok.Getter;
+import utility.Position;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -21,8 +22,8 @@ public abstract class AnimatedObject extends GridObject {
 	private int animationNumber;
 	protected int counter, animCycleParam;
 
-	public AnimatedObject(int x, int y) {
-		super(x, y);
+	public AnimatedObject(Position position) {
+		super(position);
 		generateAnimationList();
 
 		currentAnimation = animationList.get(INITIAL_ANIMATION);

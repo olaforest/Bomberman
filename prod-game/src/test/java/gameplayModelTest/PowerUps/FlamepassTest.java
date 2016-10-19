@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
 
 public class FlamepassTest {
 
@@ -13,7 +14,7 @@ public class FlamepassTest {
 
 	@Before
 	public void setUp() {
-		flamepass = new Flamepass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		flamepass = new Flamepass(create(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION));
 	}
 
 	@Test
@@ -48,7 +49,7 @@ public class FlamepassTest {
 
 		//Tests if the inputed x position is valid.
 		flamepass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flamepass.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flamepass.getPosition().getX());
 	}
 
 	@Test
@@ -56,7 +57,7 @@ public class FlamepassTest {
 
 		//Tests if the inputed y position is valid.
 		flamepass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flamepass.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flamepass.getPosition().getY());
 	}
 
 	@Test
@@ -64,7 +65,7 @@ public class FlamepassTest {
 
 		assertTrue(flamepass.toCSVEntry().size() == 3);
 		assertTrue(flamepass.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUps.Flamepass"));
-		assertTrue(flamepass.toCSVEntry().get(1).equals(Integer.toString(flamepass.getXPosition())));
-		assertTrue(flamepass.toCSVEntry().get(2).equals(Integer.toString(flamepass.getYPosition())));
+		assertTrue(flamepass.toCSVEntry().get(1).equals(Integer.toString(flamepass.getPosition().getX())));
+		assertTrue(flamepass.toCSVEntry().get(2).equals(Integer.toString(flamepass.getPosition().getY())));
 	}
 }

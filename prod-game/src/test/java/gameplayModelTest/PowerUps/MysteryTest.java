@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
 
 public class MysteryTest {
 
@@ -13,7 +14,7 @@ public class MysteryTest {
 
 	@Before
 	public void setUp() {
-		mystery = new Mystery(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		mystery = new Mystery(create(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION));
 	}
 
 	@Test
@@ -48,7 +49,7 @@ public class MysteryTest {
 
 		//Tests if the inputed x position is valid.
 		mystery.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, mystery.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, mystery.getPosition().getX());
 	}
 
 	@Test
@@ -56,7 +57,7 @@ public class MysteryTest {
 
 		//Tests if the inputed y position is valid.
 		mystery.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, mystery.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, mystery.getPosition().getY());
 	}
 
 	@Test
@@ -64,7 +65,7 @@ public class MysteryTest {
 
 		assertTrue(mystery.toCSVEntry().size() == 3);
 		assertTrue(mystery.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUps.Mystery"));
-		assertTrue(mystery.toCSVEntry().get(1).equals(Integer.toString(mystery.getXPosition())));
-		assertTrue(mystery.toCSVEntry().get(2).equals(Integer.toString(mystery.getYPosition())));
+		assertTrue(mystery.toCSVEntry().get(1).equals(Integer.toString(mystery.getPosition().getX())));
+		assertTrue(mystery.toCSVEntry().get(2).equals(Integer.toString(mystery.getPosition().getY())));
 	}
 }

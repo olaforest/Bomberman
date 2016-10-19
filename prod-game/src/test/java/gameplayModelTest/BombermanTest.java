@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
 
 public class BombermanTest {
 
@@ -17,7 +18,7 @@ public class BombermanTest {
 
 	@Before
 	public void setUp() {
-		bomberman = new Bomberman(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		bomberman = new Bomberman(create(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION));
 	}
 
 	@Test
@@ -25,43 +26,43 @@ public class BombermanTest {
 
 		//Tests if the inputed x position is out of bounds on the left.
 		bomberman.setXPosition(0);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomberman.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomberman.getPosition().getX());
 
 		//Tests if the inputed x position is out of bounds on the right.
 		bomberman.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomberman.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomberman.getPosition().getX());
 
 		//Tests if the inputed x position is valid.
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bomberman.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bomberman.getPosition().getX());
 
 		//Tests if the inputed x position is valid while the y position is above a row, outside of the misalignment tolerance.
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED - 1);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomberman.getXPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED - 1, bomberman.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomberman.getPosition().getX());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED - 1, bomberman.getPosition().getY());
 
 		//Tests if the inputed x position is valid while the y position is above a row, inside of the misalignment tolerance.
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomberman.getXPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED + 4, bomberman.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomberman.getPosition().getX());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED + 4, bomberman.getPosition().getY());
 
 		//Tests if the inputed x position is valid while the y position is below a row, outside of the misalignment tolerance.
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED + 1);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomberman.getXPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED + 1, bomberman.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomberman.getPosition().getX());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED + 1, bomberman.getPosition().getY());
 
 		//Tests if the inputed x position is valid while the y position is below a row, inside of the misalignment tolerance.
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomberman.getXPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED - 4, bomberman.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomberman.getPosition().getX());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED - 4, bomberman.getPosition().getY());
 	}
 
 	@Test
@@ -69,56 +70,56 @@ public class BombermanTest {
 
 		//Tests if the inputed y position is out of bounds on the top.
 		bomberman.setYPosition(0);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomberman.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomberman.getPosition().getY());
 
 		//Tests if the inputed y position is out of bounds on the bottom.
 		bomberman.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomberman.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomberman.getPosition().getY());
 
 		//Tests if the inputed y position is valid.
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bomberman.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bomberman.getPosition().getY());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, outside of the misalignment tolerance.
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED - 1);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomberman.getYPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED - 1, bomberman.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomberman.getPosition().getY());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED - 1, bomberman.getPosition().getX());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, inside of the misalignment tolerance.
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomberman.getYPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED + 4, bomberman.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomberman.getPosition().getY());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED + 4, bomberman.getPosition().getX());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, outside of the misalignment tolerance.
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED + 1);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomberman.getYPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED + 1, bomberman.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomberman.getPosition().getY());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED + 1, bomberman.getPosition().getX());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, inside of the misalignment tolerance.
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomberman.getYPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED - 4, bomberman.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomberman.getPosition().getY());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED - 4, bomberman.getPosition().getX());
 	}
 
 	@Test
 	public void testAddPowerUp() {
 
-		BombPU bombPU = new BombPU(0, 0);
-		Flames flames = new Flames(0, 0);
-		Speed speed = new Speed(0, 0);
-		Wallpass wallpass = new Wallpass(0, 0);
-		Detonator detonator = new Detonator(0, 0);
-		Bombpass bombpass = new Bombpass(0, 0);
-		Flamepass flamepass = new Flamepass(0, 0);
-		Mystery mystery = new Mystery(0, 0);
+		BombPU bombPU = new BombPU(create(0, 0));
+		Flames flames = new Flames(create(0, 0));
+		Speed speed = new Speed(create(0, 0));
+		Wallpass wallpass = new Wallpass(create(0, 0));
+		Detonator detonator = new Detonator(create(0, 0));
+		Bombpass bombpass = new Bombpass(create(0, 0));
+		Flamepass flamepass = new Flamepass(create(0, 0));
+		Mystery mystery = new Mystery(create(0, 0));
 
 		bomberman.getPowerUpsAcquired().clear();
 
@@ -153,14 +154,14 @@ public class BombermanTest {
 	@Test
 	public void testRemovePowerUp() {
 
-		BombPU bombPU = new BombPU(0, 0);
-		Flames flames = new Flames(0, 0);
-		Speed speed = new Speed(0, 0);
-		Wallpass wallpass = new Wallpass(0, 0);
-		Detonator detonator = new Detonator(0, 0);
-		Bombpass bombpass = new Bombpass(0, 0);
-		Flamepass flamepass = new Flamepass(0, 0);
-		Mystery mystery = new Mystery(0, 0);
+		BombPU bombPU = new BombPU(create(0, 0));
+		Flames flames = new Flames(create(0, 0));
+		Speed speed = new Speed(create(0, 0));
+		Wallpass wallpass = new Wallpass(create(0, 0));
+		Detonator detonator = new Detonator(create(0, 0));
+		Bombpass bombpass = new Bombpass(create(0, 0));
+		Flamepass flamepass = new Flamepass(create(0, 0));
+		Mystery mystery = new Mystery(create(0, 0));
 
 		bomberman.addPowerUp(bombPU);
 		bomberman.addPowerUp(flames);
@@ -209,7 +210,7 @@ public class BombermanTest {
 		assertFalse(bomberman.isInvincible());
 
 		bomberman.getPowerUpsAcquired().clear();
-		bomberman.addPowerUp(new Mystery(0, 0));
+		bomberman.addPowerUp(new Mystery(create(0, 0)));
 		assertTrue(bomberman.isInvincible());
 
 		for (int i = 0; i <= (Bomberman.INVINCIBILITY_TIMEOUT / GameplayController.TIMEOUT - 1); i++)
@@ -233,7 +234,7 @@ public class BombermanTest {
 		assertFalse(bomberman.canWallpass());
 
 		bomberman.getPowerUpsAcquired().clear();
-		bomberman.addPowerUp(new Wallpass(0, 0));
+		bomberman.addPowerUp(new Wallpass(create(0, 0)));
 
 		assertTrue(bomberman.canWallpass());
 		bomberman.getPowerUpsAcquired().clear();
@@ -245,7 +246,7 @@ public class BombermanTest {
 		assertFalse(bomberman.canDetonateBombs());
 
 		bomberman.getPowerUpsAcquired().clear();
-		bomberman.addPowerUp(new Detonator(0, 0));
+		bomberman.addPowerUp(new Detonator(create(0, 0)));
 
 		assertTrue(bomberman.canDetonateBombs());
 		bomberman.getPowerUpsAcquired().clear();
@@ -257,7 +258,7 @@ public class BombermanTest {
 		assertFalse(bomberman.canBombpass());
 
 		bomberman.getPowerUpsAcquired().clear();
-		bomberman.addPowerUp(new Bombpass(0, 0));
+		bomberman.addPowerUp(new Bombpass(create(0, 0)));
 
 		assertTrue(bomberman.canBombpass());
 		bomberman.getPowerUpsAcquired().clear();
@@ -269,7 +270,7 @@ public class BombermanTest {
 		assertFalse(bomberman.canFlamepass());
 
 		bomberman.getPowerUpsAcquired().clear();
-		bomberman.addPowerUp(new Flamepass(0, 0));
+		bomberman.addPowerUp(new Flamepass(create(0, 0)));
 
 		assertTrue(bomberman.canFlamepass());
 		bomberman.getPowerUpsAcquired().clear();
@@ -281,7 +282,7 @@ public class BombermanTest {
 		assertFalse(bomberman.isInvincible());
 
 		bomberman.getPowerUpsAcquired().clear();
-		bomberman.addPowerUp(new Mystery(0, 0));
+		bomberman.addPowerUp(new Mystery(create(0, 0)));
 
 		assertTrue(bomberman.isInvincible());
 		bomberman.getPowerUpsAcquired().clear();
@@ -293,7 +294,7 @@ public class BombermanTest {
 		bomberman.getPowerUpsAcquired().clear();
 		assertEquals(4, bomberman.getSpeed());
 
-		bomberman.addPowerUp(new Speed(0, 0));
+		bomberman.addPowerUp(new Speed(create(0, 0)));
 		assertEquals(6, bomberman.getSpeed());
 
 		bomberman.getPowerUpsAcquired().clear();
@@ -354,8 +355,8 @@ public class BombermanTest {
 	public void testToCSVEntry() {
 
 		assertTrue(bomberman.toCSVEntry().size() == (5 + 3 * bomberman.getPowerUpsAcquired().size()));
-		assertTrue(bomberman.toCSVEntry().get(0).equals(Integer.toString(bomberman.getXPosition())));
-		assertTrue(bomberman.toCSVEntry().get(1).equals(Integer.toString(bomberman.getYPosition())));
+		assertTrue(bomberman.toCSVEntry().get(0).equals(Integer.toString(bomberman.getPosition().getX())));
+		assertTrue(bomberman.toCSVEntry().get(1).equals(Integer.toString(bomberman.getPosition().getY())));
 		assertTrue(bomberman.toCSVEntry().get(3).equals(Integer.toString(bomberman.getBombsLeft())));
 		assertTrue(bomberman.toCSVEntry().get(4).equals("PowerUpAcquired"));
 	}

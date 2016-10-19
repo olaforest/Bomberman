@@ -1,12 +1,13 @@
 package gameplayModel.GridObjects.PowerUps;
 
 import gameplayModel.GridObjects.PowerUp;
+import utility.Position;
 
 public class Speed extends PowerUp {
 	private static final int[] IMAGE_PARAM = {180, 259};
 
-	public Speed(int x, int y) {
-		super(x, y, IMAGE_PARAM);
+	public Speed(Position position) {
+		super(position, IMAGE_PARAM);
 		isPermanent = true;
 	}
 }

@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
 
 public class BombpassTest {
 
@@ -13,7 +14,7 @@ public class BombpassTest {
 
 	@Before
 	public void setUp() {
-		bombpass = new Bombpass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		bombpass = new Bombpass(create(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION));
 	}
 
 	@Test
@@ -48,7 +49,7 @@ public class BombpassTest {
 
 		//Tests if the inputed x position is valid.
 		bombpass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bombpass.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bombpass.getPosition().getX());
 	}
 
 	@Test
@@ -56,7 +57,7 @@ public class BombpassTest {
 
 		//Tests if the inputed y position is valid.
 		bombpass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bombpass.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bombpass.getPosition().getY());
 	}
 
 	@Test
@@ -64,7 +65,7 @@ public class BombpassTest {
 
 		assertTrue(bombpass.toCSVEntry().size() == 3);
 		assertTrue(bombpass.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUps.Bombpass"));
-		assertTrue(bombpass.toCSVEntry().get(1).equals(Integer.toString(bombpass.getXPosition())));
-		assertTrue(bombpass.toCSVEntry().get(2).equals(Integer.toString(bombpass.getYPosition())));
+		assertTrue(bombpass.toCSVEntry().get(1).equals(Integer.toString(bombpass.getPosition().getX())));
+		assertTrue(bombpass.toCSVEntry().get(2).equals(Integer.toString(bombpass.getPosition().getY())));
 	}
 }

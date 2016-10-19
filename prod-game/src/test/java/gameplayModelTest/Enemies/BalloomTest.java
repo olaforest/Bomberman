@@ -5,6 +5,7 @@ import gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
+import utility.Position;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
@@ -15,7 +16,7 @@ public class BalloomTest {
 
 	@Before
 	public void setUp() {
-		balloom = new Balloom(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		balloom = new Balloom(Position.modulus(1, 1));
 	}
 
 	@Test
@@ -52,8 +53,8 @@ public class BalloomTest {
 
 		assertTrue(balloom.toCSVEntry().size() == 4);
 		assertTrue(balloom.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom"));
-		assertTrue(balloom.toCSVEntry().get(1).equals(Integer.toString(balloom.getXPosition())));
-		assertTrue(balloom.toCSVEntry().get(2).equals(Integer.toString(balloom.getYPosition())));
+		assertTrue(balloom.toCSVEntry().get(1).equals(Integer.toString(balloom.getPosition().getX())));
+		assertTrue(balloom.toCSVEntry().get(2).equals(Integer.toString(balloom.getPosition().getY())));
 		assertTrue(balloom.toCSVEntry().get(3).equals(Integer.toString(balloom.getDirection())));
 	}
 
@@ -94,43 +95,43 @@ public class BalloomTest {
 
 		//Tests if the inputed x position is out of bounds on the left.
 		balloom.setXPosition(0);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, balloom.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, balloom.getPosition().getX());
 
 		//Tests if the inputed x position is out of bounds on the right.
 		balloom.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, balloom.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, balloom.getPosition().getX());
 
 		//Tests if the inputed x position is valid.
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, balloom.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, balloom.getPosition().getX());
 
 		//Tests if the inputed x position is valid while the y position is above a row, outside of the misalignment tolerance.
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Balloom.MISALIGNMENT_ALLOWED - 1);
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, balloom.getXPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Balloom.MISALIGNMENT_ALLOWED - 1, balloom.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, balloom.getPosition().getX());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Balloom.MISALIGNMENT_ALLOWED - 1, balloom.getPosition().getY());
 
 		//Tests if the inputed x position is valid while the y position is above a row, inside of the misalignment tolerance.
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Balloom.MISALIGNMENT_ALLOWED);
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, balloom.getXPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Balloom.MISALIGNMENT_ALLOWED + 4, balloom.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, balloom.getPosition().getX());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Balloom.MISALIGNMENT_ALLOWED + 4, balloom.getPosition().getY());
 
 		//Tests if the inputed x position is valid while the y position is below a row, outside of the misalignment tolerance.
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Balloom.MISALIGNMENT_ALLOWED + 1);
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, balloom.getXPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Balloom.MISALIGNMENT_ALLOWED + 1, balloom.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, balloom.getPosition().getX());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Balloom.MISALIGNMENT_ALLOWED + 1, balloom.getPosition().getY());
 
 		//Tests if the inputed x position is valid while the y position is below a row, inside of the misalignment tolerance.
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Balloom.MISALIGNMENT_ALLOWED);
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, balloom.getXPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Balloom.MISALIGNMENT_ALLOWED - 4, balloom.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, balloom.getPosition().getX());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Balloom.MISALIGNMENT_ALLOWED - 4, balloom.getPosition().getY());
 	}
 
 	@Test
@@ -138,43 +139,43 @@ public class BalloomTest {
 
 		//Tests if the inputed y position is out of bounds on the top.
 		balloom.setYPosition(0);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, balloom.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, balloom.getPosition().getY());
 
 		//Tests if the inputed y position is out of bounds on the bottom.
 		balloom.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION, balloom.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION, balloom.getPosition().getY());
 
 		//Tests if the inputed y position is valid.
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, balloom.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, balloom.getPosition().getY());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, outside of the misalignment tolerance.
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Balloom.MISALIGNMENT_ALLOWED - 1);
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, balloom.getYPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Balloom.MISALIGNMENT_ALLOWED - 1, balloom.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, balloom.getPosition().getY());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Balloom.MISALIGNMENT_ALLOWED - 1, balloom.getPosition().getX());
 
 		//Tests if the inputed y position is valid while the x position is to the left of a column, inside of the misalignment tolerance.
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Balloom.MISALIGNMENT_ALLOWED);
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, balloom.getYPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Balloom.MISALIGNMENT_ALLOWED + 4, balloom.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, balloom.getPosition().getY());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Balloom.MISALIGNMENT_ALLOWED + 4, balloom.getPosition().getX());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, outside of the misalignment tolerance.
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Balloom.MISALIGNMENT_ALLOWED + 1);
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, balloom.getYPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Balloom.MISALIGNMENT_ALLOWED + 1, balloom.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, balloom.getPosition().getY());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Balloom.MISALIGNMENT_ALLOWED + 1, balloom.getPosition().getX());
 
 		//Tests if the inputed y position is valid while the x position is to the right of a column, inside of the misalignment tolerance.
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		balloom.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Balloom.MISALIGNMENT_ALLOWED);
 		balloom.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, balloom.getYPosition());
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Balloom.MISALIGNMENT_ALLOWED - 4, balloom.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, balloom.getPosition().getY());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Balloom.MISALIGNMENT_ALLOWED - 4, balloom.getPosition().getX());
 	}
 
 	private boolean isDirectionCorrect() {

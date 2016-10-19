@@ -8,8 +8,9 @@ import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
+import static utility.Position.modulus;
 
 public class CollisionDetectorTest {
 
@@ -27,8 +28,8 @@ public class CollisionDetectorTest {
 		GridObject b = null;
 		assertFalse(detector.checkUpCollision(a, b));
 
-		a = new GridObject(0, 100);
-		b = new GridObject(0, 150);
+		a = new GridObject(create(0, 100));
+		b = new GridObject(create(0, 150));
 		assertFalse(detector.checkUpCollision(a, b));
 
 //		a.xPosition = 0;
@@ -50,8 +51,8 @@ public class CollisionDetectorTest {
 		GridObject b = null;
 		assertFalse(detector.checkDownCollision(a, b));
 
-		a = new GridObject(0, 100);
-		b = new GridObject(0, 150);
+		a = new GridObject(create(0, 100));
+		b = new GridObject(create(0, 150));
 		assertFalse(detector.checkDownCollision(a, b));
 
 //		a.xPosition = 0;
@@ -79,8 +80,8 @@ public class CollisionDetectorTest {
 		GridObject b = null;
 		assertFalse(detector.checkLeftCollision(a, b));
 
-		a = new GridObject(100, 0);
-		b = new GridObject(150, 0);
+		a = new GridObject(create(100, 0));
+		b = new GridObject(create(150, 0));
 		assertFalse(detector.checkLeftCollision(a, b));
 
 //		a.xPosition = 100;
@@ -108,8 +109,8 @@ public class CollisionDetectorTest {
 		GridObject b = null;
 		assertFalse(detector.checkLeftCollision(a, b));
 
-		a = new GridObject(100, 0);
-		b = new GridObject(150, 0);
+		a = new GridObject(create(100, 0));
+		b = new GridObject(create(150, 0));
 		assertFalse(detector.checkLeftCollision(a, b));
 
 //		a.xPosition = 100;
@@ -133,7 +134,7 @@ public class CollisionDetectorTest {
 
 	@Test
 	public void testCheckExplBricks() {
-		Bomb bomb = new Bomb(EFFECTIVE_PIXEL_DIMENSION * 7, EFFECTIVE_PIXEL_DIMENSION * 7);
+		Bomb bomb = new Bomb(modulus(7, 7));
 
 		assertEquals((detector.checkExplBricks(bomb).indexOf(0)), -1);
 		assertEquals((detector.checkExplBricks(bomb).indexOf(1)), -1);
@@ -146,11 +147,11 @@ public class CollisionDetectorTest {
 
 	@Test
 	public void testCheckExactCollision() {
-		Bomberman bomberman = new Bomberman(0, 0);
-		GridObject a = new GridObject(0, 0);
+		Bomberman bomberman = new Bomberman(create(0, 0));
+		GridObject a = new GridObject(create(0, 0));
 		assertTrue(detector.checkExactCollision(bomberman, a));
 
-		GridObject b = new GridObject(2, 2);
+		GridObject b = new GridObject(create(2, 2));
 		assertTrue(detector.checkExactCollision(bomberman, b));
 
 		Bomberman testNull = null;

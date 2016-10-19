@@ -3,8 +3,10 @@ package gameplayModel.GridObjects.AnimatedObjects;
 import gameplayModel.GridObjects.AnimatedObject;
 import lombok.Getter;
 import lombok.Setter;
+import utility.Position;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public abstract class Enemy extends AnimatedObject {
@@ -19,23 +21,23 @@ public abstract class Enemy extends AnimatedObject {
 	@Setter
 	protected int direction;
 
-	public Enemy(int x, int y) {
-		super(x, y);
+	public Enemy(Position position) {
+		super(position);
 		direction = (int) (Math.random() * 3);
 	}
 
-	public Enemy(int x, int y, int dir) {
-		super(x, y);
+	public Enemy(Position position, int dir) {
+		super(position);
 		direction = dir;
 	}
 
 	public abstract void generateAnimationList();
 
-	public ArrayList<String> toCSVEntry() {
-		ArrayList<String> entryList = new ArrayList<>();
+	public List<String> toCSVEntry() {
+		List<String> entryList = new ArrayList<>();
 		entryList.add(this.getClass().toString());
-		entryList.add(Integer.toString(xPosition));
-		entryList.add(Integer.toString(yPosition));
+		entryList.add(Integer.toString(position.getX()));
+		entryList.add(Integer.toString(position.getY()));
 		entryList.add(Integer.toString(direction));
 		return entryList;
 	}

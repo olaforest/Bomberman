@@ -6,6 +6,7 @@ import gameplayModel.GridObjects.AnimatedObject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import utility.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +49,8 @@ public class Bomb extends AnimatedObject {
 	@Accessors(fluent = true)
 	private boolean wasTrigByBomb;
 
-	public Bomb(int x, int y) {
-		super(x, y);
+	public Bomb(Position position) {
+		super(position);
 
 		currentAnimations = new ArrayList<>();
 		animXOffset = new ArrayList<>();
@@ -63,8 +64,8 @@ public class Bomb extends AnimatedObject {
 		addAnimation(unexploded.ordinal(), 0, 0);
 	}
 
-	public Bomb(int range, int x, int y, int timer, int right, int left, int down, int up) {
-		super(x, y);
+	public Bomb(int range, Position position, int timer, int right, int left, int down, int up) {
+		super(position);
 
 		currentAnimations = new ArrayList<>();
 		animXOffset = new ArrayList<>();
@@ -196,8 +197,8 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0;
-	private BooleanSupplier isNotAlignedWithRow = () -> isNotAlignedWithRowOrColumn.test(yPosition);
-	private BooleanSupplier isNotAlignedWithColumn = () -> isNotAlignedWithRowOrColumn.test(xPosition);
+	private BooleanSupplier isNotAlignedWithRow = () -> isNotAlignedWithRowOrColumn.test(position.getY());
+	private BooleanSupplier isNotAlignedWithColumn = () -> isNotAlignedWithRowOrColumn.test(position.getX());
 
 	private void resetHorizontalRanges() {
 		rightRange = 0;
@@ -210,17 +211,17 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private void setHorizontalRanges() {
-		if (maxRangePosition(xPosition, rightRange) >= MAX_X_POSITION)
-			rightRange = adjustedMaxRangePosition(xPosition, MAPWIDTH);
-		if (minRangePosition(xPosition, leftRange) <= MIN_X_POSITION)
-			leftRange = adjustedMinRangePosition(xPosition);
+		if (maxRangePosition(position.getX(), rightRange) >= MAX_X_POSITION)
+			rightRange = adjustedMaxRangePosition(position.getX(), MAPWIDTH);
+		if (minRangePosition(position.getX(), leftRange) <= MIN_X_POSITION)
+			leftRange = adjustedMinRangePosition(position.getX());
 	}
 
 	private void setVerticalRanges() {
-		if (maxRangePosition(yPosition, downRange) >= MAX_Y_POSITION)
-			downRange = adjustedMaxRangePosition(yPosition, MAPHEIGHT);
-		if (minRangePosition(yPosition, upRange) <= MIN_Y_POSITION)
-			upRange = adjustedMinRangePosition(yPosition);
+		if (maxRangePosition(position.getY(), downRange) >= MAX_Y_POSITION)
+			downRange = adjustedMaxRangePosition(position.getY(), MAPHEIGHT);
+		if (minRangePosition(position.getY(), upRange) <= MIN_Y_POSITION)
+			upRange = adjustedMinRangePosition(position.getY());
 	}
 
 	private int maxRangePosition(int position, int maxRange) { return position + maxRange * EFFECTIVE_PIXEL_DIMENSION; }
@@ -256,11 +257,11 @@ public class Bomb extends AnimatedObject {
 
 	public static void resetRange() { range = 1; }
 
-	public ArrayList<String> toCSVEntry() {
-		ArrayList<String> entryList = new ArrayList<>();
+	public List<String> toCSVEntry() {
+		List<String> entryList = new ArrayList<>();
 
-		entryList.add(Integer.toString(xPosition));
-		entryList.add(Integer.toString(yPosition));
+		entryList.add(Integer.toString(position.getX()));
+		entryList.add(Integer.toString(position.getY()));
 		entryList.add(Integer.toString(timer));
 		entryList.add(Integer.toString(rightRange));
 		entryList.add(Integer.toString(leftRange));

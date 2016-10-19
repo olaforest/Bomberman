@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
 
 public class PowerUpTest {
 
@@ -14,7 +15,7 @@ public class PowerUpTest {
 
 	@Before
 	public void setUp() {
-		powerUp = new Bombpass(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		powerUp = new Bombpass(create(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION));
 	}
 
 	@Test
@@ -47,7 +48,7 @@ public class PowerUpTest {
 
 		//Tests if the inputed x position is valid.
 		powerUp.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, powerUp.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, powerUp.getPosition().getX());
 	}
 
 	@Test
@@ -55,7 +56,7 @@ public class PowerUpTest {
 
 		//Tests if the inputed y position is valid.
 		powerUp.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, powerUp.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, powerUp.getPosition().getY());
 	}
 
 	@Test
@@ -63,7 +64,7 @@ public class PowerUpTest {
 
 		assertTrue(powerUp.toCSVEntry().size() == 3);
 		assertTrue(powerUp.toCSVEntry().get(0).equals("class gameplayModel.GridObjects.PowerUp"));
-		assertTrue(powerUp.toCSVEntry().get(1).equals(Integer.toString(powerUp.getXPosition())));
-		assertTrue(powerUp.toCSVEntry().get(2).equals(Integer.toString(powerUp.getYPosition())));
+		assertTrue(powerUp.toCSVEntry().get(1).equals(Integer.toString(powerUp.getPosition().getX())));
+		assertTrue(powerUp.toCSVEntry().get(2).equals(Integer.toString(powerUp.getPosition().getY())));
 	}
 }
