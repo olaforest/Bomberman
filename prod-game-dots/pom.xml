@@ -12,6 +12,19 @@
 
 	<artifactId>prod-game-dots</artifactId>
 	<version>1.0.0</version>
-    <packaging>jar</packaging>
+	<packaging>jar</packaging>
 
+	<dependencies>
+		<dependency>
+			<groupId>oli.test.project</groupId>
+			<artifactId>prod-game</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.10</version>
+		</dependency>
+	</dependencies>
 </project>
