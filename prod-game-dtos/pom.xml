@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>oli.test.project</groupId>
+		<artifactId>bomberman</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<artifactId>prod-game-dtos</artifactId>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>oli.test.project</groupId>
+			<artifactId>prod-game</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>oli.test.project</groupId>
+			<artifactId>prod-game</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>schemagen</id>
+						<goals>
+							<goal>schemagen</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+					<transformSchemas>
+						<transformSchema>
+							<uri>file://localhost/Bomberman/prod-game-dtos/src/main/java/dtos/GameContextDto</uri>
+							<toFile>gameContext.xsd</toFile>
+						</transformSchema>
+					</transformSchemas>
+				</configuration>
+
+			</plugin>
+		</plugins>
+	</build>
+</project>
