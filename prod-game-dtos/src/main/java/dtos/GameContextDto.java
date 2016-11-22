@@ -1,12 +1,21 @@
 package dtos;
 
-import gameplayModel.GridMap;
+import lombok.Getter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType
+@Getter
+@XmlType(propOrder = {"gameTime", "livesLeft", "score", "level", "actualLevel", "endGameEnemiesSpawned", "gridMap"})
+@XmlAccessorType(XmlAccessType.FIELD)
 public class GameContextDto {
+
+	@XmlElement(required = true)
 	private int gameTime, livesLeft, score, level, actualLevel;
-	private boolean isEndGameEnemiesSpawned;
-	private GridMap gridMap;
+	@XmlElement(required = true)
+	private boolean endGameEnemiesSpawned;
+	@XmlElement(required = true)
+	private GridMapDto gridMap;
 }

@@ -27,9 +27,9 @@ public class GridMap {
 	public static final int MAPHEIGHT = 13;
 	public static final int SPAWN_TIMEOUT = 10 * 1000;
 	private static final double BRICK_FACTOR = 0.225;
+	private static final int WIDTH = EFFECTIVE_PIXEL_DIMENSION;
+	private static final int HEIGHT = EFFECTIVE_PIXEL_DIMENSION;
 
-	private int width = EFFECTIVE_PIXEL_DIMENSION;
-	private int height = EFFECTIVE_PIXEL_DIMENSION;
 	private int spawnTimer;
 	private int[] levelSpec;
 
@@ -154,7 +154,7 @@ public class GridMap {
 
 	private void addEnemy(int type) {
 		final int[] position = findNewEnemyLocation();
-		enemies.add(createEnemy(type, position[0] * width, position[1] * height));
+		enemies.add(createEnemy(type, position[0] * WIDTH, position[1] * HEIGHT));
 	}
 
 	private int[] findNewEnemyLocation() {
@@ -183,7 +183,7 @@ public class GridMap {
 
 	private Optional<Brick> findMatchingBrick(int[] location) {
 		return bricks.stream()
-				.filter(brick -> brick.isSamePosition(location[0] * width, location[1] * height))
+				.filter(brick -> brick.isSamePosition(location[0] * WIDTH, location[1] * HEIGHT))
 				.findFirst();
 	}
 

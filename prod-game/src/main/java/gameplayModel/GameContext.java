@@ -78,7 +78,7 @@ public class GameContext {
 
 	private int gameTime, livesLeft, score, level, actualLevel;
 	@Setter
-	private boolean isEndGameEnemiesSpawned;
+	private boolean endGameEnemiesSpawned;
 	private GridMap gridMap;
 
 	public GameContext() {
@@ -87,7 +87,7 @@ public class GameContext {
 		score = 0;
 		level = 0;
 		actualLevel = 0;
-		isEndGameEnemiesSpawned = false;
+		endGameEnemiesSpawned = false;
 		gridMap = new GridMap(levelSpec[level]);
 
 	}
@@ -98,7 +98,7 @@ public class GameContext {
 		score = 0;
 		actualLevel = selectedLevel;
 		level = computeLevel();
-		isEndGameEnemiesSpawned = false;
+		endGameEnemiesSpawned = false;
 		gridMap = new GridMap(levelSpec[level]);
 	}
 
@@ -108,7 +108,7 @@ public class GameContext {
 		this.score = score;
 		this.level = level;
 		computeActualLevel();
-		isEndGameEnemiesSpawned = false;
+		endGameEnemiesSpawned = false;
 		this.gridMap = gridMap;
 	}
 
