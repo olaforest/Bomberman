@@ -20,12 +20,6 @@
 			<artifactId>prod-game</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-
-		<dependency>
-			<groupId>oli.test.project</groupId>
-			<artifactId>prod-game</artifactId>
-			<version>1.0.0</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -43,14 +37,14 @@
 					</execution>
 				</executions>
 
-				<configuration>
-					<transformSchemas>
-						<transformSchema>
-							<uri>file://localhost/Bomberman/prod-game-dtos/src/main/java/dtos/GameContextDto</uri>
-							<toFile>gameContext.xsd</toFile>
-						</transformSchema>
-					</transformSchemas>
-				</configuration>
+				<!--<configuration>-->
+					<!--<transformSchemas>-->
+						<!--<transformSchema>-->
+							<!--<uri>file://localhost/Bomberman/prod-game-dtos/src/main/java/dtos/GameContextDto</uri>-->
+							<!--<toFile>gameContext.xsd</toFile>-->
+						<!--</transformSchema>-->
+					<!--</transformSchemas>-->
+				<!--</configuration>-->
 
 			</plugin>
 		</plugins>
