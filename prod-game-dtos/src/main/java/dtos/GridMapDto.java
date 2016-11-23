@@ -1,29 +1,28 @@
 package dtos;
 
-import gameplayModel.GridObjects.AnimatedObjects.Bomb;
-import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
-import gameplayModel.GridObjects.AnimatedObjects.Brick;
-import gameplayModel.GridObjects.AnimatedObjects.Enemy;
-import gameplayModel.GridObjects.Concrete;
-import gameplayModel.GridObjects.Exitway;
-import gameplayModel.GridObjects.PowerUp;
+import dtos.GridObjects.ConcreteDto;
+import lombok.Getter;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 import java.util.List;
 
-@XmlType
+@Getter
+@XmlType(propOrder = {"spawnTimer", "levelSpec", "concreteLayout"})
 public class GridMapDto {
 	@XmlElement(required = true)
 	private int spawnTimer;
-	@XmlElement
+	@XmlElement(required = true)
 	private int[] levelSpec;
 
-	private List<Concrete> concreteLayout;
-	private List<Brick> bricks;
-	private List<Bomb> bombs;
-	private List<Enemy> enemies;
-	private Exitway exitway;
-	private PowerUp powerUp;
-	private Bomberman bomberman;
+	@XmlElementWrapper(name = "concreteLayout", required = true)
+	@XmlElement(name = "concrete")
+	private List<ConcreteDto> concreteLayout;
+//	private List<Brick> bricks;
+//	private List<Bomb> bombs;
+//	private List<Enemy> enemies;
+//	private Exitway exitway;
+//	private PowerUp powerUp;
+//	private Bomberman bomberman;
 }

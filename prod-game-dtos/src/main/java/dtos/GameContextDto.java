@@ -12,9 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GameContextDto {
 
-	@XmlElement(required = true)
 	private int gameTime, livesLeft, score, level, actualLevel;
-	@XmlElement(required = true)
 	private boolean endGameEnemiesSpawned;
 	@XmlElement(required = true)
 	private GridMapDto gridMap;
