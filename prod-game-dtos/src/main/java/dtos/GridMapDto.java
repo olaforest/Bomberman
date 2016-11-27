@@ -2,15 +2,17 @@ package dtos;
 
 import dtos.GridObjects.ConcreteDto;
 import lombok.Getter;
+import lombok.Setter;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @Getter
+@Setter
 @XmlType(propOrder = {"spawnTimer", "levelSpec", "concreteLayout"})
+@XmlAccessorType(XmlAccessType.FIELD)
 public class GridMapDto {
+
 	@XmlElement(required = true)
 	private int spawnTimer;
 	@XmlElement(required = true)

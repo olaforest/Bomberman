@@ -37,14 +37,18 @@
 					</execution>
 				</executions>
 
-				<!--<configuration>-->
-				<!--<transformSchemas>-->
-				<!--<transformSchema>-->
-				<!--<uri>file://localhost/Bomberman/prod-game-dtos/src/main/java/dtos/GameContextDto</uri>-->
-				<!--<toFile>gameContext.xsd</toFile>-->
-				<!--</transformSchema>-->
-				<!--</transformSchemas>-->
-				<!--</configuration>-->
+				<configuration>
+					<sources>
+						<source>src/main/java/dtos/</source>
+					</sources>
+
+					<!--<transformSchemas>-->
+					<!--<transformSchema>-->
+					<!--<uri>file://localhost/Bomberman/prod-game-dtos/src/main/java/dtos/GameContextDto</uri>-->
+					<!--<toFile>gameContext.xsd</toFile>-->
+					<!--</transformSchema>-->
+					<!--</transformSchemas>-->
+				</configuration>
 
 			</plugin>
 		</plugins>
