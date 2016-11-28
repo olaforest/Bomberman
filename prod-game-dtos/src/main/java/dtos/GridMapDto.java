@@ -12,13 +12,13 @@ import java.util.List;
 @XmlType(propOrder = {"spawnTimer", "levelSpec", "concreteLayout"})
 public class GridMapDto {
 
-	@XmlElement(required = true)
+	@XmlElement(name = "SpawnTimer", required = true)
 	private int spawnTimer;
-	@XmlElement(required = true)
+	@XmlElement(name = "LevelSpec", required = true)
 	private int[] levelSpec;
 
-	@XmlElementWrapper(name = "concreteLayout", required = true)
-	@XmlElement(name = "concrete")
+	@XmlElementWrapper(name = "ConcreteLayout", required = true)
+	@XmlElement(name = "Concrete")
 	private List<ConcreteDto> concreteLayout;
 //	private List<Brick> bricks;
 //	private List<Bomb> bombs;

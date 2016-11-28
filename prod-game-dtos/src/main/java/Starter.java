@@ -1,6 +1,7 @@
 import dtos.GameContextDto;
 import dtos.GridMapDto;
 import dtos.GridObjects.ConcreteDto;
+import dtos.PositionDto;
 import utils.JaxbUtils;
 
 import static java.util.Collections.singletonList;
@@ -22,7 +23,15 @@ public class Starter {
 
 		gridMapDto.setSpawnTimer(123);
 		gridMapDto.setLevelSpec(new int[] {3, 3, 0, 0, 0, 0, 0, 0, 1});
-		gridMapDto.setConcreteLayout(singletonList(new ConcreteDto()));
+		final ConcreteDto concreteDto = new ConcreteDto();
+		gridMapDto.setConcreteLayout(singletonList(concreteDto));
+
+		final PositionDto positionDto = new PositionDto();
+		concreteDto.setPosition(positionDto);
+		concreteDto.setConcreteCollision(false);
+
+		positionDto.setX(12);
+		positionDto.setY(36);
 
 		JaxbUtils.marshall(gameContextDto);
 	}

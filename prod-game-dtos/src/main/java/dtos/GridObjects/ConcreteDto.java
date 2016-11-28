@@ -1,10 +1,12 @@
 package dtos.GridObjects;
 
-import lombok.Getter;
+import dtos.GridObjectDto;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-@Getter
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlType
-public class ConcreteDto {
+public class ConcreteDto extends GridObjectDto {
 }

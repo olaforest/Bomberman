@@ -8,12 +8,12 @@ import javax.xml.bind.annotation.*;
 @Getter @Setter
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {"gameTime", "livesLeft", "score", "level", "actualLevel", "endGameEnemiesSpawned", "gridMap"})
-@XmlRootElement(name = "gameContext")
+@XmlRootElement(name = "GameContext")
 public class GameContextDto {
 
 	private int gameTime, livesLeft, score, level, actualLevel;
-	@XmlAttribute
+	@XmlAttribute(name = "EndGameEnemiesSpawned")
 	private boolean endGameEnemiesSpawned;
-	@XmlElement(required = true)
+	@XmlElement(name = "GridMap", required = true)
 	private GridMapDto gridMap;
 }
