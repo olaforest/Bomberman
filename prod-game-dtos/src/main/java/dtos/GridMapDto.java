@@ -7,10 +7,9 @@ import lombok.Setter;
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
-@Getter
-@Setter
-@XmlType(propOrder = {"spawnTimer", "levelSpec", "concreteLayout"})
+@Getter @Setter
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = {"spawnTimer", "levelSpec", "concreteLayout"})
 public class GridMapDto {
 
 	@XmlElement(required = true)
