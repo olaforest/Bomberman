@@ -1,6 +1,12 @@
 package dtos;
 
-import dtos.GridObjects.ConcreteDto;
+import dtos.gridObjects.ConcreteDto;
+import dtos.gridObjects.ExitwayDto;
+import dtos.gridObjects.PowerUpDto;
+import dtos.gridObjects.animatedObjects.BombDto;
+import dtos.gridObjects.animatedObjects.BombermanDto;
+import dtos.gridObjects.animatedObjects.BrickDto;
+import dtos.gridObjects.animatedObjects.EnemyDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +15,7 @@ import java.util.List;
 
 @Getter @Setter
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = {"spawnTimer", "levelSpec", "concreteLayout"})
+@XmlType(propOrder = {"spawnTimer", "levelSpec", "concreteLayout", "bricks", "bombs", "enemies", "exitway", "powerUp", "bomberman"})
 public class GridMapDto {
 
 	@XmlElement(name = "SpawnTimer", required = true)
@@ -20,10 +26,10 @@ public class GridMapDto {
 	@XmlElementWrapper(name = "ConcreteLayout", required = true)
 	@XmlElement(name = "Concrete")
 	private List<ConcreteDto> concreteLayout;
-//	private List<Brick> bricks;
-//	private List<Bomb> bombs;
-//	private List<Enemy> enemies;
-//	private Exitway exitway;
-//	private PowerUp powerUp;
-//	private Bomberman bomberman;
+	private List<BrickDto> bricks;
+	private List<BombDto> bombs;
+	private List<EnemyDto> enemies;
+	private ExitwayDto exitway;
+	private PowerUpDto powerUp;
+	private BombermanDto bomberman;
 }

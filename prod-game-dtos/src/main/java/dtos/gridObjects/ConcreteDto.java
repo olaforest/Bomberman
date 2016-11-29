@@ -1,4 +1,4 @@
-package dtos.GridObjects;
+package dtos.gridObjects;
 
 import dtos.GridObjectDto;
 

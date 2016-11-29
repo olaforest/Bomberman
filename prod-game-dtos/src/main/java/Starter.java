@@ -1,7 +1,7 @@
 import dtos.GameContextDto;
 import dtos.GridMapDto;
-import dtos.GridObjects.ConcreteDto;
 import dtos.PositionDto;
+import dtos.gridObjects.ConcreteDto;
 import utils.JaxbUtils;
 
 import static java.util.Collections.singletonList;
