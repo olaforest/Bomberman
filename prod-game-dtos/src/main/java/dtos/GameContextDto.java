@@ -1,13 +1,16 @@
 package dtos;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.xml.bind.annotation.*;
 
-@Getter @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = {"gameTime", "livesLeft", "score", "level", "actualLevel", "endGameEnemiesSpawned", "gridMap"})
+@XmlType(propOrder = {"gameTime", "livesLeft", "score", "level", "actualLevel", "gridMap"})
 @XmlRootElement(name = "GameContext")
 public class GameContextDto {
 

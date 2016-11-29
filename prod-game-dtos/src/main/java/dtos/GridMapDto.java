@@ -7,13 +7,16 @@ import dtos.gridObjects.animatedObjects.BombDto;
 import dtos.gridObjects.animatedObjects.BombermanDto;
 import dtos.gridObjects.animatedObjects.BrickDto;
 import dtos.gridObjects.animatedObjects.EnemyDto;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
-@Getter @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {"spawnTimer", "levelSpec", "concreteLayout", "bricks", "bombs", "enemies", "exitway", "powerUp", "bomberman"})
 public class GridMapDto {
