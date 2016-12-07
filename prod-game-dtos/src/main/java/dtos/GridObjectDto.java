@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.*;
 @XmlType(propOrder = {"position", "isConcreteCollision"})
 public class GridObjectDto {
 
-	@XmlElement(name = "Position", required = true)
+	@XmlElement(name = "position", required = true)
 	protected PositionDto position;
-	@XmlAttribute(name = "ConcreteCollision")
+	@XmlAttribute(name = "concreteCollision")
 	protected boolean isConcreteCollision;
 }
