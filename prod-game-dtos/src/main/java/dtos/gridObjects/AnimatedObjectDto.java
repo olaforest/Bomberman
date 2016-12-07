@@ -12,15 +12,13 @@ public class AnimatedObjectDto {
 	@XmlElementWrapper(name = "animations", required = true)
 	@XmlElement(name = "animation")
 	protected List<AnimationDto> animationList;
-	@XmlElement(name = "currentAnimation")
+	@XmlElement
 	private AnimationDto currentAnimation;
-	@XmlAttribute(name = "isDead")
+	@XmlAttribute
 	protected boolean isDead;
-	@XmlAttribute(name = "isObsolete")
+	@XmlAttribute
 	protected boolean isObsolete;
-	@XmlElement(name = "animationNumber")
 	private int animationNumber;
-	@XmlElement(name = "counter")
 	protected int counter;
 	@XmlElement(name = "animationCycleParam")
 	protected int animCycleParam;

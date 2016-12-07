@@ -15,8 +15,8 @@ import javax.xml.bind.annotation.*;
 public class GameContextDto {
 
 	private int gameTime, livesLeft, score, level, actualLevel;
-	@XmlAttribute(name = "endGameEnemiesSpawned")
+	@XmlAttribute
 	private boolean endGameEnemiesSpawned;
-	@XmlElement(name = "gridMap", required = true)
+	@XmlElement(required = true)
 	private GridMapDto gridMap;
 }

@@ -21,9 +21,9 @@ import java.util.List;
 @XmlType(propOrder = {"spawnTimer", "levelSpec", "concreteLayout", "bricks", "bombs", "enemies", "exitway", "powerUp", "bomberman"})
 public class GridMapDto {
 
-	@XmlElement(name = "spawnTimer", required = true)
+	@XmlElement(required = true)
 	private int spawnTimer;
-	@XmlElement(name = "levelSpec", required = true)
+	@XmlElement(required = true)
 	private int[] levelSpec;
 
 	@XmlElementWrapper(name = "concreteLayout", required = true)
@@ -42,10 +42,10 @@ public class GridMapDto {
 	@XmlElement(name = "enemy")
 	private List<EnemyDto> enemies;
 
-	@XmlElement(name = "exitway")
+	@XmlElement
 	private ExitwayDto exitway;
-	@XmlElement(name = "powerUp")
+	@XmlElement
 	private PowerUpDto powerUp;
-	@XmlElement(name = "bomberman")
+	@XmlElement
 	private BombermanDto bomberman;
 }
