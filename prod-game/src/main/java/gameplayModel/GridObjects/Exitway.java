@@ -2,9 +2,11 @@ package gameplayModel.GridObjects;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import utility.Position;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class Exitway extends HiddenObject {
@@ -15,29 +17,26 @@ public class Exitway extends HiddenObject {
 	@Getter(AccessLevel.NONE)
 	private int[] imageParameter = {2, 241};
 
-	public Exitway(int x, int y, int index) {
-		super(x, y);
+	public Exitway(Position position, int index) {
+		super(position);
 		this.brickIndex = index;
 		image = resizeImage(imageParameter[0], imageParameter[1]);
 	}
 
 	@Override
-	public void setXPosition(int xPosition) {
-		this.xPosition = xPosition;
+	public void setXPosition(int xPos) {
+		position.setX(xPos);
 	}
 
 	@Override
-	public void setYPosition(int yPosition) {
-		this.yPosition = yPosition;
+	public void setYPosition(int yPos) {
+		position.setY(yPos);
 	}
 
-	public ArrayList<String> toCSVEntry() {
-
-		ArrayList<String> entryList = new ArrayList<>();
-
-		entryList.add(Integer.toString(xPosition));
-		entryList.add(Integer.toString(yPosition));
-
+	public List<String> toCSVEntry() {
+		List<String> entryList = new ArrayList<>();
+		entryList.add(Integer.toString(position.getX()));
+		entryList.add(Integer.toString(position.getY()));
 		return entryList;
 	}
 }

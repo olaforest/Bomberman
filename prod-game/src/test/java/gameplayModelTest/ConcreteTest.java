@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
+import static utility.Position.create;
 
 public class ConcreteTest {
 
@@ -13,7 +14,7 @@ public class ConcreteTest {
 
 	@Before
 	public void setUp() {
-		concrete = new Concrete(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION);
+		concrete = new Concrete(create(EFFECTIVE_PIXEL_DIMENSION, EFFECTIVE_PIXEL_DIMENSION));
 	}
 
 	@Test
@@ -33,7 +34,7 @@ public class ConcreteTest {
 
 		//Tests if the inputed x position is valid.
 		concrete.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, concrete.getXPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, concrete.getPosition().getX());
 	}
 
 	@Test
@@ -41,6 +42,6 @@ public class ConcreteTest {
 
 		//Tests if the inputed y position is valid.
 		concrete.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
-		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, concrete.getYPosition());
+		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, concrete.getPosition().getY());
 	}
 }

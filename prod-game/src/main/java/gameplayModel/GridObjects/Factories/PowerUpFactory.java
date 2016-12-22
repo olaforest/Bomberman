@@ -2,26 +2,30 @@ package gameplayModel.GridObjects.Factories;
 
 import gameplayModel.GridObjects.PowerUp;
 import gameplayModel.GridObjects.PowerUps.*;
+import utility.Position;
+
+import static utility.Position.create;
 
 public class PowerUpFactory {
 	public static PowerUp createPowerUp(int type, int xPosition, int yPosition) {
+		final Position position = create(xPosition, yPosition);
 		switch (type) {
 			case 1:
-				return new BombPU(xPosition, yPosition);
+				return new BombPU(position);
 			case 2:
-				return new Flames(xPosition, yPosition);
+				return new Flames(position);
 			case 3:
-				return new Speed(xPosition, yPosition);
+				return new Speed(position);
 			case 4:
-				return new Wallpass(xPosition, yPosition);
+				return new Wallpass(position);
 			case 5:
-				return new Detonator(xPosition, yPosition);
+				return new Detonator(position);
 			case 6:
-				return new Bombpass(xPosition, yPosition);
+				return new Bombpass(position);
 			case 7:
-				return new Flamepass(xPosition, yPosition);
+				return new Flamepass(position);
 			case 8:
-				return new Mystery(xPosition, yPosition);
+				return new Mystery(position);
 			default:
 				return null;
 		}

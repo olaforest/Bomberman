@@ -14,11 +14,16 @@ import gameplayModel.GridObjects.PowerUp;
 import gameplayModel.GridObjects.PowerUps.*;
 import menuModel.Player;
 import menuModel.SavedGame;
+import utility.Position;
 
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+
+import static java.lang.Integer.parseInt;
+import static utility.Position.create;
 
 public class Database {
 
@@ -73,7 +78,7 @@ public class Database {
 		while (nextLine != null) {
 			ArrayList<String> data = new ArrayList<>();
 			Collections.addAll(data, nextLine);
-			players.add(new Player(data.get(0), data.get(1), data.get(2), Integer.parseInt(data.get(3)), Integer.parseInt(data.get(4)), Integer.parseInt(data.get(5))));
+			players.add(new Player(data.get(0), data.get(1), data.get(2), parseInt(data.get(3)), parseInt(data.get(4)), parseInt(data.get(5))));
 
 			while (data.contains("SavedGame")) {
 				data = new ArrayList<>(data.subList(data.indexOf("SavedGame") + 1, data.size()));
@@ -107,20 +112,20 @@ public class Database {
 
 		GridMap gridMap = generateGridMap(new ArrayList<>(context.subList(context.indexOf("GridMap") + 1, context.size())));
 
-		gameTime = Integer.parseInt(context.get(0));
-		livesLeft = Integer.parseInt(context.get(1));
-		score = Integer.parseInt(context.get(2));
-		level = Integer.parseInt(context.get(3));
+		gameTime = parseInt(context.get(0));
+		livesLeft = parseInt(context.get(1));
+		score = parseInt(context.get(2));
+		level = parseInt(context.get(3));
 
 		return new GameContext(gameTime, livesLeft, score, level, gridMap);
 	}
 
-	private GridMap generateGridMap(ArrayList<String> map) {
-		int spawnTimer = Integer.parseInt(map.get(0));
+	private GridMap generateGridMap(List<String> map) {
+		int spawnTimer = parseInt(map.get(0));
 
-		ArrayList<Brick> bricks = generateBricks(new ArrayList<>(map.subList(map.indexOf("Bricks") + 1, map.indexOf("Bombs"))));
-		ArrayList<Bomb> bombs = generateBombs(new ArrayList<>(map.subList(map.indexOf("Bombs") + 1, map.indexOf("Enemies"))));
-		ArrayList<Enemy> enemies = generateEnemies(new ArrayList<>(map.subList(map.indexOf("Enemies") + 1, map.indexOf("Exitway"))));
+		List<Brick> bricks = generateBricks(new ArrayList<>(map.subList(map.indexOf("Bricks") + 1, map.indexOf("Bombs"))));
+		List<Bomb> bombs = generateBombs(new ArrayList<>(map.subList(map.indexOf("Bombs") + 1, map.indexOf("Enemies"))));
+		List<Enemy> enemies = generateEnemies(new ArrayList<>(map.subList(map.indexOf("Enemies") + 1, map.indexOf("Exitway"))));
 		Exitway exitway = generateExitway(new ArrayList<>(map.subList(map.indexOf("Exitway") + 1, map.indexOf("PowerUp"))));
 		PowerUp powerup = generatePowerUp(new ArrayList<>(map.subList(map.indexOf("PowerUp") + 1, map.indexOf("Bomberman"))));
 		Bomberman bomberman = generateBomberman(new ArrayList<>(map.subList(map.indexOf("Bomberman") + 1, map.size())));
@@ -128,134 +133,136 @@ public class Database {
 		return new GridMap(spawnTimer, bricks, bombs, enemies, exitway, powerup, bomberman);
 	}
 
-	private ArrayList<Brick> generateBricks(ArrayList<String> data) {
-		int xPosition, yPosition;
-		ArrayList<Brick> bricks = new ArrayList<>();
+	private List<Brick> generateBricks(List<String> data) {
+		int xPos, yPos;
+		List<Brick> bricks = new ArrayList<>();
 
 		while (data.size() != 0) {
-			xPosition = Integer.parseInt(data.remove(0));
-			yPosition = Integer.parseInt(data.remove(0));
-			bricks.add(new Brick(xPosition, yPosition));
+			xPos = parseInt(data.remove(0));
+			yPos = parseInt(data.remove(0));
+			bricks.add(new Brick(create(xPos, yPos)));
 		}
 		return bricks;
 	}
 
-	private ArrayList<Bomb> generateBombs(ArrayList<String> data) {
-		int range, xPosition, yPosition, timer, rightRange, leftRange, downRange, upRange;
-		ArrayList<Bomb> bombs = new ArrayList<>();
-		range = Integer.parseInt(data.remove(0));
+	private List<Bomb> generateBombs(List<String> data) {
+		int range, xPos, yPos, timer, rightRange, leftRange, downRange, upRange;
+		List<Bomb> bombs = new ArrayList<>();
+		range = parseInt(data.remove(0));
 
 		while (data.size() != 0) {
-			xPosition = Integer.parseInt(data.remove(0));
-			yPosition = Integer.parseInt(data.remove(0));
-			timer = Integer.parseInt(data.remove(0));
-			rightRange = Integer.parseInt(data.remove(0));
-			leftRange = Integer.parseInt(data.remove(0));
-			downRange = Integer.parseInt(data.remove(0));
-			upRange = Integer.parseInt(data.remove(0));
-			bombs.add(new Bomb(range, xPosition, yPosition, timer, rightRange, leftRange, downRange, upRange));
+			xPos = parseInt(data.remove(0));
+			yPos = parseInt(data.remove(0));
+			timer = parseInt(data.remove(0));
+			rightRange = parseInt(data.remove(0));
+			leftRange = parseInt(data.remove(0));
+			downRange = parseInt(data.remove(0));
+			upRange = parseInt(data.remove(0));
+			bombs.add(new Bomb(range, create(xPos, yPos), timer, rightRange, leftRange, downRange, upRange));
 		}
 		return bombs;
 	}
 
-	private ArrayList<Enemy> generateEnemies(ArrayList<String> data) {
+	private List<Enemy> generateEnemies(List<String> data) {
 		int xPosition, yPosition, direction;
 		String type;
-		ArrayList<Enemy> enemies = new ArrayList<>();
+		List<Enemy> enemies = new ArrayList<>();
 
 		while (data.size() != 0) {
 			type = data.remove(0);
-			xPosition = Integer.parseInt(data.remove(0));
-			yPosition = Integer.parseInt(data.remove(0));
-			direction = Integer.parseInt(data.remove(0));
+			xPosition = parseInt(data.remove(0));
+			yPosition = parseInt(data.remove(0));
+			final Position position = create(xPosition, yPosition);
+			direction = parseInt(data.remove(0));
 
 			switch (type) {
 				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom":
-					enemies.add(new Balloom(xPosition, yPosition, direction));
+					enemies.add(new Balloom(position, direction));
 					break;
 				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Oneal":
-					enemies.add(new Oneal(xPosition, yPosition, direction));
+					enemies.add(new Oneal(position, direction));
 					break;
 				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Doll":
-					enemies.add(new Doll(xPosition, yPosition, direction));
+					enemies.add(new Doll(position, direction));
 					break;
 				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Minvo":
-					enemies.add(new Minvo(xPosition, yPosition, direction));
+					enemies.add(new Minvo(position, direction));
 					break;
 				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Kondoria":
-					enemies.add(new Kondoria(xPosition, yPosition, direction));
+					enemies.add(new Kondoria(position, direction));
 					break;
 				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Ovapi":
-					enemies.add(new Ovapi(xPosition, yPosition, direction));
+					enemies.add(new Ovapi(position, direction));
 					break;
 				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Pass":
-					enemies.add(new Pass(xPosition, yPosition, direction));
+					enemies.add(new Pass(position, direction));
 					break;
 				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Pontan":
-					enemies.add(new Pontan(xPosition, yPosition, direction));
+					enemies.add(new Pontan(position, direction));
 					break;
 			}
 		}
 		return enemies;
 	}
 
-	private Exitway generateExitway(ArrayList<String> data) {
-		int xPosition = Integer.parseInt(data.remove(0));
-		int yPosition = Integer.parseInt(data.remove(0));
-		return new Exitway(xPosition, yPosition, -1);
+	private Exitway generateExitway(List<String> data) {
+		int xPos = parseInt(data.remove(0));
+		int yPos = parseInt(data.remove(0));
+		return new Exitway(create(xPos, yPos), -1);
 	}
 
-	private PowerUp generatePowerUp(ArrayList<String> data) {
+	private PowerUp generatePowerUp(List<String> data) {
 		String type = data.remove(0);
-		int xPosition = Integer.parseInt(data.remove(0));
-		int yPosition = Integer.parseInt(data.remove(0));
+		int xPosition = parseInt(data.remove(0));
+		int yPosition = parseInt(data.remove(0));
 		return determinePowerUp(type, xPosition, yPosition);
 	}
 
-	private Bomberman generateBomberman(ArrayList<String> data) {
-		int xPosition, yPosition, invincibilityTimer, bombsLeft;
-		xPosition = Integer.parseInt(data.remove(0));
-		yPosition = Integer.parseInt(data.remove(0));
-		invincibilityTimer = Integer.parseInt(data.remove(0));
-		bombsLeft = Integer.parseInt(data.remove(0));
+	private Bomberman generateBomberman(List<String> data) {
+		int xPos, yPos, invincibilityTimer, bombsLeft;
+		xPos = parseInt(data.remove(0));
+		yPos = parseInt(data.remove(0));
+		invincibilityTimer = parseInt(data.remove(0));
+		bombsLeft = parseInt(data.remove(0));
 
-		ArrayList<PowerUp> powerUpsAcquired = generatePowerUpsAcquired(new ArrayList<>(data.subList(data.indexOf("PowerUpAcquired") + 1, data.size())));
+		List<PowerUp> powerUpsAcquired = generatePowerUpsAcquired(new ArrayList<>(data.subList(data.indexOf("PowerUpAcquired") + 1, data.size())));
 
-		return new Bomberman(xPosition, yPosition, invincibilityTimer, bombsLeft, powerUpsAcquired);
+		return new Bomberman(create(xPos, yPos), invincibilityTimer, bombsLeft, powerUpsAcquired);
 	}
 
-	private ArrayList<PowerUp> generatePowerUpsAcquired(ArrayList<String> data) {
-		int xPosition, yPosition;
+	private List<PowerUp> generatePowerUpsAcquired(List<String> data) {
+		int xPos, yPos;
 		String type;
-		ArrayList<PowerUp> powerUps = new ArrayList<>();
+		List<PowerUp> powerUps = new ArrayList<>();
 
 		while (data.size() != 0) {
 			type = data.remove(0);
-			xPosition = Integer.parseInt(data.remove(0));
-			yPosition = Integer.parseInt(data.remove(0));
-			powerUps.add(determinePowerUp(type, xPosition, yPosition));
+			xPos = parseInt(data.remove(0));
+			yPos = parseInt(data.remove(0));
+			powerUps.add(determinePowerUp(type, xPos, yPos));
 		}
 		return powerUps;
 	}
 
 	private PowerUp determinePowerUp(String type, int xPosition, int yPosition) {
+		final Position position = create(xPosition, yPosition);
 		switch (type) {
 			case "class gameplayModel.GridObjects.PowerUps.BombPU":
-				return new BombPU(xPosition, yPosition);
+				return new BombPU(position);
 			case "class gameplayModel.GridObjects.PowerUps.Flames":
-				return new Flames(xPosition, yPosition);
+				return new Flames(position);
 			case "class gameplayModel.GridObjects.PowerUps.Speed":
-				return new Speed(xPosition, yPosition);
+				return new Speed(position);
 			case "class gameplayModel.GridObjects.PowerUps.Wallpass":
-				return new Wallpass(xPosition, yPosition);
+				return new Wallpass(position);
 			case "class gameplayModel.GridObjects.PowerUps.Detonator":
-				return new Detonator(xPosition, yPosition);
+				return new Detonator(position);
 			case "class gameplayModel.GridObjects.PowerUps.Bombpass":
-				return new Bombpass(xPosition, yPosition);
+				return new Bombpass(position);
 			case "class gameplayModel.GridObjects.PowerUps.Flamepass":
-				return new Flamepass(xPosition, yPosition);
+				return new Flamepass(position);
 			case "class gameplayModel.GridObjects.PowerUps.Mystery":
-				return new Mystery(xPosition, yPosition);
+				return new Mystery(position);
 			default:
 				return null;
 		}

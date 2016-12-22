@@ -1,28 +1,29 @@
 package gameplayModel.GridObjects.AnimatedObjects.Enemies;
 
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
+import utility.Position;
 
 import static java.util.Arrays.asList;
 
 public class Pontan extends Enemy {
-	public static final int POINTS = 8000;
-	public static final int SPEED = 4;
-	public static final int SMARTNESS = 3;
-	public static final boolean WALLPASS = true;
+	private static final int POINTS = 8000;
+	private static final int SPEED = 4;
+	private static final int SMARTNESS = 3;
+	private static final boolean WALLPASS = true;
 	public static final int[][] ANIM_PARAM = new int[][]{{73, 92, 4}, {1, 92, 4}, {146, 92, 5}};
 
-	public Pontan(int x, int y) {
-		super(x, y);
+	public Pontan(Position position) {
+		super(position);
 		initialize();
 	}
 
-	public Pontan(int x, int y, int dir) {
-		super(x, y, dir);
+	public Pontan(Position position, int dir) {
+		super(position, dir);
 		initialize();
 	}
 
 
-	public void initialize() {
+	private void initialize() {
 		points = POINTS;
 		speed = SPEED * SPEED_MULTIPLIER;
 		smartness = SMARTNESS;

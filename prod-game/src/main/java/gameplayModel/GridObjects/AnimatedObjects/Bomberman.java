@@ -7,8 +7,10 @@ import gameplayModel.GridObjects.PowerUp;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import utility.Position;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.util.Arrays.asList;
 
@@ -19,7 +21,7 @@ public class Bomberman extends AnimatedObject {
 	public static final int INITIAL_SPEED = 4, SPEED_INCREMENT = 2, MISALIGNMENT_ALLOWED = 16, INVINCIBILITY_TIMEOUT = 10000;
 	public static final int[][] ANIM_PARAM = new int[][]{{50, 3, 4}, {50, 21, 4}, {2, 3, 3}, {2, 21, 3}, {113, 3, 7}};
 
-	private ArrayList<PowerUp> powerUpsAcquired;
+	private List<PowerUp> powerUpsAcquired;
 	private int speed, bombsAvailable, bombsLeft;
 	@Getter(AccessLevel.NONE)
 	private int invincibilityTimer;
@@ -27,15 +29,15 @@ public class Bomberman extends AnimatedObject {
 	@Accessors(fluent = true)
 	private boolean canWallpass, canDetonateBombs, canBombpass, canFlamepass, isInvincible;
 
-	public Bomberman(int x, int y) {
-		super(x, y);
+	public Bomberman(Position position) {
+		super(position);
 		powerUpsAcquired = new ArrayList<>();
 		setBombermanAbilities();
 		bombsLeft = bombsAvailable;
 	}
 
-	public Bomberman(int x, int y, int invincibilityTimer, int bombsLeft, ArrayList<PowerUp> powerUpsAcquired) {
-		super(x, y);
+	public Bomberman(Position position, int invincibilityTimer, int bombsLeft, List<PowerUp> powerUpsAcquired) {
+		super(position);
 		this.invincibilityTimer = invincibilityTimer;
 		this.bombsLeft = bombsLeft;
 		this.powerUpsAcquired = powerUpsAcquired;
@@ -46,53 +48,53 @@ public class Bomberman extends AnimatedObject {
 		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 0);
 	}
 
-	public void setXPosition(int xPosition) {
-		int yError = (this.yPosition - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
+	public void setXPosition(int xPos) {
+		int yError = (position.getY() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
 
-		boolean isInXRange = (xPosition >= EFFECTIVE_PIXEL_DIMENSION) && (xPosition <= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPWIDTH - 2));
+		boolean isInXRange = (xPos >= EFFECTIVE_PIXEL_DIMENSION) && (xPos <= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPWIDTH - 2));
 		boolean isAlignedWithRow = yError == 0;
 		boolean isBelowRow = yError <= MISALIGNMENT_ALLOWED;
 		boolean isAboveRow = yError >= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED);
 
 		if (isAlignedWithRow && isInXRange) {
-			this.xPosition = xPosition;
+			position.setX(xPos);
 		} else if (isAboveRow && isInXRange && yError <= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
-			this.xPosition = xPosition;
-			this.yPosition += speed;
+			position.setX(xPos);
+			position.incrementY(speed);
 		} else if (isAboveRow && isInXRange && yError > (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
-			this.xPosition = xPosition;
-			this.yPosition += 2;
+			position.setX(xPos);
+			position.incrementY(2);
 		} else if (isBelowRow && isInXRange && yError >= speed) {
-			this.xPosition = xPosition;
-			this.yPosition -= speed;
+			position.setX(xPos);
+			position.decrementY(speed);
 		} else if (isBelowRow && isInXRange && yError < speed) {
-			this.xPosition = xPosition;
-			this.yPosition -= 2;
+			position.setX(xPos);
+			position.decrementY(2);
 		}
 	}
 
-	public void setYPosition(int yPosition) {
-		int xError = (this.xPosition - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
+	public void setYPosition(int yPos) {
+		int xError = (position.getX() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
 
-		boolean isInYRange = (yPosition >= EFFECTIVE_PIXEL_DIMENSION) && (yPosition <= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPHEIGHT - 2));
+		boolean isInYRange = (yPos >= EFFECTIVE_PIXEL_DIMENSION) && (yPos <= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPHEIGHT - 2));
 		boolean isAlignedWithColumn = xError == 0;
 		boolean isRightFromColumn = xError <= MISALIGNMENT_ALLOWED;
 		boolean isLeftFromColumn = xError >= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED);
 
 		if (isAlignedWithColumn && isInYRange) {
-			this.yPosition = yPosition;
+			position.setY(yPos);
 		} else if (isRightFromColumn && isInYRange && xError >= speed) {
-			this.yPosition = yPosition;
-			this.xPosition -= speed;
+			position.setY(yPos);
+			position.decrementX(speed);
 		} else if (isRightFromColumn && isInYRange && xError < speed) {
-			this.yPosition = yPosition;
-			this.xPosition -= 2;
+			position.setY(yPos);
+			position.decrementX(2);
 		} else if (isLeftFromColumn && isInYRange && xError <= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
-			this.yPosition = yPosition;
-			this.xPosition += speed;
+			position.setY(yPos);
+			position.incrementX(speed);
 		} else if (isLeftFromColumn && isInYRange && xError > (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
-			this.yPosition = yPosition;
-			this.xPosition += 2;
+			position.setY(yPos);
+			position.incrementX(2);
 		}
 	}
 
@@ -106,7 +108,7 @@ public class Bomberman extends AnimatedObject {
 		setBombermanAbilities();
 	}
 
-	public void setPowerUpsAcquired(ArrayList<PowerUp> powerUpsAcquired) {
+	public void setPowerUpsAcquired(List<PowerUp> powerUpsAcquired) {
 		this.powerUpsAcquired = powerUpsAcquired;
 		setBombermanAbilities();
 	}
@@ -177,19 +179,19 @@ public class Bomberman extends AnimatedObject {
 			bombsLeft--;
 	}
 
-	public ArrayList<String> toCSVEntry() {
-		ArrayList<String> entryList = new ArrayList<>();
+	public List<String> toCSVEntry() {
+		List<String> entryList = new ArrayList<>();
 
-		entryList.add(Integer.toString(xPosition));
-		entryList.add(Integer.toString(yPosition));
+		entryList.add(Integer.toString(position.getX()));
+		entryList.add(Integer.toString(position.getY()));
 		entryList.add(Integer.toString(invincibilityTimer));
 		entryList.add(Integer.toString(bombsLeft));
 		entryList.add("PowerUpAcquired");
 
 		for (PowerUp powerup : powerUpsAcquired) {
 			entryList.add(powerup.getClass().toString());
-			entryList.add(Integer.toString(powerup.getXPosition()));
-			entryList.add(Integer.toString(powerup.getYPosition()));
+			entryList.add(Integer.toString(powerup.getPosition().getX()));
+			entryList.add(Integer.toString(powerup.getPosition().getY()));
 		}
 		return entryList;
 	}

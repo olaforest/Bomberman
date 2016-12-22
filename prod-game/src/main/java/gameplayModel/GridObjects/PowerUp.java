@@ -1,17 +1,19 @@
 package gameplayModel.GridObjects;
 
 import lombok.Getter;
+import utility.Position;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class PowerUp extends HiddenObject {
 	@Getter private BufferedImage image;
 	@Getter protected boolean isPermanent;
 	private final int[] imageParameter;
 
-	protected PowerUp(int x, int y, int[] imageParameter) {
-		super(x, y);
+	protected PowerUp(Position position, int[] imageParameter) {
+		super(position);
 		this.imageParameter = imageParameter;
 		image = generateImage();
 	}
@@ -21,20 +23,20 @@ public abstract class PowerUp extends HiddenObject {
 	}
 
 	@Override
-	public void setXPosition(int xPosition) {
-		this.xPosition = xPosition;
+	public void setXPosition(int xPos) {
+		position.setX(xPos);
 	}
 
 	@Override
-	public void setYPosition(int yPosition) {
-		this.yPosition = yPosition;
+	public void setYPosition(int yPos) {
+		position.setY(yPos);
 	}
 
-	public ArrayList<String> toCSVEntry() {
-		ArrayList<String> entryList = new ArrayList<>();
+	public List<String> toCSVEntry() {
+		List<String> entryList = new ArrayList<>();
 		entryList.add(this.getClass().toString());
-		entryList.add(Integer.toString(xPosition));
-		entryList.add(Integer.toString(yPosition));
+		entryList.add(Integer.toString(position.getX()));
+		entryList.add(Integer.toString(position.getY()));
 		return entryList;
 	}
 }

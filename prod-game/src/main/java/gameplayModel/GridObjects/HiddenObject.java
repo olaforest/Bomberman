@@ -2,12 +2,13 @@ package gameplayModel.GridObjects;
 
 import gameplayModel.GridObject;
 import lombok.Getter;
+import utility.Position;
 
 @Getter
 public abstract class HiddenObject extends GridObject {
 
-	HiddenObject(int x, int y) {
-		super(x, y);
+	HiddenObject(Position position) {
+		super(position);
 	}
 
 	public static int generateIndex(int size) {

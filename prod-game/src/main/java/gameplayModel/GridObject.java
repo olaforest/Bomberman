@@ -2,6 +2,7 @@ package gameplayModel;
 
 import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 import lombok.Getter;
+import utility.Position;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -26,64 +27,62 @@ public class GridObject {
 	protected static final int MAX_X_POSITION = EFFECTIVE_PIXEL_DIMENSION * (MAPWIDTH - 2);
 	protected static final int MAX_Y_POSITION = EFFECTIVE_PIXEL_DIMENSION * (MAPHEIGHT - 2);
 
-	protected int xPosition;
-	protected int yPosition;
+	protected Position position;
 	protected boolean isConcreteCollision;
 
-	public GridObject(int x, int y) {
-		xPosition = x;
-		yPosition = y;
+	public GridObject(Position position) {
+		this.position = position;
 		isConcreteCollision = false;
 	}
 
-	public void setXPosition(int xPosition) {
+	public void setXPosition(int xPos) {
 		isConcreteCollision = false;
-		final int yError = (this.yPosition - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
+		final int yError = (position.getY() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
 
-		boolean isInXRange = (xPosition >= EFFECTIVE_PIXEL_DIMENSION) && (xPosition <= EFFECTIVE_PIXEL_DIMENSION * (MAPWIDTH - 2));
+		boolean isInXRange = (xPos >= EFFECTIVE_PIXEL_DIMENSION) && (xPos <= EFFECTIVE_PIXEL_DIMENSION * (MAPWIDTH - 2));
 		boolean isAlignedWithRow = yError == 0;
 		boolean isBelowRow = yError <= MISALIGNMENT_ALLOWED;
 		boolean isAboveRow = yError >= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED);
 
 		if (isAlignedWithRow && isInXRange) {
-			this.xPosition = xPosition;
+			position.setX(xPos);
 		} else if (isAboveRow && isInXRange) {
-			this.xPosition = xPosition;
-			this.yPosition += ADJUSTMENT;
+			position.setX(xPos);
+			position.incrementY(ADJUSTMENT);
 		} else if (isBelowRow && isInXRange) {
-			this.xPosition = xPosition;
-			this.yPosition -= ADJUSTMENT;
+			position.setX(xPos);
+			position.decrementY(ADJUSTMENT);
 		} else
 			isConcreteCollision = true;
 	}
 
-	public void setYPosition(int yPosition) {
+	public void setYPosition(int yPos) {
 		isConcreteCollision = false;
-		final int xError = (this.xPosition - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
+		final int xError = (position.getX() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
 
-		boolean isInYRange = (yPosition >= EFFECTIVE_PIXEL_DIMENSION) && (yPosition <= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPHEIGHT - 2));
+		boolean isInYRange = (yPos >= EFFECTIVE_PIXEL_DIMENSION) && (yPos <= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPHEIGHT - 2));
 		boolean isAlignedWithColumn = ((xError) == 0);
 		boolean isRightFromColumn = (xError) <= MISALIGNMENT_ALLOWED;
 		boolean isLeftFromColumn = (xError) >= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED);
 
 		if (isAlignedWithColumn && isInYRange) {
-			this.yPosition = yPosition;
+			position.setY(yPos);
 		} else if (isRightFromColumn && isInYRange) {
-			this.yPosition = yPosition;
-			this.xPosition -= ADJUSTMENT;
+			position.setY(yPos);
+			position.decrementX(ADJUSTMENT);
 		} else if (isLeftFromColumn && isInYRange) {
-			this.yPosition = yPosition;
-			this.xPosition += ADJUSTMENT;
+			position.setY(yPos);
+			position.incrementX(ADJUSTMENT);
 		} else
 			isConcreteCollision = true;
 	}
 
 	public boolean isSamePosition(GridObject object) {
-		return isSamePosition(object.getXPosition(), object.getYPosition());
+		return position.isSame(object.getPosition());
 	}
 
 	public boolean isSamePosition(int xPosition, int yPosition) {
-		return this.xPosition == xPosition && this.yPosition == yPosition;
+		return position.getX() == xPosition && position.getY() == yPosition;
 	}
 
 	protected static BufferedImage resizeImage(int xCoordinate, int yCoordinate) {
