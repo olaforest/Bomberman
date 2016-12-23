@@ -4,11 +4,6 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<properties>
-		<opencsv.version>2.3</opencsv.version>
-		<junit.version>4.12</junit.version>
-		<assertj-core.version>3.0.0</assertj-core.version>
-	</properties>
 
 	<parent>
 		<groupId>oli.test.project</groupId>
@@ -17,10 +12,21 @@
 	</parent>
 
 	<artifactId>prod-game</artifactId>
-	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
+	<name>Game</name>
+
+	<properties>
+		<opencsv.version>2.3</opencsv.version>
+		<junit.version>4.12</junit.version>
+		<assertj-core.version>3.0.0</assertj-core.version>
+	</properties>
+
 	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>net.sf.opencsv</groupId>
 			<artifactId>opencsv</artifactId>

@@ -11,8 +11,9 @@
 	</parent>
 
 	<artifactId>prod-game-dtos</artifactId>
-	<version>1.0.0</version>
 	<packaging>jar</packaging>
+
+	<name>Game Dtos</name>
 
 	<dependencies>
 		<dependency>
