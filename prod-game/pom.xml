@@ -19,7 +19,7 @@
 	<properties>
 		<opencsv.version>2.3</opencsv.version>
 		<junit.version>4.12</junit.version>
-		<assertj-core.version>3.0.0</assertj-core.version>
+		<assertj-core.version>3.6.1</assertj-core.version>
 	</properties>
 
 	<dependencies>
