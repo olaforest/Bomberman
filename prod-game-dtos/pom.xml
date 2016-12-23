@@ -54,7 +54,6 @@
 					<!--</transformSchema>-->
 					<!--</transformSchemas>-->
 				</configuration>
-
 			</plugin>
 		</plugins>
 	</build>
