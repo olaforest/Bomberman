@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class GameContext {
@@ -77,7 +78,7 @@ public class GameContext {
 
 	private int gameTime, livesLeft, score, level, actualLevel;
 	@Setter
-	private boolean isEndGameEnemiesSpawned;
+	private boolean endGameEnemiesSpawned;
 	private GridMap gridMap;
 
 	public GameContext() {
@@ -86,7 +87,7 @@ public class GameContext {
 		score = 0;
 		level = 0;
 		actualLevel = 0;
-		isEndGameEnemiesSpawned = false;
+		endGameEnemiesSpawned = false;
 		gridMap = new GridMap(levelSpec[level]);
 
 	}
@@ -97,7 +98,7 @@ public class GameContext {
 		score = 0;
 		actualLevel = selectedLevel;
 		level = computeLevel();
-		isEndGameEnemiesSpawned = false;
+		endGameEnemiesSpawned = false;
 		gridMap = new GridMap(levelSpec[level]);
 	}
 
@@ -107,7 +108,7 @@ public class GameContext {
 		this.score = score;
 		this.level = level;
 		computeActualLevel();
-		isEndGameEnemiesSpawned = false;
+		endGameEnemiesSpawned = false;
 		this.gridMap = gridMap;
 	}
 
@@ -174,8 +175,8 @@ public class GameContext {
 		return actualLevel + specialLevel;
 	}
 
-	public ArrayList<String> toCSVEntry() {
-		ArrayList<String> entryList = new ArrayList<>();
+	public List<String> toCSVEntry() {
+		List<String> entryList = new ArrayList<>();
 
 		entryList.add(Integer.toString(gameTime));
 		entryList.add(Integer.toString(livesLeft));

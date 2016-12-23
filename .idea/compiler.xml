@@ -23,11 +23,14 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="prod-game" />
+        <module name="prod-game-dtos" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Bomberman" target="1.5" />
+      <module name="Bomberman" target="1.8" />
       <module name="prod-game" target="1.8" />
+      <module name="prod-game-dots" target="1.8" />
+      <module name="prod-game-dtos" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

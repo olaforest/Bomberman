@@ -26,9 +26,13 @@ public class Animation {
 		counter = 0;
 	}
 
-	public void setFrame(BufferedImage img, int index) { frames.add(index, img); }
+	public void setFrame(BufferedImage img, int index) {
+		frames.add(index, img);
+	}
 
-	public BufferedImage getCurrentFrame() { return frames.get(counter); }
+	public BufferedImage getCurrentFrame() {
+		return frames.get(counter);
+	}
 
 	public void cycleFrame() {
 		counter = (counter + 1) % frames.size();
@@ -36,5 +40,7 @@ public class Animation {
 		if (counter == frames.size() - 1) isAnimDone = true;
 	}
 
-	public void setToInitialFrame() { counter = 0; }
+	public void setToInitialFrame() {
+		counter = 0;
+	}
 }
