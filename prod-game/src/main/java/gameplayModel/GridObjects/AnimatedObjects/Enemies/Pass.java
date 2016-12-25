@@ -1,7 +1,7 @@
 package gameplayModel.GridObjects.AnimatedObjects.Enemies;
 
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
-import utility.Position;
+import utilities.Position;
 
 import static java.util.Arrays.asList;
 

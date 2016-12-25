@@ -2,9 +2,9 @@ package gameplayModel.GridObjects.Factories;
 
 import gameplayModel.GridObjects.AnimatedObjects.Enemies.*;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
-import utility.Position;
+import utilities.Position;
 
-import static utility.Position.create;
+import static utilities.Position.create;
 
 public class EnemyFactory {
 	public static Enemy createEnemy(int type, int xPosition, int yPosition) {

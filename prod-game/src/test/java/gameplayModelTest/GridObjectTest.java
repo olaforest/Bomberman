@@ -8,7 +8,7 @@ import org.junit.Test;
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static utility.Position.create;
+import static utilities.Position.create;
 
 public class GridObjectTest {
 

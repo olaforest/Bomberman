@@ -1,7 +1,7 @@
 package gameplayModel.GridObjects.AnimatedObjects;
 
 import gameplayModel.GridObjects.AnimatedObject;
-import utility.Position;
+import utilities.Position;
 
 import java.util.ArrayList;
 import java.util.List;

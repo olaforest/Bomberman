@@ -1,7 +1,7 @@
 package gameplayModel.GridObjects.PowerUps;
 
 import gameplayModel.GridObjects.PowerUp;
-import utility.Position;
+import utilities.Position;
 
 public class Mystery extends PowerUp {
 	private static final int[] IMAGE_PARAM = {217, 223};

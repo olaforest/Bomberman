@@ -90,7 +90,6 @@ public class GameContext {
 		actualLevel = 0;
 		endGameEnemiesSpawned = false;
 		gridMap = new GridMap(levelSpec[level]);
-
 	}
 
 	public GameContext(int selectedLevel) {

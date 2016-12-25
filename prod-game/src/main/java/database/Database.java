@@ -14,7 +14,7 @@ import gameplayModel.GridObjects.PowerUp;
 import gameplayModel.GridObjects.PowerUps.*;
 import menuModel.Player;
 import menuModel.SavedGame;
-import utility.Position;
+import utilities.Position;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
-import static utility.Position.create;
+import static utilities.Position.create;
 
 public class Database {
 

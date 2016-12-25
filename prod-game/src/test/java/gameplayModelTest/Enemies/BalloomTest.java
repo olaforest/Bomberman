@@ -5,7 +5,7 @@ import gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
-import utility.Position;
+import utilities.Position;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;

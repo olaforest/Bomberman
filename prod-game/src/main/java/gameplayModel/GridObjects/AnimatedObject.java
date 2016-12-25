@@ -3,7 +3,7 @@ package gameplayModel.GridObjects;
 import gameplayModel.Animation;
 import gameplayModel.GridObject;
 import lombok.Getter;
-import utility.Position;
+import utilities.Position;
 
 import java.util.List;
 import java.util.stream.IntStream;

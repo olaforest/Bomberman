@@ -5,7 +5,7 @@ import gameplayModel.GridObjects.AnimatedObjects.Bomb;
 import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 import gameplayModel.GridObjects.AnimatedObjects.Brick;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
-import utility.Node;
+import utilities.Node;
 
 import java.util.LinkedList;
 import java.util.List;
