@@ -1,10 +1,12 @@
 package utilities;
 
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +26,19 @@ public class CsvUtils {
 					.collect(toList());
 		} catch (IOException e) {
 			return emptyList();
+		}
+	}
+
+	public static boolean writeCSV(String filePath, List<List<String>> fileContent) {
+		try {
+			final CSVWriter writer = new CSVWriter(new FileWriter(filePath, false));
+			final List<String[]> convertedFileContent = fileContent.stream()
+					.map(line -> (String[]) line.toArray())
+					.collect(toList());
+			writer.writeAll(convertedFileContent);
+			return true;
+		} catch (IOException e) {
+			return false;
 		}
 	}
 }

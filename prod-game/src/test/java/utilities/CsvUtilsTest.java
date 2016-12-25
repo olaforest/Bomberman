@@ -7,23 +7,53 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static utilities.CsvUtils.readCSV;
+import static utilities.CsvUtils.writeCSV;
 
 public class CsvUtilsTest {
 
+	private static final String INVALID_FILE_PATH = "/invalid file path";
+	private static final List<List<String>> FILE_CONTENT = asList(asList("6", "5", "4"), asList("3", "2", "1"));
+
 	@Test
-	public void invalidFilePathOrName_readCSV_returnsEmptyList() {
+	public void invalidFilePath_readCSV_returnsEmptyList() {
+		//given
+		final String filePath = INVALID_FILE_PATH;
 		//when
-		final List<List<String>> result = readCSV("invalid file path or name");
+		final List<List<String>> result = readCSV(filePath);
 		//then
 		assertThat(result).isEmpty();
 	}
 
 	@Test
-	public void validFilePathOrName_readCSV_returnsValidList() {
+	public void validFilePath_readCSV_returnsValidList() {
+		//given
+		final String validTestFilePath = "prod-game/src/test/resources/testReadCSV";
 		//when
-		final List<List<String>> result = readCSV("prod-game/src/test/resources/testReadCSV");
+		final List<List<String>> result = readCSV(validTestFilePath);
 		//then
 		assertThat(result).isNotNull()
 				.containsExactly(asList("1", "2", "3"), asList("4", "5", "6"));
+	}
+
+	@Test
+	public void invalidFilePath_writeCSV_returnsFalse() {
+		//given
+		final String filePath = INVALID_FILE_PATH;
+		final  List<List<String>> fileContent = FILE_CONTENT;
+		//when
+		final boolean result = writeCSV(filePath, fileContent);
+		//then
+		assertThat(result).isFalse();
+	}
+
+	@Test
+	public void validFilePath_writeCSV_returnsTrue() {
+		//given
+		final String validTestFilePath = "prod-game/src/test/resources/testWriteCSV";
+		final  List<List<String>> fileContent = FILE_CONTENT;
+		//when
+		final boolean result = writeCSV(validTestFilePath, fileContent);
+		//then
+		assertThat(result).isTrue();
 	}
 }
