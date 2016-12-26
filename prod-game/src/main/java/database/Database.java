@@ -12,6 +12,7 @@ import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import gameplayModel.GridObjects.Exitway;
 import gameplayModel.GridObjects.PowerUp;
 import gameplayModel.GridObjects.PowerUps.*;
+import lombok.Getter;
 import menuModel.Player;
 import menuModel.SavedGame;
 import utilities.Position;
@@ -23,23 +24,30 @@ import java.util.Collections;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
+import static java.util.Collections.emptyList;
 import static utilities.Position.create;
 
+@Getter
 public class Database {
 
 	private List<Player> players;
 	private Player currentLoggedPlayer;
 
 	public Database() {
-		players = new ArrayList<>();
-		currentLoggedPlayer = null;
+		players = importPlayers();
+//		players = new ArrayList<>();
+//		currentLoggedPlayer = null;
+//
+//		try {
+//			readCSV();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		sortPlayers();
+	}
 
-		try {
-			readCSV();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		sortPlayers();
+	private List<Player> importPlayers() {
+		return emptyList();
 	}
 
 	public void generateCSV() throws IOException, URISyntaxException {
