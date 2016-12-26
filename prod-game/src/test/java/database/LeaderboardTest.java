@@ -1,6 +1,5 @@
-package databaseTest;
+package database;
 
-import database.Database;
 import menuModel.Leaderboard;
 import org.junit.Before;
 import org.junit.Test;
