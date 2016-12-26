@@ -27,7 +27,7 @@ import static utilities.Position.create;
 
 public class Database {
 
-	private ArrayList<Player> players;
+	private List<Player> players;
 	private Player currentLoggedPlayer;
 
 	public Database() {
@@ -305,8 +305,8 @@ public class Database {
 		}
 	}
 
-	public ArrayList<Player> sortPlayers() {
-		ArrayList<Player> topPlayers = players;
+	public List<Player> sortPlayers() {
+		List<Player> topPlayers = players;
 		Collections.sort(topPlayers);
 		topPlayers = new ArrayList<>(topPlayers.subList(0, 10));
 		return topPlayers;

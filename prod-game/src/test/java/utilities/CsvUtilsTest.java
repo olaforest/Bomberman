@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static utilities.CsvUtils.readCSV;
 import static utilities.CsvUtils.writeCSV;
@@ -36,6 +37,16 @@ public class CsvUtilsTest {
 	}
 
 	@Test
+	public void emptyFile_readCSV_returnsEmptyList() {
+		//given
+		final String emptyTestFilePath = "prod-game/src/test/resources/testEmptyReadCSV";
+		//when
+		final List<List<String>> result = readCSV(emptyTestFilePath);
+		//then
+		assertThat(result).isEmpty();
+	}
+
+	@Test
 	public void invalidFilePath_writeCSV_returnsFalse() {
 		//given
 		final String filePath = INVALID_FILE_PATH;
@@ -51,6 +62,17 @@ public class CsvUtilsTest {
 		//given
 		final String validTestFilePath = "prod-game/src/test/resources/testWriteCSV";
 		final  List<List<String>> fileContent = FILE_CONTENT;
+		//when
+		final boolean result = writeCSV(validTestFilePath, fileContent);
+		//then
+		assertThat(result).isTrue();
+	}
+
+	@Test
+	public void emptyFileContent_writeCSV_returnsTrue() {
+		//given
+		final String validTestFilePath = "prod-game/src/test/resources/testEmptyWriteCSV";
+		final  List<List<String>> fileContent = emptyList();
 		//when
 		final boolean result = writeCSV(validTestFilePath, fileContent);
 		//then

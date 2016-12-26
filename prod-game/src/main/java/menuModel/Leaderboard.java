@@ -4,6 +4,7 @@ package menuModel;
 import database.Database;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class handles all calculations and updates for the Leaderboard Panel
@@ -14,7 +15,7 @@ public class Leaderboard {
 
 
 	public Database playerList;
-	public ArrayList<Player> topPlayers = new ArrayList<Player>();
+	public List<Player> topPlayers = new ArrayList<Player>();
 	public String[] names = new String[10];
 	public int[] scores = new int[10];
 

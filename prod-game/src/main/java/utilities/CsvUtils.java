@@ -21,7 +21,9 @@ public class CsvUtils {
 		CSVReader reader;
 		try {
 			reader = new CSVReader(new FileReader(filePath));
-			return reader.readAll().stream()
+			final List<String[]> fileContent = reader.readAll();
+			reader.close();
+			return fileContent.stream()
 					.map(Arrays::asList)
 					.collect(toList());
 		} catch (IOException e) {
@@ -36,6 +38,7 @@ public class CsvUtils {
 					.map(line -> (String[]) line.toArray())
 					.collect(toList());
 			writer.writeAll(convertedFileContent);
+			writer.close();
 			return true;
 		} catch (IOException e) {
 			return false;
