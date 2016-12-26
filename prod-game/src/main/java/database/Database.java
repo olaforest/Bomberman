@@ -1,6 +1,5 @@
 package database;
 
-import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import gameplayModel.GameContext;
 import gameplayModel.GridMap;
@@ -17,14 +16,17 @@ import menuModel.Player;
 import menuModel.SavedGame;
 import utilities.Position;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
-import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
+import static utilities.CsvUtils.readCSV;
 import static utilities.Position.create;
 
 @Getter
@@ -47,7 +49,10 @@ public class Database {
 	}
 
 	private List<Player> importPlayers() {
-		return emptyList();
+		return readCSV("Bomberman.csv").stream()
+				.filter(entry -> entry.size() == 6)
+				.map(e -> new Player(e.get(0), e.get(1), e.get(2), parseInt(e.get(3)), parseInt(e.get(4)), parseInt(e.get(5))))
+				.collect(toList());
 	}
 
 	public void generateCSV() throws IOException, URISyntaxException {
@@ -57,7 +62,7 @@ public class Database {
 		CSVWriter writer = new CSVWriter(fileWriter);
 
 		for (Player player : players) {
-			ArrayList<String> temp = player.toCSVEntry();
+			List<String> temp = player.toCSVEntry();
 
 			String[] csvEntries = new String[temp.size()];
 
@@ -69,41 +74,41 @@ public class Database {
 		writer.close();
 	}
 
-	private void readCSV() throws IOException {
-		CSVReader reader;
-
-		try {
-			reader = new CSVReader(new FileReader(new File("Bomberman.CSV")));
-		} catch (FileNotFoundException e) {
-			InputStream in = Bomberman.class.getResourceAsStream("/database.csv");
-			reader = new CSVReader(new InputStreamReader(in));
-		}
-
-		String[] nextLine;
-		int index = 0;
-		nextLine = reader.readNext();
-
-		while (nextLine != null) {
-			ArrayList<String> data = new ArrayList<>();
-			Collections.addAll(data, nextLine);
-			players.add(new Player(data.get(0), data.get(1), data.get(2), parseInt(data.get(3)), parseInt(data.get(4)), parseInt(data.get(5))));
-
-			while (data.contains("SavedGame")) {
-				data = new ArrayList<>(data.subList(data.indexOf("SavedGame") + 1, data.size()));
-				SavedGame savedGame;
-
-				if (data.contains("SavedGame"))
-					savedGame = generateSavedGame(new ArrayList<>(data.subList(0, data.indexOf("SavedGame"))));
-				else
-					savedGame = generateSavedGame(data);
-
-				players.get(index).addSavedGame(savedGame);
-			}
-			index++;
-			nextLine = reader.readNext();
-		}
-		reader.close();
-	}
+//	private void readCSV() throws IOException {
+//		CSVReader reader;
+//
+//		try {
+//			reader = new CSVReader(new FileReader(new File("Bomberman.CSV")));
+//		} catch (FileNotFoundException e) {
+//			InputStream in = Bomberman.class.getResourceAsStream("/database.csv");
+//			reader = new CSVReader(new InputStreamReader(in));
+//		}
+//
+//		String[] nextLine;
+//		int index = 0;
+//		nextLine = reader.readNext();
+//
+//		while (nextLine != null) {
+//			ArrayList<String> data = new ArrayList<>();
+//			Collections.addAll(data, nextLine);
+//			players.add(new Player(data.get(0), data.get(1), data.get(2), parseInt(data.get(3)), parseInt(data.get(4)), parseInt(data.get(5))));
+//
+//			while (data.contains("SavedGame")) {
+//				data = new ArrayList<>(data.subList(data.indexOf("SavedGame") + 1, data.size()));
+//				SavedGame savedGame;
+//
+//				if (data.contains("SavedGame"))
+//					savedGame = generateSavedGame(new ArrayList<>(data.subList(0, data.indexOf("SavedGame"))));
+//				else
+//					savedGame = generateSavedGame(data);
+//
+//				players.get(index).addSavedGame(savedGame);
+//			}
+//			index++;
+//			nextLine = reader.readNext();
+//		}
+//		reader.close();
+//	}
 
 	private SavedGame generateSavedGame(ArrayList<String> data) {
 		String gameName, gameDate;

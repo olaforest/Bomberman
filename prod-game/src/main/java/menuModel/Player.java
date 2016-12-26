@@ -1,13 +1,17 @@
 package menuModel;
 
-import java.util.ArrayList;
+import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@EqualsAndHashCode
 public class Player implements Comparable<Player> {
 
 	private int levelUnlocked;
 	private String realName, username, password;
 	private CumulativeScore cumulativeScore;
-	private ArrayList<SavedGame> savedGameList;
+	private List<SavedGame> savedGameList;
 
 	public Player(String name, String user, String pw) {
 		realName = name;
@@ -67,7 +71,7 @@ public class Player implements Comparable<Player> {
 		levelUnlocked++;
 	}
 
-	public ArrayList<SavedGame> getSavedGameList() {
+	public List<SavedGame> getSavedGameList() {
 		return savedGameList;
 	}
 
@@ -75,8 +79,8 @@ public class Player implements Comparable<Player> {
 		savedGameList.add(game);
 	}
 
-	public ArrayList<String> toCSVEntry() {
-		ArrayList<String> entryList = new ArrayList<String>();
+	public List<String> toCSVEntry() {
+		List<String> entryList = new ArrayList<>();
 
 		entryList.add(realName);
 		entryList.add(username);
