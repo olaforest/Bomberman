@@ -23,6 +23,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 import static java.lang.Integer.parseInt;
 import static java.util.stream.Collectors.toList;
@@ -31,6 +32,9 @@ import static utilities.Position.create;
 
 @Getter
 public class Database {
+
+	private static final String SAVED_GAME = "SavedGame";
+	public static final UnaryOperator<List<String>> SAVED_GAME_CONTENT = content -> content.subList(6, content.size());
 
 	private List<Player> players;
 	private Player currentLoggedPlayer;
@@ -50,9 +54,36 @@ public class Database {
 
 	private List<Player> importPlayers() {
 		return readCSV("Bomberman.csv").stream()
-				.filter(entry -> entry.size() == 6)
-				.map(e -> new Player(e.get(0), e.get(1), e.get(2), parseInt(e.get(3)), parseInt(e.get(4)), parseInt(e.get(5))))
+				.filter(entry -> entry.contains(SAVED_GAME) ? entry.indexOf(SAVED_GAME) == 6 : entry.size() == 6)
+				.map(this::generatePlayer)
 				.collect(toList());
+	}
+
+	private Player generatePlayer(List<String> playerContent) {
+		final Player player = new Player(playerContent.get(0), playerContent.get(1), playerContent.get(2),
+				parseInt(playerContent.get(3)), parseInt(playerContent.get(4)), parseInt(playerContent.get(5)));
+		if (playerContent.contains(SAVED_GAME))
+			player.withSavedGames(parseSavedGames(SAVED_GAME_CONTENT.apply(playerContent)));
+		return player;
+	}
+
+	private List<SavedGame> parseSavedGames(List<String> gamesContent) {
+		final List<List<String>> games = splitSavedGames(gamesContent);
+		return games.stream()
+				.map(this::generateSavedGame)
+				.collect(toList());
+	}
+
+	private List<List<String>> splitSavedGames(List<String> gamesContent) {
+		final List<List<String>> games = new ArrayList<>(new ArrayList<>());
+		gamesContent = gamesContent.subList(1, gamesContent.size());
+		while (gamesContent.contains(SAVED_GAME)) {
+			final int indexOfNextGame = gamesContent.indexOf(SAVED_GAME);
+			games.add(gamesContent.subList(0, indexOfNextGame));
+			gamesContent = gamesContent.subList(indexOfNextGame + 2, gamesContent.size());
+		}
+		games.add(gamesContent);
+		return games;
 	}
 
 	public void generateCSV() throws IOException, URISyntaxException {
@@ -110,12 +141,12 @@ public class Database {
 //		reader.close();
 //	}
 
-	private SavedGame generateSavedGame(ArrayList<String> data) {
+	private SavedGame generateSavedGame(List<String> gameContent) {
 		String gameName, gameDate;
-		GameContext gameContext = generateGameContext(new ArrayList<>(data.subList(data.indexOf("GameContext") + 1, data.size())));
+		GameContext gameContext = generateGameContext(new ArrayList<>(gameContent.subList(gameContent.indexOf("GameContext") + 1, gameContent.size())));
 
-		gameName = data.get(0);
-		gameDate = data.get(1);
+		gameName = gameContent.get(0);
+		gameDate = gameContent.get(1);
 
 		return new SavedGame(gameName, gameDate, gameContext);
 	}

@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -174,11 +175,11 @@ public class GameContext {
 	}
 
 	public List<String> toCSVEntry() {
-		List<String> entryList = asList(Integer.toString(gameTime),
+		List<String> entryList = new ArrayList<>(asList(Integer.toString(gameTime),
 				Integer.toString(livesLeft),
 				Integer.toString(score),
 				Integer.toString(level),
-				"GridMap");
+				"GridMap"));
 		gridMap.toCSVEntry().forEach(entryList::add);
 		return entryList;
 	}

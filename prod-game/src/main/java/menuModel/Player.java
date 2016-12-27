@@ -79,6 +79,11 @@ public class Player implements Comparable<Player> {
 		savedGameList.add(game);
 	}
 
+	public Player withSavedGames(List<SavedGame> games) {
+		savedGameList.addAll(games);
+		return this;
+	}
+
 	public List<String> toCSVEntry() {
 		List<String> entryList = new ArrayList<>();
 
