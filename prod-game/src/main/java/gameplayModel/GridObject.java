@@ -2,7 +2,7 @@ package gameplayModel;
 
 import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
 import lombok.Getter;
-import utility.Position;
+import utilities.Position;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

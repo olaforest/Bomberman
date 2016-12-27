@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.assertEquals;
-import static utility.Position.create;
-import static utility.Position.modulus;
+import static utilities.Position.create;
+import static utilities.Position.modulus;
 
 public class ArtificialIntelligenceTest {
 

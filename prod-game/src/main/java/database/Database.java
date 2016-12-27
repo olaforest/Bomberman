@@ -1,7 +1,5 @@
 package database;
 
-import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.CSVWriter;
 import gameplayModel.GameContext;
 import gameplayModel.GridMap;
 import gameplayModel.GridObjects.AnimatedObjects.Bomb;
@@ -12,97 +10,83 @@ import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import gameplayModel.GridObjects.Exitway;
 import gameplayModel.GridObjects.PowerUp;
 import gameplayModel.GridObjects.PowerUps.*;
+import lombok.Getter;
 import menuModel.Player;
 import menuModel.SavedGame;
-import utility.Position;
+import utilities.Position;
 
-import java.io.*;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 import static java.lang.Integer.parseInt;
-import static utility.Position.create;
+import static java.util.Collections.sort;
+import static java.util.stream.Collectors.toList;
+import static utilities.CsvUtils.readCSV;
+import static utilities.CsvUtils.writeCSV;
+import static utilities.Position.create;
 
+@Getter
 public class Database {
 
-	private ArrayList<Player> players;
+	private static final String SAVED_GAME = "SavedGame";
+	public static final UnaryOperator<List<String>> SAVED_GAME_CONTENT = content -> content.subList(6, content.size());
+
+	private List<Player> players;
 	private Player currentLoggedPlayer;
 
 	public Database() {
-		players = new ArrayList<>();
+		players = importPlayers();
 		currentLoggedPlayer = null;
-
-		try {
-			readCSV();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		sortPlayers();
 	}
 
-	public void generateCSV() throws IOException, URISyntaxException {
-
-		File file = new File("Bomberman.csv");
-		FileWriter fileWriter = new FileWriter(file, false);
-		CSVWriter writer = new CSVWriter(fileWriter);
-
-		for (Player player : players) {
-			ArrayList<String> temp = player.toCSVEntry();
-
-			String[] csvEntries = new String[temp.size()];
-
-			for (int i = 0; i < temp.size(); i++) {
-				csvEntries[i] = temp.get(i);
-			}
-			writer.writeNext(csvEntries);
-		}
-		writer.close();
+	public void generateCSV() {
+		final List<List<String>> playersContent = players.stream()
+				.map(Player::toCSVEntry)
+				.collect(toList());
+		writeCSV("Bomberman.csv", playersContent);
 	}
 
-	private void readCSV() throws IOException {
-		CSVReader reader;
-
-		try {
-			reader = new CSVReader(new FileReader(new File("Bomberman.CSV")));
-		} catch (FileNotFoundException e) {
-			InputStream in = Bomberman.class.getResourceAsStream("/database.csv");
-			reader = new CSVReader(new InputStreamReader(in));
-		}
-
-		String[] nextLine;
-		int index = 0;
-		nextLine = reader.readNext();
-
-		while (nextLine != null) {
-			ArrayList<String> data = new ArrayList<>();
-			Collections.addAll(data, nextLine);
-			players.add(new Player(data.get(0), data.get(1), data.get(2), parseInt(data.get(3)), parseInt(data.get(4)), parseInt(data.get(5))));
-
-			while (data.contains("SavedGame")) {
-				data = new ArrayList<>(data.subList(data.indexOf("SavedGame") + 1, data.size()));
-				SavedGame savedGame;
-
-				if (data.contains("SavedGame"))
-					savedGame = generateSavedGame(new ArrayList<>(data.subList(0, data.indexOf("SavedGame"))));
-				else
-					savedGame = generateSavedGame(data);
-
-				players.get(index).addSavedGame(savedGame);
-			}
-			index++;
-			nextLine = reader.readNext();
-		}
-		reader.close();
+	private List<Player> importPlayers() {
+		return readCSV("Bomberman.csv").stream()
+				.filter(entry -> entry.contains(SAVED_GAME) ? entry.indexOf(SAVED_GAME) == 6 : entry.size() == 6)
+				.map(this::generatePlayer)
+				.collect(toList());
 	}
 
-	private SavedGame generateSavedGame(ArrayList<String> data) {
+	private Player generatePlayer(List<String> playerContent) {
+		final Player player = new Player(playerContent.get(0), playerContent.get(1), playerContent.get(2),
+				parseInt(playerContent.get(3)), parseInt(playerContent.get(4)), parseInt(playerContent.get(5)));
+		if (playerContent.contains(SAVED_GAME))
+			player.withSavedGames(parseSavedGames(SAVED_GAME_CONTENT.apply(playerContent)));
+		return player;
+	}
+
+	private List<SavedGame> parseSavedGames(List<String> gamesContent) {
+		final List<List<String>> games = splitSavedGames(gamesContent);
+		return games.stream()
+				.map(this::generateSavedGame)
+				.collect(toList());
+	}
+
+	private List<List<String>> splitSavedGames(List<String> gamesContent) {
+		final List<List<String>> games = new ArrayList<>(new ArrayList<>());
+		gamesContent = gamesContent.subList(1, gamesContent.size());
+		while (gamesContent.contains(SAVED_GAME)) {
+			final int indexOfNextGame = gamesContent.indexOf(SAVED_GAME);
+			games.add(gamesContent.subList(0, indexOfNextGame));
+			gamesContent = gamesContent.subList(indexOfNextGame + 2, gamesContent.size());
+		}
+		games.add(gamesContent);
+		return games;
+	}
+
+	private SavedGame generateSavedGame(List<String> gameContent) {
 		String gameName, gameDate;
-		GameContext gameContext = generateGameContext(new ArrayList<>(data.subList(data.indexOf("GameContext") + 1, data.size())));
+		GameContext gameContext = generateGameContext(new ArrayList<>(gameContent.subList(gameContent.indexOf("GameContext") + 1, gameContent.size())));
 
-		gameName = data.get(0);
-		gameDate = data.get(1);
+		gameName = gameContent.get(0);
+		gameDate = gameContent.get(1);
 
 		return new SavedGame(gameName, gameDate, gameContext);
 	}
@@ -305,9 +289,9 @@ public class Database {
 		}
 	}
 
-	public ArrayList<Player> sortPlayers() {
-		ArrayList<Player> topPlayers = players;
-		Collections.sort(topPlayers);
+	public List<Player> sortPlayers() {
+		List<Player> topPlayers = players;
+		sort(topPlayers);
 		topPlayers = new ArrayList<>(topPlayers.subList(0, 10));
 		return topPlayers;
 	}

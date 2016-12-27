@@ -1,4 +1,4 @@
-package databaseTest;
+package database;
 
 import gameplayModel.GameContext;
 import menuModel.Player;

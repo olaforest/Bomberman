@@ -1,7 +1,7 @@
 package gameplayModel.GridObjects;
 
 import lombok.Getter;
-import utility.Position;
+import utilities.Position;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

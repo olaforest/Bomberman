@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
-import static utility.Position.create;
+import static utilities.Position.create;
 
 public class ConcreteTest {
 

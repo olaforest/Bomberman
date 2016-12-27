@@ -2,7 +2,7 @@ package gameplayModel.GridObjects;
 
 import gameplayModel.GridObject;
 import lombok.Getter;
-import utility.Position;
+import utilities.Position;
 
 @Getter
 public abstract class HiddenObject extends GridObject {

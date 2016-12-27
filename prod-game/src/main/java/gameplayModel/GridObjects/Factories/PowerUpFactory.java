@@ -2,9 +2,9 @@ package gameplayModel.GridObjects.Factories;
 
 import gameplayModel.GridObjects.PowerUp;
 import gameplayModel.GridObjects.PowerUps.*;
-import utility.Position;
+import utilities.Position;
 
-import static utility.Position.create;
+import static utilities.Position.create;
 
 public class PowerUpFactory {
 	public static PowerUp createPowerUp(int type, int xPosition, int yPosition) {

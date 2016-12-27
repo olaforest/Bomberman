@@ -1,7 +1,7 @@
 package gameplayModel.GridObjects.PowerUps;
 
 import gameplayModel.GridObjects.PowerUp;
-import utility.Position;
+import utilities.Position;
 
 public class Detonator extends PowerUp {
 	private static final int[] IMAGE_PARAM = {198, 259};

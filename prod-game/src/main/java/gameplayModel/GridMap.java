@@ -19,8 +19,8 @@ import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static gameplayModel.GridObjects.Factories.EnemyFactory.createEnemy;
 import static gameplayModel.GridObjects.Factories.PowerUpFactory.createPowerUp;
 import static gameplayModel.GridObjects.HiddenObject.generateIndex;
-import static utility.Position.create;
-import static utility.Position.modulus;
+import static utilities.Position.create;
+import static utilities.Position.modulus;
 
 public class GridMap {
 	public static final int MAPWIDTH = 31;

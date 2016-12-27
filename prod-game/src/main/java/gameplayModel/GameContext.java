@@ -8,6 +8,8 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Arrays.asList;
+
 @Getter
 public class GameContext {
 
@@ -89,7 +91,6 @@ public class GameContext {
 		actualLevel = 0;
 		endGameEnemiesSpawned = false;
 		gridMap = new GridMap(levelSpec[level]);
-
 	}
 
 	public GameContext(int selectedLevel) {
@@ -166,27 +167,20 @@ public class GameContext {
 	//This method calculates the level of the current game with special levels
 	private int computeLevel() {
 		int specialLevel = 0;
-
 		for (int i = 0; i <= actualLevel; i++)
-			if (levelSpec[i][8] == 0) {
+			if (levelSpec[i][8] == 0)
 				specialLevel++;
-			}
 
 		return actualLevel + specialLevel;
 	}
 
 	public List<String> toCSVEntry() {
-		List<String> entryList = new ArrayList<>();
-
-		entryList.add(Integer.toString(gameTime));
-		entryList.add(Integer.toString(livesLeft));
-		entryList.add(Integer.toString(score));
-		entryList.add(Integer.toString(level));
-		entryList.add("GridMap");
-
-		for (String token : gridMap.toCSVEntry())
-			entryList.add(token);
-
+		List<String> entryList = new ArrayList<>(asList(Integer.toString(gameTime),
+				Integer.toString(livesLeft),
+				Integer.toString(score),
+				Integer.toString(level),
+				"GridMap"));
+		gridMap.toCSVEntry().forEach(entryList::add);
 		return entryList;
 	}
 }

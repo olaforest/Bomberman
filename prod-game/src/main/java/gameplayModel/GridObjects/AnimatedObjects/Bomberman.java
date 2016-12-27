@@ -7,7 +7,7 @@ import gameplayModel.GridObjects.PowerUp;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import utility.Position;
+import utilities.Position;
 
 import java.util.ArrayList;
 import java.util.List;

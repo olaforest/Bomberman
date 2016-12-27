@@ -16,7 +16,7 @@ import gameplayView.GameStatusPanel;
 import gameplayView.GameplayPanel;
 import lombok.Getter;
 import menuController.MenuController;
-import utility.Position;
+import utilities.Position;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
-import static utility.Position.create;
+import static utilities.Position.create;
 
 public class GameplayController implements ActionListener {
 
