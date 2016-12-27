@@ -1,6 +1,5 @@
 package database;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import gameplayModel.GameContext;
 import gameplayModel.GridMap;
 import gameplayModel.GridObjects.AnimatedObjects.Bomb;
@@ -16,10 +15,6 @@ import menuModel.Player;
 import menuModel.SavedGame;
 import utilities.Position;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -28,6 +23,7 @@ import static java.lang.Integer.parseInt;
 import static java.util.Collections.sort;
 import static java.util.stream.Collectors.toList;
 import static utilities.CsvUtils.readCSV;
+import static utilities.CsvUtils.writeCSV;
 import static utilities.Position.create;
 
 @Getter
@@ -41,8 +37,15 @@ public class Database {
 
 	public Database() {
 		players = importPlayers();
-//		currentLoggedPlayer = null;
-//		sortPlayers();
+		currentLoggedPlayer = null;
+		sortPlayers();
+	}
+
+	public void generateCSV() {
+		final List<List<String>> playersContent = players.stream()
+				.map(Player::toCSVEntry)
+				.collect(toList());
+		writeCSV("Bomberman.csv", playersContent);
 	}
 
 	private List<Player> importPlayers() {
@@ -77,25 +80,6 @@ public class Database {
 		}
 		games.add(gamesContent);
 		return games;
-	}
-
-	public void generateCSV() throws IOException, URISyntaxException {
-
-		File file = new File("Bomberman.csv");
-		FileWriter fileWriter = new FileWriter(file, false);
-		CSVWriter writer = new CSVWriter(fileWriter);
-
-		for (Player player : players) {
-			List<String> temp = player.toCSVEntry();
-
-			String[] csvEntries = new String[temp.size()];
-
-			for (int i = 0; i < temp.size(); i++) {
-				csvEntries[i] = temp.get(i);
-			}
-			writer.writeNext(csvEntries);
-		}
-		writer.close();
 	}
 
 	private SavedGame generateSavedGame(List<String> gameContent) {

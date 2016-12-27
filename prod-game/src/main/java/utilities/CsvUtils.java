@@ -35,7 +35,7 @@ public class CsvUtils {
 		try {
 			final CSVWriter writer = new CSVWriter(new FileWriter(filePath, false));
 			final List<String[]> convertedFileContent = fileContent.stream()
-					.map(line -> (String[]) line.toArray())
+					.map(line -> line.toArray(new String[line.size()]))
 					.collect(toList());
 			writer.writeAll(convertedFileContent);
 			writer.close();
