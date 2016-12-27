@@ -38,7 +38,6 @@ public class Database {
 	public Database() {
 		players = importPlayers();
 		currentLoggedPlayer = null;
-		sortPlayers();
 	}
 
 	public void generateCSV() {
