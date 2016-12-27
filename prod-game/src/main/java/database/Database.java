@@ -21,11 +21,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
 import static java.lang.Integer.parseInt;
+import static java.util.Collections.sort;
 import static java.util.stream.Collectors.toList;
 import static utilities.CsvUtils.readCSV;
 import static utilities.Position.create;
@@ -41,14 +41,7 @@ public class Database {
 
 	public Database() {
 		players = importPlayers();
-//		players = new ArrayList<>();
 //		currentLoggedPlayer = null;
-//
-//		try {
-//			readCSV();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
 //		sortPlayers();
 	}
 
@@ -104,42 +97,6 @@ public class Database {
 		}
 		writer.close();
 	}
-
-//	private void readCSV() throws IOException {
-//		CSVReader reader;
-//
-//		try {
-//			reader = new CSVReader(new FileReader(new File("Bomberman.CSV")));
-//		} catch (FileNotFoundException e) {
-//			InputStream in = Bomberman.class.getResourceAsStream("/database.csv");
-//			reader = new CSVReader(new InputStreamReader(in));
-//		}
-//
-//		String[] nextLine;
-//		int index = 0;
-//		nextLine = reader.readNext();
-//
-//		while (nextLine != null) {
-//			ArrayList<String> data = new ArrayList<>();
-//			Collections.addAll(data, nextLine);
-//			players.add(new Player(data.get(0), data.get(1), data.get(2), parseInt(data.get(3)), parseInt(data.get(4)), parseInt(data.get(5))));
-//
-//			while (data.contains("SavedGame")) {
-//				data = new ArrayList<>(data.subList(data.indexOf("SavedGame") + 1, data.size()));
-//				SavedGame savedGame;
-//
-//				if (data.contains("SavedGame"))
-//					savedGame = generateSavedGame(new ArrayList<>(data.subList(0, data.indexOf("SavedGame"))));
-//				else
-//					savedGame = generateSavedGame(data);
-//
-//				players.get(index).addSavedGame(savedGame);
-//			}
-//			index++;
-//			nextLine = reader.readNext();
-//		}
-//		reader.close();
-//	}
 
 	private SavedGame generateSavedGame(List<String> gameContent) {
 		String gameName, gameDate;
@@ -351,7 +308,7 @@ public class Database {
 
 	public List<Player> sortPlayers() {
 		List<Player> topPlayers = players;
-		Collections.sort(topPlayers);
+		sort(topPlayers);
 		topPlayers = new ArrayList<>(topPlayers.subList(0, 10));
 		return topPlayers;
 	}

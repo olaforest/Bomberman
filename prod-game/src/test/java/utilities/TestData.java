@@ -32,20 +32,19 @@ public class TestData {
 			"86", "0", "Exitway", "832", "160", "PowerUp", "class gameplayModel.GridObjects.PowerUps.Flames",
 			"800", "128", "Bomberman", "32", "32", "0", "1", "PowerUpAcquired");
 
-	public static final List<Brick> BRICKS = singletonList(new Brick(create(160, 32)));
-	public static final List<Enemy> ENEMIES = singletonList(new Balloom(create(864, 86), 0));
-	public static final Exitway EXITWAY = new Exitway(create(832, 160), 0);
-	public static final PowerUp POWER_UP = new Flames(create(800, 128));
-	public static final Bomberman BOMBERMAN = new Bomberman(create(32, 32), 0, 1, emptyList());
+	private static final List<Brick> BRICKS = singletonList(new Brick(create(160, 32)));
+	private static final List<Enemy> ENEMIES = singletonList(new Balloom(create(864, 86), 0));
+	private static final Exitway EXITWAY = new Exitway(create(832, 160), 0);
+	private static final PowerUp POWER_UP = new Flames(create(800, 128));
+	private static final Bomberman BOMBERMAN = new Bomberman(create(32, 32), 0, 1, emptyList());
 
-	public static final GridMap GRID_MAP = new GridMap(10000, BRICKS, emptyList(), ENEMIES, EXITWAY, POWER_UP, BOMBERMAN);
-	public static final GameContext GAME_CONTEXT = new GameContext(198950, 2, 0, 0, GRID_MAP);
-	public static final SavedGame SAVED_GAME = new SavedGame("save1", "Mon Dec 26 15:59:18 PST 2016", GAME_CONTEXT);
+	private static final GridMap GRID_MAP = new GridMap(10000, BRICKS, emptyList(), ENEMIES, EXITWAY, POWER_UP, BOMBERMAN);
+	private static final GameContext GAME_CONTEXT = new GameContext(198950, 2, 0, 0, GRID_MAP);
+	private static final SavedGame SAVED_GAME = new SavedGame("save1", "Mon Dec 26 15:59:18 PST 2016", GAME_CONTEXT);
 
 	public static final Player VALID_ENTRY_PLAYER = new Player("0", "1", "2", 3, 4, 5);
 	public static final Player VALID_ENTRY_PLAYER_WITH_GAME = new Player("0", "1", "2", 3, 4, 5)
 			.withSavedGames(singletonList(SAVED_GAME));
-
 
 	public static List<List<String>> getImportWithInvalidEntries() {
 		return asList(LONG_ENTRY, SHORT_ENTRY, VALID_ENTRY, SHORT_ENTRY_WITH_GAME, VALID_ENTRY_WITH_GAME,
