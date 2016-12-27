@@ -12,8 +12,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -155,21 +153,13 @@ public class MenuController implements ActionListener {
 			layout.show(mainPanel, "Options");
 
 		} else if (event.getSource() == mainMenuPanel.getLogoutButton()) {
-			try {
-				database.generateCSV();
-				currentPlayer = null;
-			} catch (IOException | URISyntaxException e) {
-				e.printStackTrace();
-			}
+			database.generateCSV();
+			currentPlayer = null;
 			layout.show(mainPanel, "Login");
 			loginPanel.resetTextFields();
 
 		} else if (event.getSource() == mainMenuPanel.getExitButton()) {
-			try {
-				database.generateCSV();
-			} catch (IOException | URISyntaxException e) {
-				e.printStackTrace();
-			}
+			database.generateCSV();
 			System.exit(0);
 
 //************************Leaderboard buttons**************************
@@ -223,21 +213,13 @@ public class MenuController implements ActionListener {
 			currentPlayer.addSavedGame(new SavedGame(saveName, new Date().toString(), gameplayCtrl.getGameContext()));
 
 		} else if (event.getSource() == pauseMenuPanel.getExit()) {
-			try {
-				database.generateCSV();
-			} catch (IOException | URISyntaxException e) {
-				e.printStackTrace();
-			}
+			database.generateCSV();
 			System.exit(0);
 
 		} else if (event.getSource() == pauseMenuPanel.getMainMenu()) {
 			int choice = JOptionPane.showConfirmDialog(null, "All unsaved progress will be lost. Continue?", null, JOptionPane.OK_CANCEL_OPTION);
 			if (choice == 0) {
-				try {
-					database.generateCSV();
-				} catch (IOException | URISyntaxException e) {
-					e.printStackTrace();
-				}
+				database.generateCSV();
 				layout.show(mainPanel, "Main");
 			}
 

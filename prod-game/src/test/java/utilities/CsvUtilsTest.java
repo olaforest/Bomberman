@@ -7,8 +7,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static utilities.CsvUtils.readCSV;
-import static utilities.CsvUtils.writeCSV;
+import static utilities.CsvUtils.*;
 
 public class CsvUtilsTest {
 
@@ -42,6 +41,37 @@ public class CsvUtilsTest {
 		final String emptyTestFilePath = "prod-game/src/test/resources/testEmptyReadCSV";
 		//when
 		final List<List<String>> result = readCSV(emptyTestFilePath);
+		//then
+		assertThat(result).isEmpty();
+	}
+
+	@Test
+	public void invalidFileName_readResourcesCSV_returnsEmptyList() {
+		//given
+		final String filePath = INVALID_FILE_PATH;
+		//when
+		final List<List<String>> result = readResourcesCSV(filePath);
+		//then
+		assertThat(result).isEmpty();
+	}
+
+	@Test
+	public void validFileName_readResourcesCSV_returnsValidList() {
+		//given
+		final String validTestFilePath = "testReadCSV";
+		//when
+		final List<List<String>> result = readResourcesCSV(validTestFilePath);
+		//then
+		assertThat(result).isNotNull()
+				.containsExactly(asList("1", "2", "3"), asList("4", "5", "6"));
+	}
+
+	@Test
+	public void emptyFile_readResourcesCSV_returnsEmptyList() {
+		//given
+		final String emptyTestFilePath = "prod-game/src/test/resources/testEmptyReadCSV";
+		//when
+		final List<List<String>> result = readResourcesCSV(emptyTestFilePath);
 		//then
 		assertThat(result).isEmpty();
 	}
