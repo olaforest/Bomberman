@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class LevelTest {
@@ -31,4 +32,14 @@ public class LevelTest {
 				.isInstanceOf(IllegalArgumentException.class);
 	}
 
+	@Test
+	public void validLevelSpecList_newLevelInstance_resultsInValidNewLevel() {
+		//given
+		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, 0);
+		//when
+		final Level level = new Level(levelSpec);
+		//then
+		assertThat(level.getEnemiesType()).containsExactly(1, 1, 1, 1, 1, 1, 1, 1);
+		assertThat(level.getPowerUpType()).isEqualTo(0);
+	}
 }
