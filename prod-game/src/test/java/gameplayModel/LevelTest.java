@@ -47,7 +47,7 @@ public class LevelTest {
 	@Test
 	public void specListWithPowerUpTypeBelowAcceptedRange_newLevelInstance_throwsException() {
 		//given
-		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, 0);
+		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, -1);
 		//when
 		assertThatThrownBy(() -> new Level(levelSpec))
 				//then
