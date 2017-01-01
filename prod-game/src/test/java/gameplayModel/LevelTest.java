@@ -109,4 +109,24 @@ public class LevelTest {
 		assertThat(level.getEnemiesCount()).containsExactly(0, MAX_VALUE, 0, 0, 0, 0, 0, 0);
 		assertThat(level.getPowerUpType()).contains(3);
 	}
+
+	@Test
+	public void regularLevel_isBonusLevel_returnsFalse() {
+		//given
+		final Level level = new Level(asList(1, 1, 1, 1, 1, 1, 1, 1, 1));
+		//when
+		final boolean isBonusLevel = level.isBonusLevel();
+		//then
+		assertThat(isBonusLevel).isFalse();
+	}
+
+	@Test
+	public void bonusLevel_isBonusLevel_returnsTrue() {
+		//given
+		final Level level = new Level(asList(MAX_VALUE, 0, 0, 0, 0, 0, 0, 0, 1));
+		//when
+		final boolean isBonusLevel = level.isBonusLevel();
+		//then
+		assertThat(isBonusLevel).isTrue();
+	}
 }

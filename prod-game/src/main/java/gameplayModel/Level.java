@@ -12,13 +12,14 @@ public class Level {
 
 	private static final Predicate<List<Integer>> IS_BONUS_LEVEL = spec -> spec.contains(MAX_VALUE);
 
-	@Getter
-	private List<Integer> enemiesCount;
-	private Integer powerUpType;
+	@Getter private final List<Integer> enemiesCount;
+	@Getter private final boolean bonusLevel;
+	private final Integer powerUpType;
 
 	public Level(List<Integer> specification) {
 		validateInputSpecification(specification);
 		enemiesCount = specification.subList(0, 8);
+		bonusLevel = IS_BONUS_LEVEL.test(enemiesCount);
 		powerUpType = specification.get(8);
 	}
 
