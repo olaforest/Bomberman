@@ -36,18 +36,18 @@ public class LevelTest {
 	@Test
 	public void validLevelSpecList_newLevelInstance_resultsInValidNewLevel() {
 		//given
-		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, 0);
+		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, 1);
 		//when
 		final Level level = new Level(levelSpec);
 		//then
 		assertThat(level.getEnemiesCount()).containsExactly(1, 1, 1, 1, 1, 1, 1, 1);
-		assertThat(level.getPowerUpType()).isEqualTo(0);
+		assertThat(level.getPowerUpType()).isEqualTo(1);
 	}
 
 	@Test
 	public void specListWithPowerUpTypeBelowAcceptedRange_newLevelInstance_throwsException() {
 		//given
-		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, -1);
+		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, 0);
 		//when
 		assertThatThrownBy(() -> new Level(levelSpec))
 				//then
@@ -58,7 +58,7 @@ public class LevelTest {
 	@Test
 	public void specListWithPowerUpTypeAboveAcceptedRange_newLevelInstance_throwsException() {
 		//given
-		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, 8);
+		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, 9);
 		//when
 		assertThatThrownBy(() -> new Level(levelSpec))
 				//then
@@ -80,7 +80,7 @@ public class LevelTest {
 	@Test
 	public void bonusLevelSpecListWithMoreThanOneNonZeroEnemyCount_newLevelInstance_throwsException() {
 		//given
-		final List<Integer> levelSpec = asList(0, 0, MAX_VALUE, 0, 1, 0, 0, 0, 0);
+		final List<Integer> levelSpec = asList(0, 0, MAX_VALUE, 0, 1, 0, 0, 0, 8);
 		//when
 		assertThatThrownBy(() -> new Level(levelSpec))
 				//then

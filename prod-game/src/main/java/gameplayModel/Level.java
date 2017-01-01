@@ -34,7 +34,7 @@ public class Level {
 	}
 
 	private void validatePowerUpSpec(Integer powerUpType) {
-		if (powerUpType < 0 || powerUpType > 7) {
+		if (powerUpType <= 0 || powerUpType > 8) {
 			throw new IllegalArgumentException("Invalid power up type. Value is outside defined range.");
 		}
 	}
