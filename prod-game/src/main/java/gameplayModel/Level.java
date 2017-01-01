@@ -3,15 +3,16 @@ package gameplayModel;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import static java.lang.Integer.MAX_VALUE;
 
-@Getter
 public class Level {
 
 	private static final Predicate<List<Integer>> IS_BONUS_LEVEL = spec -> spec.contains(MAX_VALUE);
 
+	@Getter
 	private List<Integer> enemiesCount;
 	private Integer powerUpType;
 
@@ -19,6 +20,10 @@ public class Level {
 		validateInputSpecification(specification);
 		enemiesCount = specification.subList(0, 8);
 		powerUpType = specification.get(8);
+	}
+
+	public Optional<Integer> getPowerUpType() {
+		return powerUpType == 0 ? Optional.empty() : Optional.of(powerUpType);
 	}
 
 	private void validateInputSpecification(List<Integer> specification) {

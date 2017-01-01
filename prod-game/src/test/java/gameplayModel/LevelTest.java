@@ -34,14 +34,25 @@ public class LevelTest {
 	}
 
 	@Test
-	public void validLevelSpecList_newLevelInstance_resultsInValidNewLevel() {
+	public void validLevelWithPowerUpSpecList_newLevelInstance_resultsInValidNewLevelWithPowerUp() {
 		//given
 		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, 1);
 		//when
 		final Level level = new Level(levelSpec);
 		//then
 		assertThat(level.getEnemiesCount()).containsExactly(1, 1, 1, 1, 1, 1, 1, 1);
-		assertThat(level.getPowerUpType()).isEqualTo(1);
+		assertThat(level.getPowerUpType()).contains(1);
+	}
+
+	@Test
+	public void validLevelWithoutPowerUpSpecList_newLevelInstance_resultsInValidNewLevelWithEmptyPowerUp() {
+		//given
+		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, 0);
+		//when
+		final Level level = new Level(levelSpec);
+		//then
+		assertThat(level.getEnemiesCount()).containsExactly(1, 1, 1, 1, 1, 1, 1, 1);
+		assertThat(level.getPowerUpType()).isEmpty();
 	}
 
 	@Test
@@ -96,6 +107,6 @@ public class LevelTest {
 		final Level level = new Level(levelSpec);
 		//then
 		assertThat(level.getEnemiesCount()).containsExactly(0, MAX_VALUE, 0, 0, 0, 0, 0, 0);
-		assertThat(level.getPowerUpType()).isEqualTo(3);
+		assertThat(level.getPowerUpType()).contains(3);
 	}
 }
