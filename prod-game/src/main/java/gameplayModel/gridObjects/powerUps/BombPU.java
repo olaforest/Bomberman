@@ -1,6 +1,6 @@
-package gameplayModel.GridObjects.PowerUps;
+package gameplayModel.gridObjects.powerUps;
 
-import gameplayModel.GridObjects.PowerUp;
+import gameplayModel.gridObjects.PowerUp;
 import utilities.Position;
 
 public class BombPU extends PowerUp {

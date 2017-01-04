@@ -1,6 +1,6 @@
-package gameplayModel.GridObjects.AnimatedObjects;
+package gameplayModel.gridObjects.animatedObjects;
 
-import gameplayModel.GridObjects.AnimatedObject;
+import gameplayModel.gridObjects.AnimatedObject;
 import utilities.Position;
 
 import java.util.ArrayList;

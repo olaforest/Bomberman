@@ -1,8 +1,8 @@
-package gameplayModel.GridObjects.AnimatedObjects;
+package gameplayModel.gridObjects.animatedObjects;
 
 import gameplayController.GameplayController;
 import gameplayModel.Animation;
-import gameplayModel.GridObjects.AnimatedObject;
+import gameplayModel.gridObjects.AnimatedObject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 
 import static gameplayModel.GridMap.MAPHEIGHT;
 import static gameplayModel.GridMap.MAPWIDTH;
-import static gameplayModel.GridObjects.AnimatedObjects.Bomb.AnimationType.*;
+import static gameplayModel.gridObjects.animatedObjects.Bomb.AnimationType.*;
 import static java.util.Arrays.asList;
 import static java.util.function.IntUnaryOperator.identity;
 import static java.util.stream.Collectors.toList;

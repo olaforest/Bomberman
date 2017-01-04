@@ -1,7 +1,7 @@
-package gameplayModel.GridObjects.AnimatedObjects.Enemies;
+package gameplayModel.gridObjects.animatedObjects.Enemies;
 
 import gameplayModel.GridMap;
-import gameplayModel.GridObjects.AnimatedObjects.Enemy;
+import gameplayModel.gridObjects.animatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 

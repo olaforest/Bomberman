@@ -1,4 +1,4 @@
-package gameplayModel.GridObjects.PowerUps;
+package gameplayModel.gridObjects.powerUps;
 
 import org.junit.Before;
 import org.junit.Test;

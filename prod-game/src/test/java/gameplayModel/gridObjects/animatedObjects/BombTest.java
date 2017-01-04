@@ -1,4 +1,4 @@
-package gameplayModel.GridObjects.AnimatedObjects;
+package gameplayModel.gridObjects.animatedObjects;
 
 import gameplayController.GameplayController;
 import gameplayModel.GridMap;

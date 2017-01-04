@@ -1,9 +1,9 @@
-package gameplayModel.GridObjects.AnimatedObjects;
+package gameplayModel.gridObjects.animatedObjects;
 
 import gameplayController.GameplayController;
 import gameplayModel.GridMap;
-import gameplayModel.GridObjects.AnimatedObject;
-import gameplayModel.GridObjects.PowerUp;
+import gameplayModel.gridObjects.AnimatedObject;
+import gameplayModel.gridObjects.PowerUp;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;

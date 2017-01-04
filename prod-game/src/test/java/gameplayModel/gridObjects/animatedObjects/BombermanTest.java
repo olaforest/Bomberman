@@ -1,8 +1,8 @@
-package gameplayModel.GridObjects.AnimatedObjects;
+package gameplayModel.gridObjects.animatedObjects;
 
 import gameplayController.GameplayController;
 import gameplayModel.GridMap;
-import gameplayModel.GridObjects.PowerUps.*;
+import gameplayModel.gridObjects.powerUps.*;
 import org.junit.Before;
 import org.junit.Test;
 
