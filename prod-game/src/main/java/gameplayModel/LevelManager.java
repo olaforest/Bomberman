@@ -1,12 +1,20 @@
 package gameplayModel;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
+import java.util.List;
+
+import static gameplayModel.Levels.getLevels;
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class LevelManager {
-	private int currentLevel;
+	private static final List<Level> LEVELS = getLevels();
+
+	private int currentLevelIndex;
+
+	public Level getCurrentLevel() {
+		return LEVELS.get(currentLevelIndex);
+	}
 }
