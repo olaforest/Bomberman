@@ -1,7 +1,7 @@
 package gameplayModel;
 
-import gameplayModel.GridObjects.PowerUp;
-import gameplayModel.GridObjects.PowerUps.Bombpass;
+import gameplayModel.gridObjects.PowerUp;
+import gameplayModel.gridObjects.powerUps.Bombpass;
 import org.junit.Before;
 import org.junit.Test;
 

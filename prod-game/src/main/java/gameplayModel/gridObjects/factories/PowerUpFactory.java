@@ -1,7 +1,7 @@
-package gameplayModel.GridObjects.Factories;
+package gameplayModel.gridObjects.factories;
 
-import gameplayModel.GridObjects.PowerUp;
-import gameplayModel.GridObjects.PowerUps.*;
+import gameplayModel.gridObjects.PowerUp;
+import gameplayModel.gridObjects.powerUps.*;
 import utilities.Position;
 
 import static utilities.Position.create;

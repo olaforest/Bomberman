@@ -1,6 +1,6 @@
 package gameplayModel;
 
-import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import lombok.Getter;
 import utilities.Position;
 

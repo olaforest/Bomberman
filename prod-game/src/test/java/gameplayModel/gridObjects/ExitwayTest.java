@@ -1,4 +1,4 @@
-package gameplayModel.GridObjects;
+package gameplayModel.gridObjects;
 
 import org.junit.Before;
 import org.junit.Test;

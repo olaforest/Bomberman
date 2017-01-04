@@ -2,8 +2,8 @@ package gameplayController;
 
 import gameplayModel.GameContext;
 import gameplayModel.GridObject;
-import gameplayModel.GridObjects.AnimatedObjects.Bomb;
-import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Bomb;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

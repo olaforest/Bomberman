@@ -2,7 +2,7 @@ package menuController;
 
 import database.Database;
 import gameplayController.GameplayController;
-import gameplayModel.GridObjects.AnimatedObjects.Bomb;
+import gameplayModel.gridObjects.animatedObjects.Bomb;
 import menuModel.Leaderboard;
 import menuModel.Player;
 import menuModel.SavedGame;

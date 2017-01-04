@@ -2,13 +2,13 @@ package utilities;
 
 import gameplayModel.GameContext;
 import gameplayModel.GridMap;
-import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
-import gameplayModel.GridObjects.AnimatedObjects.Brick;
-import gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom;
-import gameplayModel.GridObjects.AnimatedObjects.Enemy;
-import gameplayModel.GridObjects.Exitway;
-import gameplayModel.GridObjects.PowerUp;
-import gameplayModel.GridObjects.PowerUps.Flames;
+import gameplayModel.gridObjects.Exitway;
+import gameplayModel.gridObjects.PowerUp;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Brick;
+import gameplayModel.gridObjects.animatedObjects.Enemies.Balloom;
+import gameplayModel.gridObjects.animatedObjects.Enemy;
+import gameplayModel.gridObjects.powerUps.Flames;
 import menuModel.Player;
 import menuModel.SavedGame;
 

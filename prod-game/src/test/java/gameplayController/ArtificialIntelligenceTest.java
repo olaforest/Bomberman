@@ -1,11 +1,11 @@
 package gameplayController;
 
 import gameplayModel.GameContext;
-import gameplayModel.GridObjects.AnimatedObjects.Bomb;
-import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
-import gameplayModel.GridObjects.AnimatedObjects.Brick;
-import gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom;
-import gameplayModel.GridObjects.AnimatedObjects.Enemy;
+import gameplayModel.gridObjects.animatedObjects.Bomb;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Brick;
+import gameplayModel.gridObjects.animatedObjects.Enemies.Balloom;
+import gameplayModel.gridObjects.animatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;
 

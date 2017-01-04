@@ -1,4 +1,4 @@
-package gameplayModel.GridObjects;
+package gameplayModel.gridObjects;
 
 import gameplayModel.GridObject;
 import lombok.Getter;

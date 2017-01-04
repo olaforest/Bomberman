@@ -1,12 +1,12 @@
 package gameplayModel;
 
-import gameplayModel.GridObjects.AnimatedObjects.Bomb;
-import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
-import gameplayModel.GridObjects.AnimatedObjects.Brick;
-import gameplayModel.GridObjects.AnimatedObjects.Enemy;
-import gameplayModel.GridObjects.Concrete;
-import gameplayModel.GridObjects.Exitway;
-import gameplayModel.GridObjects.PowerUp;
+import gameplayModel.gridObjects.Concrete;
+import gameplayModel.gridObjects.Exitway;
+import gameplayModel.gridObjects.PowerUp;
+import gameplayModel.gridObjects.animatedObjects.Bomb;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Brick;
+import gameplayModel.gridObjects.animatedObjects.Enemy;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -16,9 +16,9 @@ import java.util.stream.IntStream;
 
 import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
-import static gameplayModel.GridObjects.Factories.EnemyFactory.createEnemy;
-import static gameplayModel.GridObjects.Factories.PowerUpFactory.createPowerUp;
-import static gameplayModel.GridObjects.HiddenObject.generateIndex;
+import static gameplayModel.gridObjects.HiddenObject.generateIndex;
+import static gameplayModel.gridObjects.factories.EnemyFactory.createEnemy;
+import static gameplayModel.gridObjects.factories.PowerUpFactory.createPowerUp;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
 

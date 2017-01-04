@@ -1,4 +1,4 @@
-package gameplayModel.GridObjects;
+package gameplayModel.gridObjects;
 
 import lombok.AccessLevel;
 import lombok.Getter;
