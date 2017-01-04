@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 
 import static java.lang.Integer.MAX_VALUE;
 
-public class Level {
+class Level {
 
 	private static final Predicate<List<Integer>> IS_BONUS_LEVEL = spec -> spec.contains(MAX_VALUE);
 
@@ -16,14 +16,14 @@ public class Level {
 	@Getter private final boolean bonusLevel;
 	private final Integer powerUpType;
 
-	public Level(List<Integer> specification) {
+	Level(List<Integer> specification) {
 		validateInputSpecification(specification);
 		enemiesCount = specification.subList(0, 8);
 		bonusLevel = IS_BONUS_LEVEL.test(enemiesCount);
 		powerUpType = specification.get(8);
 	}
 
-	public Optional<Integer> getPowerUpType() {
+	Optional<Integer> getPowerUpType() {
 		return powerUpType == 0 ? Optional.empty() : Optional.of(powerUpType);
 	}
 
