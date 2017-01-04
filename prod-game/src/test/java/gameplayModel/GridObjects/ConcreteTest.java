@@ -1,6 +1,5 @@
-package gameplayModel;
+package gameplayModel.GridObjects;
 
-import gameplayModel.GridObjects.Concrete;
 import org.junit.Before;
 import org.junit.Test;
 

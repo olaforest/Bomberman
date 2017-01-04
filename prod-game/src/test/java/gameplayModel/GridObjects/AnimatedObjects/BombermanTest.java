@@ -1,8 +1,7 @@
-package gameplayModel;
+package gameplayModel.GridObjects.AnimatedObjects;
 
 import gameplayController.GameplayController;
-import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
-import gameplayModel.GridObjects.AnimatedObjects.Enemy;
+import gameplayModel.GridMap;
 import gameplayModel.GridObjects.PowerUps.*;
 import org.junit.Before;
 import org.junit.Test;

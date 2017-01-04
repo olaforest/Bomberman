@@ -1,7 +1,6 @@
-package gameplayModel.Enemies;
+package gameplayModel.GridObjects.AnimatedObjects.Enemies;
 
 import gameplayModel.GridMap;
-import gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom;
 import gameplayModel.GridObjects.AnimatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;

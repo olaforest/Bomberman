@@ -1,6 +1,5 @@
-package gameplayModel.PowerUps;
+package gameplayModel.GridObjects.PowerUps;
 
-import gameplayModel.GridObjects.PowerUps.Wallpass;
 import org.junit.Before;
 import org.junit.Test;
 

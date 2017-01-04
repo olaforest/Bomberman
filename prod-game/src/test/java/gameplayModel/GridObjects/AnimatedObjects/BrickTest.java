@@ -1,7 +1,6 @@
-package gameplayModel;
+package gameplayModel.GridObjects.AnimatedObjects;
 
-import gameplayModel.GridObjects.AnimatedObjects.Brick;
-import gameplayModel.GridObjects.AnimatedObjects.Enemy;
+import gameplayModel.GridMap;
 import org.junit.Before;
 import org.junit.Test;
 
