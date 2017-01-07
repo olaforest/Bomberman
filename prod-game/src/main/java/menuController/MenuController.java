@@ -2,6 +2,7 @@ package menuController;
 
 import database.Database;
 import gameplayController.GameplayController;
+import gameplayModel.LevelManager;
 import gameplayModel.gridObjects.animatedObjects.Bomb;
 import menuModel.Leaderboard;
 import menuModel.Player;
@@ -188,7 +189,8 @@ public class MenuController implements ActionListener {
 
 		} else if (event.getSource() == loadGamePanel.getLoad()) {
 			menuFrame.setVisible(false);
-			gameplayCtrl = new GameplayController(this, currentPlayer.getSavedGameList().get(loadGamePanel.getSaveIndex()).getGameContext());
+			final SavedGame savedGame = currentPlayer.getSavedGameList().get(loadGamePanel.getSaveIndex());
+			gameplayCtrl = new GameplayController(this, savedGame.getGameContext(), new LevelManager(savedGame.getLevelIndex()));
 			prePauseScore = gameplayCtrl.getGameContext().getScore();
 			gameplayCtrl.resumeGame();
 

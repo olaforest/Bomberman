@@ -1,10 +1,13 @@
 package gameplayModel;
 
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 import static java.lang.Integer.MAX_VALUE;
 
@@ -16,7 +19,7 @@ class Level {
 	@Getter private final boolean bonusLevel;
 	private final Integer powerUpType;
 
-	Level(List<Integer> specification) {
+	Level(@NonNull List<Integer> specification) {
 		validateInputSpecification(specification);
 		enemiesCount = specification.subList(0, 8);
 		bonusLevel = IS_BONUS_LEVEL.test(enemiesCount);
@@ -25,6 +28,13 @@ class Level {
 
 	Optional<Integer> getPowerUpType() {
 		return powerUpType == 0 ? Optional.empty() : Optional.of(powerUpType);
+	}
+
+	public OptionalInt getHardestEnemyType() {
+		return IntStream.iterate(7, i -> --i)
+				.limit(enemiesCount.size())
+				.filter(i -> enemiesCount.get(i) > 0)
+				.findFirst();
 	}
 
 	private void validateInputSpecification(List<Integer> specification) {

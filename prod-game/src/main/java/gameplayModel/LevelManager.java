@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.OptionalInt;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 import static gameplayModel.Levels.getLevels;
@@ -16,9 +18,10 @@ public class LevelManager {
 	private static final List<Level> LEVELS = getLevels();
 
 	private int currentLevelIndex;
+	public final Supplier<Level> currentLevel = () -> LEVELS.get(currentLevelIndex);
 
-	public Level getCurrentLevel() {
-		return LEVELS.get(currentLevelIndex);
+	public Level getLevel() {
+		return currentLevel.get();
 	}
 
 	public void increaseLevel() {
@@ -30,5 +33,13 @@ public class LevelManager {
 				.mapToObj(LEVELS::get)
 				.filter(Level::isBonusLevel)
 				.count();
+	}
+
+	public boolean isBonusLevel() {
+		return currentLevel.get().isBonusLevel();
+	}
+
+	public OptionalInt getHardestEnemyType() {
+		return currentLevel.get().getHardestEnemyType();
 	}
 }

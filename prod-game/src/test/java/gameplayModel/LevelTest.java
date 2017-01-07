@@ -3,6 +3,7 @@ package gameplayModel;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.OptionalInt;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.util.Arrays.asList;
@@ -31,6 +32,17 @@ public class LevelTest {
 				//then
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Trying to instantiate a level with invalid level specifications");
+	}
+
+	@Test
+	public void nullLevelSpecList_newLevelInstance_throwsException() {
+		//given
+		final List<Integer> levelSpec = null;
+		//when
+		assertThatThrownBy(() -> new Level(levelSpec))
+				//then
+				.isInstanceOf(NullPointerException.class)
+				.hasMessage("specification");
 	}
 
 	@Test
@@ -128,5 +140,25 @@ public class LevelTest {
 		final boolean isBonusLevel = level.isBonusLevel();
 		//then
 		assertThat(isBonusLevel).isTrue();
+	}
+
+	@Test
+	public void levelWithEnemies_getHardestEnemyType_returnsTypesOfHardestEnemy() {
+		//given
+		final Level level = new Level(asList(0, 1, 0, 1, 1, 0, 1, 0, 3));
+		//when
+		final OptionalInt type = level.getHardestEnemyType();
+		//then
+		assertThat(type).hasValue(6);
+	}
+
+	@Test
+	public void levelWithNoEnemies_getHardestEnemyType_returnsEmptyOptional() {
+		//given
+		final Level level = new Level(asList(0, 0, 0, 0, 0, 0, 0, 0, 3));
+		//when
+		final OptionalInt type = level.getHardestEnemyType();
+		//then
+		assertThat(type).isEmpty();
 	}
 }

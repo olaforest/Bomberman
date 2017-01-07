@@ -82,63 +82,63 @@ public class GameContextTest {
 		assertEquals(1500, gameContext.getScore());
 	}
 
-	@Test
-	public void testGetLevelSpecification() {
+//	@Test
+//	public void testGetLevelSpecification() {
+//
+//		int[] test = gameContext.getLevelSpecification();
+//
+//		assertEquals(9, test.length);
+//		assertEquals(6, test[0]);
+//		assertEquals(0, test[1]);
+//		assertEquals(0, test[2]);
+//		assertEquals(0, test[3]);
+//		assertEquals(0, test[4]);
+//		assertEquals(0, test[5]);
+//		assertEquals(0, test[6]);
+//		assertEquals(0, test[7]);
+//		assertEquals(2, test[8]);
+//
+//		gameContext.setLevel(59);
+//
+//		test = gameContext.getLevelSpecification();
+//
+//		assertEquals(9, test.length);
+//		assertEquals(0, test[0]);
+//		assertEquals(0, test[1]);
+//		assertEquals(0, test[2]);
+//		assertEquals(0, test[3]);
+//		assertEquals(1, test[4]);
+//		assertEquals(2, test[5]);
+//		assertEquals(5, test[6]);
+//		assertEquals(2, test[7]);
+//		assertEquals(8, test[8]);
+//	}
 
-		int[] test = gameContext.getLevelSpecification();
+//	@Test
+//	public void testGetActualLevel() {
+//		assertTrue(gameContext.getActualLevel() >= 0 && gameContext.getActualLevel() <= 49);
+//
+//		gameContext.setLevel(29);
+//
+//		assertEquals(24, gameContext.getActualLevel());
+//	}
 
-		assertEquals(9, test.length);
-		assertEquals(6, test[0]);
-		assertEquals(0, test[1]);
-		assertEquals(0, test[2]);
-		assertEquals(0, test[3]);
-		assertEquals(0, test[4]);
-		assertEquals(0, test[5]);
-		assertEquals(0, test[6]);
-		assertEquals(0, test[7]);
-		assertEquals(2, test[8]);
+//	@Test
+//	public void testIncreaseLevel() {
+//		int test = (int) (Math.random() * 59);
+//		gameContext.setLevel(test);
+//		gameContext.increaseLevel();
+//		assertEquals(test + 1, gameContext.getLevel());
+//	}
 
-		gameContext.setLevel(59);
-
-		test = gameContext.getLevelSpecification();
-
-		assertEquals(9, test.length);
-		assertEquals(0, test[0]);
-		assertEquals(0, test[1]);
-		assertEquals(0, test[2]);
-		assertEquals(0, test[3]);
-		assertEquals(1, test[4]);
-		assertEquals(2, test[5]);
-		assertEquals(5, test[6]);
-		assertEquals(2, test[7]);
-		assertEquals(8, test[8]);
-	}
-
-	@Test
-	public void testGetActualLevel() {
-		assertTrue(gameContext.getActualLevel() >= 0 && gameContext.getActualLevel() <= 49);
-
-		gameContext.setLevel(29);
-
-		assertEquals(24, gameContext.getActualLevel());
-	}
-
-	@Test
-	public void testIncreaseLevel() {
-		int test = (int) (Math.random() * 59);
-		gameContext.setLevel(test);
-		gameContext.increaseLevel();
-		assertEquals(test + 1, gameContext.getLevel());
-	}
-
-	@Test
-	public void testSetAndGetLevel() {
-		assertTrue(gameContext.getLevel() >= 0 && gameContext.getLevel() <= 59);
-
-		gameContext.setLevel(40);
-		assertEquals(40, gameContext.getLevel());
-		assertEquals(34, gameContext.getActualLevel());
-	}
+//	@Test
+//	public void testSetAndGetLevel() {
+//		assertTrue(gameContext.getLevel() >= 0 && gameContext.getLevel() <= 59);
+//
+//		gameContext.setLevel(40);
+//		assertEquals(40, gameContext.getLevel());
+//		assertEquals(34, gameContext.getActualLevel());
+//	}
 
 	@Test
 	public void testGetGridMap() {

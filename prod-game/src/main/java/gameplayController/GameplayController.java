@@ -3,6 +3,7 @@ package gameplayController;
 import gameplayModel.GameContext;
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
+import gameplayModel.LevelManager;
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayModel.gridObjects.Concrete;
 import gameplayModel.gridObjects.Exitway;
@@ -10,13 +11,11 @@ import gameplayModel.gridObjects.PowerUp;
 import gameplayModel.gridObjects.animatedObjects.Bomb;
 import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import gameplayModel.gridObjects.animatedObjects.Brick;
-import gameplayModel.gridObjects.animatedObjects.Enemies.*;
 import gameplayModel.gridObjects.animatedObjects.Enemy;
 import gameplayView.GameStatusPanel;
 import gameplayView.GameplayPanel;
 import lombok.Getter;
 import menuController.MenuController;
-import utilities.Position;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,8 +26,11 @@ import java.awt.event.KeyListener;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayModel.gridObjects.factories.EnemyFactory.createEnemy;
 import static utilities.Position.create;
 
 public class GameplayController implements ActionListener {
@@ -60,8 +62,8 @@ public class GameplayController implements ActionListener {
 	private PowerUp powerup;
 
 	private JFrame gameFrame;
-	private JViewport gameView;
 	private Timer timer;
+	private LevelManager levelManager;
 
 	public GameplayController(MenuController menuCtrl) {
 		this.menuCtrl = menuCtrl;
@@ -72,9 +74,10 @@ public class GameplayController implements ActionListener {
 		timer.start();
 	}
 
-	public GameplayController(MenuController menuCtrl, GameContext gameContext) {
+	public GameplayController(MenuController menuCtrl, GameContext gameContext, LevelManager levelManager) {
 		this.menuCtrl = menuCtrl;
 		this.gameContext = gameContext;
+		this.levelManager = levelManager;
 		initializeReferences();
 		setupGameFrame(false);
 		timer = new Timer(TIMEOUT, this);
@@ -92,7 +95,7 @@ public class GameplayController implements ActionListener {
 
 		if (!bomberman.canWallpass()) checkCollisionBtwBombermanAndBricks();
 
-		if (!bomberman.isInvincible() && gameContext.getLevelSpecification()[8] != 0)
+		if (!bomberman.isInvincible() && !levelManager.isBonusLevel())
 			checkCollisionBtwBombermanAndEnemies();
 
 		checkCollisionBtwBombermanAndExitway();
@@ -100,7 +103,7 @@ public class GameplayController implements ActionListener {
 
 		if (placeBomb) addBomb();
 
-		if (gameContext.getLevelSpecification()[8] == 0) gridMap.decreaseSpawnTimer();
+		if (levelManager.isBonusLevel()) gridMap.decreaseSpawnTimer();
 
 		if (gameContext.getGameTime() <= 0 && !gameContext.isEndGameEnemiesSpawned()) {
 			gameContext.setEndGameEnemiesSpawned(true);
@@ -372,7 +375,7 @@ public class GameplayController implements ActionListener {
 				ArrayList<AnimatedObject> destBricks = colDetect.checkExplBricks(bomb);
 
 				destBricks.stream()
-						.filter(destBrick -> destBrick != null)
+						.filter(Objects::nonNull)
 						.forEach(destBrick -> {
 
 							bricks.stream()
@@ -400,7 +403,7 @@ public class GameplayController implements ActionListener {
 					pointsMultiplier--;
 				}
 
-				if (colDetect.checkExplGridObject(bomb, bomberman) && !bomberman.canFlamepass() && !bomberman.isInvincible() && gameContext.getLevelSpecification()[8] != 0 && !bomberman.isDead())
+				if (colDetect.checkExplGridObject(bomb, bomberman) && !bomberman.canFlamepass() && !bomberman.isInvincible() && !levelManager.isBonusLevel() && !bomberman.isDead())
 					bomberman.triggerDeath();
 
 				if (exitway != null && colDetect.checkExplGridObject(bomb, exitway)) {
@@ -442,7 +445,7 @@ public class GameplayController implements ActionListener {
 		if (colDetect.checkExactCollision(bomberman, exitway) && enemies.size() == 0) {
 
 			List<PowerUp> powerUpsAcquired = bomberman.getPowerUpsAcquired();
-			gameContext.increaseLevel();
+			levelManager.increaseLevel();
 			gameContext.initializeGameTime();
 			gameContext.restartMap();
 			initializeReferences();
@@ -481,7 +484,6 @@ public class GameplayController implements ActionListener {
 	}
 
 	private void addBomb() {
-
 		int xPosition, yPosition;
 
 		if ((bomberman.getPosition().getX() % EFFECTIVE_PIXEL_DIMENSION) < (EFFECTIVE_PIXEL_DIMENSION / 2))
@@ -497,20 +499,17 @@ public class GameplayController implements ActionListener {
 		boolean canAddBomb = true;
 
 		if (bombs.size() != 0) {
-
 			int i = 0;
 
 			while (canAddBomb && i < bombs.size()) {
 				if (bombs.get(i).getPosition().getX() == xPosition && bombs.get(i).getPosition().getY() == yPosition)
 					canAddBomb = false;
-
 				i++;
 			}
 		}
 
 		if (canAddBomb && bomberman.getBombsLeft() != 0) {
 			Bomb tempBomb = new Bomb(create(xPosition, yPosition));
-
 			bombs.add(tempBomb);
 			unexplodedBombs.add(tempBomb);
 			bomberman.decreaseBombsLeft();
@@ -518,42 +517,14 @@ public class GameplayController implements ActionListener {
 	}
 
 	private void spawnEightHarderEnemies(GridObject gridObj) {
-
-		int enemyType = 7;
-
-		while (gameContext.getLevelSpecification()[enemyType] == 0) enemyType--;
-
 		enemies.clear();
-		final Position position = create(gridObj.getPosition().getX(), gridObj.getPosition().getY());
+		levelManager.getHardestEnemyType()
+				.ifPresent(type -> spawnEightEnemies(type == 7 ? 7 : type++ , gridObj.getX(), gridObj.getY()));
+	}
 
-		for (int n = 0; n < 8; n++) {
-			switch (enemyType) {
-				case 0:
-					enemies.add(new Oneal(position));
-					break;
-				case 1:
-					enemies.add(new Doll(position));
-					break;
-				case 2:
-					enemies.add(new Minvo(position));
-					break;
-				case 3:
-					enemies.add(new Kondoria(position));
-					break;
-				case 4:
-					enemies.add(new Ovapi(position));
-					break;
-				case 5:
-					enemies.add(new Pass(position));
-					break;
-				case 6:
-					enemies.add(new Pontan(position));
-					break;
-				case 7:
-					enemies.add(new Pontan(position));
-					break;
-			}
-		}
+	private void spawnEightEnemies(int type, int xPosition, int yPosition) {
+		IntStream.range(0, 8)
+				.forEach(i -> enemies.add(createEnemy(type,xPosition, yPosition)));
 	}
 
 	private void setupGameFrame(boolean isVisible) {
@@ -593,7 +564,7 @@ public class GameplayController implements ActionListener {
 
 		gameStatusPanel = new GameStatusPanel(gameContext);
 
-		gameView = new JViewport();
+		final JViewport gameView = new JViewport();
 		gameView.setView(gamePanel);
 
 		gameFrame = new JFrame("Bomberman");

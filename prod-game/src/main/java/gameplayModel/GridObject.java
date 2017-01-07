@@ -35,6 +35,14 @@ public class GridObject {
 		isConcreteCollision = false;
 	}
 
+	public int getX() {
+		return position.getX();
+	}
+
+	public int getY() {
+		return position.getY();
+	}
+
 	public void setXPosition(int xPos) {
 		isConcreteCollision = false;
 		final int yError = (position.getY() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);

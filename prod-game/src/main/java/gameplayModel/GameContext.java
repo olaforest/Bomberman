@@ -87,8 +87,8 @@ public class GameContext {
 		gameTime = MAX_GAME_TIME;
 		livesLeft = INITIAL_LIVES_LEFT;
 		score = 0;
-		level = 0;
-		actualLevel = 0;
+//		level = 0;
+//		actualLevel = 0;
 		endGameEnemiesSpawned = false;
 		gridMap = new GridMap(levelSpec[level]);
 	}
@@ -97,8 +97,8 @@ public class GameContext {
 		gameTime = MAX_GAME_TIME;
 		livesLeft = INITIAL_LIVES_LEFT;
 		score = 0;
-		actualLevel = selectedLevel;
-		level = computeLevel();
+//		actualLevel = selectedLevel;
+//		level = computeLevel();
 		endGameEnemiesSpawned = false;
 		gridMap = new GridMap(levelSpec[level]);
 	}
@@ -107,8 +107,8 @@ public class GameContext {
 		gameTime = time;
 		livesLeft = lives;
 		this.score = score;
-		this.level = level;
-		computeActualLevel();
+//		this.level = level;
+//		computeActualLevel();
 		endGameEnemiesSpawned = false;
 		this.gridMap = gridMap;
 	}
@@ -139,40 +139,40 @@ public class GameContext {
 		score += additionnalPoints;
 	}
 
-	public int[] getLevelSpecification() {
-		return levelSpec[level];
-	}
+//	public int[] getLevelSpecification() {
+//		return levelSpec[level];
+//	}
 
-	public void increaseLevel() {
-		level++;
-		computeActualLevel();
-	}
+//	public void increaseLevel() {
+//		level++;
+//		computeActualLevel();
+//	}
 
-	public void setLevel(int level) {
-		this.level = level;
-		computeActualLevel();
-	}
+//	public void setLevel(int level) {
+//		this.level = level;
+//		computeActualLevel();
+//	}
 
-	//This method calculates the level of the current game not including the special levels
-	private void computeActualLevel() {
-		int specialLevel = 0;
-
-		for (int i = 0; i <= level; i++) {
-			if (levelSpec[i][8] == 0)
-				specialLevel++;
-		}
-		actualLevel = level - specialLevel;
-	}
+//	This method calculates the level of the current game not including the special levels
+//	private void computeActualLevel() {
+//		int specialLevel = 0;
+//
+//		for (int i = 0; i <= level; i++) {
+//			if (levelSpec[i][8] == 0)
+//				specialLevel++;
+//		}
+//		actualLevel = level - specialLevel;
+//	}
 
 	//This method calculates the level of the current game with special levels
-	private int computeLevel() {
-		int specialLevel = 0;
-		for (int i = 0; i <= actualLevel; i++)
-			if (levelSpec[i][8] == 0)
-				specialLevel++;
-
-		return actualLevel + specialLevel;
-	}
+//	private int computeLevel() {
+//		int specialLevel = 0;
+//		for (int i = 0; i <= actualLevel; i++)
+//			if (levelSpec[i][8] == 0)
+//				specialLevel++;
+//
+//		return actualLevel + specialLevel;
+//	}
 
 	public List<String> toCSVEntry() {
 		List<String> entryList = new ArrayList<>(asList(Integer.toString(gameTime),

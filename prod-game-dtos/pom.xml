@@ -8,6 +8,7 @@
 		<groupId>oli.test.project</groupId>
 		<artifactId>bomberman</artifactId>
 		<version>1.0.0</version>
+		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>prod-game-dtos</artifactId>
