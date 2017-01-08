@@ -27,7 +27,7 @@ public class CsvUtilsTest {
 	@Test
 	public void validFilePath_readCSV_returnsValidList() {
 		//given
-		final String validTestFilePath = "prod-game/src/test/resources/testReadCSV";
+		final String validTestFilePath = "src/test/resources/testReadCSV";
 		//when
 		final List<List<String>> result = readCSV(validTestFilePath);
 		//then
@@ -38,7 +38,7 @@ public class CsvUtilsTest {
 	@Test
 	public void emptyFile_readCSV_returnsEmptyList() {
 		//given
-		final String emptyTestFilePath = "prod-game/src/test/resources/testEmptyReadCSV";
+		final String emptyTestFilePath = "src/test/resources/testEmptyReadCSV";
 		//when
 		final List<List<String>> result = readCSV(emptyTestFilePath);
 		//then
@@ -69,7 +69,7 @@ public class CsvUtilsTest {
 	@Test
 	public void emptyFile_readResourcesCSV_returnsEmptyList() {
 		//given
-		final String emptyTestFilePath = "prod-game/src/test/resources/testEmptyReadCSV";
+		final String emptyTestFilePath = "testEmptyReadCSV";
 		//when
 		final List<List<String>> result = readResourcesCSV(emptyTestFilePath);
 		//then
@@ -90,7 +90,7 @@ public class CsvUtilsTest {
 	@Test
 	public void validFilePath_writeCSV_returnsTrue() {
 		//given
-		final String validTestFilePath = "prod-game/src/test/resources/testWriteCSV";
+		final String validTestFilePath = "src/test/resources/testWriteCSV";
 		final  List<List<String>> fileContent = FILE_CONTENT;
 		//when
 		final boolean result = writeCSV(validTestFilePath, fileContent);
@@ -101,7 +101,7 @@ public class CsvUtilsTest {
 	@Test
 	public void emptyFileContent_writeCSV_returnsTrue() {
 		//given
-		final String validTestFilePath = "prod-game/src/test/resources/testEmptyWriteCSV";
+		final String validTestFilePath = "src/test/resources/testEmptyWriteCSV";
 		final  List<List<String>> fileContent = emptyList();
 		//when
 		final boolean result = writeCSV(validTestFilePath, fileContent);

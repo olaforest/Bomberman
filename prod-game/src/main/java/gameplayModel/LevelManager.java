@@ -9,16 +9,14 @@ import java.util.OptionalInt;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
-import static gameplayModel.Levels.getLevels;
-
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class LevelManager {
-	private static final List<Level> LEVELS = getLevels();
+	private static final List<Level> LEVELS = Levels.getLevels();
 
 	private int currentLevelIndex;
-	public final Supplier<Level> currentLevel = () -> LEVELS.get(currentLevelIndex);
+	private final Supplier<Level> currentLevel = () -> LEVELS.get(currentLevelIndex);
 
 	public Level getLevel() {
 		return currentLevel.get();

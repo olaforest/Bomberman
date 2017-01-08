@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>oli.test.project</groupId>
-	<artifactId>bomberman</artifactId>
+	<artifactId>parent</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
