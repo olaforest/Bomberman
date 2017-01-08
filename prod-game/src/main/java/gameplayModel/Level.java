@@ -1,5 +1,6 @@
 package gameplayModel;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -11,6 +12,7 @@ import java.util.stream.IntStream;
 
 import static java.lang.Integer.MAX_VALUE;
 
+@EqualsAndHashCode
 class Level {
 
 	private static final Predicate<List<Integer>> IS_BONUS_LEVEL = spec -> spec.contains(MAX_VALUE);

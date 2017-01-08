@@ -5,12 +5,34 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.OptionalInt;
 
-import static gameplayModel.Levels.getLevels;
+import static gameplayModel.LevelManager.importLevels;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LevelManagerTest {
+	private static final int TOTAL_NUMBER_OF_LEVELS = 60;
+	private static final int NUMBER_OF_BONUS_LEVELS = 10;
+	private static final List<Level> LEVELS = importLevels();
 
-	private static final List<Level> LEVELS = getLevels();
+	@Test
+	public void importLevels_returnsCompleteGameLevels() {
+		//when
+		final List<Level> levels = importLevels();
+		//then
+		assertThat(levels).hasSize(TOTAL_NUMBER_OF_LEVELS);
+	}
+
+	@Test
+	public void importLevelsAndFilterByBonusLevel_returnsBonusLevels() {
+		//given
+		final List<Level> levels = importLevels();
+		//when
+		final List<Level> bonusLevels = levels.stream()
+				.filter(Level::isBonusLevel)
+				.collect(toList());
+		//then
+		assertThat(bonusLevels).hasSize(NUMBER_OF_BONUS_LEVELS);
+	}
 
 	@Test
 	public void newLevelManager_returnsNewInstanceWithCurrentLevelBeingTheFirstLevelOfTheGame() {
