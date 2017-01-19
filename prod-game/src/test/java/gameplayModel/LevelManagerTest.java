@@ -3,7 +3,6 @@ package gameplayModel;
 import org.testng.annotations.Test;
 
 import java.util.List;
-import java.util.OptionalInt;
 
 import static gameplayModel.LevelManager.importLevels;
 import static java.util.stream.Collectors.toList;
@@ -119,9 +118,9 @@ public class LevelManagerTest {
 		//given
 		final LevelManager levelManager = new LevelManager(4);
 		//when
-		final OptionalInt type = levelManager.getHardestEnemyType();
+		final int type = levelManager.getHardestEnemyType();
 		//then
-		assertThat(type).hasValue(2);
+		assertThat(type).isEqualTo(2);
 	}
 
 	@Test
@@ -129,8 +128,8 @@ public class LevelManagerTest {
 		//given
 		final LevelManager levelManager = new LevelManager(21);
 		//when
-		final OptionalInt type = levelManager.getHardestEnemyType();
+		final int type = levelManager.getHardestEnemyType();
 		//then
-		assertThat(type).hasValue(6);
+		assertThat(type).isEqualTo(6);
 	}
 }

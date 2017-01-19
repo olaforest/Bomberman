@@ -3,7 +3,6 @@ package gameplayModel;
 import org.testng.annotations.Test;
 
 import java.util.List;
-import java.util.OptionalInt;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.util.Arrays.asList;
@@ -147,9 +146,9 @@ public class LevelTest {
 		//given
 		final Level level = new Level(asList(0, 1, 0, 1, 1, 0, 1, 0, 3));
 		//when
-		final OptionalInt type = level.getHardestEnemyType();
+		final int type = level.getHardestEnemyType();
 		//then
-		assertThat(type).hasValue(6);
+		assertThat(type).isEqualTo(6);
 	}
 
 	@Test
@@ -157,8 +156,9 @@ public class LevelTest {
 		//given
 		final Level level = new Level(asList(0, 0, 0, 0, 0, 0, 0, 0, 3));
 		//when
-		final OptionalInt type = level.getHardestEnemyType();
-		//then
-		assertThat(type).isEmpty();
+		assertThatThrownBy(level::getHardestEnemyType)
+				//then
+				.isInstanceOf(RuntimeException.class)
+				.hasMessage("There should be at least one enemy type per Level");
 	}
 }

@@ -192,8 +192,7 @@ public class GridMap {
 	}
 
 	private void spawnMoreEnemies() {
-		int type = level.getHardestEnemyType()
-				.orElse(0);
+		int type = level.getHardestEnemyType();
 		addEnemiesFromType(type, 8);
 	}
 
