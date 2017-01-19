@@ -31,6 +31,7 @@ import java.util.stream.IntStream;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static gameplayModel.gridObjects.factories.EnemyFactory.createEnemy;
+import static java.util.Arrays.asList;
 import static utilities.Position.create;
 
 public class GameplayController implements ActionListener {
@@ -67,7 +68,7 @@ public class GameplayController implements ActionListener {
 
 	public GameplayController(MenuController menuCtrl) {
 		this.menuCtrl = menuCtrl;
-		gameContext = new GameContext(menuCtrl.getSelectedLevel());
+		gameContext = new GameContext();
 		initializeReferences();
 		setupGameFrame(true);
 		timer = new Timer(TIMEOUT, this);
@@ -107,8 +108,7 @@ public class GameplayController implements ActionListener {
 
 		if (gameContext.getGameTime() <= 0 && !gameContext.isEndGameEnemiesSpawned()) {
 			gameContext.setEndGameEnemiesSpawned(true);
-			int[] newEnemies = {0, 0, 0, 0, 0, 0, 0, 12};
-			gridMap.generateEnemies(newEnemies);
+			gridMap.generateEnemies(asList(0, 0, 0, 0, 0, 0, 0, 12));
 		}
 
 		updateViewport();

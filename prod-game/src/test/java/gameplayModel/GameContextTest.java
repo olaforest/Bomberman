@@ -4,6 +4,7 @@ import gameplayController.GameplayController;
 import org.junit.Before;
 import org.junit.Test;
 
+import static gameplayModel.GameContext.MAX_GAME_TIME;
 import static org.junit.Assert.*;
 
 public class GameContextTest {
@@ -23,27 +24,27 @@ public class GameContextTest {
 	@Test
 	public void testGetAndDecreaseGameTime() {
 
-		int test = ((int) (Math.random() * (gameContext.MAX_GAME_TIME / GameplayController.TIMEOUT))) + 1;
+		int test = ((int) (Math.random() * (MAX_GAME_TIME / GameplayController.TIMEOUT))) + 1;
 
 		for (int i = 0; i < test; i++)
 			gameContext.decreaseGameTime();
 
-		assertEquals((gameContext.MAX_GAME_TIME / GameplayController.TIMEOUT - test) * GameplayController.TIMEOUT, gameContext.getGameTime());
+		assertEquals((MAX_GAME_TIME / GameplayController.TIMEOUT - test) * GameplayController.TIMEOUT, gameContext.getGameTime());
 	}
 
 	@Test
 	public void testInitializeGameTime() {
 
-		int test = ((int) (Math.random() * (gameContext.MAX_GAME_TIME / GameplayController.TIMEOUT))) + 1;
+		int test = ((int) (Math.random() * (MAX_GAME_TIME / GameplayController.TIMEOUT))) + 1;
 
 		for (int i = 0; i < test; i++)
 			gameContext.decreaseGameTime();
 
-		assertTrue(gameContext.getGameTime() < gameContext.MAX_GAME_TIME);
+		assertTrue(gameContext.getGameTime() < MAX_GAME_TIME);
 
 		gameContext.initializeGameTime();
 
-		assertEquals(gameContext.MAX_GAME_TIME, gameContext.getGameTime());
+		assertEquals(MAX_GAME_TIME, gameContext.getGameTime());
 	}
 
 	@Test
@@ -159,7 +160,6 @@ public class GameContextTest {
 		assertTrue(gameContext.toCSVEntry().get(0).equals(Integer.toString(gameContext.getGameTime())));
 		assertTrue(gameContext.toCSVEntry().get(1).equals(Integer.toString(gameContext.getLivesLeft())));
 		assertTrue(gameContext.toCSVEntry().get(2).equals(Integer.toString(gameContext.getScore())));
-		assertTrue(gameContext.toCSVEntry().get(3).equals(Integer.toString(gameContext.getLevel())));
 		assertTrue(gameContext.toCSVEntry().get(4).equals("GridMap"));
 	}
 }

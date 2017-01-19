@@ -92,16 +92,15 @@ public class Database {
 	}
 
 	private GameContext generateGameContext(ArrayList<String> context) {
-		int gameTime, livesLeft, score, level;
+		int gameTime, livesLeft, score;
 
 		GridMap gridMap = generateGridMap(new ArrayList<>(context.subList(context.indexOf("GridMap") + 1, context.size())));
 
 		gameTime = parseInt(context.get(0));
 		livesLeft = parseInt(context.get(1));
 		score = parseInt(context.get(2));
-		level = parseInt(context.get(3));
 
-		return new GameContext(gameTime, livesLeft, score, level, gridMap);
+		return new GameContext(gameTime, livesLeft, score, gridMap);
 	}
 
 	private GridMap generateGridMap(List<String> map) {

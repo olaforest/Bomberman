@@ -39,7 +39,7 @@ public class TestData {
 	private static final Bomberman BOMBERMAN = new Bomberman(create(32, 32), 0, 1, emptyList());
 
 	private static final GridMap GRID_MAP = new GridMap(10000, BRICKS, emptyList(), ENEMIES, EXITWAY, POWER_UP, BOMBERMAN);
-	private static final GameContext GAME_CONTEXT = new GameContext(198950, 2, 0, 0, GRID_MAP);
+	private static final GameContext GAME_CONTEXT = new GameContext(198950, 2, 0, GRID_MAP);
 	private static final SavedGame SAVED_GAME = new SavedGame("save1", "Mon Dec 26 15:59:18 PST 2016", GAME_CONTEXT);
 
 	public static final Player VALID_ENTRY_PLAYER = new Player("0", "1", "2", 3, 4, 5);

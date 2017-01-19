@@ -25,14 +25,14 @@ import static utilities.Position.modulus;
 public class GridMap {
 	public static final int MAPWIDTH = 31;
 	public static final int MAPHEIGHT = 13;
-	public static final int SPAWN_TIMEOUT = 10 * 1000;
+	static final int SPAWN_TIMEOUT = 10 * 1000;
 	private static final double BRICK_FACTOR = 0.225;
 	private static final int WIDTH = EFFECTIVE_PIXEL_DIMENSION;
 	private static final int HEIGHT = EFFECTIVE_PIXEL_DIMENSION;
 
 	private int spawnTimer;
-	private int[] levelSpec;
 
+	@Getter private Level level;
 	@Getter private List<Concrete> concreteLayout;
 	@Getter private List<Brick> bricks;
 	@Getter private List<Bomb> bombs;
@@ -41,8 +41,8 @@ public class GridMap {
 	@Getter private PowerUp powerUp;
 	@Getter private Bomberman bomberman;
 
-	public GridMap(int[] levelSpecification) {
-		levelSpec = levelSpecification;
+	public GridMap(Level level) {
+		this.level = level;
 		spawnTimer = SPAWN_TIMEOUT;
 		concreteLayout = new ArrayList<>();
 		bricks = new ArrayList<>();
@@ -97,17 +97,17 @@ public class GridMap {
 
 	private void populateMap() {
 		this.bomberman = new Bomberman(modulus(1, 1));
-		if (levelSpec[8] != 0)
-			populateStandardMap();
-		else
+		if (level.isBonusLevel())
 			populateSpecialMap();
+		else
+			populateStandardMap();
 	}
 
 	private void populateStandardMap() {
 		distributeBricks();
 		addExitway();
-		addPowerup(levelSpec[8]);
-		generateEnemies(levelSpec);
+		addPowerup(level.getPowerUpType().orElse(1));
+		generateEnemies(level.getEnemiesCount());
 	}
 
 	private void distributeBricks() {
@@ -142,9 +142,9 @@ public class GridMap {
 		powerUp = createPowerUp(type, bricks.get(brickUpIndex).getPosition().getX(), bricks.get(brickUpIndex).getPosition().getY());
 	}
 
-	public void generateEnemies(int[] levelSpec) {
-		IntStream.range(0, levelSpec.length - 1)
-				.forEach(i -> addEnemiesFromType(i, levelSpec[i]));
+	public void generateEnemies(List<Integer> enemyCounts) {
+		IntStream.range(0, enemyCounts.size() - 1)
+				.forEach(i -> addEnemiesFromType(i, enemyCounts.get(i)));
 	}
 
 	private void addEnemiesFromType(int type, int quantity) {
@@ -192,8 +192,8 @@ public class GridMap {
 	}
 
 	private void spawnMoreEnemies() {
-		int type = 0;
-		while (levelSpec[type] >= 0) type++;
+		int type = level.getHardestEnemyType()
+				.orElse(0);
 		addEnemiesFromType(type, 8);
 	}
 
