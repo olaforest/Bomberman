@@ -5,12 +5,11 @@ import au.com.bytecode.opencsv.CSVWriter;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.lang.Thread.currentThread;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
@@ -23,10 +22,21 @@ public class CsvUtils {
 			reader = new CSVReader(new FileReader(filePath));
 			final List<String[]> fileContent = reader.readAll();
 			reader.close();
-			return fileContent.stream()
-					.map(Arrays::asList)
-					.collect(toList());
+			return convertListOfArrayToListOfList(fileContent);
 		} catch (IOException e) {
+			return emptyList();
+		}
+	}
+
+	public static List<List<String>> readResourcesCSV(String fileName) {
+		CSVReader reader;
+		try {
+			final InputStream inputStream = currentThread().getContextClassLoader().getResourceAsStream(fileName);
+			reader = new CSVReader(new InputStreamReader(inputStream));
+			final List<String[]> fileContent = reader.readAll();
+			reader.close();
+			return convertListOfArrayToListOfList(fileContent);
+		} catch (IOException | NullPointerException e) {
 			return emptyList();
 		}
 	}
@@ -43,5 +53,11 @@ public class CsvUtils {
 		} catch (IOException e) {
 			return false;
 		}
+	}
+
+	private static List<List<String>> convertListOfArrayToListOfList(List<String[]> listOfArray) {
+		return listOfArray.stream()
+				.map(Arrays::asList)
+				.collect(toList());
 	}
 }

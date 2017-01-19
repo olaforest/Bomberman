@@ -1,6 +1,6 @@
 package gameplayModel;
 
-import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import lombok.Getter;
 import utilities.Position;
 
@@ -33,6 +33,14 @@ public class GridObject {
 	public GridObject(Position position) {
 		this.position = position;
 		isConcreteCollision = false;
+	}
+
+	public int getX() {
+		return position.getX();
+	}
+
+	public int getY() {
+		return position.getY();
 	}
 
 	public void setXPosition(int xPos) {

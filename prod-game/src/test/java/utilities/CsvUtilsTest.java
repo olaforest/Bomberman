@@ -7,8 +7,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static utilities.CsvUtils.readCSV;
-import static utilities.CsvUtils.writeCSV;
+import static utilities.CsvUtils.*;
 
 public class CsvUtilsTest {
 
@@ -28,7 +27,7 @@ public class CsvUtilsTest {
 	@Test
 	public void validFilePath_readCSV_returnsValidList() {
 		//given
-		final String validTestFilePath = "prod-game/src/test/resources/testReadCSV";
+		final String validTestFilePath = "src/test/resources/testReadCSV";
 		//when
 		final List<List<String>> result = readCSV(validTestFilePath);
 		//then
@@ -39,9 +38,40 @@ public class CsvUtilsTest {
 	@Test
 	public void emptyFile_readCSV_returnsEmptyList() {
 		//given
-		final String emptyTestFilePath = "prod-game/src/test/resources/testEmptyReadCSV";
+		final String emptyTestFilePath = "src/test/resources/testEmptyReadCSV";
 		//when
 		final List<List<String>> result = readCSV(emptyTestFilePath);
+		//then
+		assertThat(result).isEmpty();
+	}
+
+	@Test
+	public void invalidFileName_readResourcesCSV_returnsEmptyList() {
+		//given
+		final String filePath = INVALID_FILE_PATH;
+		//when
+		final List<List<String>> result = readResourcesCSV(filePath);
+		//then
+		assertThat(result).isEmpty();
+	}
+
+	@Test
+	public void validFileName_readResourcesCSV_returnsValidList() {
+		//given
+		final String validTestFilePath = "testReadCSV";
+		//when
+		final List<List<String>> result = readResourcesCSV(validTestFilePath);
+		//then
+		assertThat(result).isNotNull()
+				.containsExactly(asList("1", "2", "3"), asList("4", "5", "6"));
+	}
+
+	@Test
+	public void emptyFile_readResourcesCSV_returnsEmptyList() {
+		//given
+		final String emptyTestFilePath = "testEmptyReadCSV";
+		//when
+		final List<List<String>> result = readResourcesCSV(emptyTestFilePath);
 		//then
 		assertThat(result).isEmpty();
 	}
@@ -60,7 +90,7 @@ public class CsvUtilsTest {
 	@Test
 	public void validFilePath_writeCSV_returnsTrue() {
 		//given
-		final String validTestFilePath = "prod-game/src/test/resources/testWriteCSV";
+		final String validTestFilePath = "src/test/resources/testWriteCSV";
 		final  List<List<String>> fileContent = FILE_CONTENT;
 		//when
 		final boolean result = writeCSV(validTestFilePath, fileContent);
@@ -71,7 +101,7 @@ public class CsvUtilsTest {
 	@Test
 	public void emptyFileContent_writeCSV_returnsTrue() {
 		//given
-		final String validTestFilePath = "prod-game/src/test/resources/testEmptyWriteCSV";
+		final String validTestFilePath = "src/test/resources/testEmptyWriteCSV";
 		final  List<List<String>> fileContent = emptyList();
 		//when
 		final boolean result = writeCSV(validTestFilePath, fileContent);

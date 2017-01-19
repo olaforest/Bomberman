@@ -2,14 +2,14 @@ package database;
 
 import gameplayModel.GameContext;
 import gameplayModel.GridMap;
-import gameplayModel.GridObjects.AnimatedObjects.Bomb;
-import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
-import gameplayModel.GridObjects.AnimatedObjects.Brick;
-import gameplayModel.GridObjects.AnimatedObjects.Enemies.*;
-import gameplayModel.GridObjects.AnimatedObjects.Enemy;
-import gameplayModel.GridObjects.Exitway;
-import gameplayModel.GridObjects.PowerUp;
-import gameplayModel.GridObjects.PowerUps.*;
+import gameplayModel.gridObjects.Exitway;
+import gameplayModel.gridObjects.PowerUp;
+import gameplayModel.gridObjects.animatedObjects.Bomb;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Brick;
+import gameplayModel.gridObjects.animatedObjects.Enemies.*;
+import gameplayModel.gridObjects.animatedObjects.Enemy;
+import gameplayModel.gridObjects.powerUps.*;
 import lombok.Getter;
 import menuModel.Player;
 import menuModel.SavedGame;
@@ -92,16 +92,15 @@ public class Database {
 	}
 
 	private GameContext generateGameContext(ArrayList<String> context) {
-		int gameTime, livesLeft, score, level;
+		int gameTime, livesLeft, score;
 
 		GridMap gridMap = generateGridMap(new ArrayList<>(context.subList(context.indexOf("GridMap") + 1, context.size())));
 
 		gameTime = parseInt(context.get(0));
 		livesLeft = parseInt(context.get(1));
 		score = parseInt(context.get(2));
-		level = parseInt(context.get(3));
 
-		return new GameContext(gameTime, livesLeft, score, level, gridMap);
+		return new GameContext(gameTime, livesLeft, score, gridMap);
 	}
 
 	private GridMap generateGridMap(List<String> map) {

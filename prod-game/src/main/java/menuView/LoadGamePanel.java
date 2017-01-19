@@ -1,11 +1,10 @@
 package menuView;
 
-import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import menuModel.Player;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -53,13 +52,12 @@ public class LoadGamePanel extends JPanel {
 			e.printStackTrace();
 		}
 
-		ListSelectionListener listSelectionListener = new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent evt) {
-				index = evt.getLastIndex();
-				name.setText(currentPlayer.getSavedGameList().get(index).getGameName());
-				date.setText(currentPlayer.getSavedGameList().get(index).getGameDate());
-				levelNumber.setText(Integer.toString((currentPlayer.getSavedGameList().get(index).getGameContext().getLevel()) + 1));
-			}
+		ListSelectionListener listSelectionListener = evt -> {
+			index = evt.getLastIndex();
+			name.setText(currentPlayer.getSavedGameList().get(index).getGameName());
+			date.setText(currentPlayer.getSavedGameList().get(index).getGameDate());
+//				levelNumber.setText(Integer.toString(currentPlayer.getSavedGameList().get(index).getGameContext().getLevel() + 1));
+			levelNumber.setText("to be fixed");
 		};
 
 		model = new DefaultListModel<>();

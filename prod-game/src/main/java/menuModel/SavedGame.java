@@ -6,16 +6,22 @@ import lombok.EqualsAndHashCode;
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode(exclude = "gameContext")
+import static java.lang.String.valueOf;
+
+@EqualsAndHashCode(exclude = {"gameContext", "levelIndex"})
 public class SavedGame {
+	private int levelIndex;
 
 	private String gameName, gameDate;
 	private GameContext gameContext;
-
 	public SavedGame(String name, String date, GameContext context) {
 		gameName = name;
 		gameDate = date;
 		gameContext = context;
+	}
+
+	public int getLevelIndex() {
+		return levelIndex;
 	}
 
 	public String getGameName() {
@@ -32,6 +38,7 @@ public class SavedGame {
 
 	public List<String> toCSVEntry() {
 		List<String> entryList = new ArrayList<>();
+		entryList.add(valueOf(levelIndex));
 		entryList.add(gameName);
 		entryList.add(gameDate);
 		entryList.add("GameContext");

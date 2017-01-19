@@ -1,6 +1,6 @@
 package menuView;
 
-import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

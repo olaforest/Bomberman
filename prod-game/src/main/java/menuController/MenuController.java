@@ -2,7 +2,8 @@ package menuController;
 
 import database.Database;
 import gameplayController.GameplayController;
-import gameplayModel.GridObjects.AnimatedObjects.Bomb;
+import gameplayModel.LevelManager;
+import gameplayModel.gridObjects.animatedObjects.Bomb;
 import menuModel.Leaderboard;
 import menuModel.Player;
 import menuModel.SavedGame;
@@ -12,8 +13,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -155,21 +154,13 @@ public class MenuController implements ActionListener {
 			layout.show(mainPanel, "Options");
 
 		} else if (event.getSource() == mainMenuPanel.getLogoutButton()) {
-			try {
-				database.generateCSV();
-				currentPlayer = null;
-			} catch (IOException | URISyntaxException e) {
-				e.printStackTrace();
-			}
+			database.generateCSV();
+			currentPlayer = null;
 			layout.show(mainPanel, "Login");
 			loginPanel.resetTextFields();
 
 		} else if (event.getSource() == mainMenuPanel.getExitButton()) {
-			try {
-				database.generateCSV();
-			} catch (IOException | URISyntaxException e) {
-				e.printStackTrace();
-			}
+			database.generateCSV();
 			System.exit(0);
 
 //************************Leaderboard buttons**************************
@@ -198,7 +189,8 @@ public class MenuController implements ActionListener {
 
 		} else if (event.getSource() == loadGamePanel.getLoad()) {
 			menuFrame.setVisible(false);
-			gameplayCtrl = new GameplayController(this, currentPlayer.getSavedGameList().get(loadGamePanel.getSaveIndex()).getGameContext());
+			final SavedGame savedGame = currentPlayer.getSavedGameList().get(loadGamePanel.getSaveIndex());
+			gameplayCtrl = new GameplayController(this, savedGame.getGameContext(), new LevelManager(savedGame.getLevelIndex()));
 			prePauseScore = gameplayCtrl.getGameContext().getScore();
 			gameplayCtrl.resumeGame();
 
@@ -223,21 +215,13 @@ public class MenuController implements ActionListener {
 			currentPlayer.addSavedGame(new SavedGame(saveName, new Date().toString(), gameplayCtrl.getGameContext()));
 
 		} else if (event.getSource() == pauseMenuPanel.getExit()) {
-			try {
-				database.generateCSV();
-			} catch (IOException | URISyntaxException e) {
-				e.printStackTrace();
-			}
+			database.generateCSV();
 			System.exit(0);
 
 		} else if (event.getSource() == pauseMenuPanel.getMainMenu()) {
 			int choice = JOptionPane.showConfirmDialog(null, "All unsaved progress will be lost. Continue?", null, JOptionPane.OK_CANCEL_OPTION);
 			if (choice == 0) {
-				try {
-					database.generateCSV();
-				} catch (IOException | URISyntaxException e) {
-					e.printStackTrace();
-				}
+				database.generateCSV();
 				layout.show(mainPanel, "Main");
 			}
 

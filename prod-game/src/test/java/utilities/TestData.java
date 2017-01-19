@@ -2,13 +2,13 @@ package utilities;
 
 import gameplayModel.GameContext;
 import gameplayModel.GridMap;
-import gameplayModel.GridObjects.AnimatedObjects.Bomberman;
-import gameplayModel.GridObjects.AnimatedObjects.Brick;
-import gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom;
-import gameplayModel.GridObjects.AnimatedObjects.Enemy;
-import gameplayModel.GridObjects.Exitway;
-import gameplayModel.GridObjects.PowerUp;
-import gameplayModel.GridObjects.PowerUps.Flames;
+import gameplayModel.gridObjects.Exitway;
+import gameplayModel.gridObjects.PowerUp;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Brick;
+import gameplayModel.gridObjects.animatedObjects.Enemies.Balloom;
+import gameplayModel.gridObjects.animatedObjects.Enemy;
+import gameplayModel.gridObjects.powerUps.Flames;
 import menuModel.Player;
 import menuModel.SavedGame;
 
@@ -39,7 +39,7 @@ public class TestData {
 	private static final Bomberman BOMBERMAN = new Bomberman(create(32, 32), 0, 1, emptyList());
 
 	private static final GridMap GRID_MAP = new GridMap(10000, BRICKS, emptyList(), ENEMIES, EXITWAY, POWER_UP, BOMBERMAN);
-	private static final GameContext GAME_CONTEXT = new GameContext(198950, 2, 0, 0, GRID_MAP);
+	private static final GameContext GAME_CONTEXT = new GameContext(198950, 2, 0, GRID_MAP);
 	private static final SavedGame SAVED_GAME = new SavedGame("save1", "Mon Dec 26 15:59:18 PST 2016", GAME_CONTEXT);
 
 	public static final Player VALID_ENTRY_PLAYER = new Player("0", "1", "2", 3, 4, 5);
