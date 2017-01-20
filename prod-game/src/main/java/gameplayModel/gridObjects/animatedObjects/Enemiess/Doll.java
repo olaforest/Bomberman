@@ -1,23 +1,23 @@
-package gameplayModel.gridObjects.animatedObjects.Enemies;
+package gameplayModel.gridObjects.animatedObjects.Enemiess;
 
 import gameplayModel.gridObjects.animatedObjects.Enemy;
 import utilities.Position;
 
 import static java.util.Arrays.asList;
 
-public class Minvo extends Enemy {
-	private static final int POINTS = 800;
-	private static final int SPEED = 4;
-	private static final int SMARTNESS = 2;
+public class Doll extends Enemy {
+	private static final int POINTS = 400;
+	private static final int SPEED = 3;
+	private static final int SMARTNESS = 1;
 	private static final boolean WALLPASS = false;
-	public static final int[][] ANIM_PARAM = new int[][]{{56, 128, 3}, {2, 128, 3}, {110, 128, 5}};
+	public static final int[][] ANIM_PARAM = new int[][]{{55, 110, 3}, {1, 110, 3}, {107, 110, 5}};
 
-	public Minvo(Position position) {
+	public Doll(Position position) {
 		super(position);
 		initialize();
 	}
 
-	public Minvo(Position position, int dir) {
+	public Doll(Position position, int dir) {
 		super(position, dir);
 		initialize();
 	}

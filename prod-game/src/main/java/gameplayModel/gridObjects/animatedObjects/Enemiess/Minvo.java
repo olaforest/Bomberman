@@ -1,23 +1,23 @@
-package gameplayModel.gridObjects.animatedObjects.Enemies;
+package gameplayModel.gridObjects.animatedObjects.Enemiess;
 
 import gameplayModel.gridObjects.animatedObjects.Enemy;
 import utilities.Position;
 
 import static java.util.Arrays.asList;
 
-public class Ovapi extends Enemy {
-	private static final int POINTS = 2000;
-	private static final int SPEED = 2;
+public class Minvo extends Enemy {
+	private static final int POINTS = 800;
+	private static final int SPEED = 4;
 	private static final int SMARTNESS = 2;
-	private static final boolean WALLPASS = true;
-	public static final int[][] ANIM_PARAM = new int[][]{{55, 164, 3}, {1, 164, 3}, {109, 164, 5}};
+	private static final boolean WALLPASS = false;
+	public static final int[][] ANIM_PARAM = new int[][]{{56, 128, 3}, {2, 128, 3}, {110, 128, 5}};
 
-	public Ovapi(Position position) {
+	public Minvo(Position position) {
 		super(position);
 		initialize();
 	}
 
-	public Ovapi(Position position, int dir) {
+	public Minvo(Position position, int dir) {
 		super(position, dir);
 		initialize();
 	}

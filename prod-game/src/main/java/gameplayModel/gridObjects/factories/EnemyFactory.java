@@ -1,6 +1,6 @@
 package gameplayModel.gridObjects.factories;
 
-import gameplayModel.gridObjects.animatedObjects.Enemies.*;
+import gameplayModel.gridObjects.animatedObjects.Enemiess.*;
 import gameplayModel.gridObjects.animatedObjects.Enemy;
 import utilities.Position;
 

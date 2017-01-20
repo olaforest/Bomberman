@@ -6,7 +6,7 @@ import gameplayModel.gridObjects.Exitway;
 import gameplayModel.gridObjects.PowerUp;
 import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import gameplayModel.gridObjects.animatedObjects.Brick;
-import gameplayModel.gridObjects.animatedObjects.Enemies.Balloom;
+import gameplayModel.gridObjects.animatedObjects.Enemiess.Balloom;
 import gameplayModel.gridObjects.animatedObjects.Enemy;
 import gameplayModel.gridObjects.powerUps.Flames;
 import menuModel.Player;

@@ -4,7 +4,7 @@ import gameplayModel.GameContext;
 import gameplayModel.gridObjects.animatedObjects.Bomb;
 import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import gameplayModel.gridObjects.animatedObjects.Brick;
-import gameplayModel.gridObjects.animatedObjects.Enemies.Balloom;
+import gameplayModel.gridObjects.animatedObjects.Enemiess.Balloom;
 import gameplayModel.gridObjects.animatedObjects.Enemy;
 import org.junit.Before;
 import org.junit.Test;

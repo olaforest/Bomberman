@@ -1,4 +1,4 @@
-package gameplayModel.gridObjects.animatedObjects.Enemies;
+package gameplayModel.gridObjects.animatedObjects.Enemiess;
 
 import gameplayModel.GridMap;
 import gameplayModel.gridObjects.animatedObjects.Enemy;

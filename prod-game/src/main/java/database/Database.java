@@ -7,7 +7,7 @@ import gameplayModel.gridObjects.PowerUp;
 import gameplayModel.gridObjects.animatedObjects.Bomb;
 import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import gameplayModel.gridObjects.animatedObjects.Brick;
-import gameplayModel.gridObjects.animatedObjects.Enemies.*;
+import gameplayModel.gridObjects.animatedObjects.Enemiess.*;
 import gameplayModel.gridObjects.animatedObjects.Enemy;
 import gameplayModel.gridObjects.powerUps.*;
 import lombok.Getter;
