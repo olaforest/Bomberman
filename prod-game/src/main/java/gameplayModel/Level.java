@@ -6,15 +6,15 @@ import lombok.NonNull;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import static java.lang.Integer.MAX_VALUE;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
 
 @EqualsAndHashCode
 class Level {
-
 	private static final Predicate<List<Integer>> IS_BONUS_LEVEL = spec -> spec.contains(MAX_VALUE);
 
 	@Getter private final List<Integer> enemiesCount;
@@ -29,14 +29,15 @@ class Level {
 	}
 
 	Optional<Integer> getPowerUpType() {
-		return powerUpType == 0 ? Optional.empty() : Optional.of(powerUpType);
+		return powerUpType == 0 ? empty() : of(powerUpType);
 	}
 
-	public OptionalInt getHardestEnemyType() {
+	int getHardestEnemyType() {
 		return IntStream.iterate(7, i -> --i)
 				.limit(enemiesCount.size())
 				.filter(i -> enemiesCount.get(i) > 0)
-				.findFirst();
+				.findFirst()
+				.orElseThrow(() -> new RuntimeException("There should be at least one enemy type per Level"));
 	}
 
 	private void validateInputSpecification(List<Integer> specification) {

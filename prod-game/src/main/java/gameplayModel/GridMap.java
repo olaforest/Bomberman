@@ -106,7 +106,7 @@ public class GridMap {
 	private void populateStandardMap() {
 		distributeBricks();
 		addExitway();
-		addPowerup(level.getPowerUpType().orElse(1));
+		level.getPowerUpType().ifPresent(this::addPowerup);
 		generateEnemies(level.getEnemiesCount());
 	}
 
@@ -192,8 +192,7 @@ public class GridMap {
 	}
 
 	private void spawnMoreEnemies() {
-		int type = level.getHardestEnemyType()
-				.orElse(0);
+		int type = level.getHardestEnemyType();
 		addEnemiesFromType(type, 8);
 	}
 

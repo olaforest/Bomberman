@@ -518,8 +518,8 @@ public class GameplayController implements ActionListener {
 
 	private void spawnEightHarderEnemies(GridObject gridObj) {
 		enemies.clear();
-		levelManager.getHardestEnemyType()
-				.ifPresent(type -> spawnEightEnemies(type == 7 ? 7 : type++ , gridObj.getX(), gridObj.getY()));
+		final int type = levelManager.getHardestEnemyType();
+		spawnEightEnemies(type == 7 ? 7 : type + 1 , gridObj.getX(), gridObj.getY());
 	}
 
 	private void spawnEightEnemies(int type, int xPosition, int yPosition) {

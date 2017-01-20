@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import utilities.ListUtils;
 
 import java.util.List;
-import java.util.OptionalInt;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
@@ -30,7 +29,7 @@ public class LevelManager {
 		currentLevelIndex++;
 	}
 
-	public int getActualLevelIndex() {
+	int getActualLevelIndex() {
 		return currentLevelIndex - (int) IntStream.range(0, currentLevelIndex)
 				.mapToObj(levels::get)
 				.filter(Level::isBonusLevel)
@@ -41,7 +40,7 @@ public class LevelManager {
 		return currentLevel.get().isBonusLevel();
 	}
 
-	public OptionalInt getHardestEnemyType() {
+	public int getHardestEnemyType() {
 		return currentLevel.get().getHardestEnemyType();
 	}
 
