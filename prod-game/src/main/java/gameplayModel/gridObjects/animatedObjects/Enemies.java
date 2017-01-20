@@ -1,5 +1,6 @@
 package gameplayModel.gridObjects.animatedObjects;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.stream.IntStream;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
+@Getter
 @RequiredArgsConstructor
 public enum Enemies {
 	Balloom(100, 2, 1, false, generateAnimParam(asList(72, 39, 4, 1, 39, 4, 144, 39, 5))),

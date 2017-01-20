@@ -13,12 +13,12 @@ public class Pass extends Enemy {
 	public static final int[][] ANIM_PARAM = new int[][]{{56, 182, 3}, {2, 182, 3}, {110, 182, 5}};
 
 	public Pass(Position position) {
-		super(position);
+		super(, position);
 		initialize();
 	}
 
 	public Pass(Position position, int dir) {
-		super(position, dir);
+		super(, position, dir);
 		initialize();
 	}
 

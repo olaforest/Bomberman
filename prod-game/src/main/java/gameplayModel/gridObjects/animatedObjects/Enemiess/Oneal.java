@@ -13,12 +13,12 @@ public class Oneal extends Enemy {
 	public static final int[][] ANIM_PARAM = new int[][]{{56, 57, 3}, {2, 57, 3}, {110, 57, 5}};
 
 	public Oneal(Position position) {
-		super(position);
+		super(, position);
 		initialize();
 	}
 
 	public Oneal(Position position, int dir) {
-		super(position, dir);
+		super(, position, dir);
 		initialize();
 		animCycleParam = 1;
 	}

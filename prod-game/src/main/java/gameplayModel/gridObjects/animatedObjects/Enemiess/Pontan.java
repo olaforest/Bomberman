@@ -13,12 +13,12 @@ public class Pontan extends Enemy {
 	public static final int[][] ANIM_PARAM = new int[][]{{73, 92, 4}, {1, 92, 4}, {146, 92, 5}};
 
 	public Pontan(Position position) {
-		super(position);
+		super(, position);
 		initialize();
 	}
 
 	public Pontan(Position position, int dir) {
-		super(position, dir);
+		super(, position, dir);
 		initialize();
 	}
 

@@ -13,12 +13,12 @@ public class Balloom extends Enemy {
 	public static final int[][] ANIM_PARAM = new int[][]{{72, 39, 4}, {1, 39, 4}, {144, 39, 5}};
 
 	public Balloom(Position position) {
-		super(position);
+		super(, position);
 		initialize();
 	}
 
 	public Balloom(Position position, int dir) {
-		super(position, dir);
+		super(, position, dir);
 		initialize();
 	}
 

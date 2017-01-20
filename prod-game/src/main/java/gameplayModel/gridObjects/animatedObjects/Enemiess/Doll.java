@@ -13,12 +13,12 @@ public class Doll extends Enemy {
 	public static final int[][] ANIM_PARAM = new int[][]{{55, 110, 3}, {1, 110, 3}, {107, 110, 5}};
 
 	public Doll(Position position) {
-		super(position);
+		super(, position);
 		initialize();
 	}
 
 	public Doll(Position position, int dir) {
-		super(position, dir);
+		super(, position, dir);
 		initialize();
 	}
 

@@ -13,12 +13,12 @@ public class Ovapi extends Enemy {
 	public static final int[][] ANIM_PARAM = new int[][]{{55, 164, 3}, {1, 164, 3}, {109, 164, 5}};
 
 	public Ovapi(Position position) {
-		super(position);
+		super(, position);
 		initialize();
 	}
 
 	public Ovapi(Position position, int dir) {
-		super(position, dir);
+		super(, position, dir);
 		initialize();
 	}
 

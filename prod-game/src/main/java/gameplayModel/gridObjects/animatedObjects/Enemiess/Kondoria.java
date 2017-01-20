@@ -13,12 +13,12 @@ public class Kondoria extends Enemy {
 	public static final int[][] ANIM_PARAM = new int[][]{{56, 146, 3}, {2, 146, 3}, {110, 146, 5}};
 
 	public Kondoria(Position position) {
-		super(position);
+		super(, position);
 		initialize();
 	}
 
 	public Kondoria(Position position, int dir) {
-		super(position, dir);
+		super(, position, dir);
 		initialize();
 	}
 

@@ -13,12 +13,12 @@ public class Minvo extends Enemy {
 	public static final int[][] ANIM_PARAM = new int[][]{{56, 128, 3}, {2, 128, 3}, {110, 128, 5}};
 
 	public Minvo(Position position) {
-		super(position);
+		super(, position);
 		initialize();
 	}
 
 	public Minvo(Position position, int dir) {
-		super(position, dir);
+		super(, position, dir);
 		initialize();
 	}
 
