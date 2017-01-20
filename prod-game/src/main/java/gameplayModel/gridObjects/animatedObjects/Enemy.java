@@ -10,6 +10,7 @@ import java.util.List;
 
 import static java.lang.Math.random;
 import static java.util.Arrays.asList;
+import static utilities.Position.create;
 
 @Getter
 public class Enemy extends AnimatedObject {
@@ -35,6 +36,11 @@ public class Enemy extends AnimatedObject {
 		isWallpass = enemyType.isWallpass();
 		animationList = generateAnimationList(asList(AnimationType.values()), enemyType.getAnimParam(), 2);
 		this.direction = direction;
+	}
+
+	public static Enemy createEnemy(Enemies type, int xPosition, int yPosition) {
+		final Position position = create(xPosition, yPosition);
+		return new Enemy(type, position);
 	}
 
 	public void generateAnimationList() {

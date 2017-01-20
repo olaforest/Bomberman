@@ -3,21 +3,19 @@ package gameplayModel;
 import gameplayModel.gridObjects.Concrete;
 import gameplayModel.gridObjects.Exitway;
 import gameplayModel.gridObjects.PowerUp;
-import gameplayModel.gridObjects.animatedObjects.Bomb;
-import gameplayModel.gridObjects.animatedObjects.Bomberman;
-import gameplayModel.gridObjects.animatedObjects.Brick;
-import gameplayModel.gridObjects.animatedObjects.Enemy;
+import gameplayModel.gridObjects.animatedObjects.*;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static gameplayModel.gridObjects.HiddenObject.generateIndex;
-import static gameplayModel.gridObjects.factories.EnemyFactory.createEnemy;
+import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
 import static gameplayModel.gridObjects.factories.PowerUpFactory.createPowerUp;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
@@ -142,17 +140,21 @@ public class GridMap {
 		powerUp = createPowerUp(type, bricks.get(brickUpIndex).getPosition().getX(), bricks.get(brickUpIndex).getPosition().getY());
 	}
 
-	public void generateEnemies(List<Integer> enemyCounts) {
-		IntStream.range(0, enemyCounts.size() - 1)
-				.forEach(i -> addEnemiesFromType(i, enemyCounts.get(i)));
+	private void generateEnemies(Map<Enemies, Integer> enemyCounts) {
+		enemyCounts.entrySet()
+				.forEach(enemyType -> addEnemiesFromType(enemyType.getKey(), enemyType.getValue()));
 	}
 
-	private void addEnemiesFromType(int type, int quantity) {
+	public void generateEnemiesOfType(Enemies type) {
+		addEnemiesFromType(type, 12);
+	}
+
+	private void addEnemiesFromType(Enemies type, int quantity) {
 		IntStream.range(0, quantity)
 				.forEach(i -> addEnemy(type));
 	}
 
-	private void addEnemy(int type) {
+	private void addEnemy(Enemies type) {
 		final int[] position = findNewEnemyLocation();
 		enemies.add(createEnemy(type, position[0] * WIDTH, position[1] * HEIGHT));
 	}
@@ -192,7 +194,7 @@ public class GridMap {
 	}
 
 	private void spawnMoreEnemies() {
-		int type = level.getHardestEnemyType();
+		final Enemies type = level.getHardestEnemyType();
 		addEnemiesFromType(type, 8);
 	}
 

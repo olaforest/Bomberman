@@ -1,5 +1,6 @@
 package gameplayModel;
 
+import gameplayModel.gridObjects.animatedObjects.Enemies;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -118,7 +119,7 @@ public class LevelManagerTest {
 		//given
 		final LevelManager levelManager = new LevelManager(4);
 		//when
-		final int type = levelManager.getHardestEnemyType();
+		final Enemies type = levelManager.getHardestEnemyType();
 		//then
 		assertThat(type).isEqualTo(2);
 	}
@@ -128,7 +129,7 @@ public class LevelManagerTest {
 		//given
 		final LevelManager levelManager = new LevelManager(21);
 		//when
-		final int type = levelManager.getHardestEnemyType();
+		final Enemies type = levelManager.getHardestEnemyType();
 		//then
 		assertThat(type).isEqualTo(6);
 	}

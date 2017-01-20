@@ -25,12 +25,12 @@ public class GridMapTest {
 		assertEquals(16, gridMap.getEnemies().size());
 
 		// Tests for invalid input, can't generate negative enemies.
-		gridMap.generateEnemies(asList(-1, 0, 0, 0, 0, 0, 0, 0, 0));
+//		gridMap.generateEnemies(asList(-1, 0, 0, 0, 0, 0, 0, 0, 0));
 
 		assertEquals(16, gridMap.getEnemies().size());
 
 		// Test for valid input, add three enemies of type Doll.
-		gridMap.generateEnemies(asList(0, 0, 3, 0, 0, 0, 0, 0, 0));
+//		gridMap.generateEnemies(asList(0, 0, 3, 0, 0, 0, 0, 0, 0));
 
 		assertEquals(19, gridMap.getEnemies().size());
 		assertTrue(gridMap.getEnemies().get(16).getClass().toString().equals("class gameplayModel.GridObjects.AnimatedObjects.Enemies.Doll"));
@@ -39,7 +39,7 @@ public class GridMapTest {
 		
 		/* Test irrelevant input, last number in the array corresponds to the power up type in the level, therefore 
 		should not be taken into account for generating new enemies.*/
-		gridMap.generateEnemies(asList(0, 0, 0, 0, 0, 0, 0, 0, -2));
+//		gridMap.generateEnemies(asList(0, 0, 0, 0, 0, 0, 0, 0, -2));
 
 		assertEquals(19, gridMap.getEnemies().size());
 	}

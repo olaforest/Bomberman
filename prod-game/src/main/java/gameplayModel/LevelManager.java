@@ -1,5 +1,6 @@
 package gameplayModel;
 
+import gameplayModel.gridObjects.animatedObjects.Enemies;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,7 +41,7 @@ public class LevelManager {
 		return currentLevel.get().isBonusLevel();
 	}
 
-	public int getHardestEnemyType() {
+	public Enemies getHardestEnemyType() {
 		return currentLevel.get().getHardestEnemyType();
 	}
 
