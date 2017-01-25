@@ -20,8 +20,13 @@ import java.io.InputStream;
 public class MainMenuPanel extends JPanel {
 
 
-	private JButton resume, newGame, leaderboard, logout, exit, edit;
-	private JLabel bombermanLabel;
+	private final JButton resume;
+	private final JButton newGame;
+	private final JButton leaderboard;
+	private final JButton logout;
+	private final JButton exit;
+	private final JButton edit;
+	private final JLabel bombermanLabel;
 	private BufferedImage img;
 
 	/**

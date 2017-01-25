@@ -26,12 +26,15 @@ import java.io.InputStream;
 public class LoadGamePanel extends JPanel {
 
 	@SuppressWarnings("rawtypes")
-	private JList list;
-	private JButton goBack, loadGame;
-	private JLabel savename, level, datesaved; //headers
+	private final JList list;
+	private final JButton goBack;
+	private final JButton loadGame;
+	private final JLabel saveName;
+	private final JLabel level;
+	private final JLabel dateSaved; //headers
 	private JLabel name, levelNumber, date; //variable
-	private JScrollPane listScroller;
-	private DefaultListModel<String> model;
+	private final JScrollPane listScroller;
+	private final DefaultListModel<String> model;
 	private Player currentPlayer;
 	private int index;
 	private BufferedImage img;
@@ -78,20 +81,20 @@ public class LoadGamePanel extends JPanel {
 		loadGame = new JButton("Load Game");
 		loadGame.addActionListener(listener);
 
-		savename = new JLabel();
-		savename.setFont(new Font("Eurostile", Font.BOLD, 15)); // NOI18N
-		savename.setText("Save Name:");
-		savename.setForeground(Color.white);
+		saveName = new JLabel();
+		saveName.setFont(new Font("Eurostile", Font.BOLD, 15)); // NOI18N
+		saveName.setText("Save Name:");
+		saveName.setForeground(Color.white);
 
 		level = new JLabel();
 		level.setFont(new Font("Eurostile", Font.BOLD, 15)); // NOI18N
 		level.setText("Level:");
 		level.setForeground(Color.white);
 
-		datesaved = new JLabel();
-		datesaved.setFont(new Font("Eurostile", Font.BOLD, 15)); // NOI18N
-		datesaved.setText("Date Saved:");
-		datesaved.setForeground(Color.white);
+		dateSaved = new JLabel();
+		dateSaved.setFont(new Font("Eurostile", Font.BOLD, 15)); // NOI18N
+		dateSaved.setText("Date Saved:");
+		dateSaved.setForeground(Color.white);
 
 		levelNumber = new JLabel();
 		levelNumber.setFont(new Font("Eurostile", 0, 13));
@@ -166,8 +169,8 @@ public class LoadGamePanel extends JPanel {
 												.addComponent(listScroller, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 												.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-														.addComponent(savename)
-														.addComponent(datesaved)
+														.addComponent(saveName)
+														.addComponent(dateSaved)
 														.addComponent(levelNumber)
 														.addComponent(date)
 														.addComponent(name)
@@ -190,7 +193,7 @@ public class LoadGamePanel extends JPanel {
 								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
 										.addComponent(listScroller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addGroup(layout.createSequentialGroup()
-												.addComponent(savename)
+												.addComponent(saveName)
 												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 												.addComponent(name)
 												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -198,7 +201,7 @@ public class LoadGamePanel extends JPanel {
 												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 												.addComponent(levelNumber)
 												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-												.addComponent(datesaved)
+												.addComponent(dateSaved)
 												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 												.addComponent(date)))
 								.addGap(30, 30, 30)

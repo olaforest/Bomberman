@@ -31,7 +31,7 @@ public class ExitwayTest {
 	@Test
 	public void testGetAndSetXPosition() {
 
-		//Tests if the inputed x position is valid.
+		//Tests if the inputted x position is valid.
 		exitway.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, exitway.getPosition().getX());
 	}
@@ -39,7 +39,7 @@ public class ExitwayTest {
 	@Test
 	public void testGetAndSetYPosition() {
 
-		//Tests if the inputed y position is valid.
+		//Tests if the inputted y position is valid.
 		exitway.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, exitway.getPosition().getY());
 	}

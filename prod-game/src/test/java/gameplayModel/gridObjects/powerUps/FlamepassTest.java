@@ -46,7 +46,7 @@ public class FlamepassTest {
 	@Test
 	public void testGetAndSetXPosition() {
 
-		//Tests if the inputed x position is valid.
+		//Tests if the inputted x position is valid.
 		flamepass.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flamepass.getPosition().getX());
 	}
@@ -54,7 +54,7 @@ public class FlamepassTest {
 	@Test
 	public void testGetAndSetYPosition() {
 
-		//Tests if the inputed y position is valid.
+		//Tests if the inputted y position is valid.
 		flamepass.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flamepass.getPosition().getY());
 	}

@@ -12,7 +12,7 @@ import utils.JaxbUtils;
 
 import static java.util.Collections.singletonList;
 
-public class Starter {
+class Starter {
 
 	public static void main(String[] args) {
 

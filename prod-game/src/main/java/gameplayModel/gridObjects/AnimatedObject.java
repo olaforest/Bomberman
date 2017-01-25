@@ -14,15 +14,12 @@ public abstract class AnimatedObject extends GridObject {
 	private static final int INITIAL_ANIMATION = 0;
 
 	protected List<Animation> animationList;
-	@Getter
-	private Animation currentAnimation;
-	@Getter
-	protected boolean isDead, isObsolete;
-	@Getter
-	private int animationNumber;
+	@Getter private Animation currentAnimation;
+	@Getter protected boolean isDead, isObsolete;
+	@Getter private int animationNumber;
 	protected int counter, animCycleParam;
 
-	public AnimatedObject(Position position) {
+	protected AnimatedObject(Position position) {
 		super(position);
 		generateAnimationList();
 
@@ -58,7 +55,7 @@ public abstract class AnimatedObject extends GridObject {
 		isDead = true;
 	}
 
-	public abstract void generateAnimationList();
+	protected abstract void generateAnimationList();
 
 	protected List<Animation> generateAnimationList(List<?> animationTypes, List<List<Integer>> animParam, int adjustment) {
 		return IntStream.range(0, animationTypes.size())

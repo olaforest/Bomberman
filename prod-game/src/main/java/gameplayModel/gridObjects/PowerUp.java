@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class PowerUp extends HiddenObject {
-	@Getter private BufferedImage image;
+	@Getter private final BufferedImage image;
 	@Getter protected boolean isPermanent;
 	private final int[] imageParameter;
 

@@ -1,4 +1,4 @@
 package dtos.gridObjects;
 
-public class HiddenObjectDto {
+class HiddenObjectDto {
 }

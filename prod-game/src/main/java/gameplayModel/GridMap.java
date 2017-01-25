@@ -31,10 +31,10 @@ public class GridMap {
 	private int spawnTimer;
 
 	@Getter private Level level;
-	@Getter private List<Concrete> concreteLayout;
-	@Getter private List<Brick> bricks;
-	@Getter private List<Bomb> bombs;
-	@Getter private List<Enemy> enemies;
+	@Getter private final List<Concrete> concreteLayout;
+	@Getter private final List<Brick> bricks;
+	@Getter private final List<Bomb> bombs;
+	@Getter private final List<Enemy> enemies;
 	@Getter private Exitway exitway;
 	@Getter private PowerUp powerUp;
 	@Getter private Bomberman bomberman;

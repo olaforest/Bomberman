@@ -18,13 +18,13 @@ public class Enemy extends AnimatedObject {
 
 	public final int SPEED_MULTIPLIER = 1;
 
-	protected final int points;
-	protected final int speed;
-	protected final int smartness;
-	protected final boolean isWallpass;
-	@Setter protected int direction;
+	private final int points;
+	private final int speed;
+	private final int smartness;
+	private final boolean isWallpass;
+	@Setter private int direction;
 
-	public Enemy(Enemies enemyType, Position position) {
+	private Enemy(Enemies enemyType, Position position) {
 		this(enemyType, position, (int) (random() * 3));
 	}
 

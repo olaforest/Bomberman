@@ -6,10 +6,11 @@ package menuModel;
  *
  * @author Eric Liou
  */
-public class CumulativeScore {
+class CumulativeScore {
 
 
-	public int gamesPlayed, cumulativePoints;
+	final int gamesPlayed;
+	private int cumulativePoints;
 
 	/**
 	 * Constructs a new cumulative score for new player accounts

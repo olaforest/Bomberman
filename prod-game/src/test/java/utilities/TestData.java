@@ -1,7 +1,5 @@
 package utilities;
 
-import menuModel.Player;
-
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -19,8 +17,6 @@ public class TestData {
 			"86", "0", "Exitway", "832", "160", "PowerUp", "class gameplayModel.GridObjects.PowerUps.Flames",
 			"800", "128", "Bomberman", "32", "32", "0", "1", "PowerUpAcquired");
 
-
-	public static final Player VALID_ENTRY_PLAYER = new Player("0", "1", "2", 3, 4, 5);
 
 	public static List<List<String>> getImportWithInvalidEntries() {
 		return asList(LONG_ENTRY, SHORT_ENTRY, VALID_ENTRY, SHORT_ENTRY_WITH_GAME, VALID_ENTRY_WITH_GAME,

@@ -23,21 +23,31 @@ import java.io.InputStream;
 @SuppressWarnings("serial")
 public class LeaderboardPanel extends JPanel {
 
-	private JLabel user1, score1;
-	private JLabel user2, score2;
-	private JLabel user3, score3;
-	private JLabel user4, score4;
-	private JLabel user5, score5;
-	private JLabel user6, score6;
-	private JLabel user7, score7;
-	private JLabel user8, score8;
-	private JLabel user9, score9;
-	private JLabel user10, score10;
-	private JLabel title;
+	private final JLabel user1;
+	private final JLabel score1;
+	private final JLabel user2;
+	private final JLabel score2;
+	private final JLabel user3;
+	private final JLabel score3;
+	private final JLabel user4;
+	private final JLabel score4;
+	private final JLabel user5;
+	private final JLabel score5;
+	private final JLabel user6;
+	private final JLabel score6;
+	private final JLabel user7;
+	private final JLabel score7;
+	private final JLabel user8;
+	private final JLabel score8;
+	private final JLabel user9;
+	private final JLabel score9;
+	private final JLabel user10;
+	private final JLabel score10;
+	private final JLabel title;
 
-	private JButton goBack;
+	private final JButton goBack;
 
-	private Leaderboard leaderboard;
+	private final Leaderboard leaderboard;
 
 	private BufferedImage img;
 

@@ -46,7 +46,7 @@ public class FlamesTest {
 	@Test
 	public void testGetAndSetXPosition() {
 
-		//Tests if the inputed x position is valid.
+		//Tests if the inputted x position is valid.
 		flames.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flames.getPosition().getX());
 	}
@@ -54,7 +54,7 @@ public class FlamesTest {
 	@Test
 	public void testGetAndSetYPosition() {
 
-		//Tests if the inputed y position is valid.
+		//Tests if the inputted y position is valid.
 		flames.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, flames.getPosition().getY());
 	}

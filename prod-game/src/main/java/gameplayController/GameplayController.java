@@ -39,14 +39,14 @@ public class GameplayController implements ActionListener {
 
 	private boolean placeBomb;
 
-	private MenuController menuCtrl;
+	private final MenuController menuCtrl;
 	@Getter
-	private GameContext gameContext;
+	private final GameContext gameContext;
 	private GridMap gridMap;
 	private ArtificialIntelligence AI;
 	private CollisionDetector colDetect;
 
-	private GameplayKeyListener keyListener = new GameplayKeyListener();
+	private final GameplayKeyListener keyListener = new GameplayKeyListener();
 	private GameplayPanel gamePanel;
 	private GameStatusPanel gameStatusPanel;
 
@@ -61,7 +61,7 @@ public class GameplayController implements ActionListener {
 	private PowerUp powerup;
 
 	private JFrame gameFrame;
-	private Timer timer;
+	private final Timer timer;
 	private LevelManager levelManager;
 
 	public GameplayController(MenuController menuCtrl) {

@@ -11,9 +11,12 @@ import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 public class GameStatusPanel extends JPanel {
 
 	public static final int HEADERHEIGHT = EFFECTIVE_PIXEL_DIMENSION / 2 + EFFECTIVE_PIXEL_DIMENSION;
-	private int stdHeight;
-	private JLabel timeLabel, timeNumLabel, scoreLabel, livesLeftNumLabel;
-	private GameContext gameContext;
+	private final int stdHeight;
+	private final JLabel timeLabel;
+	private final JLabel timeNumLabel;
+	private final JLabel scoreLabel;
+	private final JLabel livesLeftNumLabel;
+	private final GameContext gameContext;
 
 	public GameStatusPanel(GameContext context) {
 

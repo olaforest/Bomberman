@@ -20,23 +20,23 @@ import java.io.InputStream;
 @SuppressWarnings("serial")
 public class CreateAccountPanel extends JPanel {
 
-	private int TEXTFIELD_LENGTH = 15;
+	private static final int TEXTFIELD_LENGTH = 15;
 
-	private JLabel realNameLabel, usernameLabel, passwordLabel, confirmPWLabel, bombermanLabel;
+	private final JLabel realNameLabel;
+	private final JLabel usernameLabel;
+	private final JLabel passwordLabel;
+	private final JLabel confirmPWLabel;
+	private final JLabel bombermanLabel;
 	protected JTextField realName;
 
 	protected JTextField username;
-	private JButton createAccount, back;
+	private final JButton createAccount;
+	private final JButton back;
 	protected JPasswordField password;
 
 	protected JPasswordField confirmPassword;
 	private BufferedImage img;
 
-	/**
-	 * Constructs a new Create Account Panel with all GUI elements defined default parameters
-	 *
-	 * @param listener an ActionListener which is applied to all GUI elements (Textfields, Buttons) which may trigger an user event
-	 */
 	public CreateAccountPanel(ActionListener listener) {
 
 		try {

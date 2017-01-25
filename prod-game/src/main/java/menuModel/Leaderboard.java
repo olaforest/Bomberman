@@ -8,10 +8,10 @@ import java.util.List;
 
 public class Leaderboard {
 
-	private Database playerList;
+	private final Database playerList;
 	private List<Player> topPlayers = new ArrayList<>();
-	public String[] names = new String[10];
-	public int[] scores = new int[10];
+	public final String[] names = new String[10];
+	public final int[] scores = new int[10];
 
 	public Leaderboard(Database database) {
 		playerList = database;

@@ -11,11 +11,11 @@ import java.util.List;
 @Getter
 public class Exitway extends HiddenObject {
 
-	private BufferedImage image;
-	private int brickIndex;
+	private final BufferedImage image;
+	private final int brickIndex;
 
 	@Getter(AccessLevel.NONE)
-	private int[] imageParameter = {2, 241};
+	private final int[] imageParameter = {2, 241};
 
 	public Exitway(Position position, int index) {
 		super(position);

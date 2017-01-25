@@ -22,19 +22,19 @@ public class MenuController implements ActionListener {
 	private Player currentPlayer;
 	private GameplayController gameplayCtrl;
 
-	private JFrame menuFrame;
-	private JPanel mainPanel;
-	private CardLayout layout;
-	private LoginMenuPanel loginPanel;
-	private CreateAccountPanel createAccPanel;
-	private LeaderboardPanel leaderboard;
-	private MainMenuPanel mainMenuPanel;
-	private Leaderboard updater;
-	private PauseMenuPanel pauseMenuPanel;
-	private LoadGamePanel loadGamePanel;
-	private OptionsPanel optionsPanel;
+	private final JFrame menuFrame;
+	private final JPanel mainPanel;
+	private final CardLayout layout;
+	private final LoginMenuPanel loginPanel;
+	private final CreateAccountPanel createAccPanel;
+	private final LeaderboardPanel leaderboard;
+	private final MainMenuPanel mainMenuPanel;
+	private final Leaderboard updater;
+	private final PauseMenuPanel pauseMenuPanel;
+	private final LoadGamePanel loadGamePanel;
+	private final OptionsPanel optionsPanel;
 
-	private Database database;
+	private final Database database;
 
 	private int leaderboardReturn, loadGameReturn, chosenLevel;
 	private int prePauseScore;
@@ -86,8 +86,8 @@ public class MenuController implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 
 //***********************Login Panel Buttons****************************
-/* If the event source is from the "Login" button: The Textfields are checked to see if there is an existing user that matches the user input
- * 												   If the textfields are valid, display panel is changed to the Main Menu Panel
+/* If the event source is from the "Login" button: The Text fields are checked to see if there is an existing user that matches the user input
+ * 												   If the text fields are valid, display panel is changed to the Main Menu Panel
  * If the event source is from the "Create Account" button: The display panel is changed to the Create Account Panel
  */
 		if (event.getSource() == loginPanel.getLoginButton()) {
@@ -244,7 +244,7 @@ public class MenuController implements ActionListener {
  * 
  */
 		else if (event.getSource() == optionsPanel.getSaveButton()) {
-			if (!checkPassword(optionsPanel.getNewPassword())) {
+			if (checkPassword(optionsPanel.getNewPassword())) {
 				JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long and include the following: a digit, an uppercase and lowercase character, and a special character", null, JOptionPane.INFORMATION_MESSAGE);
 				optionsPanel.resetTextFields();
 			} else if (!optionsPanel.getNewPassword().equals(optionsPanel.getNewConfirmPassword())) {
@@ -266,7 +266,7 @@ public class MenuController implements ActionListener {
 
 		if (!checkUser(createAccPanel.getUsername())) {
 			JOptionPane.showMessageDialog(null, "Username must be at least 6 characters and consist of only digits and characters", null, JOptionPane.INFORMATION_MESSAGE);
-		} else if (!checkPassword(createAccPanel.getPassword()))
+		} else if (checkPassword(createAccPanel.getPassword()))
 			JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long and include the following: a digit, an uppercase and lowercase character, and a special character", null, JOptionPane.INFORMATION_MESSAGE);
 		else if (!createAccPanel.getPassword().equals(createAccPanel.getConfirmedPassword()))
 			JOptionPane.showMessageDialog(null, "Confirmed password does not match", null, JOptionPane.ERROR_MESSAGE);
@@ -293,16 +293,16 @@ public class MenuController implements ActionListener {
 
 	//Checks any password input for validity(at least 8 characters and contains: one upper and one lower-case letter, one digit, one special character)
 	private boolean checkPassword(String password) {
-		if (!password.matches(".*[A-Z].*")) return false;
+		if (!password.matches(".*[A-Z].*")) return true;
 
-		if (!password.matches(".*[a-z].*")) return false;
+		if (!password.matches(".*[a-z].*")) return true;
 
-		if (!password.matches(".*\\d.*")) return false;
+		if (!password.matches(".*\\d.*")) return true;
 
 		Pattern p = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(password);
 		boolean b = m.find();
-		return b && password.length() >= 8;
+		return !b || password.length() < 8;
 	}
 
 	/**

@@ -13,11 +13,11 @@ import java.util.List;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 
-public class CollisionDetector {
+class CollisionDetector {
 
-	private GameContext gameContext;
-	private List<Brick> bricks;
-	private List<Enemy> enemies;
+	private final GameContext gameContext;
+	private final List<Brick> bricks;
+	private final List<Enemy> enemies;
 
 	public CollisionDetector(GameContext gC) {
 		gameContext = gC;

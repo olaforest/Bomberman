@@ -29,7 +29,7 @@ public class Database {
 	private static final String SAVED_GAME = "SavedGame";
 	public static final UnaryOperator<List<String>> SAVED_GAME_CONTENT = content -> content.subList(6, content.size());
 
-	private List<Player> players;
+	private final List<Player> players;
 	private Player currentLoggedPlayer;
 
 	public Database() {

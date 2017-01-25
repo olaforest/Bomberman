@@ -21,13 +21,16 @@ import java.io.InputStream;
 @SuppressWarnings("serial")
 public class LoginMenuPanel extends JPanel {
 
-	private int TEXTFIELD_LENGTH = 15;
+	private static final int TEXTFIELD_LENGTH = 15;
 
-	private JLabel usernameLabel, passwordLabel, bombermanLabel;
+	private final JLabel usernameLabel;
+	private final JLabel passwordLabel;
+	private final JLabel bombermanLabel;
 	//private JTextField username, password, confirmPassword;
-	private JTextField username;
-	private JButton login, createAccount;
-	private JPasswordField password;
+	private final JTextField username;
+	private final JButton login;
+	private final JButton createAccount;
+	private final JPasswordField password;
 	private BufferedImage img;
 
 	/**
