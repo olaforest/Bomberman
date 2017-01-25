@@ -22,11 +22,11 @@ public class Enemy extends AnimatedObject {
 	private final boolean isWallpass;
 	@Setter private int direction;
 
-	private Enemy(Enemies enemyType, Position position) {
+	private Enemy(EnemyType enemyType, Position position) {
 		this(enemyType, position, (int) (random() * 3));
 	}
 
-	public Enemy(Enemies enemyType, Position position, int direction) {
+	public Enemy(EnemyType enemyType, Position position, int direction) {
 		super(position);
 		points = enemyType.getPoints();
 		speed = enemyType.getSpeed();
@@ -36,7 +36,7 @@ public class Enemy extends AnimatedObject {
 		this.direction = direction;
 	}
 
-	public static Enemy createEnemy(Enemies type, int xPosition, int yPosition) {
+	public static Enemy createEnemy(EnemyType type, int xPosition, int yPosition) {
 		final Position position = create(xPosition, yPosition);
 		return new Enemy(type, position);
 	}

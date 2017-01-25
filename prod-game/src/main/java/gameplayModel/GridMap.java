@@ -140,21 +140,21 @@ public class GridMap {
 		powerUp = createPowerUp(type, bricks.get(brickUpIndex).getPosition().getX(), bricks.get(brickUpIndex).getPosition().getY());
 	}
 
-	private void generateEnemies(Map<Enemies, Integer> enemyCounts) {
+	private void generateEnemies(Map<EnemyType, Integer> enemyCounts) {
 		enemyCounts.entrySet()
 				.forEach(enemyType -> addEnemiesFromType(enemyType.getKey(), enemyType.getValue()));
 	}
 
-	public void generateEnemiesOfType(Enemies type) {
+	public void generateEnemiesOfType(EnemyType type) {
 		addEnemiesFromType(type, 12);
 	}
 
-	private void addEnemiesFromType(Enemies type, int quantity) {
+	private void addEnemiesFromType(EnemyType type, int quantity) {
 		IntStream.range(0, quantity)
 				.forEach(i -> addEnemy(type));
 	}
 
-	private void addEnemy(Enemies type) {
+	private void addEnemy(EnemyType type) {
 		final int[] position = findNewEnemyLocation();
 		enemies.add(createEnemy(type, position[0] * WIDTH, position[1] * HEIGHT));
 	}
@@ -194,7 +194,7 @@ public class GridMap {
 	}
 
 	private void spawnMoreEnemies() {
-		final Enemies type = level.getHardestEnemyType();
+		final EnemyType type = level.getHardestEnemyType();
 		addEnemiesFromType(type, 8);
 	}
 
@@ -220,7 +220,7 @@ public class GridMap {
 				.filter(bomb -> !bomb.isDead())
 				.forEach(bomb -> entryList.addAll(bomb.toCSVEntry()));
 
-		entryList.add("Enemies");
+		entryList.add("EnemyType");
 		for (Enemy enemy : enemies)
 			entryList.addAll(enemy.toCSVEntry());
 

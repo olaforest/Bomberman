@@ -1,6 +1,6 @@
 package gameplayModel;
 
-import gameplayModel.gridObjects.animatedObjects.Enemies;
+import gameplayModel.gridObjects.animatedObjects.EnemyType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -20,7 +20,7 @@ import static java.util.Optional.of;
 class Level {
 	private static final Predicate<List<Integer>> IS_BONUS_LEVEL = spec -> spec.contains(MAX_VALUE);
 
-	@Getter private final Map<Enemies, Integer> enemiesCount;
+	@Getter private final Map<EnemyType, Integer> enemiesCount;
 	@Getter private final boolean bonusLevel;
 	private final Integer powerUpType;
 
@@ -35,7 +35,7 @@ class Level {
 		return powerUpType == 0 ? empty() : of(powerUpType);
 	}
 
-	Enemies getHardestEnemyType() {
+	EnemyType getHardestEnemyType() {
 		return enemiesCount.entrySet().stream()
 				.filter(entry -> entry.getValue() > 0)
 				.map(Entry::getKey)

@@ -27,9 +27,9 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
-import static gameplayModel.gridObjects.animatedObjects.Enemies.Pontan;
-import static gameplayModel.gridObjects.animatedObjects.Enemies.values;
 import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
+import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
+import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
 import static utilities.Position.create;
 
 public class GameplayController implements ActionListener {
@@ -516,11 +516,11 @@ public class GameplayController implements ActionListener {
 
 	private void spawnEightHarderEnemies(GridObject gridObj) {
 		enemies.clear();
-		final Enemies type = levelManager.getHardestEnemyType();
+		final EnemyType type = levelManager.getHardestEnemyType();
 		spawnEightEnemies(type == Pontan ? Pontan : values()[type.ordinal() + 1], gridObj.getX(), gridObj.getY());
 	}
 
-	private void spawnEightEnemies(Enemies type, int xPosition, int yPosition) {
+	private void spawnEightEnemies(EnemyType type, int xPosition, int yPosition) {
 		IntStream.range(0, 8)
 				.forEach(i -> enemies.add(createEnemy(type, xPosition, yPosition)));
 	}

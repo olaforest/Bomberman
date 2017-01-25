@@ -1,13 +1,13 @@
 package gameplayModel;
 
-import gameplayModel.gridObjects.animatedObjects.Enemies;
+import gameplayModel.gridObjects.animatedObjects.EnemyType;
 import org.testng.annotations.Test;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static gameplayModel.gridObjects.animatedObjects.Enemies.values;
+import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
 import static java.lang.Integer.MAX_VALUE;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
@@ -54,7 +54,7 @@ public class LevelTest {
 	@Test
 	public void validLevelWithPowerUpSpecList_newLevelInstance_resultsInValidNewLevelWithPowerUp() {
 		//given
-		final LinkedHashMap<Enemies, Integer> enemies = new LinkedHashMap<>();
+		final LinkedHashMap<EnemyType, Integer> enemies = new LinkedHashMap<>();
 		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, 1);
 		//when
 		final Level level = new Level(levelSpec);
@@ -64,7 +64,7 @@ public class LevelTest {
 		assertThat(level.getPowerUpType()).contains(1);
 	}
 
-	private Map<Enemies, Integer> generateExpectedEnemyCount(List<Integer> levelSpec) {
+	private Map<EnemyType, Integer> generateExpectedEnemyCount(List<Integer> levelSpec) {
 		return stream(values())
 				.collect(toMap(identity(), entry -> levelSpec.get(entry.ordinal())));
 	}
@@ -160,7 +160,7 @@ public class LevelTest {
 		//given
 		final Level level = new Level(asList(0, 1, 0, 1, 1, 0, 1, 0, 3));
 		//when
-		final Enemies type = level.getHardestEnemyType();
+		final EnemyType type = level.getHardestEnemyType();
 		//then
 		assertThat(type).isEqualTo(6);
 	}
