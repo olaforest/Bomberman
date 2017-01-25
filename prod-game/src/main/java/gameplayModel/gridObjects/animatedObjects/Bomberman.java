@@ -31,6 +31,7 @@ public class Bomberman extends AnimatedObject {
 
 	public Bomberman(Position position) {
 		super(position);
+		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 0);
 		powerUpsAcquired = new ArrayList<>();
 		setBombermanAbilities();
 		bombsLeft = bombsAvailable;
@@ -38,14 +39,11 @@ public class Bomberman extends AnimatedObject {
 
 	public Bomberman(Position position, int invincibilityTimer, int bombsLeft, List<PowerUp> powerUpsAcquired) {
 		super(position);
+		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 0);
 		this.invincibilityTimer = invincibilityTimer;
 		this.bombsLeft = bombsLeft;
 		this.powerUpsAcquired = powerUpsAcquired;
 		setBombermanAbilities();
-	}
-
-	public void generateAnimationList() {
-		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 0);
 	}
 
 	public void setXPosition(int xPos) {

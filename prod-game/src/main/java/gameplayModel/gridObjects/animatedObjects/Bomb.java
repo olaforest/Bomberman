@@ -61,7 +61,7 @@ public class Bomb extends AnimatedObject {
 		rightRange = leftRange = downRange = upRange = range;
 		setRanges();
 		wasTrigByBomb = false;
-
+		animationList = generateAnimationList(asList(values()));
 		addAnimation(unexploded.ordinal(), 0, 0);
 	}
 
@@ -78,11 +78,10 @@ public class Bomb extends AnimatedObject {
 		leftRange = left;
 		downRange = down;
 		upRange = up;
+		animationList = generateAnimationList(asList(values()));
 
 		addAnimation(unexploded.ordinal(), 0, 0);
 	}
-
-	public void generateAnimationList() { animationList = generateAnimationList(asList(values())); }
 
 	private List<Animation> generateAnimationList(List<AnimationType> animationType) {
 		return IntStream.range(0, animationType.size())
@@ -225,14 +224,21 @@ public class Bomb extends AnimatedObject {
 			upRange = adjustedMinRangePosition(position.getY());
 	}
 
-	private int maxRangePosition(int position, int maxRange) { return position + maxRange * EFFECTIVE_PIXEL_DIMENSION; }
-	private int minRangePosition(int position, int minRange) { return position - minRange * EFFECTIVE_PIXEL_DIMENSION; }
+	private int maxRangePosition(int position, int maxRange) {
+		return position + maxRange * EFFECTIVE_PIXEL_DIMENSION;
+	}
+
+	private int minRangePosition(int position, int minRange) {
+		return position - minRange * EFFECTIVE_PIXEL_DIMENSION;
+	}
 
 	private int adjustedMaxRangePosition(int position, int maxDimension) {
 		return (maxDimension - 2) - position / EFFECTIVE_PIXEL_DIMENSION;
 	}
 
-	private int adjustedMinRangePosition(int position) { return position / EFFECTIVE_PIXEL_DIMENSION - 1; }
+	private int adjustedMinRangePosition(int position) {
+		return position / EFFECTIVE_PIXEL_DIMENSION - 1;
+	}
 
 	private void addAnimation(int animType, int xOffset, int yOffset) {
 		currentAnimations.add(new Animation(animationList.get(animType)));
@@ -252,11 +258,17 @@ public class Bomb extends AnimatedObject {
 		animYOffset.clear();
 	}
 
-	public void setWasTrigByBomb() { wasTrigByBomb = true; }
+	public void setWasTrigByBomb() {
+		wasTrigByBomb = true;
+	}
 
-	public static void increaseRange() { range++; }
+	public static void increaseRange() {
+		range++;
+	}
 
-	public static void resetRange() { range = 1; }
+	public static void resetRange() {
+		range = 1;
+	}
 
 	public List<String> toCSVEntry() {
 		List<String> entryList = new ArrayList<>();

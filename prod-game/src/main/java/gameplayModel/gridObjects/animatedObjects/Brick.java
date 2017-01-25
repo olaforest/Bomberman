@@ -15,9 +15,6 @@ public class Brick extends AnimatedObject {
 
 	public Brick(Position position) {
 		super(position);
-	}
-
-	public void generateAnimationList() {
 		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 2);
 	}
 

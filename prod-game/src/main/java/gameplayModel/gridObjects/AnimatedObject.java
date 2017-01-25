@@ -21,14 +21,10 @@ public abstract class AnimatedObject extends GridObject {
 
 	protected AnimatedObject(Position position) {
 		super(position);
-		generateAnimationList();
-
 		currentAnimation = animationList.get(INITIAL_ANIMATION);
 		animationNumber = INITIAL_ANIMATION;
-
 		counter = 0;
 		animCycleParam = 3;
-
 		isDead = false;
 		isObsolete = false;
 	}
@@ -54,8 +50,6 @@ public abstract class AnimatedObject extends GridObject {
 		currentAnimation = animationList.get(animationList.size() - 1);
 		isDead = true;
 	}
-
-	protected abstract void generateAnimationList();
 
 	protected List<Animation> generateAnimationList(List<?> animationTypes, List<List<Integer>> animParam, int adjustment) {
 		return IntStream.range(0, animationTypes.size())

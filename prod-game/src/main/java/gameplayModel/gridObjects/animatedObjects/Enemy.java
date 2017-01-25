@@ -16,8 +16,6 @@ import static utilities.Position.create;
 public class Enemy extends AnimatedObject {
 	public enum AnimationType {right, left, death}
 
-	public final int SPEED_MULTIPLIER = 1;
-
 	private final int points;
 	private final int speed;
 	private final int smartness;
@@ -41,10 +39,6 @@ public class Enemy extends AnimatedObject {
 	public static Enemy createEnemy(Enemies type, int xPosition, int yPosition) {
 		final Position position = create(xPosition, yPosition);
 		return new Enemy(type, position);
-	}
-
-	public void generateAnimationList() {
-//		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 2);
 	}
 
 	public List<String> toCSVEntry() {
