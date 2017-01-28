@@ -11,17 +11,16 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toList;
 
 public abstract class AnimatedObject extends GridObject {
-	private static final int INITIAL_ANIMATION = 0;
+	protected static final int INITIAL_ANIMATION = 0;
 
 	protected List<Animation> animationList;
-	@Getter private Animation currentAnimation;
+	@Getter protected Animation currentAnimation;
 	@Getter protected boolean isDead, isObsolete;
 	@Getter private int animationNumber;
 	protected int counter, animCycleParam;
 
 	protected AnimatedObject(Position position) {
 		super(position);
-		currentAnimation = animationList.get(INITIAL_ANIMATION);
 		animationNumber = INITIAL_ANIMATION;
 		counter = 0;
 		animCycleParam = 3;

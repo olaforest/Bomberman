@@ -16,6 +16,7 @@ public class Brick extends AnimatedObject {
 	public Brick(Position position) {
 		super(position);
 		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 2);
+		currentAnimation = animationList.get(INITIAL_ANIMATION);
 	}
 
 	public List<String> toCSVEntry() {

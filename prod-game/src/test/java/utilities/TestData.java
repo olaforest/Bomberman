@@ -13,8 +13,8 @@ public class TestData {
 	private static final List<String> SHORT_ENTRY_WITH_GAME = asList("0", "1", "2", "3", "4", "SavedGame", "...");
 	private static final List<String> VALID_ENTRY_WITH_GAME = asList("0", "1", "2", "3", "4", "5", "SavedGame", "save1",
 			"Mon Dec 26 15:59:18 PST 2016", "GameContext", "198950", "2", "0", "0", "GridMap", "10000", "Bricks", "160",
-			"32", "Bombs", "1", "EnemyType", "class gameplayModel.GridObjects.AnimatedObjects.EnemyType.Balloom", "864",
-			"86", "0", "Exitway", "832", "160", "PowerUp", "class gameplayModel.GridObjects.PowerUps.Flames",
+			"32", "Bombs", "1", "EnemyType", "Balloom", "864",
+			"86", "0", "Exitway", "832", "160", "PowerUp", "Flames",
 			"800", "128", "Bomberman", "32", "32", "0", "1", "PowerUpAcquired");
 
 

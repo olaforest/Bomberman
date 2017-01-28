@@ -6,6 +6,8 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static gameplayModel.LevelManager.importLevels;
+import static gameplayModel.gridObjects.animatedObjects.EnemyType.Doll;
+import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pass;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -121,7 +123,7 @@ public class LevelManagerTest {
 		//when
 		final EnemyType type = levelManager.getHardestEnemyType();
 		//then
-		assertThat(type).isEqualTo(2);
+		assertThat(type).isEqualTo(Doll);
 	}
 
 	@Test
@@ -131,6 +133,6 @@ public class LevelManagerTest {
 		//when
 		final EnemyType type = levelManager.getHardestEnemyType();
 		//then
-		assertThat(type).isEqualTo(6);
+		assertThat(type).isEqualTo(Pass);
 	}
 }
