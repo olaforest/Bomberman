@@ -3,6 +3,7 @@ package gameplayModel;
 import gameplayModel.gridObjects.Concrete;
 import gameplayModel.gridObjects.Exitway;
 import gameplayModel.gridObjects.PowerUp;
+import gameplayModel.gridObjects.PowerUpType;
 import gameplayModel.gridObjects.animatedObjects.*;
 import lombok.Getter;
 
@@ -15,8 +16,8 @@ import java.util.stream.IntStream;
 import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static gameplayModel.gridObjects.HiddenObject.generateIndex;
+import static gameplayModel.gridObjects.PowerUp.createPowerUp;
 import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
-import static gameplayModel.gridObjects.factories.PowerUpFactory.createPowerUp;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
 
@@ -132,7 +133,7 @@ public class GridMap {
 		exitway = new Exitway(create(bricks.get(brickIndex).getPosition().getX(), bricks.get(brickIndex).getPosition().getY()), brickIndex);
 	}
 
-	private void addPowerup(int type) {
+	private void addPowerup(PowerUpType type) {
 		int brickUpIndex;
 		do {
 			brickUpIndex = generateIndex(bricks.size());

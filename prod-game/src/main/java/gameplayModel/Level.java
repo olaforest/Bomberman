@@ -1,20 +1,21 @@
 package gameplayModel;
 
+import gameplayModel.gridObjects.PowerUpType;
 import gameplayModel.gridObjects.animatedObjects.EnemyType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import static gameplayModel.gridObjects.PowerUpType.values;
 import static java.lang.Integer.MAX_VALUE;
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
+import static java.util.Optional.ofNullable;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 @EqualsAndHashCode
 class Level {
@@ -22,23 +23,23 @@ class Level {
 
 	@Getter private final Map<EnemyType, Integer> enemiesCount;
 	@Getter private final boolean bonusLevel;
-	private final Integer powerUpType;
+	private final PowerUpType powerUpType;
 
 	Level(@NonNull List<Integer> specification) {
 		validateInputSpecification(specification);
-		enemiesCount = new LinkedHashMap<>();
+		enemiesCount = EnemyType.stream()
+				.collect(toMap(identity(), entry -> specification.get(entry.ordinal())));
 		bonusLevel = IS_BONUS_LEVEL.test(specification);
-		powerUpType = specification.get(8);
+		powerUpType = specification.get(8) == 0 ? null : values()[specification.get(8) - 1];
 	}
 
-	Optional<Integer> getPowerUpType() {
-		return powerUpType == 0 ? empty() : of(powerUpType);
+	Optional<PowerUpType> getPowerUpType() {
+		return ofNullable(powerUpType);
 	}
 
 	EnemyType getHardestEnemyType() {
-		return enemiesCount.entrySet().stream()
-				.filter(entry -> entry.getValue() > 0)
-				.map(Entry::getKey)
+		return EnemyType.stream()
+				.filter(entry -> enemiesCount.get(entry) > 0)
 				.reduce((first, second) -> second)
 				.orElseThrow(() -> new RuntimeException("There should be at least one enemy type per Level"));
 	}

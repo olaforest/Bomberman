@@ -37,8 +37,7 @@ public class Enemy extends AnimatedObject {
 	}
 
 	public static Enemy createEnemy(EnemyType type, int xPosition, int yPosition) {
-		final Position position = create(xPosition, yPosition);
-		return new Enemy(type, position);
+		return new Enemy(type, create(xPosition, yPosition));
 	}
 
 	public List<String> toCSVEntry() {

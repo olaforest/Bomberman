@@ -7,22 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Animation {
-
-	@Getter
-	private final List<BufferedImage> frames;
-	@Getter
-	private boolean isAnimDone;
+	@Getter private final List<BufferedImage> frames;
+	@Getter private boolean animDone;
 	private int counter;
 
 	public Animation(int frameNumber) {
 		frames = new ArrayList<>(frameNumber);
-		isAnimDone = false;
+		animDone = false;
 		counter = 0;
 	}
 
 	public Animation(Animation anim) {
 		frames = anim.getFrames();
-		isAnimDone = false;
+		animDone = false;
 		counter = 0;
 	}
 
@@ -37,7 +34,7 @@ public class Animation {
 	public void cycleFrame() {
 		counter = (counter + 1) % frames.size();
 
-		if (counter == frames.size() - 1) isAnimDone = true;
+		if (counter == frames.size() - 1) animDone = true;
 	}
 
 	public void setToInitialFrame() {

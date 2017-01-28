@@ -3,14 +3,14 @@ package gameplayModel;
 import gameplayModel.gridObjects.animatedObjects.EnemyType;
 import org.testng.annotations.Test;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
+import static gameplayModel.gridObjects.PowerUpType.Bomb;
+import static gameplayModel.gridObjects.PowerUpType.Speed;
+import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pass;
 import static java.lang.Integer.MAX_VALUE;
 import static java.util.Arrays.asList;
-import static java.util.Arrays.stream;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,19 +54,12 @@ public class LevelTest {
 	@Test
 	public void validLevelWithPowerUpSpecList_newLevelInstance_resultsInValidNewLevelWithPowerUp() {
 		//given
-		final LinkedHashMap<EnemyType, Integer> enemies = new LinkedHashMap<>();
 		final List<Integer> levelSpec = asList(1, 1, 1, 1, 1, 1, 1, 1, 1);
 		//when
 		final Level level = new Level(levelSpec);
 		//then
-//		assertThat(level.getEnemiesCount()).containsExactly(1, 1, 1, 1, 1, 1, 1, 1);
 		assertThat(level.getEnemiesCount()).isEqualTo(generateExpectedEnemyCount(levelSpec));
-		assertThat(level.getPowerUpType()).contains(1);
-	}
-
-	private Map<EnemyType, Integer> generateExpectedEnemyCount(List<Integer> levelSpec) {
-		return stream(values())
-				.collect(toMap(identity(), entry -> levelSpec.get(entry.ordinal())));
+		assertThat(level.getPowerUpType()).contains(Bomb);
 	}
 
 	@Test
@@ -76,7 +69,7 @@ public class LevelTest {
 		//when
 		final Level level = new Level(levelSpec);
 		//then
-//		assertThat(level.getEnemiesCount()).containsExactly(1, 1, 1, 1, 1, 1, 1, 1);
+		assertThat(level.getEnemiesCount()).isEqualTo(generateExpectedEnemyCount(levelSpec));
 		assertThat(level.getPowerUpType()).isEmpty();
 	}
 
@@ -131,8 +124,8 @@ public class LevelTest {
 		//when
 		final Level level = new Level(levelSpec);
 		//then
-//		assertThat(level.getEnemiesCount()).containsExactly(0, MAX_VALUE, 0, 0, 0, 0, 0, 0);
-		assertThat(level.getPowerUpType()).contains(3);
+		assertThat(level.getEnemiesCount()).isEqualTo(generateExpectedEnemyCount(levelSpec));
+		assertThat(level.getPowerUpType()).contains(Speed);
 	}
 
 	@Test
@@ -162,7 +155,7 @@ public class LevelTest {
 		//when
 		final EnemyType type = level.getHardestEnemyType();
 		//then
-		assertThat(type).isEqualTo(6);
+		assertThat(type).isEqualTo(Pass);
 	}
 
 	@Test
@@ -174,5 +167,10 @@ public class LevelTest {
 				//then
 				.isInstanceOf(RuntimeException.class)
 				.hasMessage("There should be at least one enemy type per Level");
+	}
+
+	private Map<EnemyType, Integer> generateExpectedEnemyCount(List<Integer> levelSpec) {
+		return EnemyType.stream()
+				.collect(toMap(identity(), entry -> levelSpec.get(entry.ordinal())));
 	}
 }
