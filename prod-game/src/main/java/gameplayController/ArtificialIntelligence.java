@@ -13,13 +13,13 @@ import java.util.Random;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 
-public class ArtificialIntelligence {
+class ArtificialIntelligence {
 
-	private List<Enemy> enemies;
-	private List<Brick> bricks;
-	private List<Bomb> bombs;
-	private CollisionDetector detector;
-	private Bomberman bomberman;
+	private final List<Enemy> enemies;
+	private final List<Brick> bricks;
+	private final List<Bomb> bombs;
+	private final CollisionDetector detector;
+	private final Bomberman bomberman;
 	private boolean collision;
 	private int collisionCount;
 
@@ -296,8 +296,8 @@ public class ArtificialIntelligence {
 							Node next = new Node(current.xPosition, current.yPosition - EFFECTIVE_PIXEL_DIMENSION, current, current.gCost + 10,
 									euclidianDistance(current.xPosition, current.yPosition - EFFECTIVE_PIXEL_DIMENSION, this.bomberman.getPosition().getX(), this.bomberman.getPosition().getY()));
 
-							if (!(alreadyIn(openList, next))) {
-								if (!(alreadyIn(closedList, next))) {
+							if (!(!notAlreadyIn(openList, next))) {
+								if (!(!notAlreadyIn(closedList, next))) {
 									openList.add(next);
 									sortList(openList);
 								}
@@ -324,8 +324,8 @@ public class ArtificialIntelligence {
 							Node next = new Node(current.xPosition, current.yPosition + EFFECTIVE_PIXEL_DIMENSION, current, current.gCost + 10,
 									euclidianDistance(current.xPosition, current.yPosition + EFFECTIVE_PIXEL_DIMENSION, this.bomberman.getPosition().getX(), this.bomberman.getPosition().getY()));
 
-							if (!(alreadyIn(openList, next))) {
-								if (!(alreadyIn(closedList, next))) {
+							if (!(!notAlreadyIn(openList, next))) {
+								if (!(!notAlreadyIn(closedList, next))) {
 									openList.add(next);
 									sortList(openList);
 								}
@@ -352,8 +352,8 @@ public class ArtificialIntelligence {
 							Node next = new Node(current.xPosition - EFFECTIVE_PIXEL_DIMENSION, current.yPosition, current, current.gCost + 10,
 									euclidianDistance(current.xPosition - EFFECTIVE_PIXEL_DIMENSION, current.yPosition, this.bomberman.getPosition().getX(), this.bomberman.getPosition().getY()));
 
-							if (!(alreadyIn(openList, next))) {
-								if (!(alreadyIn(closedList, next))) {
+							if (!(!notAlreadyIn(openList, next))) {
+								if (!(!notAlreadyIn(closedList, next))) {
 									openList.add(next);
 									sortList(openList);
 								}
@@ -379,8 +379,8 @@ public class ArtificialIntelligence {
 							Node next = new Node(current.xPosition + EFFECTIVE_PIXEL_DIMENSION, current.yPosition, current, current.gCost + 10,
 									euclidianDistance(current.xPosition + EFFECTIVE_PIXEL_DIMENSION, current.yPosition, this.bomberman.getPosition().getX(), this.bomberman.getPosition().getY()));
 
-							if (!(alreadyIn(openList, next))) {
-								if (!(alreadyIn(closedList, next))) {
+							if (!(!notAlreadyIn(openList, next))) {
+								if (!(!notAlreadyIn(closedList, next))) {
 									openList.add(next);
 									sortList(openList);
 								}
@@ -410,12 +410,12 @@ public class ArtificialIntelligence {
 	}
 
 	//returns true if the node already exists in the list
-	private boolean alreadyIn(LinkedList<Node> l, Node n) {
+	private boolean notAlreadyIn(LinkedList<Node> l, Node n) {
 		for (Node node : l) {
 			if (n.xPosition == node.xPosition)
 				if (n.yPosition == node.yPosition)
-					return true;
+					return false;
 		}
-		return false;
+		return true;
 	}
 }

@@ -12,8 +12,9 @@ import static java.lang.String.valueOf;
 public class SavedGame {
 	private int levelIndex;
 
-	private String gameName, gameDate;
-	private GameContext gameContext;
+	private final String gameName;
+	private final String gameDate;
+	private final GameContext gameContext;
 	public SavedGame(String name, String date, GameContext context) {
 		gameName = name;
 		gameDate = date;

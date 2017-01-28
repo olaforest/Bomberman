@@ -2,18 +2,16 @@ package utilities;
 
 public class Node {
 
-	public double fCost;
-	private double hCost;
-	public double gCost;
-	public int xPosition;
-	public int yPosition;
-	public Node parent;
+	public final double fCost;
+	public final double gCost;
+	public final int xPosition;
+	public final int yPosition;
+	public final Node parent;
 
 	public Node(int x, int y, Node p, double HCost, double GCost) {
 		parent = p;
-		hCost = HCost;
 		gCost = GCost;
-		fCost = hCost + gCost;
+		fCost = HCost + gCost;
 		xPosition = x;
 		yPosition = y;
 	}

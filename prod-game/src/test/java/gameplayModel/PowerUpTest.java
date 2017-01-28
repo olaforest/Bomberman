@@ -46,7 +46,7 @@ public class PowerUpTest {
 	@Test
 	public void testGetAndSetXPosition() {
 
-		//Tests if the inputed x position is valid.
+		//Tests if the inputted x position is valid.
 		powerUp.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, powerUp.getPosition().getX());
 	}
@@ -54,7 +54,7 @@ public class PowerUpTest {
 	@Test
 	public void testGetAndSetYPosition() {
 
-		//Tests if the inputed y position is valid.
+		//Tests if the inputted y position is valid.
 		powerUp.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, powerUp.getPosition().getY());
 	}

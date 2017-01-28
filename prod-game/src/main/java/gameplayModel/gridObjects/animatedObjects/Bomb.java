@@ -41,8 +41,9 @@ public class Bomb extends AnimatedObject {
 	@Getter
 	private static int range = 1;
 
-	private List<Animation> currentAnimations;
-	private List<Integer> animXOffset, animYOffset;
+	private final List<Animation> currentAnimations;
+	private final List<Integer> animXOffset;
+	private final List<Integer> animYOffset;
 	@Setter
 	private int timer, rightRange, leftRange, downRange, upRange;
 
@@ -60,7 +61,7 @@ public class Bomb extends AnimatedObject {
 		rightRange = leftRange = downRange = upRange = range;
 		setRanges();
 		wasTrigByBomb = false;
-
+		animationList = generateAnimationList(asList(values()));
 		addAnimation(unexploded.ordinal(), 0, 0);
 	}
 
@@ -77,13 +78,12 @@ public class Bomb extends AnimatedObject {
 		leftRange = left;
 		downRange = down;
 		upRange = up;
+		animationList = generateAnimationList(asList(values()));
 
 		addAnimation(unexploded.ordinal(), 0, 0);
 	}
 
-	public void generateAnimationList() { animationList = generateAnimationList(asList(values())); }
-
-	private List<Animation> generateAnimationList(List<?> animationType) {
+	private List<Animation> generateAnimationList(List<AnimationType> animationType) {
 		return IntStream.range(0, animationType.size())
 				.mapToObj(this::generateAnimation)
 				.collect(toList());
@@ -161,7 +161,7 @@ public class Bomb extends AnimatedObject {
 		}
 	}
 
-	private IntPredicate isRangeChanged = (size) -> range != size;
+	private final IntPredicate isRangeChanged = (size) -> range != size;
 
 	private void addChangedRangeAnim(int rangeSize, IntConsumer addIntermediateAnim, IntUnaryOperator direction) {
 		IntStream.rangeClosed(1, rangeSize)
@@ -176,13 +176,13 @@ public class Bomb extends AnimatedObject {
 				.forEach(addIntermediateAnim);
 	}
 
-	private IntConsumer addHorizontalAnimation = offset -> addAnimation(expHorizontal.ordinal(), offset, 0);
-	private IntConsumer addLeftAnimation = offset -> addAnimation(expLeft.ordinal(), offset, 0);
-	private IntConsumer addRightAnimation = offset -> addAnimation(expRight.ordinal(), offset, 0);
+	private final IntConsumer addHorizontalAnimation = offset -> addAnimation(expHorizontal.ordinal(), offset, 0);
+	private final IntConsumer addLeftAnimation = offset -> addAnimation(expLeft.ordinal(), offset, 0);
+	private final IntConsumer addRightAnimation = offset -> addAnimation(expRight.ordinal(), offset, 0);
 
-	private IntConsumer addVerticalAnimation = offset -> addAnimation(expVertical.ordinal(), 0, offset);
-	private IntConsumer addUpAnimation = offset -> addAnimation(expUp.ordinal(), 0, offset);
-	private IntConsumer addDownAnimation = offset -> addAnimation(expDown.ordinal(), 0, offset);
+	private final IntConsumer addVerticalAnimation = offset -> addAnimation(expVertical.ordinal(), 0, offset);
+	private final IntConsumer addUpAnimation = offset -> addAnimation(expUp.ordinal(), 0, offset);
+	private final IntConsumer addDownAnimation = offset -> addAnimation(expDown.ordinal(), 0, offset);
 
 	private void setRanges() {
 		setRanges(isNotAlignedWithRow, this::resetHorizontalRanges, this::setHorizontalRanges);
@@ -196,9 +196,9 @@ public class Bomb extends AnimatedObject {
 			setAdjustedRanges.run();
 	}
 
-	private IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0;
-	private BooleanSupplier isNotAlignedWithRow = () -> isNotAlignedWithRowOrColumn.test(position.getY());
-	private BooleanSupplier isNotAlignedWithColumn = () -> isNotAlignedWithRowOrColumn.test(position.getX());
+	private final IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0;
+	private final BooleanSupplier isNotAlignedWithRow = () -> isNotAlignedWithRowOrColumn.test(position.getY());
+	private final BooleanSupplier isNotAlignedWithColumn = () -> isNotAlignedWithRowOrColumn.test(position.getX());
 
 	private void resetHorizontalRanges() {
 		rightRange = 0;
@@ -224,14 +224,21 @@ public class Bomb extends AnimatedObject {
 			upRange = adjustedMinRangePosition(position.getY());
 	}
 
-	private int maxRangePosition(int position, int maxRange) { return position + maxRange * EFFECTIVE_PIXEL_DIMENSION; }
-	private int minRangePosition(int position, int minRange) { return position - minRange * EFFECTIVE_PIXEL_DIMENSION; }
+	private int maxRangePosition(int position, int maxRange) {
+		return position + maxRange * EFFECTIVE_PIXEL_DIMENSION;
+	}
+
+	private int minRangePosition(int position, int minRange) {
+		return position - minRange * EFFECTIVE_PIXEL_DIMENSION;
+	}
 
 	private int adjustedMaxRangePosition(int position, int maxDimension) {
 		return (maxDimension - 2) - position / EFFECTIVE_PIXEL_DIMENSION;
 	}
 
-	private int adjustedMinRangePosition(int position) { return position / EFFECTIVE_PIXEL_DIMENSION - 1; }
+	private int adjustedMinRangePosition(int position) {
+		return position / EFFECTIVE_PIXEL_DIMENSION - 1;
+	}
 
 	private void addAnimation(int animType, int xOffset, int yOffset) {
 		currentAnimations.add(new Animation(animationList.get(animType)));
@@ -251,11 +258,17 @@ public class Bomb extends AnimatedObject {
 		animYOffset.clear();
 	}
 
-	public void setWasTrigByBomb() { wasTrigByBomb = true; }
+	public void setWasTrigByBomb() {
+		wasTrigByBomb = true;
+	}
 
-	public static void increaseRange() { range++; }
+	public static void increaseRange() {
+		range++;
+	}
 
-	public static void resetRange() { range = 1; }
+	public static void resetRange() {
+		range = 1;
+	}
 
 	public List<String> toCSVEntry() {
 		List<String> entryList = new ArrayList<>();

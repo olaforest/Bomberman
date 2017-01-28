@@ -4,11 +4,7 @@ import gameplayModel.GameContext;
 import gameplayModel.GridMap;
 import gameplayModel.gridObjects.Exitway;
 import gameplayModel.gridObjects.PowerUp;
-import gameplayModel.gridObjects.animatedObjects.Bomb;
-import gameplayModel.gridObjects.animatedObjects.Bomberman;
-import gameplayModel.gridObjects.animatedObjects.Brick;
-import gameplayModel.gridObjects.animatedObjects.Enemies.*;
-import gameplayModel.gridObjects.animatedObjects.Enemy;
+import gameplayModel.gridObjects.animatedObjects.*;
 import gameplayModel.gridObjects.powerUps.*;
 import lombok.Getter;
 import menuModel.Player;
@@ -19,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
+import static gameplayModel.gridObjects.animatedObjects.EnemyType.valueOf;
 import static java.lang.Integer.parseInt;
 import static java.util.Collections.sort;
 import static java.util.stream.Collectors.toList;
@@ -32,7 +29,7 @@ public class Database {
 	private static final String SAVED_GAME = "SavedGame";
 	public static final UnaryOperator<List<String>> SAVED_GAME_CONTENT = content -> content.subList(6, content.size());
 
-	private List<Player> players;
+	private final List<Player> players;
 	private Player currentLoggedPlayer;
 
 	public Database() {
@@ -107,8 +104,8 @@ public class Database {
 		int spawnTimer = parseInt(map.get(0));
 
 		List<Brick> bricks = generateBricks(new ArrayList<>(map.subList(map.indexOf("Bricks") + 1, map.indexOf("Bombs"))));
-		List<Bomb> bombs = generateBombs(new ArrayList<>(map.subList(map.indexOf("Bombs") + 1, map.indexOf("Enemies"))));
-		List<Enemy> enemies = generateEnemies(new ArrayList<>(map.subList(map.indexOf("Enemies") + 1, map.indexOf("Exitway"))));
+		List<Bomb> bombs = generateBombs(new ArrayList<>(map.subList(map.indexOf("Bombs") + 1, map.indexOf("EnemyType"))));
+		List<Enemy> enemies = generateEnemies(new ArrayList<>(map.subList(map.indexOf("EnemyType") + 1, map.indexOf("Exitway"))));
 		Exitway exitway = generateExitway(new ArrayList<>(map.subList(map.indexOf("Exitway") + 1, map.indexOf("PowerUp"))));
 		PowerUp powerup = generatePowerUp(new ArrayList<>(map.subList(map.indexOf("PowerUp") + 1, map.indexOf("Bomberman"))));
 		Bomberman bomberman = generateBomberman(new ArrayList<>(map.subList(map.indexOf("Bomberman") + 1, map.size())));
@@ -147,43 +144,14 @@ public class Database {
 	}
 
 	private List<Enemy> generateEnemies(List<String> data) {
-		int xPosition, yPosition, direction;
-		String type;
-		List<Enemy> enemies = new ArrayList<>();
-
+		final List<Enemy> enemies = new ArrayList<>();
 		while (data.size() != 0) {
-			type = data.remove(0);
-			xPosition = parseInt(data.remove(0));
-			yPosition = parseInt(data.remove(0));
+			final EnemyType type = valueOf(data.remove(0));
+			final int xPosition = parseInt(data.remove(0));
+			final int yPosition = parseInt(data.remove(0));
 			final Position position = create(xPosition, yPosition);
-			direction = parseInt(data.remove(0));
-
-			switch (type) {
-				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Balloom":
-					enemies.add(new Balloom(position, direction));
-					break;
-				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Oneal":
-					enemies.add(new Oneal(position, direction));
-					break;
-				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Doll":
-					enemies.add(new Doll(position, direction));
-					break;
-				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Minvo":
-					enemies.add(new Minvo(position, direction));
-					break;
-				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Kondoria":
-					enemies.add(new Kondoria(position, direction));
-					break;
-				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Ovapi":
-					enemies.add(new Ovapi(position, direction));
-					break;
-				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Pass":
-					enemies.add(new Pass(position, direction));
-					break;
-				case "class gameplayModel.GridObjects.AnimatedObjects.Enemies.Pontan":
-					enemies.add(new Pontan(position, direction));
-					break;
-			}
+			final int direction = parseInt(data.remove(0));
+			enemies.add(new Enemy(type, position, direction));
 		}
 		return enemies;
 	}

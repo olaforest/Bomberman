@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 public class Concrete extends GridObject {
 
 	@Getter
-	private BufferedImage image;
+	private final BufferedImage image;
 	private static final int[] imageParameter = {2, 259};
 
 	public Concrete(Position position) {

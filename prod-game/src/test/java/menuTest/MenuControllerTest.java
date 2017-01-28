@@ -51,7 +51,7 @@ public class MenuControllerTest {
 	}
 
 	private class MyActionListener implements ActionListener {
-		private List events = new ArrayList();
+		private final List<ActionEvent> events = new ArrayList<>();
 
 		public void actionPerformed(ActionEvent e) {
 			this.events.add(e);

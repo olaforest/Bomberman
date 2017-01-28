@@ -20,12 +20,16 @@ import java.io.InputStream;
 @SuppressWarnings("serial")
 public class OptionsPanel extends JPanel {
 
-	private int TEXTFIELD_LENGTH = 12;
+	private static final int TEXTFIELD_LENGTH = 12;
 
-	private JButton save, goBack;
-	private JLabel newName, password, confirmPassword;
-	private JTextField name;
-	private JPasswordField pw, confirmPw;
+	private final JButton save;
+	private final JButton goBack;
+	private final JLabel newName;
+	private final JLabel password;
+	private final JLabel confirmPassword;
+	private final JTextField name;
+	private final JPasswordField pw;
+	private final JPasswordField confirmPw;
 	private BufferedImage img;
 
 	/**

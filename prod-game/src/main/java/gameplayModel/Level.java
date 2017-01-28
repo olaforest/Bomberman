@@ -1,13 +1,16 @@
 package gameplayModel;
 
+import gameplayModel.gridObjects.animatedObjects.EnemyType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
 import static java.lang.Integer.MAX_VALUE;
 import static java.util.Optional.empty;
@@ -17,14 +20,14 @@ import static java.util.Optional.of;
 class Level {
 	private static final Predicate<List<Integer>> IS_BONUS_LEVEL = spec -> spec.contains(MAX_VALUE);
 
-	@Getter private final List<Integer> enemiesCount;
+	@Getter private final Map<EnemyType, Integer> enemiesCount;
 	@Getter private final boolean bonusLevel;
 	private final Integer powerUpType;
 
 	Level(@NonNull List<Integer> specification) {
 		validateInputSpecification(specification);
-		enemiesCount = specification.subList(0, 8);
-		bonusLevel = IS_BONUS_LEVEL.test(enemiesCount);
+		enemiesCount = new LinkedHashMap<>();
+		bonusLevel = IS_BONUS_LEVEL.test(specification);
 		powerUpType = specification.get(8);
 	}
 
@@ -32,11 +35,11 @@ class Level {
 		return powerUpType == 0 ? empty() : of(powerUpType);
 	}
 
-	int getHardestEnemyType() {
-		return IntStream.iterate(7, i -> --i)
-				.limit(enemiesCount.size())
-				.filter(i -> enemiesCount.get(i) > 0)
-				.findFirst()
+	EnemyType getHardestEnemyType() {
+		return enemiesCount.entrySet().stream()
+				.filter(entry -> entry.getValue() > 0)
+				.map(Entry::getKey)
+				.reduce((first, second) -> second)
 				.orElseThrow(() -> new RuntimeException("There should be at least one enemy type per Level"));
 	}
 

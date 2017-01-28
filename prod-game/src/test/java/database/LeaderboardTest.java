@@ -19,16 +19,14 @@ public class LeaderboardTest {
 
 	@Test
 	public void testGetScores() {
-		int[] scores = new int[10];
-		scores = leaderboard.generateScores();
+		final int[] scores = leaderboard.generateScores();
 		for (int i = 0; i < 10; i++)
 			assertEquals(scores[i], database.sortPlayers().get(i).getCumulativeScore());
 	}
 
 	@Test
 	public void testGetNames() {
-		String[] names = new String[10];
-		names = leaderboard.generateNames();
+		final String[] names = leaderboard.generateNames();
 		for (int i = 0; i < 10; i++)
 			assertEquals(names[i], database.sortPlayers().get(i).getUsername());
 	}

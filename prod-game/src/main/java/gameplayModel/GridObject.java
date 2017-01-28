@@ -4,18 +4,24 @@ import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import lombok.Getter;
 import utilities.Position;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
 import static gameplayModel.GridMap.MAPHEIGHT;
 import static gameplayModel.GridMap.MAPWIDTH;
+import static java.awt.RenderingHints.*;
+import static java.awt.image.BufferedImage.TYPE_INT_RGB;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+import static javax.imageio.ImageIO.read;
 
 @Getter
 public class GridObject {
-	public static final BufferedImage sprite = loadSpriteSheet();
+	public static final BufferedImage sprite = loadSpriteSheet()
+			.orElseThrow(() -> new RuntimeException("Could not load sprite sheet"));
 
 	public static final int ZOOM = 2;
 	public static final int PIXEL_DIMENSION = 16;
@@ -27,7 +33,7 @@ public class GridObject {
 	protected static final int MAX_X_POSITION = EFFECTIVE_PIXEL_DIMENSION * (MAPWIDTH - 2);
 	protected static final int MAX_Y_POSITION = EFFECTIVE_PIXEL_DIMENSION * (MAPHEIGHT - 2);
 
-	protected Position position;
+	protected final Position position;
 	protected boolean isConcreteCollision;
 
 	public GridObject(Position position) {
@@ -94,31 +100,31 @@ public class GridObject {
 	}
 
 	protected static BufferedImage resizeImage(int xCoordinate, int yCoordinate) {
-		return resizeImage(sprite.getSubimage(xCoordinate, yCoordinate, PIXEL_DIMENSION, PIXEL_DIMENSION), ZOOM);
+		return resizeImage(sprite.getSubimage(xCoordinate, yCoordinate, PIXEL_DIMENSION, PIXEL_DIMENSION));
 	}
 
-	private static BufferedImage resizeImage(BufferedImage imageIn, int factor) {
-		final BufferedImage imageOut = new BufferedImage(imageIn.getWidth() * factor, imageIn.getHeight() * factor, BufferedImage.TYPE_INT_RGB);
+	private static BufferedImage resizeImage(BufferedImage imageIn) {
+		final BufferedImage imageOut = new BufferedImage(imageIn.getWidth() * ZOOM, imageIn.getHeight() * ZOOM, TYPE_INT_RGB);
 		final Graphics2D graphics2D = imageOut.createGraphics();
 		graphics2D.setComposite(AlphaComposite.Src);
 
 		//The three lines below are for RenderingHints for better sprite quality at cost of higher processing time.
-		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-		graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics2D.setRenderingHint(KEY_INTERPOLATION, VALUE_INTERPOLATION_BILINEAR);
+		graphics2D.setRenderingHint(KEY_RENDERING, VALUE_RENDER_QUALITY);
+		graphics2D.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
 
-		graphics2D.drawImage(imageIn, 0, 0, imageIn.getWidth() * factor, imageIn.getHeight() * factor, null);
+		graphics2D.drawImage(imageIn, 0, 0, imageIn.getWidth() * ZOOM, imageIn.getHeight() * ZOOM, null);
 		graphics2D.dispose();
 		return imageOut;
 	}
 
-	private static BufferedImage loadSpriteSheet() {
+	private static Optional<BufferedImage> loadSpriteSheet() {
 		try {
-			InputStream in = Bomberman.class.getResourceAsStream("/spritesheet.png");
-			return ImageIO.read(in);
+			final InputStream in = Bomberman.class.getResourceAsStream("/spritesheet.png");
+			return of(read(in));
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			return empty();
 		}
 	}
 }

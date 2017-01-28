@@ -19,7 +19,7 @@ public class Bomberman extends AnimatedObject {
 	public enum AnimationType {right, left, down, up, death}
 
 	public static final int INITIAL_SPEED = 4, SPEED_INCREMENT = 2, MISALIGNMENT_ALLOWED = 16, INVINCIBILITY_TIMEOUT = 10000;
-	public static final int[][] ANIM_PARAM = new int[][]{{50, 3, 4}, {50, 21, 4}, {2, 3, 3}, {2, 21, 3}, {113, 3, 7}};
+	public static final List<List<Integer>> ANIM_PARAM = asList(asList(50, 3, 4), asList(50, 21, 4), asList(2, 3, 3), asList(2, 21, 3), asList(113, 3, 7));
 
 	private List<PowerUp> powerUpsAcquired;
 	private int speed, bombsAvailable, bombsLeft;
@@ -31,6 +31,7 @@ public class Bomberman extends AnimatedObject {
 
 	public Bomberman(Position position) {
 		super(position);
+		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 0);
 		powerUpsAcquired = new ArrayList<>();
 		setBombermanAbilities();
 		bombsLeft = bombsAvailable;
@@ -38,14 +39,11 @@ public class Bomberman extends AnimatedObject {
 
 	public Bomberman(Position position, int invincibilityTimer, int bombsLeft, List<PowerUp> powerUpsAcquired) {
 		super(position);
+		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 0);
 		this.invincibilityTimer = invincibilityTimer;
 		this.bombsLeft = bombsLeft;
 		this.powerUpsAcquired = powerUpsAcquired;
 		setBombermanAbilities();
-	}
-
-	public void generateAnimationList() {
-		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 0);
 	}
 
 	public void setXPosition(int xPos) {
@@ -103,7 +101,7 @@ public class Bomberman extends AnimatedObject {
 		setBombermanAbilities();
 	}
 
-	public void removePowerUp(PowerUp powerUp) {
+	void removePowerUp(PowerUp powerUp) {
 		powerUpsAcquired.remove(powerUp);
 		setBombermanAbilities();
 	}
@@ -155,7 +153,7 @@ public class Bomberman extends AnimatedObject {
 		}
 	}
 
-	public void decreaseInvincibilityTimer() {
+	void decreaseInvincibilityTimer() {
 		if (invincibilityTimer > 0)
 			invincibilityTimer -= GameplayController.TIMEOUT;
 		else {
@@ -165,7 +163,7 @@ public class Bomberman extends AnimatedObject {
 		}
 	}
 
-	public void increaseBombsAvailable() {
+	void increaseBombsAvailable() {
 		bombsAvailable++;
 	}
 

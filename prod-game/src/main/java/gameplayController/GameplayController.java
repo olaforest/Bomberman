@@ -8,10 +8,7 @@ import gameplayModel.gridObjects.AnimatedObject;
 import gameplayModel.gridObjects.Concrete;
 import gameplayModel.gridObjects.Exitway;
 import gameplayModel.gridObjects.PowerUp;
-import gameplayModel.gridObjects.animatedObjects.Bomb;
-import gameplayModel.gridObjects.animatedObjects.Bomberman;
-import gameplayModel.gridObjects.animatedObjects.Brick;
-import gameplayModel.gridObjects.animatedObjects.Enemy;
+import gameplayModel.gridObjects.animatedObjects.*;
 import gameplayView.GameStatusPanel;
 import gameplayView.GameplayPanel;
 import lombok.Getter;
@@ -30,8 +27,9 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
-import static gameplayModel.gridObjects.factories.EnemyFactory.createEnemy;
-import static java.util.Arrays.asList;
+import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
+import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
+import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
 import static utilities.Position.create;
 
 public class GameplayController implements ActionListener {
@@ -41,14 +39,14 @@ public class GameplayController implements ActionListener {
 
 	private boolean placeBomb;
 
-	private MenuController menuCtrl;
+	private final MenuController menuCtrl;
 	@Getter
-	private GameContext gameContext;
+	private final GameContext gameContext;
 	private GridMap gridMap;
 	private ArtificialIntelligence AI;
 	private CollisionDetector colDetect;
 
-	private GameplayKeyListener keyListener = new GameplayKeyListener();
+	private final GameplayKeyListener keyListener = new GameplayKeyListener();
 	private GameplayPanel gamePanel;
 	private GameStatusPanel gameStatusPanel;
 
@@ -63,7 +61,7 @@ public class GameplayController implements ActionListener {
 	private PowerUp powerup;
 
 	private JFrame gameFrame;
-	private Timer timer;
+	private final Timer timer;
 	private LevelManager levelManager;
 
 	public GameplayController(MenuController menuCtrl) {
@@ -108,7 +106,7 @@ public class GameplayController implements ActionListener {
 
 		if (gameContext.getGameTime() <= 0 && !gameContext.isEndGameEnemiesSpawned()) {
 			gameContext.setEndGameEnemiesSpawned(true);
-			gridMap.generateEnemies(asList(0, 0, 0, 0, 0, 0, 0, 12));
+			gridMap.generateEnemiesOfType(Pontan);
 		}
 
 		updateViewport();
@@ -518,13 +516,13 @@ public class GameplayController implements ActionListener {
 
 	private void spawnEightHarderEnemies(GridObject gridObj) {
 		enemies.clear();
-		final int type = levelManager.getHardestEnemyType();
-		spawnEightEnemies(type == 7 ? 7 : type + 1 , gridObj.getX(), gridObj.getY());
+		final EnemyType type = levelManager.getHardestEnemyType();
+		spawnEightEnemies(type == Pontan ? Pontan : values()[type.ordinal() + 1], gridObj.getX(), gridObj.getY());
 	}
 
-	private void spawnEightEnemies(int type, int xPosition, int yPosition) {
+	private void spawnEightEnemies(EnemyType type, int xPosition, int yPosition) {
 		IntStream.range(0, 8)
-				.forEach(i -> enemies.add(createEnemy(type,xPosition, yPosition)));
+				.forEach(i -> enemies.add(createEnemy(type, xPosition, yPosition)));
 	}
 
 	private void setupGameFrame(boolean isVisible) {

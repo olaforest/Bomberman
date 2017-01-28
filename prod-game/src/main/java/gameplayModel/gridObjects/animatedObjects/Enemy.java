@@ -8,30 +8,38 @@ import utilities.Position;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.random;
+import static java.util.Arrays.asList;
+import static utilities.Position.create;
+
 @Getter
-public abstract class Enemy extends AnimatedObject {
+public class Enemy extends AnimatedObject {
 	public enum AnimationType {right, left, death}
 
-	public final int SPEED_MULTIPLIER = 1;
+	private final int points;
+	private final int speed;
+	private final int smartness;
+	private final boolean isWallpass;
+	@Setter private int direction;
 
-	protected int points;
-	protected int speed;
-	protected int smartness;
-	protected boolean isWallpass;
-	@Setter
-	protected int direction;
-
-	public Enemy(Position position) {
-		super(position);
-		direction = (int) (Math.random() * 3);
+	private Enemy(EnemyType enemyType, Position position) {
+		this(enemyType, position, (int) (random() * 3));
 	}
 
-	public Enemy(Position position, int dir) {
+	public Enemy(EnemyType enemyType, Position position, int direction) {
 		super(position);
-		direction = dir;
+		points = enemyType.getPoints();
+		speed = enemyType.getSpeed();
+		smartness = enemyType.getSmartness();
+		isWallpass = enemyType.isWallpass();
+		animationList = generateAnimationList(asList(AnimationType.values()), enemyType.getAnimParam(), 2);
+		this.direction = direction;
 	}
 
-	public abstract void generateAnimationList();
+	public static Enemy createEnemy(EnemyType type, int xPosition, int yPosition) {
+		final Position position = create(xPosition, yPosition);
+		return new Enemy(type, position);
+	}
 
 	public List<String> toCSVEntry() {
 		List<String> entryList = new ArrayList<>();

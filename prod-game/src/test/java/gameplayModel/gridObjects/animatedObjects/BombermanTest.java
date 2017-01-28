@@ -22,40 +22,40 @@ public class BombermanTest {
 	@Test
 	public void testGetAndSetXPosition() {
 
-		//Tests if the inputed x position is out of bounds on the left.
+		//Tests if the inputted x position is out of bounds on the left.
 		bomberman.setXPosition(0);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomberman.getPosition().getX());
 
-		//Tests if the inputed x position is out of bounds on the right.
+		//Tests if the inputted x position is out of bounds on the right.
 		bomberman.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomberman.getPosition().getX());
 
-		//Tests if the inputed x position is valid.
+		//Tests if the inputted x position is valid.
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bomberman.getPosition().getX());
 
-		//Tests if the inputed x position is valid while the y position is above a row, outside of the misalignment tolerance.
+		//Tests if the inputted x position is valid while the y position is above a row, outside of the misalignment tolerance.
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED - 1);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomberman.getPosition().getX());
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED - 1, bomberman.getPosition().getY());
 
-		//Tests if the inputed x position is valid while the y position is above a row, inside of the misalignment tolerance.
+		//Tests if the inputted x position is valid while the y position is above a row, inside of the misalignment tolerance.
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomberman.getPosition().getX());
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED + 4, bomberman.getPosition().getY());
 
-		//Tests if the inputed x position is valid while the y position is below a row, outside of the misalignment tolerance.
+		//Tests if the inputted x position is valid while the y position is below a row, outside of the misalignment tolerance.
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED + 1);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomberman.getPosition().getX());
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED + 1, bomberman.getPosition().getY());
 
-		//Tests if the inputed x position is valid while the y position is below a row, inside of the misalignment tolerance.
+		//Tests if the inputted x position is valid while the y position is below a row, inside of the misalignment tolerance.
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
@@ -66,40 +66,40 @@ public class BombermanTest {
 	@Test
 	public void testGetAndSetYPosition() {
 
-		//Tests if the inputed y position is out of bounds on the top.
+		//Tests if the inputted y position is out of bounds on the top.
 		bomberman.setYPosition(0);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomberman.getPosition().getY());
 
-		//Tests if the inputed y position is out of bounds on the bottom.
+		//Tests if the inputted y position is out of bounds on the bottom.
 		bomberman.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION, bomberman.getPosition().getY());
 
-		//Tests if the inputed y position is valid.
+		//Tests if the inputted y position is valid.
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, bomberman.getPosition().getY());
 
-		//Tests if the inputed y position is valid while the x position is to the left of a column, outside of the misalignment tolerance.
+		//Tests if the inputted y position is valid while the x position is to the left of a column, outside of the misalignment tolerance.
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED - 1);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomberman.getPosition().getY());
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED - 1, bomberman.getPosition().getX());
 
-		//Tests if the inputed y position is valid while the x position is to the left of a column, inside of the misalignment tolerance.
+		//Tests if the inputted y position is valid while the x position is to the left of a column, inside of the misalignment tolerance.
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, bomberman.getPosition().getY());
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Bomberman.MISALIGNMENT_ALLOWED + 4, bomberman.getPosition().getX());
 
-		//Tests if the inputed y position is valid while the x position is to the right of a column, outside of the misalignment tolerance.
+		//Tests if the inputted y position is valid while the x position is to the right of a column, outside of the misalignment tolerance.
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED + 1);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, bomberman.getPosition().getY());
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED + 1, bomberman.getPosition().getX());
 
-		//Tests if the inputed y position is valid while the x position is to the right of a column, inside of the misalignment tolerance.
+		//Tests if the inputted y position is valid while the x position is to the right of a column, inside of the misalignment tolerance.
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		bomberman.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Bomberman.MISALIGNMENT_ALLOWED);
 		bomberman.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
@@ -214,7 +214,7 @@ public class BombermanTest {
 		for (int i = 0; i <= (Bomberman.INVINCIBILITY_TIMEOUT / GameplayController.TIMEOUT - 1); i++)
 			bomberman.decreaseInvincibilityTimer();
 
-		// The invincibilityTimer should be one decrement away from the invincibilbity wearing off, therefore, bomberman should still be invincible.
+		// The invincibilityTimer should be one decrement away from the invincibility wearing off, therefore, bomberman should still be invincible.
 		assertTrue(bomberman.isInvincible());
 
 		bomberman.decreaseInvincibilityTimer();

@@ -21,8 +21,13 @@ import java.io.InputStream;
 public class PauseMenuPanel extends JPanel {
 
 
-	private JButton resume, save, load, leaderboard, mainmenu, exit;
-	private JLabel gamepaused;
+	private final JButton resume;
+	private final JButton save;
+	private final JButton load;
+	private final JButton leaderboard;
+	private final JButton mainMenu;
+	private final JButton exit;
+	private final JLabel gamePaused;
 	private BufferedImage img;
 
 	/**
@@ -60,19 +65,19 @@ public class PauseMenuPanel extends JPanel {
 		leaderboard.setText("Leaderboard");
 		leaderboard.addActionListener(listener);
 
-		mainmenu = new JButton();
+		mainMenu = new JButton();
 		setFont(new Font("Eurostile", 0, 13));
-		mainmenu.setText("Return to Main Menu");
-		mainmenu.addActionListener(listener);
+		mainMenu.setText("Return to Main Menu");
+		mainMenu.addActionListener(listener);
 
 		exit = new JButton();
 		setFont(new Font("Eurostile", 0, 13));
 		exit.setText("Exit Game");
 		exit.addActionListener(listener);
 
-		gamepaused = new JLabel();
-		gamepaused.setFont(new java.awt.Font("Eurostile", Font.BOLD, 28)); // NOI18N
-		gamepaused.setText("Game Paused");
+		gamePaused = new JLabel();
+		gamePaused.setFont(new java.awt.Font("Eurostile", Font.BOLD, 28)); // NOI18N
+		gamePaused.setText("Game Paused");
 
 		setupLayout();
 
@@ -117,7 +122,7 @@ public class PauseMenuPanel extends JPanel {
 	 * @return JButton ID of the "Return to Main Menu" button
 	 */
 	public JButton getMainMenu() {
-		return mainmenu;
+		return mainMenu;
 	}
 
 	/**
@@ -139,17 +144,17 @@ public class PauseMenuPanel extends JPanel {
 										.addComponent(resume)
 										.addComponent(save)
 										.addComponent(load)
-										.addComponent(mainmenu)
+										.addComponent(mainMenu)
 										.addComponent(leaderboard)
 										.addComponent(exit)
-										.addComponent(gamepaused))
+										.addComponent(gamePaused))
 								.addGap(150, 150, 150))
 		);
 		layout.setVerticalGroup(
 				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
 						.addGroup(layout.createSequentialGroup()
 								.addGap(90, 90, 90)
-								.addComponent(gamepaused)
+								.addComponent(gamePaused)
 								.addGap(18, 18, 18)
 								.addComponent(resume)
 								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -159,7 +164,7 @@ public class PauseMenuPanel extends JPanel {
 								.addGap(18, 18, 18)
 								.addComponent(leaderboard)
 								.addGap(18, 18, 18)
-								.addComponent(mainmenu)
+								.addComponent(mainMenu)
 								.addGap(18, 18, 18)
 								.addComponent(exit)
 								.addContainerGap(49, Short.MAX_VALUE))

@@ -9,9 +9,11 @@ import java.util.List;
 public class Player implements Comparable<Player> {
 
 	private int levelUnlocked;
-	private String realName, username, password;
-	private CumulativeScore cumulativeScore;
-	private List<SavedGame> savedGameList;
+	private String realName;
+	private final String username;
+	private String password;
+	private final CumulativeScore cumulativeScore;
+	private final List<SavedGame> savedGameList;
 
 	public Player(String name, String user, String pw) {
 		realName = name;
@@ -79,9 +81,8 @@ public class Player implements Comparable<Player> {
 		savedGameList.add(game);
 	}
 
-	public Player withSavedGames(List<SavedGame> games) {
+	public void withSavedGames(List<SavedGame> games) {
 		savedGameList.addAll(games);
-		return this;
 	}
 
 	public List<String> toCSVEntry() {

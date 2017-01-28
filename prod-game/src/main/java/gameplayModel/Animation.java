@@ -9,7 +9,7 @@ import java.util.List;
 public class Animation {
 
 	@Getter
-	private List<BufferedImage> frames;
+	private final List<BufferedImage> frames;
 	@Getter
 	private boolean isAnimDone;
 	private int counter;

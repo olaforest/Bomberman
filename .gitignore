@@ -1,12 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Java template
-*.class
-
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
@@ -72,3 +69,12 @@ fabric.properties
 
 # CSV Template
 *.csv
+.DS_Store
+parent/.DS_Store
+prod-game-dtos/.DS_Store
+prod-game-dtos/src/test/
+prod-game/.DS_Store
+prod-game/src/.DS_Store
+prod-game/src/main/.DS_Store
+prod-game/src/main/java/.DS_Store
+src/

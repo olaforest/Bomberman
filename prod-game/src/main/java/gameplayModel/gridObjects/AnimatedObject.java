@@ -14,24 +14,17 @@ public abstract class AnimatedObject extends GridObject {
 	private static final int INITIAL_ANIMATION = 0;
 
 	protected List<Animation> animationList;
-	@Getter
-	private Animation currentAnimation;
-	@Getter
-	protected boolean isDead, isObsolete;
-	@Getter
-	private int animationNumber;
+	@Getter private Animation currentAnimation;
+	@Getter protected boolean isDead, isObsolete;
+	@Getter private int animationNumber;
 	protected int counter, animCycleParam;
 
-	public AnimatedObject(Position position) {
+	protected AnimatedObject(Position position) {
 		super(position);
-		generateAnimationList();
-
 		currentAnimation = animationList.get(INITIAL_ANIMATION);
 		animationNumber = INITIAL_ANIMATION;
-
 		counter = 0;
 		animCycleParam = 3;
-
 		isDead = false;
 		isObsolete = false;
 	}
@@ -58,18 +51,16 @@ public abstract class AnimatedObject extends GridObject {
 		isDead = true;
 	}
 
-	public abstract void generateAnimationList();
-
-	protected List<Animation> generateAnimationList(List<?> animationTypes, int[][] animParam, int adjustment) {
+	protected List<Animation> generateAnimationList(List<?> animationTypes, List<List<Integer>> animParam, int adjustment) {
 		return IntStream.range(0, animationTypes.size())
 				.mapToObj(i -> generateAnimation(i, animParam, adjustment))
 				.collect(toList());
 	}
 
-	private Animation generateAnimation(int i, int[][] animParam, int adjustment) {
-		final Animation animation = new Animation(animParam[i][2]);
-		IntStream.range(0, animParam[i][2])
-				.forEach(j -> animation.setFrame(resizeImage(animParam[i][0] + (PIXEL_DIMENSION + adjustment) * j, animParam[i][1]), j));
+	private Animation generateAnimation(int i, List<List<Integer>> animParam, int adjustment) {
+		final Animation animation = new Animation(animParam.get(i).get(2));
+		IntStream.range(0, animParam.get(i).get(2))
+				.forEach(j -> animation.setFrame(resizeImage(animParam.get(i).get(0) + (PIXEL_DIMENSION + adjustment) * j, animParam.get(i).get(1)), j));
 		return animation;
 	}
 
