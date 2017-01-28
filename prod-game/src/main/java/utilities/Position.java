@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayVisual.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 
 @Getter
 @Setter

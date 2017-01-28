@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
+import static gameplayVisual.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static utilities.Position.create;
 
 public class GameplayController implements ActionListener {

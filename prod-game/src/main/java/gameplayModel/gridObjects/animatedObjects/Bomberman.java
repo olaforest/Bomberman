@@ -4,6 +4,7 @@ import gameplayController.GameplayController;
 import gameplayModel.GridMap;
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayModel.gridObjects.PowerUp;
+import gameplayVisual.ImageManager;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -47,19 +48,19 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void setXPosition(int xPos) {
-		int yError = (position.getY() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
+		int yError = (position.getY() - ImageManager.EFFECTIVE_PIXEL_DIMENSION) % (ImageManager.EFFECTIVE_PIXEL_DIMENSION * 2);
 
-		boolean isInXRange = (xPos >= EFFECTIVE_PIXEL_DIMENSION) && (xPos <= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPWIDTH - 2));
+		boolean isInXRange = (xPos >= ImageManager.EFFECTIVE_PIXEL_DIMENSION) && (xPos <= ImageManager.EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPWIDTH - 2));
 		boolean isAlignedWithRow = yError == 0;
 		boolean isBelowRow = yError <= MISALIGNMENT_ALLOWED;
-		boolean isAboveRow = yError >= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED);
+		boolean isAboveRow = yError >= (ImageManager.EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED);
 
 		if (isAlignedWithRow && isInXRange) {
 			position.setX(xPos);
-		} else if (isAboveRow && isInXRange && yError <= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
+		} else if (isAboveRow && isInXRange && yError <= (ImageManager.EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
 			position.setX(xPos);
 			position.incrementY(speed);
-		} else if (isAboveRow && isInXRange && yError > (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
+		} else if (isAboveRow && isInXRange && yError > (ImageManager.EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
 			position.setX(xPos);
 			position.incrementY(2);
 		} else if (isBelowRow && isInXRange && yError >= speed) {
@@ -72,12 +73,12 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void setYPosition(int yPos) {
-		int xError = (position.getX() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2);
+		int xError = (position.getX() - ImageManager.EFFECTIVE_PIXEL_DIMENSION) % (ImageManager.EFFECTIVE_PIXEL_DIMENSION * 2);
 
-		boolean isInYRange = (yPos >= EFFECTIVE_PIXEL_DIMENSION) && (yPos <= EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPHEIGHT - 2));
+		boolean isInYRange = (yPos >= ImageManager.EFFECTIVE_PIXEL_DIMENSION) && (yPos <= ImageManager.EFFECTIVE_PIXEL_DIMENSION * (GridMap.MAPHEIGHT - 2));
 		boolean isAlignedWithColumn = xError == 0;
 		boolean isRightFromColumn = xError <= MISALIGNMENT_ALLOWED;
-		boolean isLeftFromColumn = xError >= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED);
+		boolean isLeftFromColumn = xError >= (ImageManager.EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED);
 
 		if (isAlignedWithColumn && isInYRange) {
 			position.setY(yPos);
@@ -87,10 +88,10 @@ public class Bomberman extends AnimatedObject {
 		} else if (isRightFromColumn && isInYRange && xError < speed) {
 			position.setY(yPos);
 			position.decrementX(2);
-		} else if (isLeftFromColumn && isInYRange && xError <= (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
+		} else if (isLeftFromColumn && isInYRange && xError <= (ImageManager.EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
 			position.setY(yPos);
 			position.incrementX(speed);
-		} else if (isLeftFromColumn && isInYRange && xError > (EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
+		} else if (isLeftFromColumn && isInYRange && xError > (ImageManager.EFFECTIVE_PIXEL_DIMENSION * 2 - MISALIGNMENT_ALLOWED + speed)) {
 			position.setY(yPos);
 			position.incrementX(2);
 		}

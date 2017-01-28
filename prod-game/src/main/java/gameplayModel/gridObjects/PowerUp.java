@@ -1,5 +1,6 @@
 package gameplayModel.gridObjects;
 
+import gameplayVisual.ImageManager;
 import lombok.Getter;
 import utilities.Position;
 
@@ -43,6 +44,6 @@ public class PowerUp extends HiddenObject {
 	}
 
 	private BufferedImage generateImage(List<Integer> parameters) {
-		return resizeImage(parameters.get(0), parameters.get(1));
+		return ImageManager.resizeImage(parameters.get(0), parameters.get(1));
 	}
 }

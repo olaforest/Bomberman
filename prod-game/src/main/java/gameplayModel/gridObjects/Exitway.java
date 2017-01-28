@@ -1,5 +1,6 @@
 package gameplayModel.gridObjects;
 
+import gameplayVisual.ImageManager;
 import lombok.AccessLevel;
 import lombok.Getter;
 import utilities.Position;
@@ -20,7 +21,7 @@ public class Exitway extends HiddenObject {
 	public Exitway(Position position, int index) {
 		super(position);
 		this.brickIndex = index;
-		image = resizeImage(imageParameter[0], imageParameter[1]);
+		image = ImageManager.resizeImage(imageParameter[0], imageParameter[1]);
 	}
 
 	@Override

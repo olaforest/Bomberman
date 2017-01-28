@@ -3,6 +3,7 @@ package gameplayModel.gridObjects.animatedObjects;
 import gameplayController.GameplayController;
 import gameplayModel.Animation;
 import gameplayModel.gridObjects.AnimatedObject;
+import gameplayVisual.ImageManager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -29,7 +30,7 @@ public class Bomb extends AnimatedObject {
 	public enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp, expVertical, expHorizontal}
 
 	public static final int TIME_TO_EXPLOSION = 2500;
-	public static final int[][] ANIM_PARAM = new int[][]{{113, 21, 4, 4, PIXEL_DIMENSION},
+	public static final int[][] ANIM_PARAM = new int[][]{{113, 21, 4, 4, ImageManager.PIXEL_DIMENSION},
 			{19, 223, 7, 4, 54},
 			{37, 223, 7, 4, 54},
 			{1, 223, 7, 4, 54},
@@ -92,10 +93,10 @@ public class Bomb extends AnimatedObject {
 	private Animation generateAnimation(int i) {
 		final Animation animation = new Animation(ANIM_PARAM[i][2]);
 		for (int j = 0; j < ANIM_PARAM[i][3]; j++)
-			animation.setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * j, ANIM_PARAM[i][1]), j);
+			animation.setFrame(ImageManager.resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * j, ANIM_PARAM[i][1]), j);
 
 		for (int n = (ANIM_PARAM[i][2] - ANIM_PARAM[i][3]); n > 0; n--)
-			animation.setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * n, ANIM_PARAM[i][1]), ANIM_PARAM[i][3] - n);
+			animation.setFrame(ImageManager.resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * n, ANIM_PARAM[i][1]), ANIM_PARAM[i][3] - n);
 		return animation;
 	}
 
@@ -196,7 +197,7 @@ public class Bomb extends AnimatedObject {
 			setAdjustedRanges.run();
 	}
 
-	private final IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0;
+	private final IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (ImageManager.EFFECTIVE_PIXEL_DIMENSION * 2) == 0;
 	private final BooleanSupplier isNotAlignedWithRow = () -> isNotAlignedWithRowOrColumn.test(position.getY());
 	private final BooleanSupplier isNotAlignedWithColumn = () -> isNotAlignedWithRowOrColumn.test(position.getX());
 
@@ -225,19 +226,19 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private int maxRangePosition(int position, int maxRange) {
-		return position + maxRange * EFFECTIVE_PIXEL_DIMENSION;
+		return position + maxRange * ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 	}
 
 	private int minRangePosition(int position, int minRange) {
-		return position - minRange * EFFECTIVE_PIXEL_DIMENSION;
+		return position - minRange * ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 	}
 
 	private int adjustedMaxRangePosition(int position, int maxDimension) {
-		return (maxDimension - 2) - position / EFFECTIVE_PIXEL_DIMENSION;
+		return (maxDimension - 2) - position / ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 	}
 
 	private int adjustedMinRangePosition(int position) {
-		return position / EFFECTIVE_PIXEL_DIMENSION - 1;
+		return position / ImageManager.EFFECTIVE_PIXEL_DIMENSION - 1;
 	}
 
 	private void addAnimation(int animType, int xOffset, int yOffset) {
@@ -258,11 +259,11 @@ public class Bomb extends AnimatedObject {
 		animYOffset.clear();
 	}
 
-	public void setWasTrigByBomb() {
+	void setWasTrigByBomb() {
 		wasTrigByBomb = true;
 	}
 
-	public static void increaseRange() {
+	static void increaseRange() {
 		range++;
 	}
 

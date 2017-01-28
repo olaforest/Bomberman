@@ -11,7 +11,7 @@ import gameplayModel.gridObjects.animatedObjects.Enemy;
 import java.util.ArrayList;
 import java.util.List;
 
-import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayVisual.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 
 class CollisionDetector {
 

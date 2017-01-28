@@ -1,6 +1,7 @@
 package gameplayModel.gridObjects;
 
 import gameplayModel.GridObject;
+import gameplayVisual.ImageManager;
 import lombok.Getter;
 import utilities.Position;
 
@@ -14,7 +15,7 @@ public class Concrete extends GridObject {
 
 	public Concrete(Position position) {
 		super(position);
-		image = resizeImage(imageParameter[0], imageParameter[1]);
+		image = ImageManager.resizeImage(imageParameter[0], imageParameter[1]);
 	}
 
 	@Override
