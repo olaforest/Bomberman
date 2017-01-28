@@ -2,7 +2,6 @@ package gameplayModel.gridObjects.animatedObjects;
 
 import gameplayController.GameplayController;
 import gameplayModel.GridMap;
-import gameplayModel.gridObjects.powerUps.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -108,96 +107,6 @@ public class BombermanTest {
 	}
 
 	@Test
-	public void testAddPowerUp() {
-
-		BombPU bombPU = new BombPU(create(0, 0));
-		Flames flames = new Flames(create(0, 0));
-		Speed speed = new Speed(create(0, 0));
-		Wallpass wallpass = new Wallpass(create(0, 0));
-		Detonator detonator = new Detonator(create(0, 0));
-		Bombpass bombpass = new Bombpass(create(0, 0));
-		Flamepass flamepass = new Flamepass(create(0, 0));
-		Mystery mystery = new Mystery(create(0, 0));
-
-		bomberman.getPowerUpsAcquired().clear();
-
-		bomberman.addPowerUp(bombPU);
-		assertTrue(bomberman.getPowerUpsAcquired().contains(bombPU));
-
-		bomberman.addPowerUp(flames);
-		assertTrue(bomberman.getPowerUpsAcquired().contains(flames));
-
-		bomberman.addPowerUp(speed);
-		assertTrue(bomberman.getPowerUpsAcquired().contains(speed));
-
-		bomberman.addPowerUp(wallpass);
-		assertTrue(bomberman.getPowerUpsAcquired().contains(wallpass));
-
-		bomberman.addPowerUp(detonator);
-		assertTrue(bomberman.getPowerUpsAcquired().contains(detonator));
-
-		bomberman.addPowerUp(bombpass);
-		assertTrue(bomberman.getPowerUpsAcquired().contains(bombpass));
-
-		bomberman.addPowerUp(flamepass);
-		assertTrue(bomberman.getPowerUpsAcquired().contains(flamepass));
-
-		bomberman.addPowerUp(mystery);
-		assertTrue(bomberman.getPowerUpsAcquired().contains(mystery));
-
-		bomberman.getPowerUpsAcquired().clear();
-	}
-
-
-	@Test
-	public void testRemovePowerUp() {
-
-		BombPU bombPU = new BombPU(create(0, 0));
-		Flames flames = new Flames(create(0, 0));
-		Speed speed = new Speed(create(0, 0));
-		Wallpass wallpass = new Wallpass(create(0, 0));
-		Detonator detonator = new Detonator(create(0, 0));
-		Bombpass bombpass = new Bombpass(create(0, 0));
-		Flamepass flamepass = new Flamepass(create(0, 0));
-		Mystery mystery = new Mystery(create(0, 0));
-
-		bomberman.addPowerUp(bombPU);
-		bomberman.addPowerUp(flames);
-		bomberman.addPowerUp(speed);
-		bomberman.addPowerUp(wallpass);
-		bomberman.addPowerUp(detonator);
-		bomberman.addPowerUp(bombpass);
-		bomberman.addPowerUp(flamepass);
-		bomberman.addPowerUp(mystery);
-
-		bomberman.removePowerUp(bombPU);
-		assertFalse(bomberman.getPowerUpsAcquired().contains(bombPU));
-
-		bomberman.removePowerUp(flames);
-		assertFalse(bomberman.getPowerUpsAcquired().contains(flames));
-
-		bomberman.removePowerUp(speed);
-		assertFalse(bomberman.getPowerUpsAcquired().contains(speed));
-
-		bomberman.removePowerUp(wallpass);
-		assertFalse(bomberman.getPowerUpsAcquired().contains(wallpass));
-
-		bomberman.removePowerUp(detonator);
-		assertFalse(bomberman.getPowerUpsAcquired().contains(detonator));
-
-		bomberman.removePowerUp(bombpass);
-		assertFalse(bomberman.getPowerUpsAcquired().contains(bombpass));
-
-		bomberman.removePowerUp(flamepass);
-		assertFalse(bomberman.getPowerUpsAcquired().contains(flamepass));
-
-		bomberman.removePowerUp(mystery);
-		assertFalse(bomberman.getPowerUpsAcquired().contains(mystery));
-
-		bomberman.getPowerUpsAcquired().clear();
-	}
-
-	@Test
 	public void testGetPowerUpsAcquired() {
 		assertTrue(bomberman.getPowerUpsAcquired().getClass().toString().equals("class java.util.ArrayList"));
 	}
@@ -208,7 +117,6 @@ public class BombermanTest {
 		assertFalse(bomberman.isInvincible());
 
 		bomberman.getPowerUpsAcquired().clear();
-		bomberman.addPowerUp(new Mystery(create(0, 0)));
 		assertTrue(bomberman.isInvincible());
 
 		for (int i = 0; i <= (Bomberman.INVINCIBILITY_TIMEOUT / GameplayController.TIMEOUT - 1); i++)
@@ -232,7 +140,6 @@ public class BombermanTest {
 		assertFalse(bomberman.canWallpass());
 
 		bomberman.getPowerUpsAcquired().clear();
-		bomberman.addPowerUp(new Wallpass(create(0, 0)));
 
 		assertTrue(bomberman.canWallpass());
 		bomberman.getPowerUpsAcquired().clear();
@@ -244,7 +151,6 @@ public class BombermanTest {
 		assertFalse(bomberman.canDetonateBombs());
 
 		bomberman.getPowerUpsAcquired().clear();
-		bomberman.addPowerUp(new Detonator(create(0, 0)));
 
 		assertTrue(bomberman.canDetonateBombs());
 		bomberman.getPowerUpsAcquired().clear();
@@ -256,7 +162,6 @@ public class BombermanTest {
 		assertFalse(bomberman.canBombpass());
 
 		bomberman.getPowerUpsAcquired().clear();
-		bomberman.addPowerUp(new Bombpass(create(0, 0)));
 
 		assertTrue(bomberman.canBombpass());
 		bomberman.getPowerUpsAcquired().clear();
@@ -268,7 +173,6 @@ public class BombermanTest {
 		assertFalse(bomberman.canFlamepass());
 
 		bomberman.getPowerUpsAcquired().clear();
-		bomberman.addPowerUp(new Flamepass(create(0, 0)));
 
 		assertTrue(bomberman.canFlamepass());
 		bomberman.getPowerUpsAcquired().clear();
@@ -280,7 +184,6 @@ public class BombermanTest {
 		assertFalse(bomberman.isInvincible());
 
 		bomberman.getPowerUpsAcquired().clear();
-		bomberman.addPowerUp(new Mystery(create(0, 0)));
 
 		assertTrue(bomberman.isInvincible());
 		bomberman.getPowerUpsAcquired().clear();
@@ -292,7 +195,6 @@ public class BombermanTest {
 		bomberman.getPowerUpsAcquired().clear();
 		assertEquals(4, bomberman.getSpeed());
 
-		bomberman.addPowerUp(new Speed(create(0, 0)));
 		assertEquals(6, bomberman.getSpeed());
 
 		bomberman.getPowerUpsAcquired().clear();

@@ -7,15 +7,21 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import static utilities.Position.create;
+
 @Getter
-public abstract class PowerUp extends HiddenObject {
+public class PowerUp extends HiddenObject {
 	private final BufferedImage image;
 	private final boolean permanent;
 
-	protected PowerUp(PowerUpType type, Position position) {
+	private PowerUp(PowerUpType type, Position position) {
 		super(position);
 		permanent = type.isPermanent();
 		image = generateImage(type.getAnimParam());
+	}
+
+	public static PowerUp createPowerUp(PowerUpType type, int xPosition, int yPosition) {
+		return new PowerUp(type, create(xPosition, yPosition));
 	}
 
 	@Override

@@ -4,8 +4,8 @@ import gameplayModel.GameContext;
 import gameplayModel.GridMap;
 import gameplayModel.gridObjects.Exitway;
 import gameplayModel.gridObjects.PowerUp;
+import gameplayModel.gridObjects.PowerUpType;
 import gameplayModel.gridObjects.animatedObjects.*;
-import gameplayModel.gridObjects.powerUps.*;
 import lombok.Getter;
 import menuModel.Player;
 import menuModel.SavedGame;
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
+import static gameplayModel.gridObjects.PowerUp.createPowerUp;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.valueOf;
 import static java.lang.Integer.parseInt;
 import static java.util.Collections.sort;
@@ -163,10 +164,10 @@ public class Database {
 	}
 
 	private PowerUp generatePowerUp(List<String> data) {
-		String type = data.remove(0);
-		int xPosition = parseInt(data.remove(0));
-		int yPosition = parseInt(data.remove(0));
-		return determinePowerUp(type, xPosition, yPosition);
+		final PowerUpType type = PowerUpType.valueOf(data.remove(0));
+		final int xPosition = parseInt(data.remove(0));
+		final int yPosition = parseInt(data.remove(0));
+		return createPowerUp(type, xPosition, yPosition);
 	}
 
 	private Bomberman generateBomberman(List<String> data) {
@@ -182,41 +183,15 @@ public class Database {
 	}
 
 	private List<PowerUp> generatePowerUpsAcquired(List<String> data) {
-		int xPos, yPos;
-		String type;
 		List<PowerUp> powerUps = new ArrayList<>();
 
 		while (data.size() != 0) {
-			type = data.remove(0);
-			xPos = parseInt(data.remove(0));
-			yPos = parseInt(data.remove(0));
-			powerUps.add(determinePowerUp(type, xPos, yPos));
+			final PowerUpType type = PowerUpType.valueOf(data.remove(0));
+			final int xPos = parseInt(data.remove(0));
+			final int yPos = parseInt(data.remove(0));
+			powerUps.add(createPowerUp(type, xPos, yPos));
 		}
 		return powerUps;
-	}
-
-	private PowerUp determinePowerUp(String type, int xPosition, int yPosition) {
-		final Position position = create(xPosition, yPosition);
-		switch (type) {
-			case "class gameplayModel.GridObjects.PowerUps.BombPU":
-				return new BombPU(position);
-			case "class gameplayModel.GridObjects.PowerUps.Flames":
-				return new Flames(position);
-			case "class gameplayModel.GridObjects.PowerUps.Speed":
-				return new Speed(position);
-			case "class gameplayModel.GridObjects.PowerUps.Wallpass":
-				return new Wallpass(position);
-			case "class gameplayModel.GridObjects.PowerUps.Detonator":
-				return new Detonator(position);
-			case "class gameplayModel.GridObjects.PowerUps.Bombpass":
-				return new Bombpass(position);
-			case "class gameplayModel.GridObjects.PowerUps.Flamepass":
-				return new Flamepass(position);
-			case "class gameplayModel.GridObjects.PowerUps.Mystery":
-				return new Mystery(position);
-			default:
-				return null;
-		}
 	}
 
 	public Player addPlayer(Player newPlayer) {
