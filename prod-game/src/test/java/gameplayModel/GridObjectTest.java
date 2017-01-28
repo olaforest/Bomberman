@@ -3,7 +3,7 @@ package gameplayModel;
 import org.junit.Before;
 import org.junit.Test;
 
-import static gameplayVisual.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static utilities.Position.create;

@@ -1,7 +1,7 @@
 package gameplayModel.gridObjects;
 
 import gameplayModel.GridObject;
-import gameplayVisual.ImageManager;
+import gameplayView.ImageManager;
 import lombok.Getter;
 import utilities.Position;
 

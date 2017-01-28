@@ -4,7 +4,7 @@ import gameplayController.GameplayController;
 import gameplayModel.GridMap;
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayModel.gridObjects.PowerUp;
-import gameplayVisual.ImageManager;
+import gameplayView.ImageManager;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;

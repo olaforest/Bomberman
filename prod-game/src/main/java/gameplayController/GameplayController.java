@@ -29,7 +29,7 @@ import java.util.stream.IntStream;
 import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
-import static gameplayVisual.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static utilities.Position.create;
 
 public class GameplayController implements ActionListener {

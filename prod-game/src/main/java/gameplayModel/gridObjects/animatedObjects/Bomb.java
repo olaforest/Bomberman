@@ -1,9 +1,9 @@
 package gameplayModel.gridObjects.animatedObjects;
 
 import gameplayController.GameplayController;
-import gameplayModel.Animation;
 import gameplayModel.gridObjects.AnimatedObject;
-import gameplayVisual.ImageManager;
+import gameplayView.Animation;
+import gameplayView.ImageManager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;

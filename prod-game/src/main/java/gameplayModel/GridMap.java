@@ -17,7 +17,7 @@ import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayModel.gridObjects.HiddenObject.generateIndex;
 import static gameplayModel.gridObjects.PowerUp.createPowerUp;
 import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
-import static gameplayVisual.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
 

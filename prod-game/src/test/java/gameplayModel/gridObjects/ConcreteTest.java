@@ -3,7 +3,7 @@ package gameplayModel.gridObjects;
 import org.junit.Before;
 import org.junit.Test;
 
-import static gameplayVisual.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 import static utilities.Position.create;
 
