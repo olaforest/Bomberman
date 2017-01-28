@@ -7,19 +7,15 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public abstract class PowerUp extends HiddenObject {
-	@Getter private final BufferedImage image;
-	@Getter protected boolean isPermanent;
-	private final int[] imageParameter;
+	private final BufferedImage image;
+	private final boolean permanent;
 
-	protected PowerUp(Position position, int[] imageParameter) {
+	protected PowerUp(PowerUpType type, Position position) {
 		super(position);
-		this.imageParameter = imageParameter;
-		image = generateImage();
-	}
-
-	public BufferedImage generateImage() {
-		return resizeImage(imageParameter[0], imageParameter[1]);
+		permanent = type.isPermanent();
+		image = generateImage(type.getAnimParam());
 	}
 
 	@Override
@@ -38,5 +34,9 @@ public abstract class PowerUp extends HiddenObject {
 		entryList.add(Integer.toString(position.getX()));
 		entryList.add(Integer.toString(position.getY()));
 		return entryList;
+	}
+
+	private BufferedImage generateImage(List<Integer> parameters) {
+		return resizeImage(parameters.get(0), parameters.get(1));
 	}
 }
