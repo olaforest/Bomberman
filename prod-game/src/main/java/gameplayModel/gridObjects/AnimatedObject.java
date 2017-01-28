@@ -58,7 +58,7 @@ public abstract class AnimatedObject extends GridObject {
 	}
 
 	private static Animation generateAnimation(int i, List<List<Integer>> animParam, int adjustment) {
-		final Animation animation = new Animation(animParam.get(i).get(2));
+		final Animation animation = null;// = new Animation(animParam.get(i).get(2));
 		IntStream.range(0, animParam.get(i).get(2))
 				.forEach(j -> animation.setFrame(ImageManager.resizeImage(animParam.get(i).get(0) + (ImageManager.PIXEL_DIMENSION + adjustment) * j, animParam.get(i).get(1)), j));
 		return animation;

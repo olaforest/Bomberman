@@ -9,7 +9,6 @@ import static gameplayModel.GridMap.MAPWIDTH;
 
 @Getter
 public class GridObject {
-
 	public static final int MISALIGNMENT_ALLOWED = 16;
 	public static final int ADJUSTMENT = 4;
 	protected static final int MIN_Y_POSITION = ImageManager.EFFECTIVE_PIXEL_DIMENSION;
