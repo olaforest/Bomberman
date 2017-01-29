@@ -7,26 +7,28 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static java.awt.RenderingHints.*;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
+import static java.util.Optional.*;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.IntStream.range;
 import static javax.imageio.ImageIO.read;
 
 @UtilityClass
 public class ImageManager {
-	private static final int ZOOM = 2;
+	static final int ZOOM = 2;
 	public static final int PIXEL_DIMENSION = 16;
 	public static final int EFFECTIVE_PIXEL_DIMENSION = PIXEL_DIMENSION * ZOOM;
 	private static final BufferedImage sprite = loadSpriteSheet()
 			.orElseThrow(() -> new RuntimeException("Could not load sprite sheet"));
 
-	public static Optional<List<BufferedImage>> getImages(int numOfImages) {
-		return Optional.of(new ArrayList<BufferedImage>());
+	static Optional<List<BufferedImage>> getImages(AnimParam animParam) {
+		return ofNullable(range(0, animParam.getNumOfFrames())
+				.mapToObj(i -> resizeImage(animParam.getXCoordinate() + PIXEL_DIMENSION * i, animParam.getYCoordinate()))
+				.collect(toList()));
 	}
 
 	public static BufferedImage resizeImage(int xCoordinate, int yCoordinate) {

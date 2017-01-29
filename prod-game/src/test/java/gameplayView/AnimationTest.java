@@ -30,7 +30,7 @@ public class AnimationTest extends PowerMockTestCase {
 	@Test
 	public void getImageReturnsEmptyList_newInstance_returnsADoneAnimation() {
 		//given
-		when(getImages(animParam.getNumOfFrames())).thenReturn(of(emptyList()));
+		when(getImages(animParam)).thenReturn(of(emptyList()));
 		//when
 		final Animation animation = new Animation(animParam);
 		//then
@@ -40,7 +40,7 @@ public class AnimationTest extends PowerMockTestCase {
 	@Test
 	public void validAnimationParameters_newInstance_returnsValidAnimation() {
 		//given
-		when(getImages(animParam.getNumOfFrames())).thenReturn(of(asList(bufferedImage1, bufferedImage2)));
+		when(getImages(animParam)).thenReturn(of(asList(bufferedImage1, bufferedImage2)));
 		//when
 		final Animation animation = new Animation(animParam);
 		//then
@@ -51,7 +51,7 @@ public class AnimationTest extends PowerMockTestCase {
 	@Test
 	public void validAnimationParameters_cycleAnimationAndGetCurrentFrameAndIsAnimDone_returnsSecondImageAndTrue() {
 		//given
-		when(getImages(animParam.getNumOfFrames())).thenReturn(of(asList(bufferedImage1, bufferedImage2)));
+		when(getImages(animParam)).thenReturn(of(asList(bufferedImage1, bufferedImage2)));
 		//when
 		final Animation animation = new Animation(animParam);
 		animation.cycleFrame();

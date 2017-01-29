@@ -14,7 +14,7 @@ public class Animation {
 	private BufferedImage currentFrame;
 
 	Animation(AnimParam animParam) {
-		frames = getImages(animParam.getNumOfFrames())
+		frames = getImages(animParam)
 				.orElse(emptyList())
 				.iterator();
 		cycleFrame();
