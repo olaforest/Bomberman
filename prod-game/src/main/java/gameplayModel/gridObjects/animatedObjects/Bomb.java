@@ -3,6 +3,7 @@ package gameplayModel.gridObjects.animatedObjects;
 import gameplayController.GameplayController;
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayView.Animation;
+import gameplayView.AnimationType;
 import gameplayView.ImageManager;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,18 +20,18 @@ import java.util.stream.IntStream;
 
 import static gameplayModel.GridMap.MAPHEIGHT;
 import static gameplayModel.GridMap.MAPWIDTH;
-import static gameplayModel.gridObjects.animatedObjects.Bomb.AnimationType.*;
+import static gameplayView.AnimationType.*;
+import static gameplayView.ImageManager.PIXEL_DIMENSION;
 import static java.util.Arrays.asList;
 import static java.util.function.IntUnaryOperator.identity;
 import static java.util.stream.Collectors.toList;
 
 @Getter
 public class Bomb extends AnimatedObject {
-
-	public enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp, expVertical, expHorizontal}
-
+	public static final List<AnimationType> animationType =
+			asList(unexploded, expCenter, expRight, expLeft, expDown, expUp, expVertical, expHorizontal);
 	public static final int TIME_TO_EXPLOSION = 2500;
-	public static final int[][] ANIM_PARAM = new int[][]{{113, 21, 4, 4, ImageManager.PIXEL_DIMENSION},
+	public static final int[][] ANIM_PARAM = new int[][]{{113, 21, 4, 4, PIXEL_DIMENSION},
 			{19, 223, 7, 4, 54},
 			{37, 223, 7, 4, 54},
 			{1, 223, 7, 4, 54},

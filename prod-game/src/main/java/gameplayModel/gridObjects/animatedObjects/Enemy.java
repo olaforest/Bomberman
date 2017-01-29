@@ -1,6 +1,7 @@
 package gameplayModel.gridObjects.animatedObjects;
 
 import gameplayModel.gridObjects.AnimatedObject;
+import gameplayView.AnimationType;
 import lombok.Getter;
 import lombok.Setter;
 import utilities.Position;
@@ -8,13 +9,14 @@ import utilities.Position;
 import java.util.ArrayList;
 import java.util.List;
 
+import static gameplayView.AnimationType.*;
 import static java.lang.Math.random;
 import static java.util.Arrays.asList;
 import static utilities.Position.create;
 
 @Getter
 public class Enemy extends AnimatedObject {
-	public enum AnimationType {right, left, death}
+	public static final List<AnimationType> animationType = asList(right, left, death);
 
 	private final int points;
 	private final int speed;
