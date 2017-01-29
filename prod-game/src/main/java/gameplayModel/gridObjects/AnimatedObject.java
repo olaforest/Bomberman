@@ -2,7 +2,6 @@ package gameplayModel.gridObjects;
 
 import gameplayModel.GridObject;
 import gameplayView.Animation;
-import gameplayView.ImageManager;
 import lombok.Getter;
 import utilities.Position;
 
@@ -31,19 +30,19 @@ public abstract class AnimatedObject extends GridObject {
 
 	public void cycleAnimation() {
 		if (counter % animCycleParam == 0) {
-			if (!isDead)
-				currentAnimation.cycleFrame();
-			else
-				cycleDeathAnimation();
+//			if (!isDead)
+//				currentAnimation.cycleFrame();
+//			else
+//				cycleDeathAnimation();
 		}
 		counter++;
 	}
 
 	private void cycleDeathAnimation() {
-		if (currentAnimation.isAnimDone())
-			isObsolete = true;
-		else
-			currentAnimation.cycleFrame();
+//		if (currentAnimation.isAnimDone())
+//			isObsolete = true;
+//		else
+//			currentAnimation.cycleFrame();
 	}
 
 	public void triggerDeath() {
@@ -59,14 +58,14 @@ public abstract class AnimatedObject extends GridObject {
 
 	private static Animation generateAnimation(int i, List<List<Integer>> animParam, int adjustment) {
 		final Animation animation = null;// = new Animation(animParam.get(i).get(2));
-		IntStream.range(0, animParam.get(i).get(2))
-				.forEach(j -> animation.setFrame(ImageManager.resizeImage(animParam.get(i).get(0) + (ImageManager.PIXEL_DIMENSION + adjustment) * j, animParam.get(i).get(1)), j));
+//		IntStream.range(0, animParam.get(i).get(2))
+//				.forEach(j -> animation.setFrame(resizeImage(animParam.get(i).get(0) + (ImageManager.PIXEL_DIMENSION + adjustment) * j, animParam.get(i).get(1)), j));
 		return animation;
 	}
 
 	public void setCurrentAnimation(int aT) {
 		currentAnimation = animationList.get(aT);
-		currentAnimation.setToInitialFrame();
+//		currentAnimation.setToInitialFrame();
 		animationNumber = aT;
 	}
 }

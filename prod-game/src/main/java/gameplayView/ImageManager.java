@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
 import java.util.Optional;
 
 import static java.awt.RenderingHints.*;
@@ -22,6 +23,10 @@ public class ImageManager {
 	public static final int EFFECTIVE_PIXEL_DIMENSION = PIXEL_DIMENSION * ZOOM;
 	private static final BufferedImage sprite = loadSpriteSheet()
 			.orElseThrow(() -> new RuntimeException("Could not load sprite sheet"));
+
+	public static Iterator<BufferedImage> getImages(int numOfImages) {
+		return null;
+	}
 
 	public static BufferedImage resizeImage(int xCoordinate, int yCoordinate) {
 		return resizeImage(sprite.getSubimage(xCoordinate, yCoordinate, PIXEL_DIMENSION, PIXEL_DIMENSION));

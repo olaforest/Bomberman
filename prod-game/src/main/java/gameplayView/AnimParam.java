@@ -6,13 +6,13 @@ import lombok.Getter;
 class AnimParam {
 	private final int xCoordinate;
 	private final int yCoordinate;
-	private final int numOfFrame;
+	private final int numOfFrames;
 
-	AnimParam(int xCoordinate, int yCoordinate, int numOfFrame) {
-		validateInputs(xCoordinate, yCoordinate, numOfFrame);
+	AnimParam(int xCoordinate, int yCoordinate, int numOfFrames) {
+		validateInputs(xCoordinate, yCoordinate, numOfFrames);
 		this.xCoordinate = xCoordinate;
 		this.yCoordinate = yCoordinate;
-		this.numOfFrame = numOfFrame;
+		this.numOfFrames = numOfFrames;
 	}
 
 	private void validateInputs(int xCoordinate, int yCoordinate, int numOfFrame) {

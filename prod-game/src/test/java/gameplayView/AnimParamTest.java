@@ -31,4 +31,5 @@ public class AnimParamTest {
 				//then
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Animation should have at least 2 frames.");
-	}}
+	}
+}

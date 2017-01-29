@@ -92,33 +92,33 @@ public class Bomb extends AnimatedObject {
 
 	private Animation generateAnimation(int i) {
 		final Animation animation = null;// = new Animation(ANIM_PARAM[i][2]);
-		for (int j = 0; j < ANIM_PARAM[i][3]; j++)
-			animation.setFrame(ImageManager.resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * j, ANIM_PARAM[i][1]), j);
+//		for (int j = 0; j < ANIM_PARAM[i][3]; j++)
+//			animation.setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * j, ANIM_PARAM[i][1]), j);
 
-		for (int n = (ANIM_PARAM[i][2] - ANIM_PARAM[i][3]); n > 0; n--)
-			animation.setFrame(ImageManager.resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * n, ANIM_PARAM[i][1]), ANIM_PARAM[i][3] - n);
+//		for (int n = (ANIM_PARAM[i][2] - ANIM_PARAM[i][3]); n > 0; n--)
+//			animation.setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * n, ANIM_PARAM[i][1]), ANIM_PARAM[i][3] - n);
 		return animation;
 	}
 
 	public void cycleAnimations() {
 		if (counter % animCycleParam == 0) {
-			if (!isDead)
-				currentAnimations.forEach(Animation::cycleFrame);
-			else
-				cycleDeathAnimations();
+//			if (!isDead)
+//				currentAnimations.forEach(Animation::cycleFrame);
+//			else
+//				cycleDeathAnimations();
 		}
 		counter++;
 	}
 
 	private void cycleDeathAnimations() {
 		for (int i = 0; i < currentAnimations.size(); ) {
-			if (currentAnimations.get(i).isAnimDone()) {
-				removeAnimation(i);
-				if (currentAnimations.size() == 0) isObsolete = true;
-			} else {
-				currentAnimations.get(i).cycleFrame();
-				i++;
-			}
+//			if (currentAnimations.get(i).isAnimDone()) {
+//				removeAnimation(i);
+//				if (currentAnimations.size() == 0) isObsolete = true;
+//			} else {
+//				currentAnimations.get(i).cycleFrame();
+//				i++;
+//			}
 		}
 	}
 
@@ -242,7 +242,7 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private void addAnimation(int animType, int xOffset, int yOffset) {
-		currentAnimations.add(new Animation(animationList.get(animType)));
+//		currentAnimations.add(new Animation(animationList.get(animType)));
 		animXOffset.add(xOffset);
 		animYOffset.add(yOffset);
 	}
