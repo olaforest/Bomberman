@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
 import static gameplayView.ImageManager.getImages;
+import static java.util.Collections.emptyList;
 
 @Getter
 public class Animation {
@@ -13,7 +14,9 @@ public class Animation {
 	private BufferedImage currentFrame;
 
 	Animation(AnimParam animParam) {
-		frames = getImages(animParam.getNumOfFrames());
+		frames = getImages(animParam.getNumOfFrames())
+				.orElse(emptyList())
+				.iterator();
 		cycleFrame();
 	}
 

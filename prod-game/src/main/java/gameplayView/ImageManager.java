@@ -7,7 +7,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static java.awt.RenderingHints.*;
@@ -24,8 +25,8 @@ public class ImageManager {
 	private static final BufferedImage sprite = loadSpriteSheet()
 			.orElseThrow(() -> new RuntimeException("Could not load sprite sheet"));
 
-	public static Iterator<BufferedImage> getImages(int numOfImages) {
-		return null;
+	public static Optional<List<BufferedImage>> getImages(int numOfImages) {
+		return Optional.of(new ArrayList<BufferedImage>());
 	}
 
 	public static BufferedImage resizeImage(int xCoordinate, int yCoordinate) {
