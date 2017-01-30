@@ -536,7 +536,7 @@ public class GameplayController implements ActionListener {
 				Graphics2D g2d = (Graphics2D) page;
 
 				if (exitway != null)
-					g2d.drawImage(exitway.getImage(), exitway.getPosition().getX(), exitway.getPosition().getY(), gamePanel);
+					g2d.drawImage(Exitway.getImage(), exitway.getPosition().getX(), exitway.getPosition().getY(), gamePanel);
 
 				if (powerup != null)
 					g2d.drawImage(powerup.getImage(), powerup.getPosition().getX(), powerup.getPosition().getY(), gamePanel);
@@ -557,7 +557,7 @@ public class GameplayController implements ActionListener {
 				g2d.drawImage(bomberman.getCurrentAnimation().getCurrentFrame(), bomberman.getPosition().getX(), bomberman.getPosition().getY(), gamePanel);
 
 				for (Concrete block : concreteLayout)
-					g2d.drawImage(block.getImage(), block.getPosition().getX(), block.getPosition().getY(), gamePanel);
+					g2d.drawImage(Concrete.getImage(), block.getPosition().getX(), block.getPosition().getY(), gamePanel);
 			}
 		};
 

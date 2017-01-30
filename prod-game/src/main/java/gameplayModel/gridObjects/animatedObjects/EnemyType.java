@@ -39,7 +39,7 @@ public enum EnemyType {
 
 	private static List<SimpleEntry<AnimationType, AnimParam>> generateAnimParam(List<Integer> params) {
 		final List<AnimParam> animParams = convertToAnimParam(params);
-		return IntStream.range(0, params.size())
+		return IntStream.range(0, animParams.size())
 				.mapToObj(i -> new SimpleEntry<>(ANIMATION_TYPES.get(i), animParams.get(i)))
 				.collect(toList());
 	}
