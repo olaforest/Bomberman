@@ -18,7 +18,7 @@ public abstract class AnimatedObject extends GridObject {
 
 	private final Map<AnimationType, Animation> animations;
 	@Getter private Animation currentAnimation;
-	@Getter protected boolean isDead, isObsolete;
+	@Getter protected boolean isObsolete;
 	protected int counter, animCycleParam;
 
 	protected AnimatedObject(Position position, List<SimpleEntry<AnimationType, AnimParam>> animParams) {
@@ -26,30 +26,28 @@ public abstract class AnimatedObject extends GridObject {
 		this.animations = generateAnimations(animParams);
 		counter = 0;
 		animCycleParam = 3;
-		isDead = false;
 		isObsolete = false;
 	}
 
 	public void cycleAnimation() {
 		if (counter % animCycleParam == 0) {
-//			if (!isDead)
-//				currentAnimation.cycleFrame();
-//			else
-//				cycleDeathAnimation();
+			if (currentAnimation.getType() == death)
+				cycleDeathAnimation();
+			else
+				currentAnimation.cycleFrame();
 		}
 		counter++;
 	}
 
 	private void cycleDeathAnimation() {
-//		if (currentAnimation.isAnimDone())
-//			isObsolete = true;
-//		else
-//			currentAnimation.cycleFrame();
+		if (currentAnimation.isAnimDone())
+			isObsolete = true;
+		else
+			currentAnimation.cycleFrame();
 	}
 
 	public void triggerDeath() {
 		currentAnimation = animations.get(death);
-		isDead = true;
 	}
 
 	public AnimationType getCurrentAnimationType() {
@@ -60,12 +58,12 @@ public abstract class AnimatedObject extends GridObject {
 		currentAnimation = animations.get(type).reset();
 	}
 
-	public void cycleFrame() {
-		currentAnimation.cycleFrame();
-	}
-
 	private Map<AnimationType, Animation> generateAnimations(List<SimpleEntry<AnimationType, AnimParam>> params) {
 		return params.stream()
 				.collect(toMap(SimpleEntry::getKey, entry -> new Animation(entry.getKey(), entry.getValue())));
+	}
+
+	public boolean isDead() {
+		return currentAnimation.getType() == death;
 	}
 }

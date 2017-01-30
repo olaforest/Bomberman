@@ -49,7 +49,7 @@ public class Bomb extends AnimatedObject {
 	private int timer, rightRange, leftRange, downRange, upRange;
 
 	@Accessors(fluent = true)
-	private boolean wasTrigByBomb;
+	private boolean wasTrigByBomb, isDead;
 
 	public Bomb(Position position) {
 		super(position, animParams);
@@ -62,6 +62,7 @@ public class Bomb extends AnimatedObject {
 		rightRange = leftRange = downRange = upRange = range;
 		setRanges();
 		wasTrigByBomb = false;
+		isDead = false;
 		addAnimation(unexploded.ordinal(), 0, 0);
 	}
 
@@ -71,6 +72,7 @@ public class Bomb extends AnimatedObject {
 		currentAnimations = new ArrayList<>();
 		animXOffset = new ArrayList<>();
 		animYOffset = new ArrayList<>();
+		isDead = false;
 
 		this.timer = timer;
 		Bomb.range = range;

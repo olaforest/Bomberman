@@ -12,7 +12,8 @@ import static java.util.Collections.emptyList;
 
 @Getter
 public class Animation {
-	@Getter(AccessLevel.NONE) private final List<BufferedImage> frameList;
+	@Getter(AccessLevel.NONE)
+	private final List<BufferedImage> frameList;
 	private final AnimationType type;
 	private Iterator<BufferedImage> frames;
 	private BufferedImage currentFrame;
@@ -25,7 +26,7 @@ public class Animation {
 		cycleFrame();
 	}
 
-	boolean isAnimDone() {
+	public boolean isAnimDone() {
 		return !frames.hasNext();
 	}
 

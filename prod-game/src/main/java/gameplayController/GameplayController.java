@@ -215,7 +215,7 @@ public class GameplayController implements ActionListener {
 						if (bomberman.getCurrentAnimationType() != up)
 							bomberman.setCurrentAnimation(up);
 						else
-							bomberman.cycleFrame();
+							bomberman.cycleAnimation();
 
 						boolean canMoveUp = true;
 
@@ -231,7 +231,7 @@ public class GameplayController implements ActionListener {
 						if (bomberman.getCurrentAnimationType() != down)
 							bomberman.setCurrentAnimation(down);
 						else
-							bomberman.cycleFrame();
+							bomberman.cycleAnimation();
 
 						boolean canMoveDown = true;
 
@@ -247,7 +247,7 @@ public class GameplayController implements ActionListener {
 						if (bomberman.getCurrentAnimationType() != left)
 							bomberman.setCurrentAnimation(left);
 						else
-							bomberman.cycleFrame();
+							bomberman.cycleAnimation();
 
 						boolean canMoveLeft = true;
 
@@ -263,7 +263,7 @@ public class GameplayController implements ActionListener {
 						if (bomberman.getCurrentAnimationType() != right)
 							bomberman.setCurrentAnimation(right);
 						else
-							bomberman.cycleFrame();
+							bomberman.cycleAnimation();
 
 						boolean canMoveRight = true;
 
