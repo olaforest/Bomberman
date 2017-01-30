@@ -29,12 +29,11 @@ public class Enemy extends AnimatedObject {
 	}
 
 	public Enemy(EnemyType enemyType, Position position, int direction) {
-		super(position);
+		super(position, enemyType.getAnimParams());
 		points = enemyType.getPoints();
 		speed = enemyType.getSpeed();
 		smartness = enemyType.getSmartness();
 		isWallpass = enemyType.isWallpass();
-		animations = generateAnimations(enemyType.getAnimParams());
 		this.direction = direction;
 	}
 

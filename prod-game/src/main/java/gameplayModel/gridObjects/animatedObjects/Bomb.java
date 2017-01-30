@@ -52,7 +52,7 @@ public class Bomb extends AnimatedObject {
 	private boolean wasTrigByBomb;
 
 	public Bomb(Position position) {
-		super(position);
+		super(position, animParams);
 
 		currentAnimations = new ArrayList<>();
 		animXOffset = new ArrayList<>();
@@ -62,12 +62,11 @@ public class Bomb extends AnimatedObject {
 		rightRange = leftRange = downRange = upRange = range;
 		setRanges();
 		wasTrigByBomb = false;
-		animations = generateAnimations(animParams);
 		addAnimation(unexploded.ordinal(), 0, 0);
 	}
 
 	public Bomb(int range, Position position, int timer, int right, int left, int down, int up) {
-		super(position);
+		super(position, animParams);
 
 		currentAnimations = new ArrayList<>();
 		animXOffset = new ArrayList<>();
@@ -79,8 +78,6 @@ public class Bomb extends AnimatedObject {
 		leftRange = left;
 		downRange = down;
 		upRange = up;
-		animations = generateAnimations(animParams);
-
 		addAnimation(unexploded.ordinal(), 0, 0);
 	}
 

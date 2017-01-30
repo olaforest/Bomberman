@@ -14,17 +14,15 @@ import java.util.Map;
 import static java.util.stream.Collectors.toMap;
 
 public abstract class AnimatedObject extends GridObject {
-	protected static final int INITIAL_ANIMATION = 0;
 
-	protected Map<AnimationType, Animation> animations;
+	private final Map<AnimationType, Animation> animations;
 	@Getter protected Animation currentAnimation;
 	@Getter protected boolean isDead, isObsolete;
-	@Getter private int animationNumber;
 	protected int counter, animCycleParam;
 
-	protected AnimatedObject(Position position) {
+	protected AnimatedObject(Position position, List<SimpleEntry<AnimationType, AnimParam>> animParams) {
 		super(position);
-		animationNumber = INITIAL_ANIMATION;
+		this.animations = generateAnimations(animParams);
 		counter = 0;
 		animCycleParam = 3;
 		isDead = false;
@@ -41,6 +39,12 @@ public abstract class AnimatedObject extends GridObject {
 		counter++;
 	}
 
+	public void setCurrentAnimation(int aT) {
+//		currentAnimation = animations.get(aT);
+//		currentAnimation.setToInitialFrame();
+//		animationNumber = aT;
+	}
+
 	private void cycleDeathAnimation() {
 //		if (currentAnimation.isAnimDone())
 //			isObsolete = true;
@@ -53,14 +57,8 @@ public abstract class AnimatedObject extends GridObject {
 		isDead = true;
 	}
 
-	protected Map<AnimationType, Animation> generateAnimations(List<SimpleEntry<AnimationType, AnimParam>> params) {
+	private Map<AnimationType, Animation> generateAnimations(List<SimpleEntry<AnimationType, AnimParam>> params) {
 		return params.stream()
 				.collect(toMap(SimpleEntry::getKey, entry -> new Animation(entry.getValue())));
-	}
-
-	public void setCurrentAnimation(int aT) {
-		currentAnimation = animations.get(aT);
-//		currentAnimation.setToInitialFrame();
-		animationNumber = aT;
 	}
 }

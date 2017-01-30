@@ -9,17 +9,15 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-import static gameplayView.AnimationType.destruction;
+import static gameplayView.AnimationType.death;
 import static java.util.Collections.singletonList;
 
 public class Brick extends AnimatedObject {
 	private static final List<SimpleEntry<AnimationType, AnimParam>> animParams =
-			singletonList(new SimpleEntry<>(destruction, new AnimParam(19, 259, 7)));
+			singletonList(new SimpleEntry<>(death, new AnimParam(19, 259, 7)));
 
 	public Brick(Position position) {
-		super(position);
-		animations = generateAnimations(animParams);
-		currentAnimation = animations.get(INITIAL_ANIMATION);
+		super(position, animParams);
 	}
 
 	public List<String> toCSVEntry() {

@@ -42,16 +42,14 @@ public class Bomberman extends AnimatedObject {
 	private boolean canWallpass, canDetonateBombs, canBombpass, canFlamepass, isInvincible;
 
 	public Bomberman(Position position) {
-		super(position);
-		animations = generateAnimations(animParams);
+		super(position, animParams);
 		powerUpsAcquired = new ArrayList<>();
 		setBombermanAbilities();
 		bombsLeft = bombsAvailable;
 	}
 
 	public Bomberman(Position position, int invincibilityTimer, int bombsLeft, List<PowerUp> powerUpsAcquired) {
-		super(position);
-		animations = generateAnimations(animParams);
+		super(position, animParams);
 		this.invincibilityTimer = invincibilityTimer;
 		this.bombsLeft = bombsLeft;
 		this.powerUpsAcquired = powerUpsAcquired;
