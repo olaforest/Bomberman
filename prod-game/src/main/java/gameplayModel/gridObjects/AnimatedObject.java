@@ -11,12 +11,13 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
 
+import static gameplayView.AnimationType.death;
 import static java.util.stream.Collectors.toMap;
 
 public abstract class AnimatedObject extends GridObject {
 
 	private final Map<AnimationType, Animation> animations;
-	@Getter protected Animation currentAnimation;
+	@Getter private Animation currentAnimation;
 	@Getter protected boolean isDead, isObsolete;
 	protected int counter, animCycleParam;
 
@@ -39,12 +40,6 @@ public abstract class AnimatedObject extends GridObject {
 		counter++;
 	}
 
-	public void setCurrentAnimation(int aT) {
-//		currentAnimation = animations.get(aT);
-//		currentAnimation.setToInitialFrame();
-//		animationNumber = aT;
-	}
-
 	private void cycleDeathAnimation() {
 //		if (currentAnimation.isAnimDone())
 //			isObsolete = true;
@@ -53,12 +48,24 @@ public abstract class AnimatedObject extends GridObject {
 	}
 
 	public void triggerDeath() {
-		currentAnimation = animations.get(animations.size() - 1);
+		currentAnimation = animations.get(death);
 		isDead = true;
+	}
+
+	public AnimationType getCurrentAnimationType() {
+		return currentAnimation.getType();
+	}
+
+	public void setCurrentAnimation(AnimationType type) {
+		currentAnimation = animations.get(type).reset();
+	}
+
+	public void cycleFrame() {
+		currentAnimation.cycleFrame();
 	}
 
 	private Map<AnimationType, Animation> generateAnimations(List<SimpleEntry<AnimationType, AnimParam>> params) {
 		return params.stream()
-				.collect(toMap(SimpleEntry::getKey, entry -> new Animation(entry.getValue())));
+				.collect(toMap(SimpleEntry::getKey, entry -> new Animation(entry.getKey(), entry.getValue())));
 	}
 }

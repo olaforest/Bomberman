@@ -43,16 +43,6 @@ public class BrickTest {
 	}
 
 	@Test
-	public void testGetAndSetCurrentAnimation() {
-
-		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
-
-		brick.setCurrentAnimation(animationNumber);
-
-		assertTrue(animationNumber == brick.getAnimationNumber());
-	}
-
-	@Test
 	public void testIsConcreteCollision() {
 		assertFalse(brick.isConcreteCollision());
 	}

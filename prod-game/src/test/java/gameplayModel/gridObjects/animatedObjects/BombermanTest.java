@@ -279,14 +279,6 @@ public class BombermanTest {
 	}
 
 	@Test
-	public void testGetAndSetCurrentAnimation() {
-
-		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
-		bomberman.setCurrentAnimation(animationNumber);
-		assertTrue(animationNumber == bomberman.getAnimationNumber());
-	}
-
-	@Test
 	public void testIsConcreteCollision() {
 		assertFalse(bomberman.isConcreteCollision());
 	}

@@ -89,16 +89,6 @@ public class BombTest {
 	}
 
 	@Test
-	public void testGetAndSetCurrentAnimation() {
-
-		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
-
-		bomb.setCurrentAnimation(animationNumber);
-
-		assertTrue(animationNumber == bomb.getAnimationNumber());
-	}
-
-	@Test
 	public void testTriggerExplosion() {
 
 		Bomb.resetRange();

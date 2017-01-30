@@ -29,6 +29,7 @@ import java.util.stream.IntStream;
 import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
+import static gameplayView.AnimationType.*;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static utilities.Position.create;
 
@@ -211,10 +212,10 @@ public class GameplayController implements ActionListener {
 
 				switch (activeDirectionKeys.getFirst()) {
 					case KeyEvent.VK_UP:
-						if (bomberman.getAnimationNumber() != Bomberman.AnimationType.up.ordinal())
-							bomberman.setCurrentAnimation(Bomberman.AnimationType.up.ordinal());
-//						else
-//							bomberman.getCurrentAnimation().cycleFrame();
+						if (bomberman.getCurrentAnimationType() != up)
+							bomberman.setCurrentAnimation(up);
+						else
+							bomberman.cycleFrame();
 
 						boolean canMoveUp = true;
 
@@ -227,10 +228,10 @@ public class GameplayController implements ActionListener {
 
 						break;
 					case KeyEvent.VK_DOWN:
-						if (bomberman.getAnimationNumber() != Bomberman.AnimationType.down.ordinal())
-							bomberman.setCurrentAnimation(Bomberman.AnimationType.down.ordinal());
-//						else
-//							bomberman.getCurrentAnimation().cycleFrame();
+						if (bomberman.getCurrentAnimationType() != down)
+							bomberman.setCurrentAnimation(down);
+						else
+							bomberman.cycleFrame();
 
 						boolean canMoveDown = true;
 
@@ -243,10 +244,10 @@ public class GameplayController implements ActionListener {
 
 						break;
 					case KeyEvent.VK_LEFT:
-						if (bomberman.getAnimationNumber() != Bomberman.AnimationType.left.ordinal())
-							bomberman.setCurrentAnimation(Bomberman.AnimationType.left.ordinal());
-//						else
-//							bomberman.getCurrentAnimation().cycleFrame();
+						if (bomberman.getCurrentAnimationType() != left)
+							bomberman.setCurrentAnimation(left);
+						else
+							bomberman.cycleFrame();
 
 						boolean canMoveLeft = true;
 
@@ -259,10 +260,10 @@ public class GameplayController implements ActionListener {
 
 						break;
 					case KeyEvent.VK_RIGHT:
-						if (bomberman.getAnimationNumber() != Bomberman.AnimationType.right.ordinal())
-							bomberman.setCurrentAnimation(Bomberman.AnimationType.right.ordinal());
-//						else
-//							bomberman.getCurrentAnimation().cycleFrame();
+						if (bomberman.getCurrentAnimationType() != right)
+							bomberman.setCurrentAnimation(right);
+						else
+							bomberman.cycleFrame();
 
 						boolean canMoveRight = true;
 
@@ -325,12 +326,12 @@ public class GameplayController implements ActionListener {
 			if (!enemies.get(i).isDead()) {
 
 				if (enemies.get(i).getDirection() == 1 || enemies.get(i).getDirection() == 2) {
-					if (enemies.get(i).getAnimationNumber() != Enemy.AnimationType.left.ordinal())
-						enemies.get(i).setCurrentAnimation(Enemy.AnimationType.left.ordinal());
+					if (enemies.get(i).getCurrentAnimationType() != left)
+						enemies.get(i).setCurrentAnimation(left);
 					enemies.get(i).cycleAnimation();
 				} else {
-					if (enemies.get(i).getAnimationNumber() != Enemy.AnimationType.right.ordinal())
-						enemies.get(i).setCurrentAnimation(Enemy.AnimationType.right.ordinal());
+					if (enemies.get(i).getCurrentAnimationType() != right)
+						enemies.get(i).setCurrentAnimation(right);
 					enemies.get(i).cycleAnimation();
 				}
 				i++;
