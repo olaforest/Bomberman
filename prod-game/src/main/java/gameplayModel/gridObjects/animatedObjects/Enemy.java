@@ -16,7 +16,7 @@ import static utilities.Position.create;
 
 @Getter
 public class Enemy extends AnimatedObject {
-	public static final List<AnimationType> animationType = asList(right, left, death);
+	public static final List<AnimationType> ANIMATION_TYPES = asList(right, left, death);
 
 	private final int points;
 	private final int speed;
@@ -34,7 +34,7 @@ public class Enemy extends AnimatedObject {
 		speed = enemyType.getSpeed();
 		smartness = enemyType.getSmartness();
 		isWallpass = enemyType.isWallpass();
-		animationList = generateAnimationList(asList(AnimationType.values()), enemyType.getAnimParam(), 2);
+		animations = generateAnimations(enemyType.getAnimParams());
 		this.direction = direction;
 	}
 

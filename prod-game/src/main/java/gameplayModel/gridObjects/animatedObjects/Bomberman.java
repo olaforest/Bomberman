@@ -4,6 +4,7 @@ import gameplayController.GameplayController;
 import gameplayModel.GridMap;
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayModel.gridObjects.PowerUp;
+import gameplayView.AnimParam;
 import gameplayView.AnimationType;
 import gameplayView.ImageManager;
 import lombok.AccessLevel;
@@ -11,6 +12,7 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import utilities.Position;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +21,17 @@ import static java.util.Arrays.asList;
 
 @Getter
 public class Bomberman extends AnimatedObject {
-	public static final List<AnimationType> animationType = asList(right, left, down, up, death);
+	public static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
+			new SimpleEntry<>(right, new AnimParam(50, 3, 4)),
+			new SimpleEntry<>(left, new AnimParam(50, 21, 4)),
+			new SimpleEntry<>(down, new AnimParam(2, 3, 3)),
+			new SimpleEntry<>(up, new AnimParam(2, 21, 3)),
+			new SimpleEntry<>(death, new AnimParam(113, 3, 7)));
 
-	public static final int INITIAL_SPEED = 4, SPEED_INCREMENT = 2, MISALIGNMENT_ALLOWED = 16, INVINCIBILITY_TIMEOUT = 10000;
-	public static final List<List<Integer>> ANIM_PARAM = asList(asList(50, 3, 4), asList(50, 21, 4), asList(2, 3, 3), asList(2, 21, 3), asList(113, 3, 7));
+	public static final int INITIAL_SPEED = 4;
+	public static final int SPEED_INCREMENT = 2;
+	public static final int MISALIGNMENT_ALLOWED = 16;
+	public static final int INVINCIBILITY_TIMEOUT = 10000;
 
 	private List<PowerUp> powerUpsAcquired;
 	private int speed, bombsAvailable, bombsLeft;
@@ -34,7 +43,7 @@ public class Bomberman extends AnimatedObject {
 
 	public Bomberman(Position position) {
 		super(position);
-		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 0);
+		animations = generateAnimations(animParams);
 		powerUpsAcquired = new ArrayList<>();
 		setBombermanAbilities();
 		bombsLeft = bombsAvailable;
@@ -42,7 +51,7 @@ public class Bomberman extends AnimatedObject {
 
 	public Bomberman(Position position, int invincibilityTimer, int bombsLeft, List<PowerUp> powerUpsAcquired) {
 		super(position);
-		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 0);
+		animations = generateAnimations(animParams);
 		this.invincibilityTimer = invincibilityTimer;
 		this.bombsLeft = bombsLeft;
 		this.powerUpsAcquired = powerUpsAcquired;

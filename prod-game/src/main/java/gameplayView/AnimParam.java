@@ -3,12 +3,12 @@ package gameplayView;
 import lombok.Getter;
 
 @Getter
-class AnimParam {
+public class AnimParam {
 	private final int xCoordinate;
 	private final int yCoordinate;
 	private final int numOfFrames;
 
-	AnimParam(int xCoordinate, int yCoordinate, int numOfFrames) {
+	public AnimParam(int xCoordinate, int yCoordinate, int numOfFrames) {
 		validateInputs(xCoordinate, yCoordinate, numOfFrames);
 		this.xCoordinate = xCoordinate;
 		this.yCoordinate = yCoordinate;

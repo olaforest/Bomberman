@@ -13,7 +13,7 @@ public class Animation {
 	private final Iterator<BufferedImage> frames;
 	private BufferedImage currentFrame;
 
-	Animation(AnimParam animParam) {
+	public Animation(AnimParam animParam) {
 		frames = getImages(animParam)
 				.orElse(emptyList())
 				.iterator();

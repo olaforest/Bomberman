@@ -2,6 +2,7 @@ package gameplayModel.gridObjects.animatedObjects;
 
 import gameplayController.GameplayController;
 import gameplayModel.gridObjects.AnimatedObject;
+import gameplayView.AnimParam;
 import gameplayView.Animation;
 import gameplayView.AnimationType;
 import gameplayView.ImageManager;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import utilities.Position;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
@@ -21,24 +23,21 @@ import java.util.stream.IntStream;
 import static gameplayModel.GridMap.MAPHEIGHT;
 import static gameplayModel.GridMap.MAPWIDTH;
 import static gameplayView.AnimationType.*;
-import static gameplayView.ImageManager.PIXEL_DIMENSION;
 import static java.util.Arrays.asList;
 import static java.util.function.IntUnaryOperator.identity;
-import static java.util.stream.Collectors.toList;
 
 @Getter
 public class Bomb extends AnimatedObject {
-	public static final List<AnimationType> animationType =
-			asList(unexploded, expCenter, expRight, expLeft, expDown, expUp, expVertical, expHorizontal);
 	public static final int TIME_TO_EXPLOSION = 2500;
-	public static final int[][] ANIM_PARAM = new int[][]{{113, 21, 4, 4, PIXEL_DIMENSION},
-			{19, 223, 7, 4, 54},
-			{37, 223, 7, 4, 54},
-			{1, 223, 7, 4, 54},
-			{19, 241, 7, 4, 54},
-			{19, 205, 7, 4, 54},
-			{37, 205, 7, 4, 54},
-			{37, 241, 7, 4, 54}};
+	public static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
+			new SimpleEntry<>(unexploded, new AnimParam(113, 21, 4)),
+			new SimpleEntry<>(expCenter, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(expRight, new AnimParam(37, 223, 7)),
+			new SimpleEntry<>(expLeft, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(expDown, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(expUp, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(expVertical, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(expHorizontal, new AnimParam(19, 223, 7)));
 
 	@Getter
 	private static int range = 1;
@@ -63,7 +62,7 @@ public class Bomb extends AnimatedObject {
 		rightRange = leftRange = downRange = upRange = range;
 		setRanges();
 		wasTrigByBomb = false;
-		animationList = generateAnimationList(asList(values()));
+		animations = generateAnimations(animParams);
 		addAnimation(unexploded.ordinal(), 0, 0);
 	}
 
@@ -80,25 +79,9 @@ public class Bomb extends AnimatedObject {
 		leftRange = left;
 		downRange = down;
 		upRange = up;
-		animationList = generateAnimationList(asList(values()));
+		animations = generateAnimations(animParams);
 
 		addAnimation(unexploded.ordinal(), 0, 0);
-	}
-
-	private List<Animation> generateAnimationList(List<AnimationType> animationType) {
-		return IntStream.range(0, animationType.size())
-				.mapToObj(this::generateAnimation)
-				.collect(toList());
-	}
-
-	private Animation generateAnimation(int i) {
-		final Animation animation = null;// = new Animation(ANIM_PARAM[i][2]);
-//		for (int j = 0; j < ANIM_PARAM[i][3]; j++)
-//			animation.setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * j, ANIM_PARAM[i][1]), j);
-
-//		for (int n = (ANIM_PARAM[i][2] - ANIM_PARAM[i][3]); n > 0; n--)
-//			animation.setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * n, ANIM_PARAM[i][1]), ANIM_PARAM[i][3] - n);
-		return animation;
 	}
 
 	public void cycleAnimations() {
@@ -243,7 +226,7 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private void addAnimation(int animType, int xOffset, int yOffset) {
-//		currentAnimations.add(new Animation(animationList.get(animType)));
+//		currentAnimations.add(new Animation(animations.get(animType)));
 		animXOffset.add(xOffset);
 		animYOffset.add(yOffset);
 	}
