@@ -11,14 +11,13 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
 
-import static gameplayView.AnimationType.death;
+import static gameplayView.AnimationType.Death;
 import static java.util.stream.Collectors.toMap;
 
 public abstract class AnimatedObject extends GridObject {
-
 	private final Map<AnimationType, Animation> animations;
 	@Getter private Animation currentAnimation;
-	@Getter protected boolean isObsolete;
+	@Getter private boolean isObsolete;
 	protected int counter, animCycleParam;
 
 	protected AnimatedObject(Position position, List<SimpleEntry<AnimationType, AnimParam>> animParams) {
@@ -31,7 +30,7 @@ public abstract class AnimatedObject extends GridObject {
 
 	public void cycleAnimation() {
 		if (counter % animCycleParam == 0) {
-			if (currentAnimation.getType() == death)
+			if (currentAnimation.getType() == Death)
 				cycleDeathAnimation();
 			else
 				currentAnimation.cycleFrame();
@@ -39,15 +38,12 @@ public abstract class AnimatedObject extends GridObject {
 		counter++;
 	}
 
-	private void cycleDeathAnimation() {
-		if (currentAnimation.isAnimDone())
-			isObsolete = true;
-		else
-			currentAnimation.cycleFrame();
+	public void triggerDeath() {
+		currentAnimation = animations.get(Death);
 	}
 
-	public void triggerDeath() {
-		currentAnimation = animations.get(death);
+	public boolean isDead() {
+		return currentAnimation.getType() == Death;
 	}
 
 	public AnimationType getCurrentAnimationType() {
@@ -58,12 +54,15 @@ public abstract class AnimatedObject extends GridObject {
 		currentAnimation = animations.get(type).reset();
 	}
 
-	private Map<AnimationType, Animation> generateAnimations(List<SimpleEntry<AnimationType, AnimParam>> params) {
-		return params.stream()
-				.collect(toMap(SimpleEntry::getKey, entry -> new Animation(entry.getKey(), entry.getValue())));
+	private void cycleDeathAnimation() {
+		if (currentAnimation.isAnimDone())
+			isObsolete = true;
+		else
+			currentAnimation.cycleFrame();
 	}
 
-	public boolean isDead() {
-		return currentAnimation.getType() == death;
+	private static Map<AnimationType, Animation> generateAnimations(List<SimpleEntry<AnimationType, AnimParam>> params) {
+		return params.stream()
+				.collect(toMap(SimpleEntry::getKey, entry -> new Animation(entry.getKey(), entry.getValue())));
 	}
 }

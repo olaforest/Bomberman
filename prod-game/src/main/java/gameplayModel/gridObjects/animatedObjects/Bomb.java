@@ -30,14 +30,14 @@ import static java.util.function.IntUnaryOperator.identity;
 public class Bomb extends AnimatedObject {
 	public static final int TIME_TO_EXPLOSION = 2500;
 	public static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
-			new SimpleEntry<>(unexploded, new AnimParam(113, 21, 4)),
-			new SimpleEntry<>(expCenter, new AnimParam(19, 223, 7)),
-			new SimpleEntry<>(expRight, new AnimParam(37, 223, 7)),
-			new SimpleEntry<>(expLeft, new AnimParam(19, 223, 7)),
-			new SimpleEntry<>(expDown, new AnimParam(19, 223, 7)),
-			new SimpleEntry<>(expUp, new AnimParam(19, 223, 7)),
-			new SimpleEntry<>(expVertical, new AnimParam(19, 223, 7)),
-			new SimpleEntry<>(expHorizontal, new AnimParam(19, 223, 7)));
+			new SimpleEntry<>(Unexploded, new AnimParam(113, 21, 4)),
+			new SimpleEntry<>(ExpCenter, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(ExpRight, new AnimParam(37, 223, 7)),
+			new SimpleEntry<>(ExpLeft, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(ExpDown, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(ExpUp, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(ExpVertical, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(ExpHorizontal, new AnimParam(19, 223, 7)));
 
 	@Getter
 	private static int range = 1;
@@ -63,7 +63,7 @@ public class Bomb extends AnimatedObject {
 		setRanges();
 		wasTrigByBomb = false;
 		isDead = false;
-		addAnimation(unexploded.ordinal(), 0, 0);
+		addAnimation(Unexploded.ordinal(), 0, 0);
 	}
 
 	public Bomb(int range, Position position, int timer, int right, int left, int down, int up) {
@@ -80,7 +80,7 @@ public class Bomb extends AnimatedObject {
 		leftRange = left;
 		downRange = down;
 		upRange = up;
-		addAnimation(unexploded.ordinal(), 0, 0);
+		addAnimation(Unexploded.ordinal(), 0, 0);
 	}
 
 	public void cycleAnimations() {
@@ -116,7 +116,7 @@ public class Bomb extends AnimatedObject {
 		timer = 0;
 		animCycleParam = 2;
 		clearAnimation();
-		addAnimation(expCenter.ordinal(), 0, 0);
+		addAnimation(ExpCenter.ordinal(), 0, 0);
 		processRanges();
 	}
 
@@ -160,13 +160,13 @@ public class Bomb extends AnimatedObject {
 				.forEach(addIntermediateAnim);
 	}
 
-	private final IntConsumer addHorizontalAnimation = offset -> addAnimation(expHorizontal.ordinal(), offset, 0);
-	private final IntConsumer addLeftAnimation = offset -> addAnimation(expLeft.ordinal(), offset, 0);
-	private final IntConsumer addRightAnimation = offset -> addAnimation(expRight.ordinal(), offset, 0);
+	private final IntConsumer addHorizontalAnimation = offset -> addAnimation(ExpHorizontal.ordinal(), offset, 0);
+	private final IntConsumer addLeftAnimation = offset -> addAnimation(ExpLeft.ordinal(), offset, 0);
+	private final IntConsumer addRightAnimation = offset -> addAnimation(ExpRight.ordinal(), offset, 0);
 
-	private final IntConsumer addVerticalAnimation = offset -> addAnimation(expVertical.ordinal(), 0, offset);
-	private final IntConsumer addUpAnimation = offset -> addAnimation(expUp.ordinal(), 0, offset);
-	private final IntConsumer addDownAnimation = offset -> addAnimation(expDown.ordinal(), 0, offset);
+	private final IntConsumer addVerticalAnimation = offset -> addAnimation(ExpVertical.ordinal(), 0, offset);
+	private final IntConsumer addUpAnimation = offset -> addAnimation(ExpUp.ordinal(), 0, offset);
+	private final IntConsumer addDownAnimation = offset -> addAnimation(ExpDown.ordinal(), 0, offset);
 
 	private void setRanges() {
 		setRanges(isNotAlignedWithRow, this::resetHorizontalRanges, this::setHorizontalRanges);

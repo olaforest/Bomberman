@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 import java.awt.image.BufferedImage;
 
-import static gameplayView.AnimationType.death;
+import static gameplayView.AnimationType.Death;
 import static gameplayView.ImageManager.getImages;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -33,7 +33,7 @@ public class AnimationTest extends PowerMockTestCase {
 		//given
 		when(getImages(animParam)).thenReturn(of(emptyList()));
 		//when
-		final Animation animation = new Animation(death, animParam);
+		final Animation animation = new Animation(Death, animParam);
 		//then
 		assertThat(animation.isAnimDone()).isTrue();
 	}
@@ -43,7 +43,7 @@ public class AnimationTest extends PowerMockTestCase {
 		//given
 		when(getImages(animParam)).thenReturn(of(asList(bufferedImage1, bufferedImage2)));
 		//when
-		final Animation animation = new Animation(death, animParam);
+		final Animation animation = new Animation(Death, animParam);
 		//then
 		assertThat(animation.getCurrentFrame()).isEqualTo(bufferedImage1);
 		assertThat(animation.isAnimDone()).isFalse();
@@ -54,7 +54,7 @@ public class AnimationTest extends PowerMockTestCase {
 		//given
 		when(getImages(animParam)).thenReturn(of(asList(bufferedImage1, bufferedImage2)));
 		//when
-		final Animation animation = new Animation(death, animParam);
+		final Animation animation = new Animation(Death, animParam);
 		animation.cycleFrame();
 		//then
 		assertThat(animation.getCurrentFrame()).isEqualTo(bufferedImage2);

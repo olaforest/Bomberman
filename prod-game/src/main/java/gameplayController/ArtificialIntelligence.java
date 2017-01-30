@@ -243,7 +243,7 @@ class ArtificialIntelligence {
 		}
 	}
 
-	/* This is just AStar. The only thing of note is that we round up to the nearest cell width
+	/* This is just AStar. The only thing of note is that we round Up to the nearest cell width
 	* so that we can use standard grid sizes for searching
 	*/
 	private Node AStar(Enemy enemy, Bomberman bomberman) {

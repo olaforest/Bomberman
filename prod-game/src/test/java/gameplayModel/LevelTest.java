@@ -81,7 +81,7 @@ public class LevelTest {
 		assertThatThrownBy(() -> new Level(levelSpec))
 				//then
 				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessage("Invalid power up type. Value is outside defined range.");
+				.hasMessage("Invalid power Up type. Value is outside defined range.");
 	}
 
 	@Test
@@ -92,7 +92,7 @@ public class LevelTest {
 		assertThatThrownBy(() -> new Level(levelSpec))
 				//then
 				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessage("Invalid power up type. Value is outside defined range.");
+				.hasMessage("Invalid power Up type. Value is outside defined range.");
 	}
 
 	@Test

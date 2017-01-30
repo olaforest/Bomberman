@@ -1,17 +1,17 @@
 package gameplayView;
 
 public enum AnimationType {
-	right,
-	left,
-	down,
-	up,
-	death,
-	unexploded,
-	expCenter,
-	expRight,
-	expLeft,
-	expDown,
-	expUp,
-	expVertical,
-	expHorizontal
+	Right,
+	Left,
+	Down,
+	Up,
+	Death,
+	Unexploded,
+	ExpCenter,
+	ExpRight,
+	ExpLeft,
+	ExpDown,
+	ExpUp,
+	ExpVertical,
+	ExpHorizontal
 }

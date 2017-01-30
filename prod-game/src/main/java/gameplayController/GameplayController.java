@@ -212,8 +212,8 @@ public class GameplayController implements ActionListener {
 
 				switch (activeDirectionKeys.getFirst()) {
 					case KeyEvent.VK_UP:
-						if (bomberman.getCurrentAnimationType() != up)
-							bomberman.setCurrentAnimation(up);
+						if (bomberman.getCurrentAnimationType() != Up)
+							bomberman.setCurrentAnimation(Up);
 						else
 							bomberman.cycleAnimation();
 
@@ -228,8 +228,8 @@ public class GameplayController implements ActionListener {
 
 						break;
 					case KeyEvent.VK_DOWN:
-						if (bomberman.getCurrentAnimationType() != down)
-							bomberman.setCurrentAnimation(down);
+						if (bomberman.getCurrentAnimationType() != Down)
+							bomberman.setCurrentAnimation(Down);
 						else
 							bomberman.cycleAnimation();
 
@@ -244,8 +244,8 @@ public class GameplayController implements ActionListener {
 
 						break;
 					case KeyEvent.VK_LEFT:
-						if (bomberman.getCurrentAnimationType() != left)
-							bomberman.setCurrentAnimation(left);
+						if (bomberman.getCurrentAnimationType() != Left)
+							bomberman.setCurrentAnimation(Left);
 						else
 							bomberman.cycleAnimation();
 
@@ -260,8 +260,8 @@ public class GameplayController implements ActionListener {
 
 						break;
 					case KeyEvent.VK_RIGHT:
-						if (bomberman.getCurrentAnimationType() != right)
-							bomberman.setCurrentAnimation(right);
+						if (bomberman.getCurrentAnimationType() != Right)
+							bomberman.setCurrentAnimation(Right);
 						else
 							bomberman.cycleAnimation();
 
@@ -286,7 +286,7 @@ public class GameplayController implements ActionListener {
 
 				List<PowerUp> powerUpsAcquired = bomberman.getPowerUpsAcquired();
 
-				// The power up of the current map is removed from bomberman if he already picked it up before dying.
+				// The power Up of the current map is removed from bomberman if he already picked it Up before dying.
 				if (powerup == null)
 					powerUpsAcquired.remove(powerUpsAcquired.size() - 1);
 
@@ -326,12 +326,12 @@ public class GameplayController implements ActionListener {
 			if (!enemies.get(i).isDead()) {
 
 				if (enemies.get(i).getDirection() == 1 || enemies.get(i).getDirection() == 2) {
-					if (enemies.get(i).getCurrentAnimationType() != left)
-						enemies.get(i).setCurrentAnimation(left);
+					if (enemies.get(i).getCurrentAnimationType() != Left)
+						enemies.get(i).setCurrentAnimation(Left);
 					enemies.get(i).cycleAnimation();
 				} else {
-					if (enemies.get(i).getCurrentAnimationType() != right)
-						enemies.get(i).setCurrentAnimation(right);
+					if (enemies.get(i).getCurrentAnimationType() != Right)
+						enemies.get(i).setCurrentAnimation(Right);
 					enemies.get(i).cycleAnimation();
 				}
 				i++;

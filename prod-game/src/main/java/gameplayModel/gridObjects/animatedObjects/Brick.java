@@ -9,12 +9,12 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-import static gameplayView.AnimationType.death;
+import static gameplayView.AnimationType.Death;
 import static java.util.Collections.singletonList;
 
 public class Brick extends AnimatedObject {
 	private static final List<SimpleEntry<AnimationType, AnimParam>> animParams =
-			singletonList(new SimpleEntry<>(death, new AnimParam(19, 259, 7)));
+			singletonList(new SimpleEntry<>(Death, new AnimParam(19, 259, 7)));
 
 	public Brick(Position position) {
 		super(position, animParams);
