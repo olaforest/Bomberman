@@ -37,7 +37,7 @@ public class GridMapTest {
 		assertTrue(gridMap.getEnemies().get(17).getClass().toString().equals("class gameplayModel.GridObjects.AnimatedObjects.EnemyType.Doll"));
 		assertTrue(gridMap.getEnemies().get(18).getClass().toString().equals("class gameplayModel.GridObjects.AnimatedObjects.EnemyType.Doll"));
 		
-		/* Test irrelevant input, last number in the array corresponds to the power up type in the level, therefore 
+		/* Test irrelevant input, last number in the array corresponds to the power Up type in the level, therefore
 		should not be taken into account for generating new enemies.*/
 //		gridMap.generateEnemies(asList(0, 0, 0, 0, 0, 0, 0, 0, -2));
 

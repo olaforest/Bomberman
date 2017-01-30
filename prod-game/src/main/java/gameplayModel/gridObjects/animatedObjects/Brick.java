@@ -1,22 +1,23 @@
 package gameplayModel.gridObjects.animatedObjects;
 
 import gameplayModel.gridObjects.AnimatedObject;
+import gameplayView.AnimParam;
+import gameplayView.AnimationType;
 import utilities.Position;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Arrays.asList;
+import static gameplayView.AnimationType.Death;
 import static java.util.Collections.singletonList;
 
 public class Brick extends AnimatedObject {
-	public enum AnimationType {destruction}
-	private static final List<List<Integer>> ANIM_PARAM = singletonList(asList(19, 259, 7));
+	private static final List<SimpleEntry<AnimationType, AnimParam>> animParams =
+			singletonList(new SimpleEntry<>(Death, new AnimParam(19, 259, 7)));
 
 	public Brick(Position position) {
-		super(position);
-		animationList = generateAnimationList(asList(AnimationType.values()), ANIM_PARAM, 2);
-		currentAnimation = animationList.get(INITIAL_ANIMATION);
+		super(position, animParams);
 	}
 
 	public List<String> toCSVEntry() {

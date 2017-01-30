@@ -1,13 +1,17 @@
 package gameplayModel.gridObjects.animatedObjects;
 
 import gameplayController.GameplayController;
-import gameplayModel.Animation;
 import gameplayModel.gridObjects.AnimatedObject;
+import gameplayView.AnimParam;
+import gameplayView.Animation;
+import gameplayView.AnimationType;
+import gameplayView.ImageManager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import utilities.Position;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
@@ -18,25 +22,22 @@ import java.util.stream.IntStream;
 
 import static gameplayModel.GridMap.MAPHEIGHT;
 import static gameplayModel.GridMap.MAPWIDTH;
-import static gameplayModel.gridObjects.animatedObjects.Bomb.AnimationType.*;
+import static gameplayView.AnimationType.*;
 import static java.util.Arrays.asList;
 import static java.util.function.IntUnaryOperator.identity;
-import static java.util.stream.Collectors.toList;
 
 @Getter
 public class Bomb extends AnimatedObject {
-
-	public enum AnimationType {unexploded, expCenter, expRight, expLeft, expDown, expUp, expVertical, expHorizontal}
-
 	public static final int TIME_TO_EXPLOSION = 2500;
-	public static final int[][] ANIM_PARAM = new int[][]{{113, 21, 4, 4, PIXEL_DIMENSION},
-			{19, 223, 7, 4, 54},
-			{37, 223, 7, 4, 54},
-			{1, 223, 7, 4, 54},
-			{19, 241, 7, 4, 54},
-			{19, 205, 7, 4, 54},
-			{37, 205, 7, 4, 54},
-			{37, 241, 7, 4, 54}};
+	public static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
+			new SimpleEntry<>(Unexploded, new AnimParam(113, 21, 4)),
+			new SimpleEntry<>(ExpCenter, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(ExpRight, new AnimParam(37, 223, 7)),
+			new SimpleEntry<>(ExpLeft, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(ExpDown, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(ExpUp, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(ExpVertical, new AnimParam(19, 223, 7)),
+			new SimpleEntry<>(ExpHorizontal, new AnimParam(19, 223, 7)));
 
 	@Getter
 	private static int range = 1;
@@ -48,10 +49,10 @@ public class Bomb extends AnimatedObject {
 	private int timer, rightRange, leftRange, downRange, upRange;
 
 	@Accessors(fluent = true)
-	private boolean wasTrigByBomb;
+	private boolean wasTrigByBomb, isDead;
 
 	public Bomb(Position position) {
-		super(position);
+		super(position, animParams);
 
 		currentAnimations = new ArrayList<>();
 		animXOffset = new ArrayList<>();
@@ -61,16 +62,17 @@ public class Bomb extends AnimatedObject {
 		rightRange = leftRange = downRange = upRange = range;
 		setRanges();
 		wasTrigByBomb = false;
-		animationList = generateAnimationList(asList(values()));
-		addAnimation(unexploded.ordinal(), 0, 0);
+		isDead = false;
+		addAnimation(Unexploded.ordinal(), 0, 0);
 	}
 
 	public Bomb(int range, Position position, int timer, int right, int left, int down, int up) {
-		super(position);
+		super(position, animParams);
 
 		currentAnimations = new ArrayList<>();
 		animXOffset = new ArrayList<>();
 		animYOffset = new ArrayList<>();
+		isDead = false;
 
 		this.timer = timer;
 		Bomb.range = range;
@@ -78,25 +80,7 @@ public class Bomb extends AnimatedObject {
 		leftRange = left;
 		downRange = down;
 		upRange = up;
-		animationList = generateAnimationList(asList(values()));
-
-		addAnimation(unexploded.ordinal(), 0, 0);
-	}
-
-	private List<Animation> generateAnimationList(List<AnimationType> animationType) {
-		return IntStream.range(0, animationType.size())
-				.mapToObj(this::generateAnimation)
-				.collect(toList());
-	}
-
-	private Animation generateAnimation(int i) {
-		final Animation animation = new Animation(ANIM_PARAM[i][2]);
-		for (int j = 0; j < ANIM_PARAM[i][3]; j++)
-			animation.setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * j, ANIM_PARAM[i][1]), j);
-
-		for (int n = (ANIM_PARAM[i][2] - ANIM_PARAM[i][3]); n > 0; n--)
-			animation.setFrame(resizeImage(ANIM_PARAM[i][0] + ANIM_PARAM[i][4] * n, ANIM_PARAM[i][1]), ANIM_PARAM[i][3] - n);
-		return animation;
+		addAnimation(Unexploded.ordinal(), 0, 0);
 	}
 
 	public void cycleAnimations() {
@@ -113,7 +97,8 @@ public class Bomb extends AnimatedObject {
 		for (int i = 0; i < currentAnimations.size(); ) {
 			if (currentAnimations.get(i).isAnimDone()) {
 				removeAnimation(i);
-				if (currentAnimations.size() == 0) isObsolete = true;
+				if (currentAnimations.size() == 0)
+					isObsolete = true;
 			} else {
 				currentAnimations.get(i).cycleFrame();
 				i++;
@@ -132,7 +117,7 @@ public class Bomb extends AnimatedObject {
 		timer = 0;
 		animCycleParam = 2;
 		clearAnimation();
-		addAnimation(expCenter.ordinal(), 0, 0);
+		addAnimation(ExpCenter.ordinal(), 0, 0);
 		processRanges();
 	}
 
@@ -176,13 +161,13 @@ public class Bomb extends AnimatedObject {
 				.forEach(addIntermediateAnim);
 	}
 
-	private final IntConsumer addHorizontalAnimation = offset -> addAnimation(expHorizontal.ordinal(), offset, 0);
-	private final IntConsumer addLeftAnimation = offset -> addAnimation(expLeft.ordinal(), offset, 0);
-	private final IntConsumer addRightAnimation = offset -> addAnimation(expRight.ordinal(), offset, 0);
+	private final IntConsumer addHorizontalAnimation = offset -> addAnimation(ExpHorizontal.ordinal(), offset, 0);
+	private final IntConsumer addLeftAnimation = offset -> addAnimation(ExpLeft.ordinal(), offset, 0);
+	private final IntConsumer addRightAnimation = offset -> addAnimation(ExpRight.ordinal(), offset, 0);
 
-	private final IntConsumer addVerticalAnimation = offset -> addAnimation(expVertical.ordinal(), 0, offset);
-	private final IntConsumer addUpAnimation = offset -> addAnimation(expUp.ordinal(), 0, offset);
-	private final IntConsumer addDownAnimation = offset -> addAnimation(expDown.ordinal(), 0, offset);
+	private final IntConsumer addVerticalAnimation = offset -> addAnimation(ExpVertical.ordinal(), 0, offset);
+	private final IntConsumer addUpAnimation = offset -> addAnimation(ExpUp.ordinal(), 0, offset);
+	private final IntConsumer addDownAnimation = offset -> addAnimation(ExpDown.ordinal(), 0, offset);
 
 	private void setRanges() {
 		setRanges(isNotAlignedWithRow, this::resetHorizontalRanges, this::setHorizontalRanges);
@@ -196,7 +181,7 @@ public class Bomb extends AnimatedObject {
 			setAdjustedRanges.run();
 	}
 
-	private final IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0;
+	private final IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (ImageManager.EFFECTIVE_PIXEL_DIMENSION * 2) == 0;
 	private final BooleanSupplier isNotAlignedWithRow = () -> isNotAlignedWithRowOrColumn.test(position.getY());
 	private final BooleanSupplier isNotAlignedWithColumn = () -> isNotAlignedWithRowOrColumn.test(position.getX());
 
@@ -225,23 +210,23 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private int maxRangePosition(int position, int maxRange) {
-		return position + maxRange * EFFECTIVE_PIXEL_DIMENSION;
+		return position + maxRange * ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 	}
 
 	private int minRangePosition(int position, int minRange) {
-		return position - minRange * EFFECTIVE_PIXEL_DIMENSION;
+		return position - minRange * ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 	}
 
 	private int adjustedMaxRangePosition(int position, int maxDimension) {
-		return (maxDimension - 2) - position / EFFECTIVE_PIXEL_DIMENSION;
+		return (maxDimension - 2) - position / ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 	}
 
 	private int adjustedMinRangePosition(int position) {
-		return position / EFFECTIVE_PIXEL_DIMENSION - 1;
+		return position / ImageManager.EFFECTIVE_PIXEL_DIMENSION - 1;
 	}
 
 	private void addAnimation(int animType, int xOffset, int yOffset) {
-		currentAnimations.add(new Animation(animationList.get(animType)));
+//		currentAnimations.add(new Animation(animations.get(animType)));
 		animXOffset.add(xOffset);
 		animYOffset.add(yOffset);
 	}
@@ -258,11 +243,11 @@ public class Bomb extends AnimatedObject {
 		animYOffset.clear();
 	}
 
-	public void setWasTrigByBomb() {
+	void setWasTrigByBomb() {
 		wasTrigByBomb = true;
 	}
 
-	public static void increaseRange() {
+	static void increaseRange() {
 		range++;
 	}
 

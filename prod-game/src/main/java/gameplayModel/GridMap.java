@@ -14,10 +14,10 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static gameplayController.GameplayController.TIMEOUT;
-import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static gameplayModel.gridObjects.HiddenObject.generateIndex;
 import static gameplayModel.gridObjects.PowerUp.createPowerUp;
 import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
 

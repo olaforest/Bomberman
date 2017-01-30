@@ -1,41 +1,57 @@
 package gameplayModel.gridObjects;
 
-import gameplayModel.Animation;
 import gameplayModel.GridObject;
+import gameplayView.AnimParam;
+import gameplayView.Animation;
+import gameplayView.AnimationType;
 import lombok.Getter;
 import utilities.Position;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.Map;
 
-import static java.util.stream.Collectors.toList;
+import static gameplayView.AnimationType.Death;
+import static java.util.stream.Collectors.toMap;
 
 public abstract class AnimatedObject extends GridObject {
-	protected static final int INITIAL_ANIMATION = 0;
-
-	protected List<Animation> animationList;
-	@Getter protected Animation currentAnimation;
-	@Getter protected boolean isDead, isObsolete;
-	@Getter private int animationNumber;
+	private final Map<AnimationType, Animation> animations;
+	@Getter private Animation currentAnimation;
+	@Getter protected boolean isObsolete;
 	protected int counter, animCycleParam;
 
-	protected AnimatedObject(Position position) {
+	protected AnimatedObject(Position position, List<SimpleEntry<AnimationType, AnimParam>> animParams) {
 		super(position);
-		animationNumber = INITIAL_ANIMATION;
+		this.animations = generateAnimations(animParams);
 		counter = 0;
 		animCycleParam = 3;
-		isDead = false;
 		isObsolete = false;
 	}
 
 	public void cycleAnimation() {
 		if (counter % animCycleParam == 0) {
-			if (!isDead)
-				currentAnimation.cycleFrame();
-			else
+			if (currentAnimation.getType() == Death)
 				cycleDeathAnimation();
+			else
+				currentAnimation.cycleFrame();
 		}
 		counter++;
+	}
+
+	public void triggerDeath() {
+		currentAnimation = animations.get(Death);
+	}
+
+	public boolean isDead() {
+		return currentAnimation.getType() == Death;
+	}
+
+	public AnimationType getCurrentAnimationType() {
+		return currentAnimation.getType();
+	}
+
+	public void setCurrentAnimation(AnimationType type) {
+		currentAnimation = animations.get(type).reset();
 	}
 
 	private void cycleDeathAnimation() {
@@ -45,27 +61,8 @@ public abstract class AnimatedObject extends GridObject {
 			currentAnimation.cycleFrame();
 	}
 
-	public void triggerDeath() {
-		currentAnimation = animationList.get(animationList.size() - 1);
-		isDead = true;
-	}
-
-	protected List<Animation> generateAnimationList(List<?> animationTypes, List<List<Integer>> animParam, int adjustment) {
-		return IntStream.range(0, animationTypes.size())
-				.mapToObj(i -> generateAnimation(i, animParam, adjustment))
-				.collect(toList());
-	}
-
-	private Animation generateAnimation(int i, List<List<Integer>> animParam, int adjustment) {
-		final Animation animation = new Animation(animParam.get(i).get(2));
-		IntStream.range(0, animParam.get(i).get(2))
-				.forEach(j -> animation.setFrame(resizeImage(animParam.get(i).get(0) + (PIXEL_DIMENSION + adjustment) * j, animParam.get(i).get(1)), j));
-		return animation;
-	}
-
-	public void setCurrentAnimation(int aT) {
-		currentAnimation = animationList.get(aT);
-		currentAnimation.setToInitialFrame();
-		animationNumber = aT;
+	private static Map<AnimationType, Animation> generateAnimations(List<SimpleEntry<AnimationType, AnimParam>> params) {
+		return params.stream()
+				.collect(toMap(SimpleEntry::getKey, entry -> new Animation(entry.getKey(), entry.getValue())));
 	}
 }

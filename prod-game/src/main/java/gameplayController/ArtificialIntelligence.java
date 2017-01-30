@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 
 class ArtificialIntelligence {
 
@@ -243,7 +243,7 @@ class ArtificialIntelligence {
 		}
 	}
 
-	/* This is just AStar. The only thing of note is that we round up to the nearest cell width
+	/* This is just AStar. The only thing of note is that we round Up to the nearest cell width
 	* so that we can use standard grid sizes for searching
 	*/
 	private Node AStar(Enemy enemy, Bomberman bomberman) {

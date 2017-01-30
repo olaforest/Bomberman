@@ -9,7 +9,6 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
-import static java.lang.Thread.currentThread;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
@@ -31,7 +30,7 @@ public class CsvUtils {
 	public static List<List<String>> readResourcesCSV(String fileName) {
 		CSVReader reader;
 		try {
-			final InputStream inputStream = currentThread().getContextClassLoader().getResourceAsStream(fileName);
+			final InputStream inputStream = CsvUtils.class.getClassLoader().getResourceAsStream(fileName);
 			reader = new CSVReader(new InputStreamReader(inputStream));
 			final List<String[]> fileContent = reader.readAll();
 			reader.close();

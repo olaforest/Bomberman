@@ -26,10 +26,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
 import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
+import static gameplayView.AnimationType.*;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static utilities.Position.create;
 
 public class GameplayController implements ActionListener {
@@ -211,10 +212,10 @@ public class GameplayController implements ActionListener {
 
 				switch (activeDirectionKeys.getFirst()) {
 					case KeyEvent.VK_UP:
-						if (bomberman.getAnimationNumber() != Bomberman.AnimationType.up.ordinal())
-							bomberman.setCurrentAnimation(Bomberman.AnimationType.up.ordinal());
+						if (bomberman.getCurrentAnimationType() != Up)
+							bomberman.setCurrentAnimation(Up);
 						else
-							bomberman.getCurrentAnimation().cycleFrame();
+							bomberman.cycleAnimation();
 
 						boolean canMoveUp = true;
 
@@ -227,10 +228,10 @@ public class GameplayController implements ActionListener {
 
 						break;
 					case KeyEvent.VK_DOWN:
-						if (bomberman.getAnimationNumber() != Bomberman.AnimationType.down.ordinal())
-							bomberman.setCurrentAnimation(Bomberman.AnimationType.down.ordinal());
+						if (bomberman.getCurrentAnimationType() != Down)
+							bomberman.setCurrentAnimation(Down);
 						else
-							bomberman.getCurrentAnimation().cycleFrame();
+							bomberman.cycleAnimation();
 
 						boolean canMoveDown = true;
 
@@ -243,10 +244,10 @@ public class GameplayController implements ActionListener {
 
 						break;
 					case KeyEvent.VK_LEFT:
-						if (bomberman.getAnimationNumber() != Bomberman.AnimationType.left.ordinal())
-							bomberman.setCurrentAnimation(Bomberman.AnimationType.left.ordinal());
+						if (bomberman.getCurrentAnimationType() != Left)
+							bomberman.setCurrentAnimation(Left);
 						else
-							bomberman.getCurrentAnimation().cycleFrame();
+							bomberman.cycleAnimation();
 
 						boolean canMoveLeft = true;
 
@@ -259,10 +260,10 @@ public class GameplayController implements ActionListener {
 
 						break;
 					case KeyEvent.VK_RIGHT:
-						if (bomberman.getAnimationNumber() != Bomberman.AnimationType.right.ordinal())
-							bomberman.setCurrentAnimation(Bomberman.AnimationType.right.ordinal());
+						if (bomberman.getCurrentAnimationType() != Right)
+							bomberman.setCurrentAnimation(Right);
 						else
-							bomberman.getCurrentAnimation().cycleFrame();
+							bomberman.cycleAnimation();
 
 						boolean canMoveRight = true;
 
@@ -285,7 +286,7 @@ public class GameplayController implements ActionListener {
 
 				List<PowerUp> powerUpsAcquired = bomberman.getPowerUpsAcquired();
 
-				// The power up of the current map is removed from bomberman if he already picked it up before dying.
+				// The power Up of the current map is removed from bomberman if he already picked it Up before dying.
 				if (powerup == null)
 					powerUpsAcquired.remove(powerUpsAcquired.size() - 1);
 
@@ -325,12 +326,12 @@ public class GameplayController implements ActionListener {
 			if (!enemies.get(i).isDead()) {
 
 				if (enemies.get(i).getDirection() == 1 || enemies.get(i).getDirection() == 2) {
-					if (enemies.get(i).getAnimationNumber() != Enemy.AnimationType.left.ordinal())
-						enemies.get(i).setCurrentAnimation(Enemy.AnimationType.left.ordinal());
+					if (enemies.get(i).getCurrentAnimationType() != Left)
+						enemies.get(i).setCurrentAnimation(Left);
 					enemies.get(i).cycleAnimation();
 				} else {
-					if (enemies.get(i).getAnimationNumber() != Enemy.AnimationType.right.ordinal())
-						enemies.get(i).setCurrentAnimation(Enemy.AnimationType.right.ordinal());
+					if (enemies.get(i).getCurrentAnimationType() != Right)
+						enemies.get(i).setCurrentAnimation(Right);
 					enemies.get(i).cycleAnimation();
 				}
 				i++;
@@ -535,7 +536,7 @@ public class GameplayController implements ActionListener {
 				Graphics2D g2d = (Graphics2D) page;
 
 				if (exitway != null)
-					g2d.drawImage(exitway.getImage(), exitway.getPosition().getX(), exitway.getPosition().getY(), gamePanel);
+					g2d.drawImage(Exitway.getImage(), exitway.getPosition().getX(), exitway.getPosition().getY(), gamePanel);
 
 				if (powerup != null)
 					g2d.drawImage(powerup.getImage(), powerup.getPosition().getX(), powerup.getPosition().getY(), gamePanel);
@@ -556,7 +557,7 @@ public class GameplayController implements ActionListener {
 				g2d.drawImage(bomberman.getCurrentAnimation().getCurrentFrame(), bomberman.getPosition().getX(), bomberman.getPosition().getY(), gamePanel);
 
 				for (Concrete block : concreteLayout)
-					g2d.drawImage(block.getImage(), block.getPosition().getX(), block.getPosition().getY(), gamePanel);
+					g2d.drawImage(Concrete.getImage(), block.getPosition().getX(), block.getPosition().getY(), gamePanel);
 			}
 		};
 

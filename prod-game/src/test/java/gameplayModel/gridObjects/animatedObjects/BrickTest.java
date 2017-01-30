@@ -4,7 +4,7 @@ import gameplayModel.GridMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import static gameplayModel.GridObject.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 import static utilities.Position.create;
 
@@ -43,16 +43,6 @@ public class BrickTest {
 	}
 
 	@Test
-	public void testGetAndSetCurrentAnimation() {
-
-		int animationNumber = (int) (Math.random() * Enemy.AnimationType.values().length);
-
-		brick.setCurrentAnimation(animationNumber);
-
-		assertTrue(animationNumber == brick.getAnimationNumber());
-	}
-
-	@Test
 	public void testIsConcreteCollision() {
 		assertFalse(brick.isConcreteCollision());
 	}
@@ -60,11 +50,11 @@ public class BrickTest {
 	@Test
 	public void testGetAndSetXPosition() {
 
-		//Tests if the inputted x position is out of bounds on the left.
+		//Tests if the inputted x position is out of bounds on the Left.
 		brick.setXPosition(0);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION, brick.getPosition().getX());
 
-		//Tests if the inputted x position is out of bounds on the right.
+		//Tests if the inputted x position is out of bounds on the Right.
 		brick.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIMENSION);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION, brick.getPosition().getX());
 
@@ -116,28 +106,28 @@ public class BrickTest {
 		brick.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 2);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 2, brick.getPosition().getY());
 
-		//Tests if the inputted y position is valid while the x position is to the left of a column, outside of the misalignment tolerance.
+		//Tests if the inputted y position is valid while the x position is to the Left of a column, outside of the misalignment tolerance.
 		brick.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		brick.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Brick.MISALIGNMENT_ALLOWED - 1);
 		brick.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, brick.getPosition().getY());
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Brick.MISALIGNMENT_ALLOWED - 1, brick.getPosition().getX());
 
-		//Tests if the inputted y position is valid while the x position is to the left of a column, inside of the misalignment tolerance.
+		//Tests if the inputted y position is valid while the x position is to the Left of a column, inside of the misalignment tolerance.
 		brick.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		brick.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 - Brick.MISALIGNMENT_ALLOWED);
 		brick.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + 4, brick.getPosition().getY());
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 - Brick.MISALIGNMENT_ALLOWED + 4, brick.getPosition().getX());
 
-		//Tests if the inputted y position is valid while the x position is to the right of a column, outside of the misalignment tolerance.
+		//Tests if the inputted y position is valid while the x position is to the Right of a column, outside of the misalignment tolerance.
 		brick.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		brick.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Brick.MISALIGNMENT_ALLOWED + 1);
 		brick.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3, brick.getPosition().getY());
 		assertEquals(EFFECTIVE_PIXEL_DIMENSION * 3 + Brick.MISALIGNMENT_ALLOWED + 1, brick.getPosition().getX());
 
-		//Tests if the inputted y position is valid while the x position is to the right of a column, inside of the misalignment tolerance.
+		//Tests if the inputted y position is valid while the x position is to the Right of a column, inside of the misalignment tolerance.
 		brick.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3);
 		brick.setXPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + Brick.MISALIGNMENT_ALLOWED);
 		brick.setYPosition(EFFECTIVE_PIXEL_DIMENSION * 3 + 4);
