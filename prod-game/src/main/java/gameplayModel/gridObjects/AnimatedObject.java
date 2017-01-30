@@ -17,7 +17,7 @@ import static java.util.stream.Collectors.toMap;
 public abstract class AnimatedObject extends GridObject {
 	private final Map<AnimationType, Animation> animations;
 	@Getter private Animation currentAnimation;
-	@Getter private boolean isObsolete;
+	@Getter protected boolean isObsolete;
 	protected int counter, animCycleParam;
 
 	protected AnimatedObject(Position position, List<SimpleEntry<AnimationType, AnimParam>> animParams) {

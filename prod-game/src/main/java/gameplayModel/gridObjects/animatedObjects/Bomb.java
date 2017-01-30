@@ -85,23 +85,24 @@ public class Bomb extends AnimatedObject {
 
 	public void cycleAnimations() {
 		if (counter % animCycleParam == 0) {
-//			if (!isDead)
-//				currentAnimations.forEach(Animation::cycleFrame);
-//			else
-//				cycleDeathAnimations();
+			if (!isDead)
+				currentAnimations.forEach(Animation::cycleFrame);
+			else
+				cycleDeathAnimations();
 		}
 		counter++;
 	}
 
 	private void cycleDeathAnimations() {
 		for (int i = 0; i < currentAnimations.size(); ) {
-//			if (currentAnimations.get(i).isAnimDone()) {
-//				removeAnimation(i);
-//				if (currentAnimations.size() == 0) isObsolete = true;
-//			} else {
-//				currentAnimations.get(i).cycleFrame();
-//				i++;
-//			}
+			if (currentAnimations.get(i).isAnimDone()) {
+				removeAnimation(i);
+				if (currentAnimations.size() == 0)
+					isObsolete = true;
+			} else {
+				currentAnimations.get(i).cycleFrame();
+				i++;
+			}
 		}
 	}
 

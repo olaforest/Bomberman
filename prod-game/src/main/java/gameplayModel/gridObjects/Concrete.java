@@ -1,30 +1,17 @@
 package gameplayModel.gridObjects;
 
-import gameplayModel.GridObject;
-import gameplayView.ImageManager;
 import lombok.Getter;
 import utilities.Position;
 
 import java.awt.image.BufferedImage;
 
-public class Concrete extends GridObject {
+import static gameplayView.ImageManager.importScaledImage;
 
+public class Concrete extends FixedObject {
 	@Getter
-	private final BufferedImage image;
-	private static final int[] imageParameter = {2, 259};
+	private static final BufferedImage image = importScaledImage(2, 259);
 
 	public Concrete(Position position) {
 		super(position);
-		image = ImageManager.resizeImage(imageParameter[0], imageParameter[1]);
-	}
-
-	@Override
-	public void setXPosition(int xPos) {
-		position.setX(xPos);
-	}
-
-	@Override
-	public void setYPosition(int yPos) {
-		position.setY(yPos);
 	}
 }

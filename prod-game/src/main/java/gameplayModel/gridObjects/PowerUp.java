@@ -1,6 +1,5 @@
 package gameplayModel.gridObjects;
 
-import gameplayView.ImageManager;
 import lombok.Getter;
 import utilities.Position;
 
@@ -8,10 +7,11 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import static gameplayView.ImageManager.importScaledImage;
 import static utilities.Position.create;
 
 @Getter
-public class PowerUp extends HiddenObject {
+public class PowerUp extends FixedObject implements HiddenObject {
 	private final BufferedImage image;
 	private final boolean permanent;
 
@@ -25,16 +25,6 @@ public class PowerUp extends HiddenObject {
 		return new PowerUp(type, create(xPosition, yPosition));
 	}
 
-	@Override
-	public void setXPosition(int xPos) {
-		position.setX(xPos);
-	}
-
-	@Override
-	public void setYPosition(int yPos) {
-		position.setY(yPos);
-	}
-
 	public List<String> toCSVEntry() {
 		List<String> entryList = new ArrayList<>();
 		entryList.add(this.getClass().toString());
@@ -44,6 +34,6 @@ public class PowerUp extends HiddenObject {
 	}
 
 	private BufferedImage generateImage(List<Integer> parameters) {
-		return ImageManager.resizeImage(parameters.get(0), parameters.get(1));
+		return importScaledImage(parameters.get(0), parameters.get(1));
 	}
 }

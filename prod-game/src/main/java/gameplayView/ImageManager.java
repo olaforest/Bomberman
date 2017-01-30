@@ -20,18 +20,18 @@ import static javax.imageio.ImageIO.read;
 @UtilityClass
 public class ImageManager {
 	static final int ZOOM = 2;
-	public static final int PIXEL_DIMENSION = 16;
+	static final int PIXEL_DIMENSION = 16;
 	public static final int EFFECTIVE_PIXEL_DIMENSION = PIXEL_DIMENSION * ZOOM;
 	private static final BufferedImage sprite = loadSpriteSheet()
 			.orElseThrow(() -> new RuntimeException("Could not load sprite sheet"));
 
 	static Optional<List<BufferedImage>> getImages(AnimParam animParam) {
 		return ofNullable(range(0, animParam.getNumOfFrames())
-				.mapToObj(i -> resizeImage(animParam.getXCoordinate() + PIXEL_DIMENSION * i, animParam.getYCoordinate()))
+				.mapToObj(i -> importScaledImage(animParam.getXCoordinate() + PIXEL_DIMENSION * i, animParam.getYCoordinate()))
 				.collect(toList()));
 	}
 
-	public static BufferedImage resizeImage(int xCoordinate, int yCoordinate) {
+	public static BufferedImage importScaledImage(int xCoordinate, int yCoordinate) {
 		return resizeImage(sprite.getSubimage(xCoordinate, yCoordinate, PIXEL_DIMENSION, PIXEL_DIMENSION));
 	}
 
