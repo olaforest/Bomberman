@@ -12,7 +12,6 @@ import gameplayModel.gridObjects.animatedObjects.*;
 import gameplayView.GameStatusPanel;
 import gameplayView.GameplayPanel;
 import lombok.Getter;
-import menuController.MenuController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +39,6 @@ public class GameplayController implements ActionListener {
 
 	private boolean placeBomb;
 
-	private final MenuController menuCtrl;
 	@Getter
 	private final GameContext gameContext;
 	private GridMap gridMap;
@@ -63,19 +61,18 @@ public class GameplayController implements ActionListener {
 
 	private JFrame gameFrame;
 	private final Timer timer;
-	private LevelManager levelManager;
+	private final LevelManager levelManager;
 
-	public GameplayController(MenuController menuCtrl) {
-		this.menuCtrl = menuCtrl;
+	public GameplayController() {
 		gameContext = new GameContext();
+		levelManager = new LevelManager();
 		initializeReferences();
 		setupGameFrame(true);
 		timer = new Timer(TIMEOUT, this);
 		timer.start();
 	}
 
-	public GameplayController(MenuController menuCtrl, GameContext gameContext, LevelManager levelManager) {
-		this.menuCtrl = menuCtrl;
+	public GameplayController(GameContext gameContext, LevelManager levelManager) {
 		this.gameContext = gameContext;
 		this.levelManager = levelManager;
 		initializeReferences();
@@ -161,7 +158,6 @@ public class GameplayController implements ActionListener {
 						if (timer.isRunning()) {
 							timer.stop();
 							gameFrame.setVisible(false);
-							menuCtrl.pause();
 						}
 						break;
 					case KeyEvent.VK_X:
@@ -314,7 +310,6 @@ public class GameplayController implements ActionListener {
 				timer.start();
 			} else {
 				gameFrame.setVisible(false);
-				menuCtrl.gameOver();
 			}
 		} else {
 			bomberman.cycleAnimation();
@@ -448,7 +443,6 @@ public class GameplayController implements ActionListener {
 			gameContext.initializeGameTime();
 			gameContext.restartMap();
 			initializeReferences();
-			menuCtrl.getCurrentPlayer().increaseLevelUnlocked();
 			bomberman.setPowerUpsAcquired(powerUpsAcquired);
 
 			try {

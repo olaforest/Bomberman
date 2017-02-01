@@ -21,7 +21,7 @@ import static java.util.Arrays.asList;
 
 @Getter
 public class Bomberman extends AnimatedObject {
-	public static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
+	private static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
 			new SimpleEntry<>(Right, new AnimParam(50, 3, 4)),
 			new SimpleEntry<>(Left, new AnimParam(50, 21, 4)),
 			new SimpleEntry<>(Down, new AnimParam(2, 3, 3)),

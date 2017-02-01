@@ -28,8 +28,8 @@ import static java.util.function.IntUnaryOperator.identity;
 
 @Getter
 public class Bomb extends AnimatedObject {
-	public static final int TIME_TO_EXPLOSION = 2500;
-	public static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
+	private static final int TIME_TO_EXPLOSION = 2500;
+	private static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
 			new SimpleEntry<>(Unexploded, new AnimParam(113, 21, 4)),
 			new SimpleEntry<>(ExpCenter, new AnimParam(19, 223, 7)),
 			new SimpleEntry<>(ExpRight, new AnimParam(37, 223, 7)),

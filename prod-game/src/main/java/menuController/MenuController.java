@@ -143,7 +143,7 @@ public class MenuController implements ActionListener {
 			} else
 				chosenLevel = 0;
 			menuFrame.setVisible(false);
-			gameplayCtrl = new GameplayController(this);
+			gameplayCtrl = new GameplayController();
 
 		} else if (event.getSource() == mainMenuPanel.getLeaderboardButton()) {
 			leaderboard.updateLeaderboard();
@@ -190,7 +190,7 @@ public class MenuController implements ActionListener {
 		} else if (event.getSource() == loadGamePanel.getLoad()) {
 			menuFrame.setVisible(false);
 			final SavedGame savedGame = currentPlayer.getSavedGameList().get(loadGamePanel.getSaveIndex());
-			gameplayCtrl = new GameplayController(this, savedGame.getGameContext(), new LevelManager(savedGame.getLevelIndex()));
+			gameplayCtrl = new GameplayController(savedGame.getGameContext(), new LevelManager(savedGame.getLevelIndex()));
 			prePauseScore = gameplayCtrl.getGameContext().getScore();
 			gameplayCtrl.resumeGame();
 
