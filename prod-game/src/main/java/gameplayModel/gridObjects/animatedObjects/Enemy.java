@@ -16,7 +16,7 @@ import static utilities.Position.create;
 
 @Getter
 public class Enemy extends AnimatedObject {
-	public static final List<AnimationType> ANIMATION_TYPES = asList(Right, Left, Death);
+	public static final List<AnimationType> ANIMATION_TYPES = asList(Left, Right, Death);
 
 	private final int points;
 	private final int speed;

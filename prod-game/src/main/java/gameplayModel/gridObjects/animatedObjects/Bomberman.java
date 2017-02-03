@@ -22,11 +22,11 @@ import static java.util.Arrays.asList;
 @Getter
 public class Bomberman extends AnimatedObject {
 	private static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
-			new SimpleEntry<>(Right, new AnimParam(50, 3, 4)),
-			new SimpleEntry<>(Left, new AnimParam(50, 21, 4)),
+			new SimpleEntry<>(Right, new AnimParam(56, 3, 4)),
+			new SimpleEntry<>(Left, new AnimParam(56, 21, 4)),
 			new SimpleEntry<>(Down, new AnimParam(2, 3, 3)),
 			new SimpleEntry<>(Up, new AnimParam(2, 21, 3)),
-			new SimpleEntry<>(Death, new AnimParam(113, 3, 7)));
+			new SimpleEntry<>(Death, new AnimParam(128, 3, 6)));
 
 	public static final int INITIAL_SPEED = 4;
 	public static final int SPEED_INCREMENT = 2;

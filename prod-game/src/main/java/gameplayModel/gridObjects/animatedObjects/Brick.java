@@ -15,8 +15,8 @@ import static java.util.Arrays.asList;
 
 public class Brick extends AnimatedObject {
 	private static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
-			new SimpleEntry<>(Fixed, new AnimParam(19, 259, 2)),
-			new SimpleEntry<>(Death, new AnimParam(19, 259, 7)));
+			new SimpleEntry<>(Fixed, new AnimParam(38, 346, 2)),
+			new SimpleEntry<>(Death, new AnimParam(56, 346, 6)));
 
 	public Brick(Position position) {
 		super(position, animParams);

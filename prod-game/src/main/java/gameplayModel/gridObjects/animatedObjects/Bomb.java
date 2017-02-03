@@ -30,14 +30,14 @@ import static java.util.function.IntUnaryOperator.identity;
 public class Bomb extends AnimatedObject {
 	private static final int TIME_TO_EXPLOSION = 2500;
 	private static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
-			new SimpleEntry<>(Unexploded, new AnimParam(113, 21, 4)),
-			new SimpleEntry<>(ExpCenter, new AnimParam(19, 223, 7)),
-			new SimpleEntry<>(ExpRight, new AnimParam(37, 223, 7)),
-			new SimpleEntry<>(ExpLeft, new AnimParam(19, 223, 7)),
-			new SimpleEntry<>(ExpDown, new AnimParam(19, 223, 7)),
-			new SimpleEntry<>(ExpUp, new AnimParam(19, 223, 7)),
-			new SimpleEntry<>(ExpVertical, new AnimParam(19, 223, 7)),
-			new SimpleEntry<>(ExpHorizontal, new AnimParam(19, 223, 7)));
+			new SimpleEntry<>(Unexploded, new AnimParam(128, 21, 4)),
+			new SimpleEntry<>(ExpCenter, new AnimParam(2, 273, 7)),
+			new SimpleEntry<>(ExpRight, new AnimParam(2, 255, 7)),
+			new SimpleEntry<>(ExpLeft, new AnimParam(2, 219, 7)),
+			new SimpleEntry<>(ExpDown, new AnimParam(2, 237, 7)),
+			new SimpleEntry<>(ExpUp, new AnimParam(2, 201, 7)),
+			new SimpleEntry<>(ExpVertical, new AnimParam(2, 309, 7)),
+			new SimpleEntry<>(ExpHorizontal, new AnimParam(2, 291, 7)));
 
 	@Getter
 	private static int range = 1;
