@@ -27,7 +27,7 @@ public class ImageManager {
 
 	static Optional<List<BufferedImage>> getImages(AnimParam animParam) {
 		return ofNullable(range(0, animParam.getNumOfFrames())
-				.mapToObj(i -> importScaledImage(animParam.getXCoordinate() + PIXEL_DIMENSION * i, animParam.getYCoordinate()))
+				.mapToObj(i -> importScaledImage(animParam.getXCoordinate() + (PIXEL_DIMENSION + 2) * i, animParam.getYCoordinate()))
 				.collect(toList()));
 	}
 

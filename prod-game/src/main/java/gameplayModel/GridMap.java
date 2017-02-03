@@ -7,32 +7,31 @@ import gameplayModel.gridObjects.PowerUpType;
 import gameplayModel.gridObjects.animatedObjects.*;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayModel.gridObjects.HiddenObject.generateIndex;
 import static gameplayModel.gridObjects.PowerUp.createPowerUp;
 import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
 
 public class GridMap {
 	public static final int MAPWIDTH = 31;
 	public static final int MAPHEIGHT = 13;
+	public static final List<Concrete> CONCRETE_LAYOUT = generateMap();
 	static final int SPAWN_TIMEOUT = 10 * 1000;
 	private static final double BRICK_FACTOR = 0.225;
 	private static final int WIDTH = EFFECTIVE_PIXEL_DIMENSION;
 	private static final int HEIGHT = EFFECTIVE_PIXEL_DIMENSION;
 
 	private int spawnTimer;
-
 	@Getter private Level level;
-	@Getter private final List<Concrete> concreteLayout;
 	@Getter private final List<Brick> bricks;
 	@Getter private final List<Bomb> bombs;
 	@Getter private final List<Enemy> enemies;
@@ -43,55 +42,21 @@ public class GridMap {
 	public GridMap(Level level) {
 		this.level = level;
 		spawnTimer = SPAWN_TIMEOUT;
-		concreteLayout = new ArrayList<>();
 		bricks = new ArrayList<>();
 		bombs = new ArrayList<>();
 		enemies = new ArrayList<>();
-
-		generateMap();
 		populateMap();
 	}
 
 	public GridMap(int spawnTimer, List<Brick> bricks, List<Bomb> bombs, List<Enemy> enemies, Exitway exitway,
 				   PowerUp powerup, Bomberman bomberman) {
 		this.spawnTimer = spawnTimer;
-		concreteLayout = new ArrayList<>();
 		this.bricks = bricks;
 		this.bombs = bombs;
 		this.enemies = enemies;
-		this.bomberman = bomberman;
 		this.exitway = exitway;
 		this.powerUp = powerup;
-
-		generateMap();
-	}
-
-	private void generateMap() {
-		addHorizontalConcreteBoundary();
-		addVerticalConcreteBoundary();
-		addInnerConcreteBlocks();
-	}
-
-	private void addHorizontalConcreteBoundary() {
-		IntStream.range(0, MAPWIDTH)
-				.peek(i -> concreteLayout.add(new Concrete(modulus(i, 0))))
-				.forEach(i -> concreteLayout.add(new Concrete(modulus(i, (MAPHEIGHT - 1)))));
-	}
-
-	private void addVerticalConcreteBoundary() {
-		IntStream.range(1, MAPHEIGHT - 1)
-				.peek(i -> concreteLayout.add(new Concrete(modulus(0, i))))
-				.forEach(i -> concreteLayout.add(new Concrete(modulus((MAPWIDTH - 1), i))));
-	}
-
-	private void addInnerConcreteBlocks() {
-		for (int i = 2; i < MAPWIDTH - 2; i += 2)
-			addInnerConcreteBlockRow(i);
-	}
-
-	private void addInnerConcreteBlockRow(int i) {
-		for (int j = 2; j < MAPHEIGHT - 2; j += 2)
-			concreteLayout.add(new Concrete(modulus(i, j)));
+		this.bomberman = bomberman;
 	}
 
 	private void populateMap() {
@@ -205,6 +170,41 @@ public class GridMap {
 			spawnMoreEnemies();
 			spawnTimer = SPAWN_TIMEOUT;
 		}
+	}
+
+	private static List<Concrete> generateMap() {
+		return Stream.of(generateHoriConcreteBoundary(), generateVertConcreteBoundary(), generateInnerConcreteBlocks())
+				.flatMap(Collection::stream)
+				.collect(toList());
+	}
+
+	private static List<Concrete> generateHoriConcreteBoundary() {
+		return IntStream.range(0, MAPWIDTH)
+				.mapToObj(i -> asList(new Concrete(modulus(i, 0)), new Concrete(modulus(i, (MAPHEIGHT - 1)))))
+				.flatMap(Collection::stream)
+				.collect(toList());
+	}
+
+	private static List<Concrete> generateVertConcreteBoundary() {
+		return IntStream.range(1, MAPHEIGHT - 1)
+				.mapToObj(i -> asList(new Concrete(modulus(0, i)), new Concrete(modulus((MAPWIDTH - 1), i))))
+				.flatMap(Collection::stream)
+				.collect(toList());
+	}
+
+	private static List<Concrete> generateInnerConcreteBlocks() {
+		return IntStream.iterate(2, i -> i + 2)
+				.limit((MAPWIDTH - 2) / 2)
+				.mapToObj(GridMap::addInnerConcreteBlockRow)
+				.flatMap(Collection::stream)
+				.collect(toList());
+	}
+
+	private static List<Concrete> addInnerConcreteBlockRow(int xModulusPosition) {
+		return IntStream.iterate(2, i -> i + 2)
+				.limit((MAPHEIGHT - 2)/2)
+				.mapToObj(i -> new Concrete(modulus(xModulusPosition, i)))
+				.collect(toList());
 	}
 
 	public List<String> toCSVEntry() {

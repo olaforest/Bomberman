@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
+import static gameplayModel.GridMap.CONCRETE_LAYOUT;
 import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
@@ -122,7 +123,7 @@ public class GameplayController implements ActionListener {
 		gridMap = gameContext.getGridMap();
 
 		activeDirectionKeys = new ArrayDeque<>();
-		concreteLayout = gameContext.getGridMap().getConcreteLayout();
+		concreteLayout = CONCRETE_LAYOUT;
 		bricks = gameContext.getGridMap().getBricks();
 		bombs = gameContext.getGridMap().getBombs();
 		unexplodedBombs = new ArrayList<>();

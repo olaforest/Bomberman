@@ -66,12 +66,6 @@ public class GridMapTest {
 	}
 
 	@Test
-	public void testGetConcreteLayout() {
-		assertTrue(gridMap.getConcreteLayout().getClass().toString().equals("class java.util.ArrayList"));
-		assertEquals(154, gridMap.getConcreteLayout().size());
-	}
-
-	@Test
 	public void testGetBricks() {
 		assertTrue(gridMap.getBricks().getClass().toString().equals("class java.util.ArrayList"));
 	}
