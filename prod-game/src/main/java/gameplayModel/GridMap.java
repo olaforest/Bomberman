@@ -36,7 +36,7 @@ public class GridMap {
 	private static final double BRICK_FACTOR = 0.225;
 	private static final BiPredicate<Integer, Integer> CONCRETE_POS = (x, y) -> x % 2 == 0 && y % 2 == 0;
 	private static final BiPredicate<Integer, Integer> START_POS = (x, y) -> (x == 1 && y == 1) || (x == 1 && y == 2) || (x == 2 && y == 1);
-	private static final BiPredicate<Integer, Integer> BRICK_POS = CONCRETE_POS.and(START_POS).negate();
+	private static final BiPredicate<Integer, Integer> BRICK_POS = CONCRETE_POS.or(START_POS).negate();
 
 	private final Bomberman bomberman;
 	private final List<Brick> bricks;
@@ -57,16 +57,16 @@ public class GridMap {
 	}
 
 	private static List<Brick> generateBricks() {
-		return IntStream.range(1, MAPHEIGHT)
-				.peek(System.out::println)
+		return IntStream.range(1, MAPHEIGHT - 1)
 				.mapToObj(GridMap::generateBricksInRow)
 				.flatMap(List::stream)
 				.collect(toList());
 	}
 
 	private static List<Brick> generateBricksInRow(int rowNumber) {
-		return IntStream.range(0, MAPWIDTH - 1)
+		return IntStream.range(1, MAPWIDTH - 1)
 				.filter(x -> BRICK_POS.test(x, rowNumber))
+//				.filter(x -> random() < BRICK_FACTOR)
 				.mapToObj(x -> new Brick(modulus(x, rowNumber)))
 				.collect(toList());
 	}
@@ -93,7 +93,7 @@ public class GridMap {
 				.collect(toList());
 	}
 
-	public List<Enemy> generateEnemiesOfType(Entry<EnemyType, Integer> type) {
+	private List<Enemy> generateEnemiesOfType(Entry<EnemyType, Integer> type) {
 		return IntStream.range(0, type.getValue())
 				.mapToObj(i -> findNewEnemyLocation())
 				.map(position -> createEnemy(type.getKey(), position))
@@ -101,7 +101,7 @@ public class GridMap {
 	}
 
 	private Position findNewEnemyLocation() {
-		return IntStream.iterate(0, i -> i++)
+		return IntStream.iterate(0, i -> ++i)
 				.limit(1000)
 				.mapToObj(i -> generateRandomLocation())
 				.filter(this::validPosition)
@@ -111,11 +111,11 @@ public class GridMap {
 
 	private Boolean validPosition(Position position) {
 		return bricks.stream()
-				.filter(brick -> BRICK_POS.test(brick.getX(), brick.getY()))
-				.filter(brick -> !brick.isSamePosition(position))
+				.filter(brick -> !BRICK_POS.test(position.getModX(), position.getModY()))
+				.filter(brick -> brick.isSamePosition(position))
 				.findFirst()
-				.map(brick -> true)
-				.orElse(false);
+				.map(brick -> false)
+				.orElse(true);
 	}
 
 	private static Position generateRandomLocation() {

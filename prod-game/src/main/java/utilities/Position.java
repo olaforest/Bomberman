@@ -30,6 +30,14 @@ public class Position {
 		y -= delta;
 	}
 
+	public int getModX() {
+		return x / EFFECTIVE_PIXEL_DIMENSION;
+	}
+
+	public int getModY() {
+		return y / EFFECTIVE_PIXEL_DIMENSION;
+	}
+
 	public static Position create(int x, int y) {
 		return new Position(x, y);
 	}

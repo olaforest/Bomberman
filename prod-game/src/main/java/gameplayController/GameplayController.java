@@ -28,6 +28,9 @@ import static gameplayModel.GridMap.CONCRETE_LAYOUT;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
 import static gameplayView.AnimationType.*;
+import static gameplayView.GameStatusPanel.HEADERHEIGHT;
+import static gameplayView.GameplayPanel.HEIGHT;
+import static gameplayView.GameplayPanel.WIDTH;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static utilities.Position.create;
 
@@ -529,10 +532,10 @@ public class GameplayController implements ActionListener {
 				Graphics2D g2d = (Graphics2D) page;
 
 				if (exitway != null)
-					g2d.drawImage(Exitway.getImage(), exitway.getPosition().getX(), exitway.getPosition().getY(), gamePanel);
+					g2d.drawImage(Exitway.getImage(), exitway.getX(), exitway.getY(), gamePanel);
 
 				if (powerup != null)
-					g2d.drawImage(powerup.getImage(), powerup.getPosition().getX(), powerup.getPosition().getY(), gamePanel);
+					g2d.drawImage(powerup.getImage(), powerup.getX(), powerup.getY(), gamePanel);
 
 				for (Bomb bomb : bombs) {
 					for (int i = 0; i < bomb.getCurrentAnimations().size(); i++)
@@ -549,8 +552,8 @@ public class GameplayController implements ActionListener {
 
 				g2d.drawImage(bomberman.getCurrentAnimation().getCurrentFrame(), bomberman.getPosition().getX(), bomberman.getPosition().getY(), gamePanel);
 
-				for (Concrete block : concreteLayout)
-					g2d.drawImage(Concrete.getImage(), block.getPosition().getX(), block.getPosition().getY(), gamePanel);
+//				for (Concrete block : concreteLayout)
+//					g2d.drawImage(Concrete.getImage(), block.getPosition().getX(), block.getPosition().getY(), gamePanel);
 			}
 		};
 
@@ -565,7 +568,8 @@ public class GameplayController implements ActionListener {
 		gameFrame.getContentPane().setLayout(new BorderLayout());
 		gameFrame.getContentPane().add(gameStatusPanel, BorderLayout.NORTH);
 		gameFrame.getContentPane().add(gameView);
-		gameFrame.getContentPane().setPreferredSize(new Dimension(VIEW_PORT_WIDTH, GameplayPanel.HEIGHT + GameStatusPanel.HEADERHEIGHT));
+//		gameFrame.getContentPane().setPreferredSize(new Dimension(VIEW_PORT_WIDTH, GameplayPanel.HEIGHT + GameStatusPanel.HEADERHEIGHT));
+		gameFrame.getContentPane().setPreferredSize(new Dimension(WIDTH, HEIGHT + HEADERHEIGHT));
 		gameFrame.pack();
 		gameFrame.setLocation(400, 200);
 		gameFrame.setVisible(isVisible);
@@ -575,8 +579,8 @@ public class GameplayController implements ActionListener {
 		if (bomberman.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION / 2 <= VIEW_PORT_WIDTH / 2) {
 			gamePanel.setLocation(0, 0);
 			gamePanel.repaint();
-		} else if (bomberman.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION / 2 >= GameplayPanel.WIDTH - VIEW_PORT_WIDTH / 2) {
-			gamePanel.setLocation(VIEW_PORT_WIDTH - GameplayPanel.WIDTH, 0);
+		} else if (bomberman.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION / 2 >= WIDTH - VIEW_PORT_WIDTH / 2) {
+			gamePanel.setLocation(VIEW_PORT_WIDTH - WIDTH, 0);
 			gamePanel.repaint();
 		} else {
 			gamePanel.setLocation(VIEW_PORT_WIDTH / 2 - bomberman.getPosition().getX() - EFFECTIVE_PIXEL_DIMENSION / 2, 0);
