@@ -12,7 +12,6 @@ import java.util.List;
 import static gameplayView.AnimationType.*;
 import static java.lang.Math.random;
 import static java.util.Arrays.asList;
-import static utilities.Position.create;
 
 @Getter
 public class Enemy extends AnimatedObject {
@@ -37,8 +36,8 @@ public class Enemy extends AnimatedObject {
 		this.direction = direction;
 	}
 
-	public static Enemy createEnemy(EnemyType type, int xPosition, int yPosition) {
-		return new Enemy(type, create(xPosition, yPosition));
+	public static Enemy createEnemy(EnemyType type, Position position) {
+		return new Enemy(type, position);
 	}
 
 	public List<String> toCSVEntry() {

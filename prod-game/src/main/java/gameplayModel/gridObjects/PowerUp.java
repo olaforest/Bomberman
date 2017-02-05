@@ -25,6 +25,10 @@ public class PowerUp extends FixedObject implements HiddenObject {
 		return new PowerUp(type, create(xPosition, yPosition));
 	}
 
+	public static PowerUp createPowerUp(PowerUpType type, Position position) {
+		return new PowerUp(type, position);
+	}
+
 	public List<String> toCSVEntry() {
 		List<String> entryList = new ArrayList<>();
 		entryList.add(this.getClass().toString());

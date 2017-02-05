@@ -6,173 +6,123 @@ import gameplayModel.gridObjects.PowerUp;
 import gameplayModel.gridObjects.PowerUpType;
 import gameplayModel.gridObjects.animatedObjects.*;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import utilities.Position;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.BiPredicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayModel.gridObjects.HiddenObject.generateIndex;
 import static gameplayModel.gridObjects.PowerUp.createPowerUp;
 import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+import static java.lang.Math.random;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
 
+@Getter
+@RequiredArgsConstructor
 public class GridMap {
 	public static final int MAPWIDTH = 31;
 	public static final int MAPHEIGHT = 13;
-	public static final List<Concrete> CONCRETE_LAYOUT = generateMap();
-	static final int SPAWN_TIMEOUT = 10 * 1000;
+	public static final List<Concrete> CONCRETE_LAYOUT = generateConcreteBlocks();
 	private static final double BRICK_FACTOR = 0.225;
-	private static final int WIDTH = EFFECTIVE_PIXEL_DIMENSION;
-	private static final int HEIGHT = EFFECTIVE_PIXEL_DIMENSION;
+	private static final BiPredicate<Integer, Integer> CONCRETE_POS = (x, y) -> x % 2 == 0 && y % 2 == 0;
+	private static final BiPredicate<Integer, Integer> START_POS = (x, y) -> (x == 1 && y == 1) || (x == 1 && y == 2) || (x == 2 && y == 1);
+	private static final BiPredicate<Integer, Integer> BRICK_POS = CONCRETE_POS.and(START_POS).negate();
 
-	private int spawnTimer;
-	@Getter private Level level;
-	@Getter private final List<Brick> bricks;
-	@Getter private final List<Bomb> bombs;
-	@Getter private final List<Enemy> enemies;
-	@Getter private Exitway exitway;
-	@Getter private PowerUp powerUp;
-	@Getter private Bomberman bomberman;
+	private final Bomberman bomberman;
+	private final List<Brick> bricks;
+	private final List<Bomb> bombs;
+	private final List<Enemy> enemies;
+	private final Exitway exitway;
+	private final PowerUp powerUp;
 
 	public GridMap(Level level) {
-		this.level = level;
-		spawnTimer = SPAWN_TIMEOUT;
-		bricks = new ArrayList<>();
-		bombs = new ArrayList<>();
-		enemies = new ArrayList<>();
-		populateMap();
-	}
-
-	public GridMap(int spawnTimer, List<Brick> bricks, List<Bomb> bombs, List<Enemy> enemies, Exitway exitway,
-				   PowerUp powerup, Bomberman bomberman) {
-		this.spawnTimer = spawnTimer;
-		this.bricks = bricks;
-		this.bombs = bombs;
-		this.enemies = enemies;
-		this.exitway = exitway;
-		this.powerUp = powerup;
-		this.bomberman = bomberman;
-	}
-
-	private void populateMap() {
 		this.bomberman = new Bomberman(modulus(1, 1));
-		if (level.isBonusLevel())
-			populateSpecialMap();
-		else
-			populateStandardMap();
+		this.bricks = generateBricks();
+		this.bombs = new ArrayList<>();
+		this.enemies = generateEnemies(level.getEnemiesCount());
+		this.exitway = addExitway();
+		this.powerUp = level.getPowerUpType()
+				.map(type -> addPowerup(type, exitway))
+				.orElse(null);
 	}
 
-	private void populateStandardMap() {
-		distributeBricks();
-		addExitway();
-		level.getPowerUpType().ifPresent(this::addPowerup);
-		generateEnemies(level.getEnemiesCount());
+	private static List<Brick> generateBricks() {
+		return IntStream.range(1, MAPHEIGHT)
+				.peek(System.out::println)
+				.mapToObj(GridMap::generateBricksInRow)
+				.flatMap(List::stream)
+				.collect(toList());
 	}
 
-	private void distributeBricks() {
-		addBricksToOddRows();
-		addBricksToEvenRows();
+	private static List<Brick> generateBricksInRow(int rowNumber) {
+		return IntStream.range(0, MAPWIDTH - 1)
+				.filter(x -> BRICK_POS.test(x, rowNumber))
+				.mapToObj(x -> new Brick(modulus(x, rowNumber)))
+				.collect(toList());
 	}
 
-	private void addBricksToOddRows() {
-		for (int i = 1; i < MAPHEIGHT; i += 2)
-			for (int j = 1; j < MAPWIDTH - 1; j++)
-				if (Math.random() < BRICK_FACTOR && !(i == 1 && j == 1) && !(i == 1 && j == 2))
-					bricks.add(new Brick(modulus(j, i)));
-	}
-
-	private void addBricksToEvenRows() {
-		for (int i = 2; i < MAPHEIGHT - 1; i += 2)
-			for (int j = 1; j < MAPWIDTH - 1; j += 2)
-				if (Math.random() < BRICK_FACTOR && !(i == 2 && j == 1))
-					bricks.add(new Brick(modulus(j, i)));
-	}
-
-	private void addExitway() {
+	private Exitway addExitway() {
 		int brickIndex = generateIndex(bricks.size());
-		exitway = new Exitway(create(bricks.get(brickIndex).getPosition().getX(), bricks.get(brickIndex).getPosition().getY()), brickIndex);
+		return new Exitway(create(bricks.get(brickIndex).getPosition()));
 	}
 
-	private void addPowerup(PowerUpType type) {
-		int brickUpIndex;
-		do {
-			brickUpIndex = generateIndex(bricks.size());
-		} while (brickUpIndex == exitway.getBrickIndex());
-		powerUp = createPowerUp(type, bricks.get(brickUpIndex).getPosition().getX(), bricks.get(brickUpIndex).getPosition().getY());
+	private PowerUp addPowerup(PowerUpType type, Exitway exitway) {
+		return IntStream.iterate(0, i -> i++)
+				.limit(1000)
+				.mapToObj(i -> generateIndex(bricks.size()))
+				.filter(index -> !bricks.get(index).isSamePosition(exitway))
+				.findFirst()
+				.map(index -> createPowerUp(type, bricks.get(index).getPosition()))
+				.orElseThrow(RuntimeException::new);
 	}
 
-	private void generateEnemies(Map<EnemyType, Integer> enemyCounts) {
-		enemyCounts.entrySet()
-				.forEach(enemyType -> addEnemiesFromType(enemyType.getKey(), enemyType.getValue()));
+	private List<Enemy> generateEnemies(Map<EnemyType, Integer> enemyCounts) {
+		return enemyCounts.entrySet().stream()
+				.map(this::generateEnemiesOfType)
+				.flatMap(List::stream)
+				.collect(toList());
 	}
 
-	public void generateEnemiesOfType(EnemyType type) {
-		addEnemiesFromType(type, 12);
+	public List<Enemy> generateEnemiesOfType(Entry<EnemyType, Integer> type) {
+		return IntStream.range(0, type.getValue())
+				.mapToObj(i -> findNewEnemyLocation())
+				.map(position -> createEnemy(type.getKey(), position))
+				.collect(toList());
 	}
 
-	private void addEnemiesFromType(EnemyType type, int quantity) {
-		IntStream.range(0, quantity)
-				.forEach(i -> addEnemy(type));
+	private Position findNewEnemyLocation() {
+		return IntStream.iterate(0, i -> i++)
+				.limit(1000)
+				.mapToObj(i -> generateRandomLocation())
+				.filter(this::validPosition)
+				.findFirst()
+				.orElseThrow(RuntimeException::new);
 	}
 
-	private void addEnemy(EnemyType type) {
-		final int[] position = findNewEnemyLocation();
-		enemies.add(createEnemy(type, position[0] * WIDTH, position[1] * HEIGHT));
-	}
-
-	private int[] findNewEnemyLocation() {
-		int[] location;
-		Optional<Brick> matchedBrick;
-		do {
-			location = generateRandomLocation();
-			matchedBrick = findMatchingBrick(location);
-		} while (matchedBrick.isPresent());
-		return location;
-	}
-
-	private int[] generateRandomLocation() {
-		int[] location = new int[2];
-		double row = Math.random();
-
-		if (row >= 0.5) {
-			location[0] = ((int) (Math.random() * 29)) + 1;
-			location[1] = ((int) (Math.random() * 6)) * 2 + 1;
-		} else {
-			location[0] = ((int) (Math.random() * 15)) * 2 + 1;
-			location[1] = ((int) (Math.random() * 5)) * 2 + 2;
-		}
-		return location;
-	}
-
-	private Optional<Brick> findMatchingBrick(int[] location) {
+	private Boolean validPosition(Position position) {
 		return bricks.stream()
-				.filter(brick -> brick.isSamePosition(location[0] * WIDTH, location[1] * HEIGHT))
-				.findFirst();
+				.filter(brick -> BRICK_POS.test(brick.getX(), brick.getY()))
+				.filter(brick -> !brick.isSamePosition(position))
+				.findFirst()
+				.map(brick -> true)
+				.orElse(false);
 	}
 
-	private void populateSpecialMap() {
-		spawnMoreEnemies();
+	private static Position generateRandomLocation() {
+		return modulus((int) (random() * 29) + 1, (int) (random() * 11) + 1);
 	}
 
-	private void spawnMoreEnemies() {
-		final EnemyType type = level.getHardestEnemyType();
-		addEnemiesFromType(type, 8);
-	}
-
-	public void decreaseSpawnTimer() {
-		spawnTimer -= TIMEOUT;
-		if (spawnTimer <= 0) {
-			spawnMoreEnemies();
-			spawnTimer = SPAWN_TIMEOUT;
-		}
-	}
-
-	private static List<Concrete> generateMap() {
+	private static List<Concrete> generateConcreteBlocks() {
 		return Stream.of(generateHoriConcreteBoundary(), generateVertConcreteBoundary(), generateInnerConcreteBlocks())
 				.flatMap(Collection::stream)
 				.collect(toList());
@@ -202,15 +152,13 @@ public class GridMap {
 
 	private static List<Concrete> addInnerConcreteBlockRow(int xModulusPosition) {
 		return IntStream.iterate(2, i -> i + 2)
-				.limit((MAPHEIGHT - 2)/2)
+				.limit((MAPHEIGHT - 2) / 2)
 				.mapToObj(i -> new Concrete(modulus(xModulusPosition, i)))
 				.collect(toList());
 	}
 
 	public List<String> toCSVEntry() {
 		List<String> entryList = new ArrayList<>();
-
-		entryList.add(Integer.toString(spawnTimer));
 		entryList.add("Bricks");
 		for (Brick brick : bricks)
 			entryList.addAll(brick.toCSVEntry());

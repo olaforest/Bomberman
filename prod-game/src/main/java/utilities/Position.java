@@ -34,6 +34,10 @@ public class Position {
 		return new Position(x, y);
 	}
 
+	public static Position create(Position position) {
+		return new Position(position.getX(), position.getY());
+	}
+
 	public static Position modulus(int x, int y) {
 		return new Position(x * EFFECTIVE_PIXEL_DIMENSION, y * EFFECTIVE_PIXEL_DIMENSION);
 	}

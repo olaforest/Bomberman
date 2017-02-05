@@ -23,10 +23,8 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 import static gameplayModel.GridMap.CONCRETE_LAYOUT;
-import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
 import static gameplayView.AnimationType.*;
@@ -101,11 +99,11 @@ public class GameplayController implements ActionListener {
 
 		if (placeBomb) addBomb();
 
-		if (levelManager.isBonusLevel()) gridMap.decreaseSpawnTimer();
+//		if (levelManager.isBonusLevel()) gridMap.decreaseSpawnTimer();
 
 		if (gameContext.getGameTime() <= 0 && !gameContext.isEndGameEnemiesSpawned()) {
 			gameContext.setEndGameEnemiesSpawned(true);
-			gridMap.generateEnemiesOfType(Pontan);
+//			gridMap.generateEnemiesOfType(Pontan);
 		}
 
 		updateViewport();
@@ -517,8 +515,8 @@ public class GameplayController implements ActionListener {
 	}
 
 	private void spawnEightEnemies(EnemyType type, int xPosition, int yPosition) {
-		IntStream.range(0, 8)
-				.forEach(i -> enemies.add(createEnemy(type, xPosition, yPosition)));
+//		IntStream.range(0, 8)
+//				.forEach(i -> enemies.add(createEnemy(type, xPosition, yPosition)));
 	}
 
 	private void setupGameFrame(boolean isVisible) {
