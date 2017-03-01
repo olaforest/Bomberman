@@ -5,10 +5,9 @@ import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import org.testng.annotations.Test;
 
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.function.Function;
 
-import static gameplayModel.GridMap.MAPHEIGHT;
-import static gameplayModel.GridMap.MAPWIDTH;
+import static gameplayModel.GridMap.*;
 import static gameplayModel.LevelManager.importLevels;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,18 +28,17 @@ public class GridMapTest {
 	@Test
 	public void initialLevel_newInstance_returnsGridMapWithCorrectConcreteLayout() {
 		//given
-		final List<Concrete> concreteLayout = GridMap.CONCRETE_LAYOUT;
+		final List<Concrete> concreteLayout = CONCRETE_LAYOUT;
 		//then
 		assertThat(concreteLayout).hasSize(154);
-		assertThat(getCount(concreteLayout, block -> block.getX() == 0)).isEqualTo(MAPHEIGHT);
-		assertThat(getCount(concreteLayout, block -> block.getX() == 30 * EFFECTIVE_PIXEL_DIMENSION)).isEqualTo(MAPHEIGHT);
-		assertThat(getCount(concreteLayout, block -> block.getY() == 0)).isEqualTo(MAPWIDTH);
-		assertThat(getCount(concreteLayout, block -> block.getY() == 12 * EFFECTIVE_PIXEL_DIMENSION)).isEqualTo(MAPWIDTH);
+		assertThat(getCount(concreteLayout, GridObject::getX, 30)).isEqualTo(MAPHEIGHT * 2);
+		assertThat(getCount(concreteLayout, GridObject::getY, 12)).isEqualTo(MAPWIDTH * 2);
 	}
 
-	private static long getCount(List<Concrete> concreteLayout, Predicate<Concrete> condition) {
+	private static long getCount(List<Concrete> concreteLayout, Function<Concrete, Integer> mapper, int posLimit) {
 		return concreteLayout.stream()
-					.filter(condition)
+				.map(mapper)
+					.filter(position -> position == 0 || position == posLimit * EFFECTIVE_PIXEL_DIMENSION)
 					.count();
 	}
 }
