@@ -1,11 +1,9 @@
 package gameplayController;
 
 import gameplayModel.GameContext;
-import gameplayModel.GridMap;
 import gameplayModel.GridObject;
 import gameplayModel.LevelManager;
 import gameplayModel.gridObjects.AnimatedObject;
-import gameplayModel.gridObjects.Concrete;
 import gameplayModel.gridObjects.Exitway;
 import gameplayModel.gridObjects.PowerUp;
 import gameplayModel.gridObjects.animatedObjects.*;
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static gameplayModel.GridMap.CONCRETE_LAYOUT;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
 import static gameplayView.AnimationType.*;
@@ -43,8 +40,7 @@ public class GameplayController implements ActionListener {
 
 	@Getter
 	private final GameContext gameContext;
-	private GridMap gridMap;
-	private ArtificialIntelligence AI;
+	private ArtificialIntelligence intelligence;
 	private CollisionDetector colDetect;
 
 	private final GameplayKeyListener keyListener = new GameplayKeyListener();
@@ -52,7 +48,6 @@ public class GameplayController implements ActionListener {
 	private GameStatusPanel gameStatusPanel;
 
 	private ArrayDeque<Integer> activeDirectionKeys;
-	private List<Concrete> concreteLayout;
 	private List<Brick> bricks;
 	private List<Bomb> bombs;
 	private List<Bomb> unexplodedBombs;
@@ -85,7 +80,7 @@ public class GameplayController implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 
 		updateBombermanStatus();
-		AI.updateEnemiesPosition();
+		intelligence.updateEnemiesPosition();
 		updateEnemiesAnim();
 		updateBombsStatus();
 		updateBricksStatus();
@@ -120,11 +115,7 @@ public class GameplayController implements ActionListener {
 	}
 
 	private void initializeReferences() {
-
-		gridMap = gameContext.getGridMap();
-
 		activeDirectionKeys = new ArrayDeque<>();
-		concreteLayout = CONCRETE_LAYOUT;
 		bricks = gameContext.getGridMap().getBricks();
 		bombs = gameContext.getGridMap().getBombs();
 		unexplodedBombs = new ArrayList<>();
@@ -134,15 +125,13 @@ public class GameplayController implements ActionListener {
 		powerup = gameContext.getGridMap().getPowerUp();
 
 		colDetect = new CollisionDetector(gameContext);
-		AI = new ArtificialIntelligence(bomberman, enemies, bricks, bombs, colDetect);
+		intelligence = new ArtificialIntelligence(bomberman, enemies, bricks, bombs, colDetect);
 	}
 
 	private class GameplayKeyListener implements KeyListener {
 
 		public void keyPressed(KeyEvent event) {
-
 			if (!activeDirectionKeys.contains(event.getKeyCode())) {
-
 				switch (event.getKeyCode()) {
 					case KeyEvent.VK_UP:
 						activeDirectionKeys.addFirst(KeyEvent.VK_UP);
