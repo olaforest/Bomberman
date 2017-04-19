@@ -66,7 +66,7 @@ public class GridMap {
 	private static List<Brick> generateBricksInRow(int rowNumber) {
 		return IntStream.range(1, MAPWIDTH - 1)
 				.filter(x -> BRICK_POS.test(x, rowNumber))
-//				.filter(x -> random() < BRICK_FACTOR)
+				.filter(x -> random() < BRICK_FACTOR)
 				.mapToObj(x -> new Brick(modulus(x, rowNumber)))
 				.collect(toList());
 	}

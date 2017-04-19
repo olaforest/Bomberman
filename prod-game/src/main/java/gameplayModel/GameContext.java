@@ -63,9 +63,8 @@ public class GameContext {
 	}
 
 	public List<String> toCSVEntry() {
-		List<String> entryList = new ArrayList<>(asList(Integer.toString(gameTime), Integer.toString(livesLeft),
-				Integer.toString(score), "GridMap"));
-		gridMap.toCSVEntry().forEach(entryList::add);
+		List<String> entryList = new ArrayList<>(asList(Integer.toString(gameTime), Integer.toString(livesLeft), Integer.toString(score), "GridMap"));
+		entryList.addAll(gridMap.toCSVEntry());
 		return entryList;
 	}
 }
