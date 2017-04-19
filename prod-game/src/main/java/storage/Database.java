@@ -1,4 +1,4 @@
-package database;
+package storage;
 
 import gameplayModel.GameContext;
 import gameplayModel.GridMap;

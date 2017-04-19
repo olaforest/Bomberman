@@ -1,7 +1,7 @@
 
 package menuModel;
 
-import database.Database;
+import storage.Database;
 
 import java.util.ArrayList;
 import java.util.List;
