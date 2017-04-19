@@ -38,7 +38,7 @@ public class GridMapTest {
 	private static long getCount(List<Concrete> concreteLayout, Function<Concrete, Integer> mapper, int posLimit) {
 		return concreteLayout.stream()
 				.map(mapper)
-					.filter(position -> position == 0 || position == posLimit * EFFECTIVE_PIXEL_DIMENSION)
-					.count();
+				.filter(position -> position == 0 || position == posLimit * EFFECTIVE_PIXEL_DIMENSION)
+				.count();
 	}
 }
