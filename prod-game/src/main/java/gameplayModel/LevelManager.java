@@ -45,7 +45,7 @@ public class LevelManager {
 		return currentLevel.get().getHardestEnemyType();
 	}
 
-	static List<Level> importLevels() {
+	public static List<Level> importLevels() {
 		return readResourcesCSV("levelSpecifications").stream()
 				.map(ListUtils::convertStringListToIntegerList)
 				.map(Level::new)

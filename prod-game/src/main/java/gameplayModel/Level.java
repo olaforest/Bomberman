@@ -18,7 +18,7 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 @EqualsAndHashCode
-class Level {
+public class Level {
 	private static final Predicate<List<Integer>> IS_BONUS_LEVEL = spec -> spec.contains(MAX_VALUE);
 
 	@Getter private final Map<EnemyType, Integer> enemiesCount;

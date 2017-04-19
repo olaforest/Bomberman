@@ -78,7 +78,7 @@ public class GridObject {
 		return position.isSame(object.getPosition());
 	}
 
-	public boolean isSamePosition(int xPosition, int yPosition) {
-		return position.getX() == xPosition && position.getY() == yPosition;
+	public boolean isSamePosition(Position position) {
+		return this.position.isSame(position);
 	}
 }

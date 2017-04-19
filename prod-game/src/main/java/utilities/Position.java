@@ -30,8 +30,20 @@ public class Position {
 		y -= delta;
 	}
 
+	public int getModX() {
+		return x / EFFECTIVE_PIXEL_DIMENSION;
+	}
+
+	public int getModY() {
+		return y / EFFECTIVE_PIXEL_DIMENSION;
+	}
+
 	public static Position create(int x, int y) {
 		return new Position(x, y);
+	}
+
+	public static Position create(Position position) {
+		return new Position(position.getX(), position.getY());
 	}
 
 	public static Position modulus(int x, int y) {

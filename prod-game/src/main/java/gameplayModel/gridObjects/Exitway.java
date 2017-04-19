@@ -10,12 +10,10 @@ import java.util.List;
 import static gameplayView.ImageManager.importScaledImage;
 
 public class Exitway extends FixedObject implements HiddenObject {
-	@Getter private static final BufferedImage image = importScaledImage(2, 241);
-	@Getter private final int brickIndex;
+	@Getter private static final BufferedImage image = importScaledImage(2, 346);
 
-	public Exitway(Position position, int index) {
+	public Exitway(Position position) {
 		super(position);
-		this.brickIndex = index;
 	}
 
 	public List<String> toCSVEntry() {

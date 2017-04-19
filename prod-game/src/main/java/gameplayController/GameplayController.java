@@ -12,7 +12,6 @@ import gameplayModel.gridObjects.animatedObjects.*;
 import gameplayView.GameStatusPanel;
 import gameplayView.GameplayPanel;
 import lombok.Getter;
-import menuController.MenuController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,12 +23,14 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
-import static gameplayModel.gridObjects.animatedObjects.Enemy.createEnemy;
+import static gameplayModel.GridMap.CONCRETE_LAYOUT;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
 import static gameplayView.AnimationType.*;
+import static gameplayView.GameStatusPanel.HEADERHEIGHT;
+import static gameplayView.GameplayPanel.HEIGHT;
+import static gameplayView.GameplayPanel.WIDTH;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static utilities.Position.create;
 
@@ -40,7 +41,6 @@ public class GameplayController implements ActionListener {
 
 	private boolean placeBomb;
 
-	private final MenuController menuCtrl;
 	@Getter
 	private final GameContext gameContext;
 	private GridMap gridMap;
@@ -63,19 +63,18 @@ public class GameplayController implements ActionListener {
 
 	private JFrame gameFrame;
 	private final Timer timer;
-	private LevelManager levelManager;
+	private final LevelManager levelManager;
 
-	public GameplayController(MenuController menuCtrl) {
-		this.menuCtrl = menuCtrl;
+	public GameplayController() {
 		gameContext = new GameContext();
+		levelManager = new LevelManager();
 		initializeReferences();
 		setupGameFrame(true);
 		timer = new Timer(TIMEOUT, this);
 		timer.start();
 	}
 
-	public GameplayController(MenuController menuCtrl, GameContext gameContext, LevelManager levelManager) {
-		this.menuCtrl = menuCtrl;
+	public GameplayController(GameContext gameContext, LevelManager levelManager) {
 		this.gameContext = gameContext;
 		this.levelManager = levelManager;
 		initializeReferences();
@@ -103,11 +102,11 @@ public class GameplayController implements ActionListener {
 
 		if (placeBomb) addBomb();
 
-		if (levelManager.isBonusLevel()) gridMap.decreaseSpawnTimer();
+//		if (levelManager.isBonusLevel()) gridMap.decreaseSpawnTimer();
 
 		if (gameContext.getGameTime() <= 0 && !gameContext.isEndGameEnemiesSpawned()) {
 			gameContext.setEndGameEnemiesSpawned(true);
-			gridMap.generateEnemiesOfType(Pontan);
+//			gridMap.generateEnemiesOfType(Pontan);
 		}
 
 		updateViewport();
@@ -125,7 +124,7 @@ public class GameplayController implements ActionListener {
 		gridMap = gameContext.getGridMap();
 
 		activeDirectionKeys = new ArrayDeque<>();
-		concreteLayout = gameContext.getGridMap().getConcreteLayout();
+		concreteLayout = CONCRETE_LAYOUT;
 		bricks = gameContext.getGridMap().getBricks();
 		bombs = gameContext.getGridMap().getBombs();
 		unexplodedBombs = new ArrayList<>();
@@ -161,7 +160,6 @@ public class GameplayController implements ActionListener {
 						if (timer.isRunning()) {
 							timer.stop();
 							gameFrame.setVisible(false);
-							menuCtrl.pause();
 						}
 						break;
 					case KeyEvent.VK_X:
@@ -314,7 +312,6 @@ public class GameplayController implements ActionListener {
 				timer.start();
 			} else {
 				gameFrame.setVisible(false);
-				menuCtrl.gameOver();
 			}
 		} else {
 			bomberman.cycleAnimation();
@@ -448,7 +445,6 @@ public class GameplayController implements ActionListener {
 			gameContext.initializeGameTime();
 			gameContext.restartMap();
 			initializeReferences();
-			menuCtrl.getCurrentPlayer().increaseLevelUnlocked();
 			bomberman.setPowerUpsAcquired(powerUpsAcquired);
 
 			try {
@@ -522,8 +518,8 @@ public class GameplayController implements ActionListener {
 	}
 
 	private void spawnEightEnemies(EnemyType type, int xPosition, int yPosition) {
-		IntStream.range(0, 8)
-				.forEach(i -> enemies.add(createEnemy(type, xPosition, yPosition)));
+//		IntStream.range(0, 8)
+//				.forEach(i -> enemies.add(createEnemy(type, xPosition, yPosition)));
 	}
 
 	private void setupGameFrame(boolean isVisible) {
@@ -536,10 +532,10 @@ public class GameplayController implements ActionListener {
 				Graphics2D g2d = (Graphics2D) page;
 
 				if (exitway != null)
-					g2d.drawImage(Exitway.getImage(), exitway.getPosition().getX(), exitway.getPosition().getY(), gamePanel);
+					g2d.drawImage(Exitway.getImage(), exitway.getX(), exitway.getY(), gamePanel);
 
 				if (powerup != null)
-					g2d.drawImage(powerup.getImage(), powerup.getPosition().getX(), powerup.getPosition().getY(), gamePanel);
+					g2d.drawImage(powerup.getImage(), powerup.getX(), powerup.getY(), gamePanel);
 
 				for (Bomb bomb : bombs) {
 					for (int i = 0; i < bomb.getCurrentAnimations().size(); i++)
@@ -556,8 +552,8 @@ public class GameplayController implements ActionListener {
 
 				g2d.drawImage(bomberman.getCurrentAnimation().getCurrentFrame(), bomberman.getPosition().getX(), bomberman.getPosition().getY(), gamePanel);
 
-				for (Concrete block : concreteLayout)
-					g2d.drawImage(Concrete.getImage(), block.getPosition().getX(), block.getPosition().getY(), gamePanel);
+//				for (Concrete block : concreteLayout)
+//					g2d.drawImage(Concrete.getImage(), block.getPosition().getX(), block.getPosition().getY(), gamePanel);
 			}
 		};
 
@@ -572,7 +568,8 @@ public class GameplayController implements ActionListener {
 		gameFrame.getContentPane().setLayout(new BorderLayout());
 		gameFrame.getContentPane().add(gameStatusPanel, BorderLayout.NORTH);
 		gameFrame.getContentPane().add(gameView);
-		gameFrame.getContentPane().setPreferredSize(new Dimension(VIEW_PORT_WIDTH, GameplayPanel.HEIGHT + GameStatusPanel.HEADERHEIGHT));
+//		gameFrame.getContentPane().setPreferredSize(new Dimension(VIEW_PORT_WIDTH, GameplayPanel.HEIGHT + GameStatusPanel.HEADERHEIGHT));
+		gameFrame.getContentPane().setPreferredSize(new Dimension(WIDTH, HEIGHT + HEADERHEIGHT));
 		gameFrame.pack();
 		gameFrame.setLocation(400, 200);
 		gameFrame.setVisible(isVisible);
@@ -582,8 +579,8 @@ public class GameplayController implements ActionListener {
 		if (bomberman.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION / 2 <= VIEW_PORT_WIDTH / 2) {
 			gamePanel.setLocation(0, 0);
 			gamePanel.repaint();
-		} else if (bomberman.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION / 2 >= GameplayPanel.WIDTH - VIEW_PORT_WIDTH / 2) {
-			gamePanel.setLocation(VIEW_PORT_WIDTH - GameplayPanel.WIDTH, 0);
+		} else if (bomberman.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION / 2 >= WIDTH - VIEW_PORT_WIDTH / 2) {
+			gamePanel.setLocation(VIEW_PORT_WIDTH - WIDTH, 0);
 			gamePanel.repaint();
 		} else {
 			gamePanel.setLocation(VIEW_PORT_WIDTH / 2 - bomberman.getPosition().getX() - EFFECTIVE_PIXEL_DIMENSION / 2, 0);

@@ -23,6 +23,7 @@ public abstract class AnimatedObject extends GridObject {
 	protected AnimatedObject(Position position, List<SimpleEntry<AnimationType, AnimParam>> animParams) {
 		super(position);
 		this.animations = generateAnimations(animParams);
+		currentAnimation = animations.get(animParams.get(0).getKey());
 		counter = 0;
 		animCycleParam = 3;
 		isObsolete = false;

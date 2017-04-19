@@ -37,7 +37,7 @@ public class GameContext {
 	}
 
 	public void restartMap() {
-		gridMap = new GridMap(gridMap.getLevel());
+//		gridMap = new GridMap(gridMap.getLevel());
 	}
 
 	public void decreaseGameTime() {

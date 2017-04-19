@@ -2,6 +2,7 @@ package database;
 
 import gameplayModel.GameContext;
 import gameplayModel.GridMap;
+import gameplayModel.LevelManager;
 import gameplayModel.gridObjects.Exitway;
 import gameplayModel.gridObjects.PowerUp;
 import gameplayModel.gridObjects.PowerUpType;
@@ -111,7 +112,8 @@ public class Database {
 		PowerUp powerup = generatePowerUp(new ArrayList<>(map.subList(map.indexOf("PowerUp") + 1, map.indexOf("Bomberman"))));
 		Bomberman bomberman = generateBomberman(new ArrayList<>(map.subList(map.indexOf("Bomberman") + 1, map.size())));
 
-		return new GridMap(spawnTimer, bricks, bombs, enemies, exitway, powerup, bomberman);
+//		return new GridMap(spawnTimer, bricks, bombs, enemies, exitway, powerup, bomberman);
+		return new GridMap(LevelManager.importLevels().get(0));
 	}
 
 	private List<Brick> generateBricks(List<String> data) {
@@ -160,7 +162,7 @@ public class Database {
 	private Exitway generateExitway(List<String> data) {
 		int xPos = parseInt(data.remove(0));
 		int yPos = parseInt(data.remove(0));
-		return new Exitway(create(xPos, yPos), -1);
+		return new Exitway(create(xPos, yPos));
 	}
 
 	private PowerUp generatePowerUp(List<String> data) {

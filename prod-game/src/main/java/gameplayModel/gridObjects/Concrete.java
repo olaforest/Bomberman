@@ -9,7 +9,7 @@ import static gameplayView.ImageManager.importScaledImage;
 
 public class Concrete extends FixedObject {
 	@Getter
-	private static final BufferedImage image = importScaledImage(2, 259);
+	private static final BufferedImage image = importScaledImage(20, 346);
 
 	public Concrete(Position position) {
 		super(position);

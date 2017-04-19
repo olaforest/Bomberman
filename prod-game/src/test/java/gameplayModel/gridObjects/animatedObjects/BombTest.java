@@ -5,13 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static gameplayController.GameplayController.TIMEOUT;
-import static gameplayModel.gridObjects.animatedObjects.Bomb.TIME_TO_EXPLOSION;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
 import static org.junit.Assert.*;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
 
 public class BombTest {
+	private static final int TIME_TO_EXPLOSION = 2500;
 
 	private Bomb bomb;
 

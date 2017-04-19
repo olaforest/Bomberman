@@ -6,6 +6,7 @@ public enum AnimationType {
 	Down,
 	Up,
 	Death,
+	Fixed,
 	Unexploded,
 	ExpCenter,
 	ExpRight,
