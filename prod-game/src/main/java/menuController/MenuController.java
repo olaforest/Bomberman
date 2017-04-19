@@ -1,6 +1,5 @@
 package menuController;
 
-import database.Database;
 import gameplayController.GameplayController;
 import gameplayModel.LevelManager;
 import gameplayModel.gridObjects.animatedObjects.Bomb;
@@ -8,6 +7,7 @@ import menuModel.Leaderboard;
 import menuModel.Player;
 import menuModel.SavedGame;
 import menuView.*;
+import storage.Database;
 
 import javax.swing.*;
 import java.awt.*;
