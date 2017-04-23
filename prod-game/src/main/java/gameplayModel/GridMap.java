@@ -1,18 +1,19 @@
 package gameplayModel;
 
+import gameplayController.CollisionDetector;
 import gameplayModel.gridObjects.*;
 import gameplayModel.gridObjects.animatedObjects.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import utilities.Position;
 
-import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.BiPredicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static gameplayController.CollisionDetector.*;
 import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayModel.gridObjects.HiddenObject.generateIndex;
 import static gameplayModel.gridObjects.PowerUp.createPowerUp;
@@ -21,6 +22,7 @@ import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
 import static gameplayView.AnimationType.*;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+import static java.awt.event.KeyEvent.*;
 import static java.lang.Math.random;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
@@ -56,14 +58,13 @@ public class GridMap {
 				.orElse(null);
 	}
 
-	void updateBombermanStatus() {
-
-		if (!bomberman.isDead()) {
-
+	void updateBombermanStatus(ArrayDeque<Integer> activeDirectionKeys) {
+		if (bomberman.isDead()) {
+			bomberman.cycleAnimation();
+		} else {
 			if (activeDirectionKeys.size() != 0) {
-
 				switch (activeDirectionKeys.getFirst()) {
-					case KeyEvent.VK_UP:
+					case VK_UP:
 						if (bomberman.getCurrentAnimationType() != Up)
 							bomberman.setCurrentAnimation(Up);
 						else
@@ -72,14 +73,14 @@ public class GridMap {
 						boolean canMoveUp = true;
 
 						for (Bomb bomb : bombs) {
-							if (colDetect.checkUpCollision(bomberman, bomb) && !bomberman.canBombpass())
+							if (CollisionDetector.checkUpCollision(bomberman, bomb) && !bomberman.canBombpass())
 								canMoveUp = false;
 						}
 
 						if (canMoveUp) bomberman.setYPosition(bomberman.getPosition().getY() - bomberman.getSpeed());
 
 						break;
-					case KeyEvent.VK_DOWN:
+					case VK_DOWN:
 						if (bomberman.getCurrentAnimationType() != Down)
 							bomberman.setCurrentAnimation(Down);
 						else
@@ -88,14 +89,14 @@ public class GridMap {
 						boolean canMoveDown = true;
 
 						for (Bomb bomb : bombs) {
-							if (colDetect.checkDownCollision(bomberman, bomb) && !bomberman.canBombpass())
+							if (checkDownCollision(bomberman, bomb) && !bomberman.canBombpass())
 								canMoveDown = false;
 						}
 
 						if (canMoveDown) bomberman.setYPosition(bomberman.getPosition().getY() + bomberman.getSpeed());
 
 						break;
-					case KeyEvent.VK_LEFT:
+					case VK_LEFT:
 						if (bomberman.getCurrentAnimationType() != Left)
 							bomberman.setCurrentAnimation(Left);
 						else
@@ -104,14 +105,14 @@ public class GridMap {
 						boolean canMoveLeft = true;
 
 						for (Bomb bomb : bombs) {
-							if (colDetect.checkLeftCollision(bomberman, bomb) && !bomberman.canBombpass())
+							if (checkLeftCollision(bomberman, bomb) && !bomberman.canBombpass())
 								canMoveLeft = false;
 						}
 
 						if (canMoveLeft) bomberman.setXPosition(bomberman.getPosition().getX() - bomberman.getSpeed());
 
 						break;
-					case KeyEvent.VK_RIGHT:
+					case VK_RIGHT:
 						if (bomberman.getCurrentAnimationType() != Right)
 							bomberman.setCurrentAnimation(Right);
 						else
@@ -120,7 +121,7 @@ public class GridMap {
 						boolean canMoveRight = true;
 
 						for (Bomb bomb : bombs) {
-							if (colDetect.checkRightCollision(bomberman, bomb) && !bomberman.canBombpass())
+							if (checkRightCollision(bomberman, bomb) && !bomberman.canBombpass())
 								canMoveRight = false;
 						}
 
@@ -129,45 +130,21 @@ public class GridMap {
 						break;
 				}
 			}
-		} else if (bomberman.isObsolete()) {
+		}
+	}
 
-			timer.stop();
+	void removePowerUps() {
+		final List<PowerUp> powerUpsAcquired = bomberman.getPowerUpsAcquired();
+		// The power Up of the current map is removed from bomberman if he already picked it Up before dying.
+		if (powerUp == null)
+			powerUpsAcquired.remove(powerUpsAcquired.size() - 1);
 
-			if (gameContext.getLivesLeft() > 0) {
-
-				List<PowerUp> powerUpsAcquired = bomberman.getPowerUpsAcquired();
-
-				// The power Up of the current map is removed from bomberman if he already picked it Up before dying.
-				if (powerup == null)
-					powerUpsAcquired.remove(powerUpsAcquired.size() - 1);
-
-				// Removes the non permanent power ups acquired
-				for (int i = 0; i < powerUpsAcquired.size(); ) {
-					if (!powerUpsAcquired.get(i).isPermanent())
-						powerUpsAcquired.remove(i);
-					else
-						i++;
-				}
-
-				gameContext.decreaseLivesLeft();
-				gameContext.initializeGameTime();
-				gameContext.restartMap();
-				initializeReferences();
-
-				bomberman.setPowerUpsAcquired(powerUpsAcquired);
-
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-				timer.start();
-			} else {
-				gameFrame.setVisible(false);
-			}
-		} else {
-			bomberman.cycleAnimation();
+		// Removes the non permanent power ups acquired
+		for (int i = 0; i < powerUpsAcquired.size(); ) {
+			if (!powerUpsAcquired.get(i).isPermanent())
+				powerUpsAcquired.remove(i);
+			else
+				i++;
 		}
 	}
 
@@ -207,6 +184,10 @@ public class GridMap {
 			}
 		}
 
+		final List<Bomb> unexplodedBombs = bombs.stream()
+				.filter(bomb -> !bomb.isDead())
+				.collect(toList());
+
 		for (int i = 0; i < unexplodedBombs.size(); ) {
 			if (unexplodedBombs.get(i).isDead()) {
 				unexplodedBombs.remove(i);
@@ -228,11 +209,11 @@ public class GridMap {
 		}
 	}
 
-	void destroyObjectInExplodedBombsRange() {
+	void destroyObjectInExplodedBombsRange(boolean isBonusLevel, EnemyType hardestEnemyType) {
 		for (Bomb bomb : bombs) {
 			if (bomb.getTimer() == TIMEOUT) {
 
-				ArrayList<AnimatedObject> destBricks = colDetect.checkExplBricks(bomb);
+				List<AnimatedObject> destBricks = checkExplBricks(bricks, bombs, bomb);
 
 				destBricks.stream()
 						.filter(Objects::nonNull)
@@ -247,7 +228,7 @@ public class GridMap {
 									.forEach(bomb1 -> bomb1.setTimer(TIMEOUT * 2));
 						});
 
-				ArrayList<Enemy> destEnemies = colDetect.checkExplEnemies(bomb);
+				ArrayList<Enemy> destEnemies = checkExplEnemies(enemies, bomb);
 
 				int pointsMultiplier = destEnemies.size();
 
@@ -256,22 +237,22 @@ public class GridMap {
 						for (Enemy enemy1 : enemies) {
 							if ((enemy.getPosition().getX() == enemy1.getPosition().getX()) && (enemy.getPosition().getY() == enemy1.getPosition().getY()) && !enemy1.isDead()) {
 								enemy1.triggerDeath();
-								gameContext.increaseScore(enemy1.getPoints() * ((int) Math.pow(2, pointsMultiplier)));
+//								gameContext.increaseScore(enemy1.getPoints() * ((int) Math.pow(2, pointsMultiplier)));
 							}
 						}
 					}
 					pointsMultiplier--;
 				}
 
-				if (colDetect.checkExplGridObject(bomb, bomberman) && !bomberman.canFlamepass() && !bomberman.isInvincible() && !levelManager.isBonusLevel() && !bomberman.isDead())
+				if (checkExplGridObject(bomb, bomberman) && !bomberman.canFlamepass() && !bomberman.isInvincible() && !isBonusLevel && !bomberman.isDead())
 					bomberman.triggerDeath();
 
-				if (exitway != null && colDetect.checkExplGridObject(bomb, exitway)) {
-					spawnEightHarderEnemies(exitway);
+				if (exitway != null && checkExplGridObject(bomb, exitway)) {
+					spawnEightHarderEnemies(exitway, hardestEnemyType);
 				}
 
-				if (powerup != null && colDetect.checkExplGridObject(bomb, powerup)) {
-					spawnEightHarderEnemies(powerup);
+				if (powerUp != null && checkExplGridObject(bomb, powerUp)) {
+					spawnEightHarderEnemies(powerUp, hardestEnemyType);
 				}
 			}
 		}
@@ -280,13 +261,13 @@ public class GridMap {
 	void checkCollisionBtwBombermanAndBricks() {
 		if (!bomberman.canWallpass()) {
 			for (Brick brick : bricks) {
-				if (colDetect.checkRightCollision(bomberman, brick))
+				if (checkRightCollision(bomberman, brick))
 					bomberman.setXPosition(brick.getPosition().getX() - EFFECTIVE_PIXEL_DIM);
-				if (colDetect.checkLeftCollision(bomberman, brick))
+				if (checkLeftCollision(bomberman, brick))
 					bomberman.setXPosition(brick.getPosition().getX() + EFFECTIVE_PIXEL_DIM);
-				if (colDetect.checkDownCollision(bomberman, brick))
+				if (checkDownCollision(bomberman, brick))
 					bomberman.setYPosition(brick.getPosition().getY() - EFFECTIVE_PIXEL_DIM);
-				if (colDetect.checkUpCollision(bomberman, brick))
+				if (CollisionDetector.checkUpCollision(bomberman, brick))
 					bomberman.setYPosition(brick.getPosition().getY() + EFFECTIVE_PIXEL_DIM);
 			}
 		}
@@ -295,8 +276,8 @@ public class GridMap {
 	void checkCollisionBtwBombermanAndEnemies() {
 		if (!bomberman.isInvincible()) {
 			for (Enemy enemy : enemies) {
-				boolean isHorzCollision = colDetect.checkRightCollision(bomberman, enemy) || colDetect.checkLeftCollision(bomberman, enemy);
-				boolean isVertCollision = colDetect.checkDownCollision(bomberman, enemy) || colDetect.checkUpCollision(bomberman, enemy);
+				boolean isHorzCollision = checkRightCollision(bomberman, enemy) || checkLeftCollision(bomberman, enemy);
+				boolean isVertCollision = checkDownCollision(bomberman, enemy) || CollisionDetector.checkUpCollision(bomberman, enemy);
 
 				if (isHorzCollision || isVertCollision)
 					bomberman.triggerDeath();
@@ -305,11 +286,11 @@ public class GridMap {
 	}
 
 	boolean checkCollisionBtwBombermanAndExitway() {
-		return colDetect.checkExactCollision(bomberman, exitway) && enemies.size() == 0;
+		return checkExactCollision(bomberman, exitway) && enemies.size() == 0;
 	}
 
 	void checkCollisionBtwBombermanAndPowerUp() {
-		if (powerUp != null && colDetect.checkExactCollision(bomberman, powerUp)) {
+		if (powerUp != null && checkExactCollision(bomberman, powerUp)) {
 			bomberman.addPowerUp(powerUp);
 			powerUp = null;
 		}
@@ -343,7 +324,6 @@ public class GridMap {
 		if (canAddBomb && bomberman.getBombsLeft() != 0) {
 			Bomb tempBomb = new Bomb(create(xPosition, yPosition));
 			bombs.add(tempBomb);
-			unexplodedBombs.add(tempBomb);
 			bomberman.decreaseBombsLeft();
 		}
 	}
@@ -357,9 +337,13 @@ public class GridMap {
 			bombs.get(0).setTimer(TIMEOUT * 2);
 	}
 
-	private void spawnEightHarderEnemies(GridObject gridObj) {
+	boolean isGameOver() {
+		return bomberman.isObsolete();
+	}
+
+	private void spawnEightHarderEnemies(GridObject gridObj, EnemyType hardestEnemyType) {
 		enemies.clear();
-		final EnemyType type = levelManager.getHardestEnemyType();
+		final EnemyType type = hardestEnemyType;
 		spawnEightEnemies(type == Pontan ? Pontan : values()[type.ordinal() + 1], gridObj.getX(), gridObj.getY());
 	}
 

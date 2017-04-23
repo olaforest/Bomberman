@@ -39,8 +39,8 @@ public class GameplayController implements ActionListener {
 
 	public GameplayController() {
 		gameContext = new GameContext();
-		colDetect = new CollisionDetector(gameContext.getGridMap());
-		intelligence = new ArtificialIntelligence(gameContext.getGridMap(), colDetect);
+		colDetect = new CollisionDetector();
+		intelligence = new ArtificialIntelligence(gameContext.getGridMap());
 		levelManager = new LevelManager();
 		activeDirectionKeys = new ArrayDeque<>();
 		setupGameFrame(true, gameContext.getGridMap());
@@ -50,8 +50,8 @@ public class GameplayController implements ActionListener {
 
 	public GameplayController(GameContext gameContext, LevelManager levelManager) {
 		this.gameContext = gameContext;
-		colDetect = new CollisionDetector(gameContext.getGridMap());
-		intelligence = new ArtificialIntelligence(gameContext.getGridMap(), colDetect);
+		colDetect = new CollisionDetector();
+		intelligence = new ArtificialIntelligence(gameContext.getGridMap());
 		this.levelManager = levelManager;
 		activeDirectionKeys = new ArrayDeque<>();
 		setupGameFrame(false, gameContext.getGridMap());
@@ -59,12 +59,33 @@ public class GameplayController implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent event) {
-		gameContext.updateBombermanStatus();
+		if (gameContext.isGameOver()) {
+			timer.stop();
+
+			if (gameContext.getLivesLeft() > 0) {
+				gameContext.removePowerUps();
+//				List<PowerUp> powerUpsAcquired = bomberman.getPowerUpsAcquired();
+				gameContext.decreaseLivesLeft();
+				gameContext.initializeGameTime();
+				gameContext.restartMap();
+//				bomberman.setPowerUpsAcquired(powerUpsAcquired);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				timer.start();
+			} else {
+				gameFrame.setVisible(false);
+			}
+		}
+
+		gameContext.updateBombermanStatus(activeDirectionKeys);
 		intelligence.updateEnemiesPosition();
 		gameContext.updateEnemiesAnim();
 		gameContext.updateBombsStatus();
 		gameContext.updateBricksStatus();
-		gameContext.destroyObjectInExplodedBombsRange();
+		gameContext.destroyObjectInExplodedBombsRange(levelManager.isBonusLevel(), levelManager.getHardestEnemyType());
 		gameContext.checkCollisionBtwBombermanAndBricks();
 
 		if (!levelManager.isBonusLevel())

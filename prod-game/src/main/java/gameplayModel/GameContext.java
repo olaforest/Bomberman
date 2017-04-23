@@ -1,12 +1,12 @@
 package gameplayModel;
 
 import gameplayController.GameplayController;
+import gameplayModel.gridObjects.animatedObjects.EnemyType;
 import lombok.Getter;
 import lombok.Setter;
 import utilities.Position;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static gameplayModel.LevelManager.importLevels;
 import static java.util.Arrays.asList;
@@ -37,8 +37,8 @@ public class GameContext {
 		this.gridMap = gridMap;
 	}
 
-	public void updateBombermanStatus() {
-		gridMap.updateBombermanStatus();
+	public void updateBombermanStatus(ArrayDeque<Integer> activeDirectionKeys) {
+		gridMap.updateBombermanStatus(activeDirectionKeys);
 	}
 
 	public void updateEnemiesAnim() {
@@ -53,8 +53,8 @@ public class GameContext {
 		gridMap.updateBricksStatus();
 	}
 
-	public void destroyObjectInExplodedBombsRange() {
-		gridMap.destroyObjectInExplodedBombsRange();
+	public void destroyObjectInExplodedBombsRange(boolean isBonusLevel, EnemyType hardestEnemyType) {
+		gridMap.destroyObjectInExplodedBombsRange(isBonusLevel, hardestEnemyType);
 	}
 
 	public void checkCollisionBtwBombermanAndBricks() {
@@ -83,6 +83,14 @@ public class GameContext {
 
 	public void detonateBomb() {
 		gridMap.detonateBomb();
+	}
+
+	public boolean isGameOver() {
+		return gridMap.isGameOver();
+	}
+
+	public void removePowerUps() {
+		gridMap.removePowerUps();
 	}
 
 	public void restartMap() {

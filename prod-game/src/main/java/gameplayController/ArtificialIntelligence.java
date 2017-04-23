@@ -8,18 +8,17 @@ import utilities.Node;
 import java.util.LinkedList;
 import java.util.Random;
 
+import static gameplayController.CollisionDetector.*;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 import static java.lang.Math.abs;
 
 class ArtificialIntelligence {
 	private final GridMap gridMap;
-	private final CollisionDetector detector;
 	private boolean collision;
 	private int collisionCount;
 
-	ArtificialIntelligence(GridMap gridMap, CollisionDetector collisionDetector) {
+	ArtificialIntelligence(GridMap gridMap) {
 		this.gridMap = gridMap;
-		detector = collisionDetector;
 		collision = false;
 		collisionCount = 0;
 	}
@@ -84,16 +83,16 @@ class ArtificialIntelligence {
 	private void AICollisionCheck(Enemy enemy, GridObject gridObject) {
 
 		if (enemy.getDirection() == 0) {
-			if (detector.checkUpCollision(enemy, gridObject))
+			if (checkUpCollision(enemy, gridObject))
 				collision = true;
 		} else if (enemy.getDirection() == 1) {
-			if (detector.checkDownCollision(enemy, gridObject))
+			if (checkDownCollision(enemy, gridObject))
 				collision = true;
 		} else if (enemy.getDirection() == 2) {
-			if (detector.checkLeftCollision(enemy, gridObject))
+			if (checkLeftCollision(enemy, gridObject))
 				collision = true;
 		} else if (enemy.getDirection() == 3) {
-			if (detector.checkRightCollision(enemy, gridObject))
+			if (checkRightCollision(enemy, gridObject))
 				collision = true;
 		}
 	}
