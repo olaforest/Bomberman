@@ -181,7 +181,7 @@ public class Bomb extends AnimatedObject {
 			setAdjustedRanges.run();
 	}
 
-	private final IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (ImageManager.EFFECTIVE_PIXEL_DIMENSION * 2) == 0;
+	private final IntPredicate isNotAlignedWithRowOrColumn = (position) -> position % (ImageManager.EFFECTIVE_PIXEL_DIM * 2) == 0;
 	private final BooleanSupplier isNotAlignedWithRow = () -> isNotAlignedWithRowOrColumn.test(position.getY());
 	private final BooleanSupplier isNotAlignedWithColumn = () -> isNotAlignedWithRowOrColumn.test(position.getX());
 
@@ -210,19 +210,19 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private int maxRangePosition(int position, int maxRange) {
-		return position + maxRange * ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+		return position + maxRange * ImageManager.EFFECTIVE_PIXEL_DIM;
 	}
 
 	private int minRangePosition(int position, int minRange) {
-		return position - minRange * ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+		return position - minRange * ImageManager.EFFECTIVE_PIXEL_DIM;
 	}
 
 	private int adjustedMaxRangePosition(int position, int maxDimension) {
-		return (maxDimension - 2) - position / ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+		return (maxDimension - 2) - position / ImageManager.EFFECTIVE_PIXEL_DIM;
 	}
 
 	private int adjustedMinRangePosition(int position) {
-		return position / ImageManager.EFFECTIVE_PIXEL_DIMENSION - 1;
+		return position / ImageManager.EFFECTIVE_PIXEL_DIM - 1;
 	}
 
 	private void addAnimation(int animType, int xOffset, int yOffset) {

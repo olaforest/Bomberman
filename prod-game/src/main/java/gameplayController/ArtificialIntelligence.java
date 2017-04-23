@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 
 class ArtificialIntelligence {
 
@@ -36,8 +36,8 @@ class ArtificialIntelligence {
 	public void updateEnemiesPosition() {
 		for (Enemy enemy : enemies) {
 			if (!enemy.isDead()) {
-				boolean isAlignedWithColumn = ((enemy.getPosition().getX() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0);
-				boolean isAlignedWithRow = ((enemy.getPosition().getY() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0);
+				boolean isAlignedWithColumn = ((enemy.getPosition().getX() - EFFECTIVE_PIXEL_DIM) % (EFFECTIVE_PIXEL_DIM * 2) == 0);
+				boolean isAlignedWithRow = ((enemy.getPosition().getY() - EFFECTIVE_PIXEL_DIM) % (EFFECTIVE_PIXEL_DIM * 2) == 0);
 
 				if (isAlignedWithColumn && (!(isAlignedWithRow))) {
 					if (enemy.getDirection() > 1)
@@ -136,16 +136,16 @@ class ArtificialIntelligence {
 	private void randomChangeCheck(Enemy enemy, GridObject gridObject) {
 
 		if (enemy.getDirection() < 2) {
-			if ((gridObject.getPosition().getX() == enemy.getPosition().getX() - EFFECTIVE_PIXEL_DIMENSION) && (gridObject.getPosition().getY() == enemy.getPosition().getY()))
+			if ((gridObject.getPosition().getX() == enemy.getPosition().getX() - EFFECTIVE_PIXEL_DIM) && (gridObject.getPosition().getY() == enemy.getPosition().getY()))
 				collisionCount++;
 
-			if ((gridObject.getPosition().getX() == enemy.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION) && (gridObject.getPosition().getY() == enemy.getPosition().getY()))
+			if ((gridObject.getPosition().getX() == enemy.getPosition().getX() + EFFECTIVE_PIXEL_DIM) && (gridObject.getPosition().getY() == enemy.getPosition().getY()))
 				collisionCount++;
 		} else if (enemy.getDirection() > 1) {
-			if ((gridObject.getPosition().getY() == enemy.getPosition().getY() - EFFECTIVE_PIXEL_DIMENSION) && (gridObject.getPosition().getX() == enemy.getPosition().getX()))
+			if ((gridObject.getPosition().getY() == enemy.getPosition().getY() - EFFECTIVE_PIXEL_DIM) && (gridObject.getPosition().getX() == enemy.getPosition().getX()))
 				collisionCount++;
 
-			if ((gridObject.getPosition().getY() == enemy.getPosition().getY() + EFFECTIVE_PIXEL_DIMENSION) && (gridObject.getPosition().getX() == enemy.getPosition().getX()))
+			if ((gridObject.getPosition().getY() == enemy.getPosition().getY() + EFFECTIVE_PIXEL_DIM) && (gridObject.getPosition().getX() == enemy.getPosition().getX()))
 				collisionCount++;
 		}
 	}
@@ -170,8 +170,8 @@ class ArtificialIntelligence {
 		if (enemy.getSmartness() == 3) {
 
 			//if bomberman is within 2 range
-			if ((Math.abs(bomberman.getPosition().getX() - enemy.getPosition().getX()) <= 2 * EFFECTIVE_PIXEL_DIMENSION)
-					&& (Math.abs(bomberman.getPosition().getY() - enemy.getPosition().getY()) <= 2 * EFFECTIVE_PIXEL_DIMENSION)) {
+			if ((Math.abs(bomberman.getPosition().getX() - enemy.getPosition().getX()) <= 2 * EFFECTIVE_PIXEL_DIM)
+					&& (Math.abs(bomberman.getPosition().getY() - enemy.getPosition().getY()) <= 2 * EFFECTIVE_PIXEL_DIM)) {
 				
 				/* getWallpass makes it unnecessary to use AStar, so we only do it if
 				 * the enemy doesn't have isWallpass
@@ -188,17 +188,17 @@ class ArtificialIntelligence {
 					if (Direction != null) {
 						if (Direction.parent != null) {
 
-							while (!((Direction.parent.xPosition == (((enemy.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION / 2) / EFFECTIVE_PIXEL_DIMENSION) * EFFECTIVE_PIXEL_DIMENSION))
-									&& (Direction.parent.yPosition == (((enemy.getPosition().getY() + EFFECTIVE_PIXEL_DIMENSION / 2) / EFFECTIVE_PIXEL_DIMENSION) * EFFECTIVE_PIXEL_DIMENSION))))
+							while (!((Direction.parent.xPosition == (((enemy.getPosition().getX() + EFFECTIVE_PIXEL_DIM / 2) / EFFECTIVE_PIXEL_DIM) * EFFECTIVE_PIXEL_DIM))
+									&& (Direction.parent.yPosition == (((enemy.getPosition().getY() + EFFECTIVE_PIXEL_DIM / 2) / EFFECTIVE_PIXEL_DIM) * EFFECTIVE_PIXEL_DIM))))
 								Direction = Direction.parent;
 
-							if (Direction.xPosition == ((enemy.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION / 2) / EFFECTIVE_PIXEL_DIMENSION) * EFFECTIVE_PIXEL_DIMENSION) {
+							if (Direction.xPosition == ((enemy.getPosition().getX() + EFFECTIVE_PIXEL_DIM / 2) / EFFECTIVE_PIXEL_DIM) * EFFECTIVE_PIXEL_DIM) {
 								if (Direction.yPosition < enemy.getPosition().getY()) enemy.setDirection(0);
 
 								if (Direction.yPosition > enemy.getPosition().getY()) enemy.setDirection(1);
 							}
 
-							if (Direction.yPosition == ((enemy.getPosition().getY() + EFFECTIVE_PIXEL_DIMENSION / 2) / EFFECTIVE_PIXEL_DIMENSION) * EFFECTIVE_PIXEL_DIMENSION) {
+							if (Direction.yPosition == ((enemy.getPosition().getY() + EFFECTIVE_PIXEL_DIM / 2) / EFFECTIVE_PIXEL_DIM) * EFFECTIVE_PIXEL_DIM) {
 								if (Direction.xPosition < enemy.getPosition().getX()) enemy.setDirection(2);
 
 								if (Direction.xPosition > enemy.getPosition().getX()) enemy.setDirection(3);
@@ -227,18 +227,18 @@ class ArtificialIntelligence {
 		 * is within one range. If he is, we set the enemy's direction to face him
 		 */
 		else if (bomberman.getPosition().getX() == enemy.getPosition().getX()) {
-			if ((bomberman.getPosition().getY() - EFFECTIVE_PIXEL_DIMENSION <= enemy.getPosition().getY())
+			if ((bomberman.getPosition().getY() - EFFECTIVE_PIXEL_DIM <= enemy.getPosition().getY())
 					&& (enemy.getPosition().getY() < bomberman.getPosition().getY()))
 				enemy.setDirection(1);
 
-			if ((bomberman.getPosition().getY() + EFFECTIVE_PIXEL_DIMENSION >= enemy.getPosition().getY())
+			if ((bomberman.getPosition().getY() + EFFECTIVE_PIXEL_DIM >= enemy.getPosition().getY())
 					&& (enemy.getPosition().getY() > bomberman.getPosition().getY()))
 				enemy.setDirection(0);
 		} else if (bomberman.getPosition().getY() == enemy.getPosition().getY()) {
-			if ((bomberman.getPosition().getX() - EFFECTIVE_PIXEL_DIMENSION <= enemy.getPosition().getX()) && (enemy.getPosition().getX() < bomberman.getPosition().getX()))
+			if ((bomberman.getPosition().getX() - EFFECTIVE_PIXEL_DIM <= enemy.getPosition().getX()) && (enemy.getPosition().getX() < bomberman.getPosition().getX()))
 				enemy.setDirection(3);
 
-			if ((bomberman.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION >= enemy.getPosition().getX()) && (enemy.getPosition().getX() > bomberman.getPosition().getX()))
+			if ((bomberman.getPosition().getX() + EFFECTIVE_PIXEL_DIM >= enemy.getPosition().getX()) && (enemy.getPosition().getX() > bomberman.getPosition().getX()))
 				enemy.setDirection(2);
 		}
 	}
@@ -251,8 +251,8 @@ class ArtificialIntelligence {
 		LinkedList<Node> openList = new LinkedList<>();
 		LinkedList<Node> closedList = new LinkedList<>();
 
-		int correctedX = ((enemy.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION / 2) / EFFECTIVE_PIXEL_DIMENSION) * (EFFECTIVE_PIXEL_DIMENSION);
-		int correctedY = ((enemy.getPosition().getY() + EFFECTIVE_PIXEL_DIMENSION / 2) / EFFECTIVE_PIXEL_DIMENSION) * (EFFECTIVE_PIXEL_DIMENSION);
+		int correctedX = ((enemy.getPosition().getX() + EFFECTIVE_PIXEL_DIM / 2) / EFFECTIVE_PIXEL_DIM) * (EFFECTIVE_PIXEL_DIM);
+		int correctedY = ((enemy.getPosition().getY() + EFFECTIVE_PIXEL_DIM / 2) / EFFECTIVE_PIXEL_DIM) * (EFFECTIVE_PIXEL_DIM);
 
 		Node startNode = new Node(correctedX, correctedY, null, 0, euclidianDistance(enemy.getPosition().getX(), enemy.getPosition().getY(), bomberman.getPosition().getX(), bomberman.getPosition().getY()));
 		openList.add(startNode);
@@ -263,38 +263,38 @@ class ArtificialIntelligence {
 
 			closedList.add(current);
 
-			int bCorrectedX = (bomberman.getPosition().getX() / EFFECTIVE_PIXEL_DIMENSION) * (EFFECTIVE_PIXEL_DIMENSION);
-			int bCorrectedY = (bomberman.getPosition().getY() / EFFECTIVE_PIXEL_DIMENSION) * (EFFECTIVE_PIXEL_DIMENSION);
+			int bCorrectedX = (bomberman.getPosition().getX() / EFFECTIVE_PIXEL_DIM) * (EFFECTIVE_PIXEL_DIM);
+			int bCorrectedY = (bomberman.getPosition().getY() / EFFECTIVE_PIXEL_DIM) * (EFFECTIVE_PIXEL_DIM);
 
 			if ((current.xPosition == bCorrectedX) && (current.yPosition == bCorrectedY))
 				return current;
 
 			boolean obstacle;
 
-			boolean isAlignedWithColumn = ((current.xPosition - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0);
-			boolean isAlignedWithRow = ((current.yPosition - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0);
+			boolean isAlignedWithColumn = ((current.xPosition - EFFECTIVE_PIXEL_DIM) % (EFFECTIVE_PIXEL_DIM * 2) == 0);
+			boolean isAlignedWithRow = ((current.yPosition - EFFECTIVE_PIXEL_DIM) % (EFFECTIVE_PIXEL_DIM * 2) == 0);
 
 			for (int i = 0; i < 4; i++) {
 
 				obstacle = false;
 				if (i == 0) {
 
-					if (current.yPosition <= EFFECTIVE_PIXEL_DIMENSION) obstacle = true;
+					if (current.yPosition <= EFFECTIVE_PIXEL_DIM) obstacle = true;
 
 					if (isAlignedWithColumn) {
 						for (Brick brick : bricks) {
-							if ((brick.getPosition().getX() == current.xPosition) && (brick.getPosition().getY() + EFFECTIVE_PIXEL_DIMENSION == current.yPosition))
+							if ((brick.getPosition().getX() == current.xPosition) && (brick.getPosition().getY() + EFFECTIVE_PIXEL_DIM == current.yPosition))
 								obstacle = true;
 						}
 
 						for (Bomb bomb : bombs) {
-							if ((bomb.getPosition().getX() == current.xPosition) && (bomb.getPosition().getY() + EFFECTIVE_PIXEL_DIMENSION == current.yPosition))
+							if ((bomb.getPosition().getX() == current.xPosition) && (bomb.getPosition().getY() + EFFECTIVE_PIXEL_DIM == current.yPosition))
 								obstacle = true;
 						}
 
 						if (!obstacle) {
-							Node next = new Node(current.xPosition, current.yPosition - EFFECTIVE_PIXEL_DIMENSION, current, current.gCost + 10,
-									euclidianDistance(current.xPosition, current.yPosition - EFFECTIVE_PIXEL_DIMENSION, this.bomberman.getPosition().getX(), this.bomberman.getPosition().getY()));
+							Node next = new Node(current.xPosition, current.yPosition - EFFECTIVE_PIXEL_DIM, current, current.gCost + 10,
+									euclidianDistance(current.xPosition, current.yPosition - EFFECTIVE_PIXEL_DIM, this.bomberman.getPosition().getX(), this.bomberman.getPosition().getY()));
 
 							if (!(!notAlreadyIn(openList, next))) {
 								if (!(!notAlreadyIn(closedList, next))) {
@@ -306,23 +306,23 @@ class ArtificialIntelligence {
 					}
 				} else if (i == 1) {
 
-					if (current.yPosition >= EFFECTIVE_PIXEL_DIMENSION * 13) obstacle = true;
+					if (current.yPosition >= EFFECTIVE_PIXEL_DIM * 13) obstacle = true;
 
 					if (isAlignedWithColumn) {
 
 						for (Brick brick : bricks) {
-							if ((brick.getPosition().getX() == current.xPosition) && (brick.getPosition().getY() - EFFECTIVE_PIXEL_DIMENSION == current.yPosition))
+							if ((brick.getPosition().getX() == current.xPosition) && (brick.getPosition().getY() - EFFECTIVE_PIXEL_DIM == current.yPosition))
 								obstacle = true;
 						}
 
 						for (Bomb bomb : bombs) {
-							if ((bomb.getPosition().getX() == current.xPosition) && (bomb.getPosition().getY() - EFFECTIVE_PIXEL_DIMENSION == current.yPosition))
+							if ((bomb.getPosition().getX() == current.xPosition) && (bomb.getPosition().getY() - EFFECTIVE_PIXEL_DIM == current.yPosition))
 								obstacle = true;
 						}
 
 						if (!obstacle) {
-							Node next = new Node(current.xPosition, current.yPosition + EFFECTIVE_PIXEL_DIMENSION, current, current.gCost + 10,
-									euclidianDistance(current.xPosition, current.yPosition + EFFECTIVE_PIXEL_DIMENSION, this.bomberman.getPosition().getX(), this.bomberman.getPosition().getY()));
+							Node next = new Node(current.xPosition, current.yPosition + EFFECTIVE_PIXEL_DIM, current, current.gCost + 10,
+									euclidianDistance(current.xPosition, current.yPosition + EFFECTIVE_PIXEL_DIM, this.bomberman.getPosition().getX(), this.bomberman.getPosition().getY()));
 
 							if (!(!notAlreadyIn(openList, next))) {
 								if (!(!notAlreadyIn(closedList, next))) {
@@ -334,23 +334,23 @@ class ArtificialIntelligence {
 					}
 				} else if (i == 2) {
 
-					if (current.xPosition <= EFFECTIVE_PIXEL_DIMENSION)
+					if (current.xPosition <= EFFECTIVE_PIXEL_DIM)
 						obstacle = true;
 
 					if (isAlignedWithRow) {
 						for (Brick brick : bricks) {
-							if ((brick.getPosition().getY() == current.yPosition) && (brick.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION == current.xPosition))
+							if ((brick.getPosition().getY() == current.yPosition) && (brick.getPosition().getX() + EFFECTIVE_PIXEL_DIM == current.xPosition))
 								obstacle = true;
 						}
 
 						for (Bomb bomb : bombs) {
-							if ((bomb.getPosition().getY() == current.yPosition) && (bomb.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION == current.xPosition))
+							if ((bomb.getPosition().getY() == current.yPosition) && (bomb.getPosition().getX() + EFFECTIVE_PIXEL_DIM == current.xPosition))
 								obstacle = true;
 						}
 
 						if (!obstacle) {
-							Node next = new Node(current.xPosition - EFFECTIVE_PIXEL_DIMENSION, current.yPosition, current, current.gCost + 10,
-									euclidianDistance(current.xPosition - EFFECTIVE_PIXEL_DIMENSION, current.yPosition, this.bomberman.getPosition().getX(), this.bomberman.getPosition().getY()));
+							Node next = new Node(current.xPosition - EFFECTIVE_PIXEL_DIM, current.yPosition, current, current.gCost + 10,
+									euclidianDistance(current.xPosition - EFFECTIVE_PIXEL_DIM, current.yPosition, this.bomberman.getPosition().getX(), this.bomberman.getPosition().getY()));
 
 							if (!(!notAlreadyIn(openList, next))) {
 								if (!(!notAlreadyIn(closedList, next))) {
@@ -361,23 +361,23 @@ class ArtificialIntelligence {
 						}
 					}
 				} else if (i == 3) {
-					if (current.xPosition >= EFFECTIVE_PIXEL_DIMENSION * 13)
+					if (current.xPosition >= EFFECTIVE_PIXEL_DIM * 13)
 						obstacle = true;
 
 					if (isAlignedWithRow) {
 						for (Brick brick : bricks) {
-							if ((brick.getPosition().getY() == current.yPosition) && (brick.getPosition().getX() - EFFECTIVE_PIXEL_DIMENSION == current.xPosition))
+							if ((brick.getPosition().getY() == current.yPosition) && (brick.getPosition().getX() - EFFECTIVE_PIXEL_DIM == current.xPosition))
 								obstacle = true;
 						}
 
 						for (Bomb bomb : bombs) {
-							if ((bomb.getPosition().getY() == current.yPosition) && (bomb.getPosition().getX() - EFFECTIVE_PIXEL_DIMENSION == current.xPosition))
+							if ((bomb.getPosition().getY() == current.yPosition) && (bomb.getPosition().getX() - EFFECTIVE_PIXEL_DIM == current.xPosition))
 								obstacle = true;
 						}
 
 						if (!obstacle) {
-							Node next = new Node(current.xPosition + EFFECTIVE_PIXEL_DIMENSION, current.yPosition, current, current.gCost + 10,
-									euclidianDistance(current.xPosition + EFFECTIVE_PIXEL_DIMENSION, current.yPosition, this.bomberman.getPosition().getX(), this.bomberman.getPosition().getY()));
+							Node next = new Node(current.xPosition + EFFECTIVE_PIXEL_DIM, current.yPosition, current, current.gCost + 10,
+									euclidianDistance(current.xPosition + EFFECTIVE_PIXEL_DIM, current.yPosition, this.bomberman.getPosition().getX(), this.bomberman.getPosition().getY()));
 
 							if (!(!notAlreadyIn(openList, next))) {
 								if (!(!notAlreadyIn(closedList, next))) {

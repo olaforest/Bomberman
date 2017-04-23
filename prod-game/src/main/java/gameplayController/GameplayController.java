@@ -28,13 +28,13 @@ import static gameplayView.AnimationType.*;
 import static gameplayView.GameStatusPanel.HEADERHEIGHT;
 import static gameplayView.GameplayPanel.HEIGHT;
 import static gameplayView.GameplayPanel.WIDTH;
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 import static utilities.Position.create;
 
 public class GameplayController implements ActionListener {
 
 	public static final int TIMEOUT = 50;
-	public static final int VIEW_PORT_WIDTH = 16 * EFFECTIVE_PIXEL_DIMENSION;
+	public static final int VIEW_PORT_WIDTH = 16 * EFFECTIVE_PIXEL_DIM;
 
 	private boolean placeBomb;
 
@@ -405,13 +405,13 @@ public class GameplayController implements ActionListener {
 	private void checkCollisionBtwBombermanAndBricks() {
 		for (Brick brick : bricks) {
 			if (colDetect.checkRightCollision(bomberman, brick))
-				bomberman.setXPosition(brick.getPosition().getX() - EFFECTIVE_PIXEL_DIMENSION);
+				bomberman.setXPosition(brick.getPosition().getX() - EFFECTIVE_PIXEL_DIM);
 			if (colDetect.checkLeftCollision(bomberman, brick))
-				bomberman.setXPosition(brick.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION);
+				bomberman.setXPosition(brick.getPosition().getX() + EFFECTIVE_PIXEL_DIM);
 			if (colDetect.checkDownCollision(bomberman, brick))
-				bomberman.setYPosition(brick.getPosition().getY() - EFFECTIVE_PIXEL_DIMENSION);
+				bomberman.setYPosition(brick.getPosition().getY() - EFFECTIVE_PIXEL_DIM);
 			if (colDetect.checkUpCollision(bomberman, brick))
-				bomberman.setYPosition(brick.getPosition().getY() + EFFECTIVE_PIXEL_DIMENSION);
+				bomberman.setYPosition(brick.getPosition().getY() + EFFECTIVE_PIXEL_DIM);
 		}
 	}
 
@@ -470,15 +470,15 @@ public class GameplayController implements ActionListener {
 	private void addBomb() {
 		int xPosition, yPosition;
 
-		if ((bomberman.getPosition().getX() % EFFECTIVE_PIXEL_DIMENSION) < (EFFECTIVE_PIXEL_DIMENSION / 2))
-			xPosition = EFFECTIVE_PIXEL_DIMENSION * (bomberman.getPosition().getX() / EFFECTIVE_PIXEL_DIMENSION);
+		if ((bomberman.getPosition().getX() % EFFECTIVE_PIXEL_DIM) < (EFFECTIVE_PIXEL_DIM / 2))
+			xPosition = EFFECTIVE_PIXEL_DIM * (bomberman.getPosition().getX() / EFFECTIVE_PIXEL_DIM);
 		else
-			xPosition = EFFECTIVE_PIXEL_DIMENSION * (bomberman.getPosition().getX() / EFFECTIVE_PIXEL_DIMENSION + 1);
+			xPosition = EFFECTIVE_PIXEL_DIM * (bomberman.getPosition().getX() / EFFECTIVE_PIXEL_DIM + 1);
 
-		if ((bomberman.getPosition().getY() % EFFECTIVE_PIXEL_DIMENSION) < (EFFECTIVE_PIXEL_DIMENSION / 2))
-			yPosition = EFFECTIVE_PIXEL_DIMENSION * (bomberman.getPosition().getY() / EFFECTIVE_PIXEL_DIMENSION);
+		if ((bomberman.getPosition().getY() % EFFECTIVE_PIXEL_DIM) < (EFFECTIVE_PIXEL_DIM / 2))
+			yPosition = EFFECTIVE_PIXEL_DIM * (bomberman.getPosition().getY() / EFFECTIVE_PIXEL_DIM);
 		else
-			yPosition = EFFECTIVE_PIXEL_DIMENSION * (bomberman.getPosition().getY() / EFFECTIVE_PIXEL_DIMENSION + 1);
+			yPosition = EFFECTIVE_PIXEL_DIM * (bomberman.getPosition().getY() / EFFECTIVE_PIXEL_DIM + 1);
 
 		boolean canAddBomb = true;
 
@@ -529,8 +529,8 @@ public class GameplayController implements ActionListener {
 				for (Bomb bomb : bombs) {
 					for (int i = 0; i < bomb.getCurrentAnimations().size(); i++)
 						g2d.drawImage(bomb.getCurrentAnimations().get(i).getCurrentFrame(),
-								bomb.getPosition().getX() + bomb.getAnimXOffset().get(i) * EFFECTIVE_PIXEL_DIMENSION,
-								bomb.getPosition().getY() + bomb.getAnimYOffset().get(i) * EFFECTIVE_PIXEL_DIMENSION, gamePanel);
+								bomb.getPosition().getX() + bomb.getAnimXOffset().get(i) * EFFECTIVE_PIXEL_DIM,
+								bomb.getPosition().getY() + bomb.getAnimYOffset().get(i) * EFFECTIVE_PIXEL_DIM, gamePanel);
 				}
 
 				for (Brick brick : bricks)
@@ -565,14 +565,14 @@ public class GameplayController implements ActionListener {
 	}
 
 	private void updateViewport() {
-		if (bomberman.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION / 2 <= VIEW_PORT_WIDTH / 2) {
+		if (bomberman.getPosition().getX() + EFFECTIVE_PIXEL_DIM / 2 <= VIEW_PORT_WIDTH / 2) {
 			gamePanel.setLocation(0, 0);
 			gamePanel.repaint();
-		} else if (bomberman.getPosition().getX() + EFFECTIVE_PIXEL_DIMENSION / 2 >= WIDTH - VIEW_PORT_WIDTH / 2) {
+		} else if (bomberman.getPosition().getX() + EFFECTIVE_PIXEL_DIM / 2 >= WIDTH - VIEW_PORT_WIDTH / 2) {
 			gamePanel.setLocation(VIEW_PORT_WIDTH - WIDTH, 0);
 			gamePanel.repaint();
 		} else {
-			gamePanel.setLocation(VIEW_PORT_WIDTH / 2 - bomberman.getPosition().getX() - EFFECTIVE_PIXEL_DIMENSION / 2, 0);
+			gamePanel.setLocation(VIEW_PORT_WIDTH / 2 - bomberman.getPosition().getX() - EFFECTIVE_PIXEL_DIM / 2, 0);
 			gamePanel.repaint();
 		}
 	}
