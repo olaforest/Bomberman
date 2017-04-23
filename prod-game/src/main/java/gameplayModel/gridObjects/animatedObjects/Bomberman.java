@@ -4,9 +4,7 @@ import gameplayController.GameplayController;
 import gameplayModel.GridMap;
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayModel.gridObjects.PowerUp;
-import gameplayView.AnimParam;
-import gameplayView.AnimationType;
-import gameplayView.ImageManager;
+import gameplayView.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -54,6 +52,22 @@ public class Bomberman extends AnimatedObject {
 		this.bombsLeft = bombsLeft;
 		this.powerUpsAcquired = powerUpsAcquired;
 		setBombermanAbilities();
+	}
+
+	public void moveRight() {
+		setXPosition(position.getX() + speed);
+	}
+
+	public void moveLeft() {
+		setXPosition(position.getX() - speed);
+	}
+
+	public void moveUp() {
+		setYPosition(position.getY() - speed);
+	}
+
+	public void moveDown() {
+		setYPosition(position.getY() + speed);
 	}
 
 	public void setXPosition(int xPos) {

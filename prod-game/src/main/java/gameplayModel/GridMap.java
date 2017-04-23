@@ -3,6 +3,7 @@ package gameplayModel;
 import gameplayController.CollisionDetector;
 import gameplayModel.gridObjects.*;
 import gameplayModel.gridObjects.animatedObjects.*;
+import gameplayView.AnimationType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import utilities.Position;
@@ -65,72 +66,36 @@ public class GridMap {
 			if (activeDirectionKeys.size() != 0) {
 				switch (activeDirectionKeys.getFirst()) {
 					case VK_UP:
-						if (bomberman.getCurrentAnimationType() != Up)
-							bomberman.setCurrentAnimation(Up);
-						else
-							bomberman.cycleAnimation();
-
-						boolean canMoveUp = true;
-
-						for (Bomb bomb : bombs) {
-							if (CollisionDetector.checkUpCollision(bomberman, bomb) && !bomberman.canBombpass())
-								canMoveUp = false;
-						}
-
-						if (canMoveUp) bomberman.setYPosition(bomberman.getPosition().getY() - bomberman.getSpeed());
-
+						updateBombermanStatus(Up, CollisionDetector::checkUpCollision, bomberman::moveUp);
 						break;
 					case VK_DOWN:
-						if (bomberman.getCurrentAnimationType() != Down)
-							bomberman.setCurrentAnimation(Down);
-						else
-							bomberman.cycleAnimation();
-
-						boolean canMoveDown = true;
-
-						for (Bomb bomb : bombs) {
-							if (checkDownCollision(bomberman, bomb) && !bomberman.canBombpass())
-								canMoveDown = false;
-						}
-
-						if (canMoveDown) bomberman.setYPosition(bomberman.getPosition().getY() + bomberman.getSpeed());
-
+						updateBombermanStatus(Down, CollisionDetector::checkDownCollision, bomberman::moveDown);
 						break;
 					case VK_LEFT:
-						if (bomberman.getCurrentAnimationType() != Left)
-							bomberman.setCurrentAnimation(Left);
-						else
-							bomberman.cycleAnimation();
-
-						boolean canMoveLeft = true;
-
-						for (Bomb bomb : bombs) {
-							if (checkLeftCollision(bomberman, bomb) && !bomberman.canBombpass())
-								canMoveLeft = false;
-						}
-
-						if (canMoveLeft) bomberman.setXPosition(bomberman.getPosition().getX() - bomberman.getSpeed());
-
+						updateBombermanStatus(Left, CollisionDetector::checkLeftCollision, bomberman::moveLeft);
 						break;
 					case VK_RIGHT:
-						if (bomberman.getCurrentAnimationType() != Right)
-							bomberman.setCurrentAnimation(Right);
-						else
-							bomberman.cycleAnimation();
-
-						boolean canMoveRight = true;
-
-						for (Bomb bomb : bombs) {
-							if (checkRightCollision(bomberman, bomb) && !bomberman.canBombpass())
-								canMoveRight = false;
-						}
-
-						if (canMoveRight) bomberman.setXPosition(bomberman.getPosition().getX() + bomberman.getSpeed());
-
+						updateBombermanStatus(Right, CollisionDetector::checkRightCollision, bomberman::moveRight);
 						break;
 				}
 			}
 		}
+	}
+
+	private void updateBombermanStatus(AnimationType animationType, BiPredicate<GridObject, GridObject> collisionCheck, Runnable move) {
+		if (bomberman.getCurrentAnimationType() != animationType)
+			bomberman.setCurrentAnimation(animationType);
+		else
+			bomberman.cycleAnimation();
+		if (canMove(collisionCheck)) move.run();
+	}
+
+	private Boolean canMove(BiPredicate<GridObject, GridObject> collisionCheck) {
+		return bombs.stream()
+				.filter(bomb -> collisionCheck.test(bomberman, bomb) && !bomberman.canBombpass())
+				.findFirst()
+				.map(bomb -> false)
+				.orElse(true);
 	}
 
 	void removePowerUps() {
