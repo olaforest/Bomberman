@@ -1,6 +1,5 @@
 package gameplayView;
 
-import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import lombok.experimental.UtilityClass;
 
 import java.awt.*;
@@ -52,7 +51,7 @@ public class ImageManager {
 
 	private static Optional<BufferedImage> loadSpriteSheet() {
 		try {
-			final InputStream in = Bomberman.class.getResourceAsStream("/spritesheet.png");
+			final InputStream in = ImageManager.class.getResourceAsStream("/spritesheet.png");
 			return of(read(in));
 		} catch (IOException e) {
 			e.printStackTrace();

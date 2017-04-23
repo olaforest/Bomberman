@@ -3,6 +3,7 @@ package gameplayModel;
 import gameplayController.GameplayController;
 import lombok.Getter;
 import lombok.Setter;
+import utilities.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,54 @@ public class GameContext {
 		this.score = score;
 		endGameEnemiesSpawned = false;
 		this.gridMap = gridMap;
+	}
+
+	public void updateBombermanStatus() {
+		gridMap.updateBombermanStatus();
+	}
+
+	public void updateEnemiesAnim() {
+		gridMap.updateEnemiesAnim();
+	}
+
+	public void updateBombsStatus() {
+		gridMap.updateBombsStatus();
+	}
+
+	public void updateBricksStatus() {
+		gridMap.updateBricksStatus();
+	}
+
+	public void destroyObjectInExplodedBombsRange() {
+		gridMap.destroyObjectInExplodedBombsRange();
+	}
+
+	public void checkCollisionBtwBombermanAndBricks() {
+		gridMap.checkCollisionBtwBombermanAndBricks();
+	}
+
+	public void checkCollisionBtwBombermanAndEnemies() {
+		gridMap.checkCollisionBtwBombermanAndEnemies();
+	}
+
+	public boolean checkCollisionBtwBombermanAndExitway() {
+		return gridMap.checkCollisionBtwBombermanAndExitway();
+	}
+
+	public void checkCollisionBtwBombermanAndPowerUp() {
+		gridMap.checkCollisionBtwBombermanAndPowerUp();
+	}
+
+	public void addBomb() {
+		gridMap.addBomb();
+	}
+
+	public Position getViewPortPosition() {
+		return gridMap.getViewPortPosition();
+	}
+
+	public void detonateBomb() {
+		gridMap.detonateBomb();
 	}
 
 	public void restartMap() {

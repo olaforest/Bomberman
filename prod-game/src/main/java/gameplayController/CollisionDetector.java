@@ -1,12 +1,10 @@
 package gameplayController;
 
-import gameplayModel.GameContext;
+import gameplayModel.GridMap;
 import gameplayModel.GridObject;
 import gameplayModel.gridObjects.AnimatedObject;
-import gameplayModel.gridObjects.animatedObjects.Bomb;
-import gameplayModel.gridObjects.animatedObjects.Bomberman;
-import gameplayModel.gridObjects.animatedObjects.Brick;
-import gameplayModel.gridObjects.animatedObjects.Enemy;
+import gameplayModel.gridObjects.animatedObjects.*;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,47 +12,39 @@ import java.util.List;
 import static gameplayModel.GridObject.MISALIGNMENT_ALLOWED;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 
+@RequiredArgsConstructor
 class CollisionDetector {
+	private final GridMap gridMap;
 
-	private final GameContext gameContext;
-	private final List<Brick> bricks;
-	private final List<Enemy> enemies;
-
-	public CollisionDetector(GameContext gC) {
-		gameContext = gC;
-		bricks = gameContext.getGridMap().getBricks();
-		enemies = gameContext.getGridMap().getEnemies();
-	}
-
-	public boolean checkUpCollision(GridObject a, GridObject b) {
+	boolean checkUpCollision(GridObject a, GridObject b) {
 		if ((a != null) && (b != null))
 			if (Math.abs(a.getPosition().getX() - b.getPosition().getX()) < MISALIGNMENT_ALLOWED)
 				return ((b.getPosition().getY() + EFFECTIVE_PIXEL_DIM > a.getPosition().getY()) && (b.getPosition().getY() <= a.getPosition().getY()));
 		return false;
 	}
 
-	public boolean checkDownCollision(GridObject a, GridObject b) {
+	boolean checkDownCollision(GridObject a, GridObject b) {
 		if ((a != null) && (b != null))
 			if (Math.abs(a.getPosition().getX() - b.getPosition().getX()) < MISALIGNMENT_ALLOWED)
 				return ((a.getPosition().getY() + EFFECTIVE_PIXEL_DIM > b.getPosition().getY()) && (a.getPosition().getY() <= b.getPosition().getY()));
 		return false;
 	}
 
-	public boolean checkLeftCollision(GridObject a, GridObject b) {
+	boolean checkLeftCollision(GridObject a, GridObject b) {
 		if ((a != null) && (b != null))
 			if (Math.abs(a.getPosition().getY() - b.getPosition().getY()) < MISALIGNMENT_ALLOWED)
 				return ((b.getPosition().getX() + EFFECTIVE_PIXEL_DIM > a.getPosition().getX()) && (b.getPosition().getX() <= a.getPosition().getX()));
 		return false;
 	}
 
-	public boolean checkRightCollision(GridObject a, GridObject b) {
+	boolean checkRightCollision(GridObject a, GridObject b) {
 		if ((a != null) && (b != null))
 			if (Math.abs(a.getPosition().getY() - b.getPosition().getY()) < MISALIGNMENT_ALLOWED)
 				return ((a.getPosition().getX() + EFFECTIVE_PIXEL_DIM > b.getPosition().getX()) && (a.getPosition().getX() <= b.getPosition().getX()));
 		return false;
 	}
 
-	public boolean checkExplGridObject(Bomb bomb, GridObject gridObj) {
+	boolean checkExplGridObject(Bomb bomb, GridObject gridObj) {
 		if (Math.abs(bomb.getPosition().getY() - gridObj.getPosition().getY()) < EFFECTIVE_PIXEL_DIM) {
 			boolean isInRightRange = (bomb.getPosition().getX() + (bomb.getRightRange() + 1) * EFFECTIVE_PIXEL_DIM) >= (gridObj.getPosition().getX() + 6) && bomb.getPosition().getX() < gridObj.getPosition().getX();
 
@@ -75,10 +65,10 @@ class CollisionDetector {
 		return false;
 	}
 
-	public ArrayList<Enemy> checkExplEnemies(Bomb bomb) {
+	ArrayList<Enemy> checkExplEnemies(Bomb bomb) {
 		ArrayList<Enemy> destroyedEnemies = new ArrayList<>();
 
-		for (Enemy enemy : enemies) {
+		for (Enemy enemy : gridMap.getEnemies()) {
 			if (Math.abs(bomb.getPosition().getY() - enemy.getPosition().getY()) < EFFECTIVE_PIXEL_DIM) {
 				boolean isInRightRange = (bomb.getPosition().getX() + (bomb.getRightRange() + 1) * EFFECTIVE_PIXEL_DIM) >= (enemy.getPosition().getX() + 1) && bomb.getPosition().getX() < enemy.getPosition().getX();
 				if (isInRightRange) destroyedEnemies.add(enemy);
@@ -98,16 +88,16 @@ class CollisionDetector {
 		return destroyedEnemies;
 	}
 
-	public ArrayList<AnimatedObject> checkExplBricks(Bomb bomb) {
+	List<AnimatedObject> checkExplBricks(Bomb bomb) {
 		ArrayList<AnimatedObject> destroyedObjs = new ArrayList<>();
 		destroyedObjs.add(null);
 		destroyedObjs.add(null);
 		destroyedObjs.add(null);
 		destroyedObjs.add(null);
 
-		for (Brick brick : bricks) adjustRanges(bomb, brick, destroyedObjs);
+		for (Brick brick : gridMap.getBricks()) adjustRanges(bomb, brick, destroyedObjs);
 
-		for (Bomb bombOnMap : gameContext.getGridMap().getBombs()) {
+		for (Bomb bombOnMap : gridMap.getBombs()) {
 			if (!bombOnMap.isDead() && !(bombOnMap.getPosition().getX() == bomb.getPosition().getX() && bombOnMap.getPosition().getY() == bomb.getPosition().getY()))
 				adjustRanges(bomb, bombOnMap, destroyedObjs);
 		}
@@ -165,7 +155,7 @@ class CollisionDetector {
 		}
 	}
 
-	public boolean checkExactCollision(Bomberman bomberman, GridObject b) {
+	boolean checkExactCollision(Bomberman bomberman, GridObject b) {
 		return bomberman != null
 				&& b != null
 				&& ((Math.abs(bomberman.getPosition().getX() - b.getPosition().getX()) < MISALIGNMENT_ALLOWED

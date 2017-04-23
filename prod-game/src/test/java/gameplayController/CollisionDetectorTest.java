@@ -1,24 +1,23 @@
 package gameplayController;
 
-import gameplayModel.GameContext;
+import gameplayModel.GridMap;
 import gameplayModel.GridObject;
 import gameplayModel.gridObjects.animatedObjects.Bomb;
 import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static gameplayModel.LevelManager.importLevels;
 import static org.junit.Assert.*;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
 
 public class CollisionDetectorTest {
-
 	private static CollisionDetector detector;
 
 	@BeforeClass
 	public static void setUpClass() {
-		GameContext gC = new GameContext();
-		detector = new CollisionDetector(new GameContext());
+		detector = new CollisionDetector(new GridMap(importLevels().get(0)));
 	}
 
 	@Test
