@@ -128,16 +128,6 @@ public class Bomberman extends AnimatedObject {
 		setBombermanAbilities();
 	}
 
-	void removePowerUp(PowerUp powerUp) {
-		powerUpsAcquired.remove(powerUp);
-		setBombermanAbilities();
-	}
-
-	public void setPowerUpsAcquired(List<PowerUp> powerUpsAcquired) {
-		this.powerUpsAcquired = powerUpsAcquired;
-		setBombermanAbilities();
-	}
-
 	private void setBombermanAbilities() {
 		resetAbilities();
 		powerUpsAcquired.forEach(powerUp -> powerUp.performAction(this));
@@ -160,7 +150,7 @@ public class Bomberman extends AnimatedObject {
 		else {
 			isInvincible = false;
 			invincibilityTimer = 0;
-			powerUpsAcquired.remove(powerUpsAcquired.size() - 1);
+			removeCurrentLevelPowerUp();
 		}
 	}
 

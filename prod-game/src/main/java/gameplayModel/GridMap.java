@@ -59,7 +59,7 @@ public class GridMap {
 				.orElse(null);
 	}
 
-	void updateBombermanStatus(ArrayDeque<Integer> activeDirectionKeys) {
+	void updateBombermanStatus(Deque<Integer> activeDirectionKeys) {
 		if (bomberman.isDead()) {
 			bomberman.cycleAnimation();
 		} else {
