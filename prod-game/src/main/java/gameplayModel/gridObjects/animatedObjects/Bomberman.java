@@ -1,10 +1,10 @@
 package gameplayModel.gridObjects.animatedObjects;
 
-import gameplayController.GameplayController;
 import gameplayModel.GridMap;
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayModel.gridObjects.PowerUp;
-import gameplayView.*;
+import gameplayView.AnimParam;
+import gameplayView.AnimationType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -14,8 +14,11 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 
+import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayView.AnimationType.*;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 
 @Getter
 public class Bomberman extends AnimatedObject {
@@ -71,19 +74,19 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void setXPosition(int xPos) {
-		int yError = (position.getY() - ImageManager.EFFECTIVE_PIXEL_DIM) % (ImageManager.EFFECTIVE_PIXEL_DIM * 2);
+		int yError = (position.getY() - EFFECTIVE_PIXEL_DIM) % (EFFECTIVE_PIXEL_DIM * 2);
 
-		boolean isInXRange = (xPos >= ImageManager.EFFECTIVE_PIXEL_DIM) && (xPos <= ImageManager.EFFECTIVE_PIXEL_DIM * (GridMap.MAPWIDTH - 2));
+		boolean isInXRange = (xPos >= EFFECTIVE_PIXEL_DIM) && (xPos <= EFFECTIVE_PIXEL_DIM * (GridMap.MAPWIDTH - 2));
 		boolean isAlignedWithRow = yError == 0;
 		boolean isBelowRow = yError <= MISALIGNMENT_ALLOWED;
-		boolean isAboveRow = yError >= (ImageManager.EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED);
+		boolean isAboveRow = yError >= (EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED);
 
 		if (isAlignedWithRow && isInXRange) {
 			position.setX(xPos);
-		} else if (isAboveRow && isInXRange && yError <= (ImageManager.EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED + speed)) {
+		} else if (isAboveRow && isInXRange && yError <= (EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED + speed)) {
 			position.setX(xPos);
 			position.incrementY(speed);
-		} else if (isAboveRow && isInXRange && yError > (ImageManager.EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED + speed)) {
+		} else if (isAboveRow && isInXRange && yError > (EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED + speed)) {
 			position.setX(xPos);
 			position.incrementY(2);
 		} else if (isBelowRow && isInXRange && yError >= speed) {
@@ -96,12 +99,12 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void setYPosition(int yPos) {
-		int xError = (position.getX() - ImageManager.EFFECTIVE_PIXEL_DIM) % (ImageManager.EFFECTIVE_PIXEL_DIM * 2);
+		int xError = (position.getX() - EFFECTIVE_PIXEL_DIM) % (EFFECTIVE_PIXEL_DIM * 2);
 
-		boolean isInYRange = (yPos >= ImageManager.EFFECTIVE_PIXEL_DIM) && (yPos <= ImageManager.EFFECTIVE_PIXEL_DIM * (GridMap.MAPHEIGHT - 2));
+		boolean isInYRange = (yPos >= EFFECTIVE_PIXEL_DIM) && (yPos <= EFFECTIVE_PIXEL_DIM * (GridMap.MAPHEIGHT - 2));
 		boolean isAlignedWithColumn = xError == 0;
 		boolean isRightFromColumn = xError <= MISALIGNMENT_ALLOWED;
-		boolean isLeftFromColumn = xError >= (ImageManager.EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED);
+		boolean isLeftFromColumn = xError >= (EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED);
 
 		if (isAlignedWithColumn && isInYRange) {
 			position.setY(yPos);
@@ -111,10 +114,10 @@ public class Bomberman extends AnimatedObject {
 		} else if (isRightFromColumn && isInYRange && xError < speed) {
 			position.setY(yPos);
 			position.decrementX(2);
-		} else if (isLeftFromColumn && isInYRange && xError <= (ImageManager.EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED + speed)) {
+		} else if (isLeftFromColumn && isInYRange && xError <= (EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED + speed)) {
 			position.setY(yPos);
 			position.incrementX(speed);
-		} else if (isLeftFromColumn && isInYRange && xError > (ImageManager.EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED + speed)) {
+		} else if (isLeftFromColumn && isInYRange && xError > (EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED + speed)) {
 			position.setY(yPos);
 			position.incrementX(2);
 		}
@@ -136,6 +139,11 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	private void setBombermanAbilities() {
+		resetAbilities();
+		powerUpsAcquired.forEach(powerUp -> powerUp.performAction(this));
+	}
+
+	private void resetAbilities() {
 		bombsAvailable = 1;
 		Bomb.resetRange();
 		speed = INITIAL_SPEED;
@@ -144,42 +152,11 @@ public class Bomberman extends AnimatedObject {
 		canBombpass = false;
 		canFlamepass = false;
 		isInvincible = false;
-
-		for (PowerUp powerup : powerUpsAcquired) {
-			switch (powerup.getClass().toString()) {
-				case "class gameplayModel.GridObjects.PowerUps.BombPU":
-					bombsAvailable++;
-					bombsLeft++;
-					break;
-				case "class gameplayModel.GridObjects.PowerUps.Flames":
-					Bomb.increaseRange();
-					break;
-				case "class gameplayModel.GridObjects.PowerUps.Speed":
-					speed += SPEED_INCREMENT;
-					break;
-				case "class gameplayModel.GridObjects.PowerUps.Wallpass":
-					canWallpass = true;
-					break;
-				case "class gameplayModel.GridObjects.PowerUps.Detonator":
-					canDetonateBombs = true;
-					break;
-				case "class gameplayModel.GridObjects.PowerUps.Bombpass":
-					canBombpass = true;
-					break;
-				case "class gameplayModel.GridObjects.PowerUps.Flamepass":
-					canFlamepass = true;
-					break;
-				case "class gameplayModel.GridObjects.PowerUps.Mystery":
-					isInvincible = true;
-					invincibilityTimer = INVINCIBILITY_TIMEOUT;
-					break;
-			}
-		}
 	}
 
 	void decreaseInvincibilityTimer() {
 		if (invincibilityTimer > 0)
-			invincibilityTimer -= GameplayController.TIMEOUT;
+			invincibilityTimer -= TIMEOUT;
 		else {
 			isInvincible = false;
 			invincibilityTimer = 0;
@@ -201,9 +178,52 @@ public class Bomberman extends AnimatedObject {
 			bombsLeft--;
 	}
 
-	public List<String> toCSVEntry() {
-		List<String> entryList = new ArrayList<>();
+	public void increaseBombAvailable() {
+		bombsAvailable++;
+		bombsLeft++;
+	}
 
+	public void increaseBombRange() {
+		Bomb.increaseRange();
+	}
+
+	public void increaseSpeed() {
+		speed += SPEED_INCREMENT;
+	}
+
+	public void activateCanWallPass() {
+		canWallpass = true;
+	}
+
+	public void activateCanDetonateBomb() {
+		canDetonateBombs = true;
+	}
+
+	public void activateCanBombPass() {
+		canBombpass = true;
+	}
+
+	public void activateCanFlamePass() {
+		canFlamepass = true;
+	}
+
+	public void activateInvincibility() {
+		isInvincible = true;
+		invincibilityTimer = INVINCIBILITY_TIMEOUT;
+	}
+
+	public void removeCurrentLevelPowerUp() {
+		powerUpsAcquired.remove(powerUpsAcquired.size() - 1);
+	}
+
+	public void removeNonPermanentPowerUps() {
+		powerUpsAcquired = powerUpsAcquired.stream()
+				.filter(PowerUp::isPermanent)
+				.collect(toList());
+	}
+
+	public List<String> toCSVEntry() {
+		final List<String> entryList = new ArrayList<>();
 		entryList.add(Integer.toString(position.getX()));
 		entryList.add(Integer.toString(position.getY()));
 		entryList.add(Integer.toString(invincibilityTimer));

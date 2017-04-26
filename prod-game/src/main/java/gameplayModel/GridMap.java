@@ -99,18 +99,8 @@ public class GridMap {
 	}
 
 	void removePowerUps() {
-		final List<PowerUp> powerUpsAcquired = bomberman.getPowerUpsAcquired();
-		// The power Up of the current map is removed from bomberman if he already picked it Up before dying.
-		if (powerUp == null)
-			powerUpsAcquired.remove(powerUpsAcquired.size() - 1);
-
-		// Removes the non permanent power ups acquired
-		for (int i = 0; i < powerUpsAcquired.size(); ) {
-			if (!powerUpsAcquired.get(i).isPermanent())
-				powerUpsAcquired.remove(i);
-			else
-				i++;
-		}
+		if (powerUp == null) bomberman.removeCurrentLevelPowerUp();
+		bomberman.removeNonPermanentPowerUps();
 	}
 
 	void updateEnemiesAnim() {
