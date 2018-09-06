@@ -147,7 +147,7 @@ class ArtificialIntelligence {
 
 		if (enemy.getSmartness() == 3) chance = 4;
 
-		Random rn = new Random();
+		final var rn = new Random();
 		int random = rn.nextInt(10);
 
 		if (random > chance) {
@@ -286,8 +286,8 @@ class ArtificialIntelligence {
 							Node next = new Node(current.xPosition, current.yPosition - EFFECTIVE_PIXEL_DIM, current, current.gCost + 10,
 									euclidianDistance(current.xPosition, current.yPosition - EFFECTIVE_PIXEL_DIM, this.gridMap.getBomberman().getPosition().getX(), this.gridMap.getBomberman().getPosition().getY()));
 
-							if (!(!notAlreadyIn(openList, next))) {
-								if (!(!notAlreadyIn(closedList, next))) {
+							if (notAlreadyIn(openList, next)) {
+								if (notAlreadyIn(closedList, next)) {
 									openList.add(next);
 									sortList(openList);
 								}
@@ -314,8 +314,8 @@ class ArtificialIntelligence {
 							Node next = new Node(current.xPosition, current.yPosition + EFFECTIVE_PIXEL_DIM, current, current.gCost + 10,
 									euclidianDistance(current.xPosition, current.yPosition + EFFECTIVE_PIXEL_DIM, this.gridMap.getBomberman().getPosition().getX(), this.gridMap.getBomberman().getPosition().getY()));
 
-							if (!(!notAlreadyIn(openList, next))) {
-								if (!(!notAlreadyIn(closedList, next))) {
+							if (notAlreadyIn(openList, next)) {
+								if (notAlreadyIn(closedList, next)) {
 									openList.add(next);
 									sortList(openList);
 								}
@@ -342,8 +342,8 @@ class ArtificialIntelligence {
 							Node next = new Node(current.xPosition - EFFECTIVE_PIXEL_DIM, current.yPosition, current, current.gCost + 10,
 									euclidianDistance(current.xPosition - EFFECTIVE_PIXEL_DIM, current.yPosition, this.gridMap.getBomberman().getPosition().getX(), this.gridMap.getBomberman().getPosition().getY()));
 
-							if (!(!notAlreadyIn(openList, next))) {
-								if (!(!notAlreadyIn(closedList, next))) {
+							if (notAlreadyIn(openList, next)) {
+								if (notAlreadyIn(closedList, next)) {
 									openList.add(next);
 									sortList(openList);
 								}
@@ -369,8 +369,8 @@ class ArtificialIntelligence {
 							Node next = new Node(current.xPosition + EFFECTIVE_PIXEL_DIM, current.yPosition, current, current.gCost + 10,
 									euclidianDistance(current.xPosition + EFFECTIVE_PIXEL_DIM, current.yPosition, this.gridMap.getBomberman().getPosition().getX(), this.gridMap.getBomberman().getPosition().getY()));
 
-							if (!(!notAlreadyIn(openList, next))) {
-								if (!(!notAlreadyIn(closedList, next))) {
+							if (notAlreadyIn(openList, next)) {
+								if (notAlreadyIn(closedList, next)) {
 									openList.add(next);
 									sortList(openList);
 								}

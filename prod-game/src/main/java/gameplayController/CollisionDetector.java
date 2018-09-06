@@ -91,7 +91,7 @@ public class CollisionDetector {
 		destroyedObjs.add(null);
 		destroyedObjs.add(null);
 
-		for (Brick brick : bricks) adjustRanges(bomb, brick, destroyedObjs);
+		for (var brick : bricks) adjustRanges(bomb, brick, destroyedObjs);
 
 		for (Bomb bombOnMap : bombs) {
 			if (!bombOnMap.isDead() && !(bombOnMap.getPosition().getX() == bomb.getPosition().getX() && bombOnMap.getPosition().getY() == bomb.getPosition().getY()))

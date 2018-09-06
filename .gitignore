@@ -4,10 +4,7 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
-.idea/**/workspace.xml
 .idea/**/tasks.xml
-.idea/dictionaries
-
 # Sensitive or high-churn files:
 .idea/**/dataSources/
 .idea/**/dataSources.ids
@@ -19,8 +16,6 @@
 
 # Gradle:
 .idea/**/gradle.xml
-.idea/**/libraries
-
 # Mongo Explorer plugin:
 .idea/**/mongoSettings.xml
 
@@ -31,6 +26,8 @@
 
 # IntelliJ
 /out/
+*.iml
+.idea/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
