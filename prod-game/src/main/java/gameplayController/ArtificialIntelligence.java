@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Random;
 
 class ArtificialIntelligence {
-
 	private final List<Enemy> enemies;
 	private final List<Brick> bricks;
 	private final List<Bomb> bombs;
@@ -34,10 +33,10 @@ class ArtificialIntelligence {
 	}
 
 	void updateEnemiesPosition() {
-		for (Enemy enemy : enemies) {
+		for (var enemy : enemies) {
 			if (!enemy.isDead()) {
-				boolean isAlignedWithColumn = ((enemy.getPosition().getX() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0);
-				boolean isAlignedWithRow = ((enemy.getPosition().getY() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0);
+				final var isAlignedWithColumn = ((enemy.getPosition().getX() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0);
+				final var isAlignedWithRow = ((enemy.getPosition().getY() - EFFECTIVE_PIXEL_DIMENSION) % (EFFECTIVE_PIXEL_DIMENSION * 2) == 0);
 
 				if (isAlignedWithColumn && (!(isAlignedWithRow))) {
 					if (enemy.getDirection() > 1)
@@ -55,9 +54,9 @@ class ArtificialIntelligence {
 						collisionCount = 0;
 
 						if (!enemy.isWallpass()) {
-							for (Brick brick : bricks)
+							for (var brick : bricks)
 								randomChangeCheck(enemy, brick);
-							for (Bomb bomb : bombs)
+							for (var bomb : bombs)
 								randomChangeCheck(enemy, bomb);
 						}
 
@@ -77,10 +76,10 @@ class ArtificialIntelligence {
 
 				if (!(enemy.isWallpass())) {
 					// Now we check if any bricks or bombs are colliding with the enemy due to its initial movement
-					for (Brick brick : bricks)
+					for (var brick : bricks)
 						AICollisionCheck(enemy, brick);
 
-					for (Bomb bomb : bombs)
+					for (var bomb : bombs)
 						AICollisionCheck(enemy, bomb);
 				}
 
@@ -157,7 +156,7 @@ class ArtificialIntelligence {
 
 		if (enemy.getSmartness() == 3) chance = 4;
 
-		Random rn = new Random();
+		final var rn = new Random();
 		int random = rn.nextInt(10);
 
 		if (random > chance) {

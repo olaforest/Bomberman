@@ -11,10 +11,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="aggregator" target="10" />
-      <module name="parent" target="10" />
-      <module name="prod-game" target="10" />
-      <module name="prod-game-dtos" target="10" />
+      <module name="aggregator" target="1.10" />
+      <module name="parent" target="1.10" />
+      <module name="prod-game" target="1.10" />
+      <module name="prod-game-dtos" target="1.10" />
     </bytecodeTargetLevel>
   </component>
 </project>
