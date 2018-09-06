@@ -1,5 +1,14 @@
 package gameplayController;
 
+import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
+import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
+import static gameplayView.AnimationType.*;
+import static gameplayView.GameStatusPanel.HEADERHEIGHT;
+import static gameplayView.GameplayPanel.HEIGHT;
+import static gameplayView.GameplayPanel.WIDTH;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+import static utilities.Position.create;
+
 import gameplayModel.GameContext;
 import gameplayModel.GridObject;
 import gameplayModel.LevelManager;
@@ -21,15 +30,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pontan;
-import static gameplayModel.gridObjects.animatedObjects.EnemyType.values;
-import static gameplayView.AnimationType.*;
-import static gameplayView.GameStatusPanel.HEADERHEIGHT;
-import static gameplayView.GameplayPanel.HEIGHT;
-import static gameplayView.GameplayPanel.WIDTH;
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
-import static utilities.Position.create;
 
 public class GameplayController implements ActionListener {
 
@@ -264,7 +264,6 @@ public class GameplayController implements ActionListener {
 						break;
 				}
 			}
-
 		} else if (bomberman.isObsolete()) {
 
 			timer.stop();
