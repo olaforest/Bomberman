@@ -1,15 +1,17 @@
 package gameplayModel;
 
+import static gameplayModel.LevelManager.importLevels;
+import static java.util.Arrays.asList;
+
 import gameplayController.GameplayController;
 import gameplayModel.gridObjects.animatedObjects.EnemyType;
 import lombok.Getter;
 import lombok.Setter;
 import utilities.Position;
 
-import java.util.*;
-
-import static gameplayModel.LevelManager.importLevels;
-import static java.util.Arrays.asList;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class GameContext {

@@ -1,5 +1,8 @@
 package gameplayModel.gridObjects;
 
+import static gameplayView.ImageManager.importScaledImage;
+import static utilities.Position.create;
+
 import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import lombok.Getter;
 import utilities.Position;
@@ -8,9 +11,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-
-import static gameplayView.ImageManager.importScaledImage;
-import static utilities.Position.create;
 
 @Getter
 public class PowerUp extends FixedObject implements HiddenObject {

@@ -1,14 +1,17 @@
 package gameplayController;
 
+import static gameplayModel.GridObject.MISALIGNMENT_ALLOWED;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+
 import gameplayModel.GridObject;
 import gameplayModel.gridObjects.AnimatedObject;
-import gameplayModel.gridObjects.animatedObjects.*;
+import gameplayModel.gridObjects.animatedObjects.Bomb;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Brick;
+import gameplayModel.gridObjects.animatedObjects.Enemy;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static gameplayModel.GridObject.MISALIGNMENT_ALLOWED;
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 
 public class CollisionDetector {
 

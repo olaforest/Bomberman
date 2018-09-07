@@ -1,16 +1,16 @@
 package gameplayModel;
 
+import static gameplayModel.GridMap.*;
+import static gameplayModel.LevelManager.importLevels;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import gameplayModel.gridObjects.Concrete;
 import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import org.testng.annotations.Test;
 
 import java.util.List;
 import java.util.function.Function;
-
-import static gameplayModel.GridMap.*;
-import static gameplayModel.LevelManager.importLevels;
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class GridMapTest {
 
@@ -31,8 +31,8 @@ public class GridMapTest {
 		final List<Concrete> concreteLayout = CONCRETE_LAYOUT;
 		//then
 		assertThat(concreteLayout).hasSize(154);
-		assertThat(getCount(concreteLayout, GridObject::getX, 30)).isEqualTo(MAPHEIGHT * 2);
-		assertThat(getCount(concreteLayout, GridObject::getY, 12)).isEqualTo(MAPWIDTH * 2);
+		assertThat(getCount(concreteLayout, GridObject::getX, 30)).isEqualTo(MAP_HEIGHT * 2);
+		assertThat(getCount(concreteLayout, GridObject::getY, 12)).isEqualTo(MAP_WIDTH * 2);
 	}
 
 	private static long getCount(List<Concrete> concreteLayout, Function<Concrete, Integer> mapper, int posLimit) {

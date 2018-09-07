@@ -1,16 +1,19 @@
 package gameplayController;
 
+import static gameplayController.CollisionDetector.*;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+import static java.lang.Math.abs;
+
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
-import gameplayModel.gridObjects.animatedObjects.*;
+import gameplayModel.gridObjects.animatedObjects.Bomb;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Brick;
+import gameplayModel.gridObjects.animatedObjects.Enemy;
 import utilities.Node;
 
 import java.util.LinkedList;
 import java.util.Random;
-
-import static gameplayController.CollisionDetector.*;
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
-import static java.lang.Math.abs;
 
 class ArtificialIntelligence {
 	private final GridMap gridMap;

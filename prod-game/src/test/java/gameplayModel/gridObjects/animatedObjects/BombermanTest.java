@@ -1,13 +1,13 @@
 package gameplayModel.gridObjects.animatedObjects;
 
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+import static org.junit.Assert.*;
+import static utilities.Position.create;
+
 import gameplayController.GameplayController;
 import gameplayModel.GridMap;
 import org.junit.Before;
 import org.junit.Test;
-
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
-import static org.junit.Assert.*;
-import static utilities.Position.create;
 
 public class BombermanTest {
 
@@ -26,7 +26,7 @@ public class BombermanTest {
 		assertEquals(EFFECTIVE_PIXEL_DIM, bomberman.getPosition().getX());
 
 		//Tests if the inputted x position is out of bounds on the Right.
-		bomberman.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIM);
+		bomberman.setXPosition(GridMap.MAP_WIDTH * EFFECTIVE_PIXEL_DIM);
 		assertEquals(EFFECTIVE_PIXEL_DIM, bomberman.getPosition().getX());
 
 		//Tests if the inputted x position is valid.
@@ -70,7 +70,7 @@ public class BombermanTest {
 		assertEquals(EFFECTIVE_PIXEL_DIM, bomberman.getPosition().getY());
 
 		//Tests if the inputted y position is out of bounds on the bottom.
-		bomberman.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIM);
+		bomberman.setYPosition(GridMap.MAP_WIDTH * EFFECTIVE_PIXEL_DIM);
 		assertEquals(EFFECTIVE_PIXEL_DIM, bomberman.getPosition().getY());
 
 		//Tests if the inputted y position is valid.

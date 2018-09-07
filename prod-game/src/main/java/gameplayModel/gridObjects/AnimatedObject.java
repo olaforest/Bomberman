@@ -1,5 +1,8 @@
 package gameplayModel.gridObjects;
 
+import static gameplayView.AnimationType.Death;
+import static java.util.stream.Collectors.toMap;
+
 import gameplayModel.GridObject;
 import gameplayView.AnimParam;
 import gameplayView.Animation;
@@ -10,9 +13,6 @@ import utilities.Position;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
-
-import static gameplayView.AnimationType.Death;
-import static java.util.stream.Collectors.toMap;
 
 public abstract class AnimatedObject extends GridObject {
 	private final Map<AnimationType, Animation> animations;

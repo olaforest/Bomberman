@@ -1,5 +1,9 @@
 package gameplayModel.gridObjects.animatedObjects;
 
+import static gameplayModel.gridObjects.animatedObjects.Enemy.ANIMATION_TYPES;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+
 import gameplayView.AnimParam;
 import gameplayView.AnimationType;
 import lombok.Getter;
@@ -10,10 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import static gameplayModel.gridObjects.animatedObjects.Enemy.ANIMATION_TYPES;
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
 
 @Getter
 @RequiredArgsConstructor

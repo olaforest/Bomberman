@@ -1,13 +1,13 @@
 package gameplayModel.gridObjects;
 
+import static java.util.Arrays.asList;
+
 import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.function.Consumer;
-
-import static java.util.Arrays.asList;
 
 @Getter
 @RequiredArgsConstructor

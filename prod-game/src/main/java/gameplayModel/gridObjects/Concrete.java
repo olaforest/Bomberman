@@ -1,11 +1,11 @@
 package gameplayModel.gridObjects;
 
+import static gameplayView.ImageManager.importScaledImage;
+
 import lombok.Getter;
 import utilities.Position;
 
 import java.awt.image.BufferedImage;
-
-import static gameplayView.ImageManager.importScaledImage;
 
 public class Concrete extends FixedObject {
 	@Getter

@@ -1,5 +1,11 @@
 package gameplayModel;
 
+import static gameplayModel.gridObjects.PowerUpType.values;
+import static java.lang.Integer.MAX_VALUE;
+import static java.util.Optional.ofNullable;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
+
 import gameplayModel.gridObjects.PowerUpType;
 import gameplayModel.gridObjects.animatedObjects.EnemyType;
 import lombok.EqualsAndHashCode;
@@ -11,14 +17,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import static gameplayModel.gridObjects.PowerUpType.values;
-import static java.lang.Integer.MAX_VALUE;
-import static java.util.Optional.ofNullable;
-import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.toMap;
-
 @EqualsAndHashCode
-public class Level {
+class Level {
 	private static final Predicate<List<Integer>> IS_BONUS_LEVEL = spec -> spec.contains(MAX_VALUE);
 
 	@Getter private final Map<EnemyType, Integer> enemiesCount;

@@ -1,5 +1,11 @@
 package gameplayModel.gridObjects.animatedObjects;
 
+import static gameplayController.GameplayController.TIMEOUT;
+import static gameplayView.AnimationType.*;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+
 import gameplayModel.GridMap;
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayModel.gridObjects.PowerUp;
@@ -13,12 +19,6 @@ import utilities.Position;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
-
-import static gameplayController.GameplayController.TIMEOUT;
-import static gameplayView.AnimationType.*;
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
 
 @Getter
 public class Bomberman extends AnimatedObject {
@@ -40,7 +40,7 @@ public class Bomberman extends AnimatedObject {
 	private int invincibilityTimer;
 
 	@Accessors(fluent = true)
-	private boolean canWallpass, canDetonateBombs, canBombpass, canFlamepass, isInvincible;
+	private boolean canWallPass, canDetonateBombs, canBombPass, canFlamePass, isInvincible;
 
 	public Bomberman(Position position) {
 		super(position, animParams);
@@ -76,7 +76,7 @@ public class Bomberman extends AnimatedObject {
 	public void setXPosition(int xPos) {
 		int yError = (position.getY() - EFFECTIVE_PIXEL_DIM) % (EFFECTIVE_PIXEL_DIM * 2);
 
-		boolean isInXRange = (xPos >= EFFECTIVE_PIXEL_DIM) && (xPos <= EFFECTIVE_PIXEL_DIM * (GridMap.MAPWIDTH - 2));
+		boolean isInXRange = xPos >= EFFECTIVE_PIXEL_DIM && xPos <= EFFECTIVE_PIXEL_DIM * (GridMap.MAP_WIDTH - 2);
 		boolean isAlignedWithRow = yError == 0;
 		boolean isBelowRow = yError <= MISALIGNMENT_ALLOWED;
 		boolean isAboveRow = yError >= (EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED);
@@ -101,7 +101,7 @@ public class Bomberman extends AnimatedObject {
 	public void setYPosition(int yPos) {
 		int xError = (position.getX() - EFFECTIVE_PIXEL_DIM) % (EFFECTIVE_PIXEL_DIM * 2);
 
-		boolean isInYRange = (yPos >= EFFECTIVE_PIXEL_DIM) && (yPos <= EFFECTIVE_PIXEL_DIM * (GridMap.MAPHEIGHT - 2));
+		boolean isInYRange = (yPos >= EFFECTIVE_PIXEL_DIM) && (yPos <= EFFECTIVE_PIXEL_DIM * (GridMap.MAP_HEIGHT - 2));
 		boolean isAlignedWithColumn = xError == 0;
 		boolean isRightFromColumn = xError <= MISALIGNMENT_ALLOWED;
 		boolean isLeftFromColumn = xError >= (EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED);
@@ -137,10 +137,10 @@ public class Bomberman extends AnimatedObject {
 		bombsAvailable = 1;
 		Bomb.resetRange();
 		speed = INITIAL_SPEED;
-		canWallpass = false;
+		canWallPass = false;
 		canDetonateBombs = false;
-		canBombpass = false;
-		canFlamepass = false;
+		canBombPass = false;
+		canFlamePass = false;
 		isInvincible = false;
 	}
 
@@ -159,13 +159,11 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void increaseBombsLeft() {
-		if (bombsLeft < bombsAvailable)
-			bombsLeft++;
+		if (bombsLeft < bombsAvailable) bombsLeft++;
 	}
 
 	public void decreaseBombsLeft() {
-		if (bombsLeft > 0)
-			bombsLeft--;
+		if (bombsLeft > 0) bombsLeft--;
 	}
 
 	public void increaseBombAvailable() {
@@ -182,7 +180,7 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void activateCanWallPass() {
-		canWallpass = true;
+		canWallPass = true;
 	}
 
 	public void activateCanDetonateBomb() {
@@ -190,11 +188,11 @@ public class Bomberman extends AnimatedObject {
 	}
 
 	public void activateCanBombPass() {
-		canBombpass = true;
+		canBombPass = true;
 	}
 
 	public void activateCanFlamePass() {
-		canFlamepass = true;
+		canFlamePass = true;
 	}
 
 	public void activateInvincibility() {

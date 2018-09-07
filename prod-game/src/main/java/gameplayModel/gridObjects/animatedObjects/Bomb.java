@@ -1,5 +1,11 @@
 package gameplayModel.gridObjects.animatedObjects;
 
+import static gameplayModel.GridMap.MAP_HEIGHT;
+import static gameplayModel.GridMap.MAP_WIDTH;
+import static gameplayView.AnimationType.*;
+import static java.util.Arrays.asList;
+import static java.util.function.IntUnaryOperator.identity;
+
 import gameplayController.GameplayController;
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayView.AnimParam;
@@ -19,12 +25,6 @@ import java.util.function.IntConsumer;
 import java.util.function.IntPredicate;
 import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
-
-import static gameplayModel.GridMap.MAPHEIGHT;
-import static gameplayModel.GridMap.MAPWIDTH;
-import static gameplayView.AnimationType.*;
-import static java.util.Arrays.asList;
-import static java.util.function.IntUnaryOperator.identity;
 
 @Getter
 public class Bomb extends AnimatedObject {
@@ -137,7 +137,7 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private void processRange(int size, IntConsumer addEndAnim, IntConsumer addIntermediateAnim,
-							  IntUnaryOperator direction) {
+														IntUnaryOperator direction) {
 		if (size > 0) {
 			if (isRangeChanged.test(size))
 				addChangedRangeAnim(size, addIntermediateAnim, direction);
@@ -197,14 +197,14 @@ public class Bomb extends AnimatedObject {
 
 	private void setHorizontalRanges() {
 		if (maxRangePosition(position.getX(), rightRange) >= MAX_X_POSITION)
-			rightRange = adjustedMaxRangePosition(position.getX(), MAPWIDTH);
+			rightRange = adjustedMaxRangePosition(position.getX(), MAP_WIDTH);
 		if (minRangePosition(position.getX(), leftRange) <= MIN_X_POSITION)
 			leftRange = adjustedMinRangePosition(position.getX());
 	}
 
 	private void setVerticalRanges() {
 		if (maxRangePosition(position.getY(), downRange) >= MAX_Y_POSITION)
-			downRange = adjustedMaxRangePosition(position.getY(), MAPHEIGHT);
+			downRange = adjustedMaxRangePosition(position.getY(), MAP_HEIGHT);
 		if (minRangePosition(position.getY(), upRange) <= MIN_Y_POSITION)
 			upRange = adjustedMinRangePosition(position.getY());
 	}

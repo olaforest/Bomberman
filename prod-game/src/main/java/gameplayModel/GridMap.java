@@ -1,19 +1,5 @@
 package gameplayModel;
 
-import gameplayController.CollisionDetector;
-import gameplayModel.gridObjects.*;
-import gameplayModel.gridObjects.animatedObjects.*;
-import gameplayView.AnimationType;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import utilities.Position;
-
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.function.BiPredicate;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 import static gameplayController.CollisionDetector.*;
 import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayModel.gridObjects.HiddenObject.generateIndex;
@@ -30,11 +16,25 @@ import static java.util.stream.Collectors.toList;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
 
+import gameplayController.CollisionDetector;
+import gameplayModel.gridObjects.*;
+import gameplayModel.gridObjects.animatedObjects.*;
+import gameplayView.AnimationType;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import utilities.Position;
+
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.function.BiPredicate;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 @Getter
 @RequiredArgsConstructor
 public class GridMap {
-	public static final int MAPWIDTH = 31;
-	public static final int MAPHEIGHT = 13;
+	public static final int MAP_WIDTH = 31;
+	public static final int MAP_HEIGHT = 13;
 	public static final List<Concrete> CONCRETE_LAYOUT = generateConcreteBlocks();
 	private static final double BRICK_FACTOR = 0.225;
 	private static final BiPredicate<Integer, Integer> CONCRETE_POS = (x, y) -> x % 2 == 0 && y % 2 == 0;
@@ -92,7 +92,7 @@ public class GridMap {
 
 	private Boolean canMove(BiPredicate<GridObject, GridObject> collisionCheck) {
 		return bombs.stream()
-				.filter(bomb -> collisionCheck.test(bomberman, bomb) && !bomberman.canBombpass())
+				.filter(bomb -> collisionCheck.test(bomberman, bomb) && !bomberman.canBombPass())
 				.findFirst()
 				.map(bomb -> false)
 				.orElse(true);
@@ -199,7 +199,7 @@ public class GridMap {
 					pointsMultiplier--;
 				}
 
-				if (checkExplGridObject(bomb, bomberman) && !bomberman.canFlamepass() && !bomberman.isInvincible() && !isBonusLevel && !bomberman.isDead())
+				if (checkExplGridObject(bomb, bomberman) && !bomberman.canFlamePass() && !bomberman.isInvincible() && !isBonusLevel && !bomberman.isDead())
 					bomberman.triggerDeath();
 
 				if (exitway != null && checkExplGridObject(bomb, exitway)) {
@@ -214,7 +214,7 @@ public class GridMap {
 	}
 
 	void checkCollisionBtwBombermanAndBricks() {
-		if (!bomberman.canWallpass()) {
+		if (!bomberman.canWallPass()) {
 			for (Brick brick : bricks) {
 				if (checkRightCollision(bomberman, brick))
 					bomberman.setXPosition(brick.getPosition().getX() - EFFECTIVE_PIXEL_DIM);
@@ -308,14 +308,14 @@ public class GridMap {
 	}
 
 	private static List<Brick> generateBricks() {
-		return IntStream.range(1, MAPHEIGHT - 1)
+		return IntStream.range(1, MAP_HEIGHT - 1)
 				.mapToObj(GridMap::generateBricksInRow)
 				.flatMap(List::stream)
 				.collect(toList());
 	}
 
 	private static List<Brick> generateBricksInRow(int rowNumber) {
-		return IntStream.range(1, MAPWIDTH - 1)
+		return IntStream.range(1, MAP_WIDTH - 1)
 				.filter(x -> BRICK_POS.test(x, rowNumber))
 				.filter(x -> random() < BRICK_FACTOR)
 				.mapToObj(x -> new Brick(modulus(x, rowNumber)))
@@ -380,22 +380,22 @@ public class GridMap {
 	}
 
 	private static List<Concrete> generateHoriConcreteBoundary() {
-		return IntStream.range(0, MAPWIDTH)
-				.mapToObj(i -> asList(new Concrete(modulus(i, 0)), new Concrete(modulus(i, (MAPHEIGHT - 1)))))
+		return IntStream.range(0, MAP_WIDTH)
+				.mapToObj(i -> asList(new Concrete(modulus(i, 0)), new Concrete(modulus(i, (MAP_HEIGHT - 1)))))
 				.flatMap(Collection::stream)
 				.collect(toList());
 	}
 
 	private static List<Concrete> generateVertConcreteBoundary() {
-		return IntStream.range(1, MAPHEIGHT - 1)
-				.mapToObj(i -> asList(new Concrete(modulus(0, i)), new Concrete(modulus((MAPWIDTH - 1), i))))
+		return IntStream.range(1, MAP_HEIGHT - 1)
+				.mapToObj(i -> asList(new Concrete(modulus(0, i)), new Concrete(modulus((MAP_WIDTH - 1), i))))
 				.flatMap(Collection::stream)
 				.collect(toList());
 	}
 
 	private static List<Concrete> generateInnerConcreteBlocks() {
 		return IntStream.iterate(2, i -> i + 2)
-				.limit((MAPWIDTH - 2) / 2)
+				.limit((MAP_WIDTH - 2) / 2)
 				.mapToObj(GridMap::addInnerConcreteBlockRow)
 				.flatMap(Collection::stream)
 				.collect(toList());
@@ -403,7 +403,7 @@ public class GridMap {
 
 	private static List<Concrete> addInnerConcreteBlockRow(int xModulusPosition) {
 		return IntStream.iterate(2, i -> i + 2)
-				.limit((MAPHEIGHT - 2) / 2)
+				.limit((MAP_HEIGHT - 2) / 2)
 				.mapToObj(i -> new Concrete(modulus(xModulusPosition, i)))
 				.collect(toList());
 	}

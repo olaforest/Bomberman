@@ -1,9 +1,18 @@
 package gameplayController;
 
-import gameplayModel.*;
+import static gameplayView.GameStatusPanel.HEADERHEIGHT;
+import static gameplayView.GameplayPanel.HEIGHT;
+import static gameplayView.GameplayPanel.WIDTH;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+
+import gameplayModel.GameContext;
+import gameplayModel.GridMap;
+import gameplayModel.LevelManager;
 import gameplayModel.gridObjects.Concrete;
 import gameplayModel.gridObjects.Exitway;
-import gameplayModel.gridObjects.animatedObjects.*;
+import gameplayModel.gridObjects.animatedObjects.Bomb;
+import gameplayModel.gridObjects.animatedObjects.Brick;
+import gameplayModel.gridObjects.animatedObjects.Enemy;
 import gameplayView.GameStatusPanel;
 import gameplayView.GameplayPanel;
 import lombok.Getter;
@@ -11,13 +20,11 @@ import utilities.Position;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayDeque;
-
-import static gameplayView.GameStatusPanel.HEADERHEIGHT;
-import static gameplayView.GameplayPanel.HEIGHT;
-import static gameplayView.GameplayPanel.WIDTH;
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 
 public class GameplayController implements ActionListener {
 	public static final int TIMEOUT = 50;

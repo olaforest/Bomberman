@@ -1,11 +1,11 @@
 package gameplayModel;
 
+import static gameplayModel.GridMap.MAP_HEIGHT;
+import static gameplayModel.GridMap.MAP_WIDTH;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+
 import lombok.Getter;
 import utilities.Position;
-
-import static gameplayModel.GridMap.MAPHEIGHT;
-import static gameplayModel.GridMap.MAPWIDTH;
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 
 @Getter
 public class GridObject {
@@ -13,8 +13,8 @@ public class GridObject {
 	public static final int ADJUSTMENT = 4;
 	protected static final int MIN_Y_POSITION = EFFECTIVE_PIXEL_DIM;
 	protected static final int MIN_X_POSITION = EFFECTIVE_PIXEL_DIM;
-	protected static final int MAX_X_POSITION = EFFECTIVE_PIXEL_DIM * (MAPWIDTH - 2);
-	protected static final int MAX_Y_POSITION = EFFECTIVE_PIXEL_DIM * (MAPHEIGHT - 2);
+	protected static final int MAX_X_POSITION = EFFECTIVE_PIXEL_DIM * (MAP_WIDTH - 2);
+	protected static final int MAX_Y_POSITION = EFFECTIVE_PIXEL_DIM * (MAP_HEIGHT - 2);
 
 	protected final Position position;
 	protected boolean isConcreteCollision;
@@ -36,7 +36,7 @@ public class GridObject {
 		isConcreteCollision = false;
 		final int yError = (position.getY() - EFFECTIVE_PIXEL_DIM) % (EFFECTIVE_PIXEL_DIM * 2);
 
-		boolean isInXRange = (xPos >= EFFECTIVE_PIXEL_DIM) && (xPos <= EFFECTIVE_PIXEL_DIM * (MAPWIDTH - 2));
+		boolean isInXRange = (xPos >= EFFECTIVE_PIXEL_DIM) && (xPos <= EFFECTIVE_PIXEL_DIM * (MAP_WIDTH - 2));
 		boolean isAlignedWithRow = yError == 0;
 		boolean isBelowRow = yError <= MISALIGNMENT_ALLOWED;
 		boolean isAboveRow = yError >= (EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED);
@@ -57,7 +57,7 @@ public class GridObject {
 		isConcreteCollision = false;
 		final int xError = (position.getX() - EFFECTIVE_PIXEL_DIM) % (EFFECTIVE_PIXEL_DIM * 2);
 
-		boolean isInYRange = (yPos >= EFFECTIVE_PIXEL_DIM) && (yPos <= EFFECTIVE_PIXEL_DIM * (GridMap.MAPHEIGHT - 2));
+		boolean isInYRange = (yPos >= EFFECTIVE_PIXEL_DIM) && (yPos <= EFFECTIVE_PIXEL_DIM * (GridMap.MAP_HEIGHT - 2));
 		boolean isAlignedWithColumn = ((xError) == 0);
 		boolean isRightFromColumn = (xError) <= MISALIGNMENT_ALLOWED;
 		boolean isLeftFromColumn = (xError) >= (EFFECTIVE_PIXEL_DIM * 2 - MISALIGNMENT_ALLOWED);
