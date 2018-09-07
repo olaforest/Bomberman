@@ -1,6 +1,5 @@
 package gameplayView;
 
-import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import lombok.experimental.UtilityClass;
 
 import java.awt.*;
@@ -21,7 +20,7 @@ import static javax.imageio.ImageIO.read;
 public class ImageManager {
 	static final int ZOOM = 2;
 	static final int PIXEL_DIMENSION = 16;
-	public static final int EFFECTIVE_PIXEL_DIMENSION = PIXEL_DIMENSION * ZOOM;
+	public static final int EFFECTIVE_PIXEL_DIM = PIXEL_DIMENSION * ZOOM;
 	private static final BufferedImage sprite = loadSpriteSheet()
 			.orElseThrow(() -> new RuntimeException("Could not load sprite sheet"));
 
@@ -52,7 +51,7 @@ public class ImageManager {
 
 	private static Optional<BufferedImage> loadSpriteSheet() {
 		try {
-			final InputStream in = Bomberman.class.getResourceAsStream("/spritesheet.png");
+			final InputStream in = ImageManager.class.getResourceAsStream("/spritesheet.png");
 			return of(read(in));
 		} catch (IOException e) {
 			e.printStackTrace();

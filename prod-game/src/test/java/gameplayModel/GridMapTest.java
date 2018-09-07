@@ -9,7 +9,7 @@ import java.util.function.Function;
 
 import static gameplayModel.GridMap.*;
 import static gameplayModel.LevelManager.importLevels;
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GridMapTest {
@@ -21,8 +21,8 @@ public class GridMapTest {
 		//when
 		final Bomberman bomberman = new GridMap(level).getBomberman();
 		//then
-		assertThat(bomberman.getX()).isEqualTo(EFFECTIVE_PIXEL_DIMENSION);
-		assertThat(bomberman.getY()).isEqualTo(EFFECTIVE_PIXEL_DIMENSION);
+		assertThat(bomberman.getX()).isEqualTo(EFFECTIVE_PIXEL_DIM);
+		assertThat(bomberman.getY()).isEqualTo(EFFECTIVE_PIXEL_DIM);
 	}
 
 	@Test
@@ -38,7 +38,7 @@ public class GridMapTest {
 	private static long getCount(List<Concrete> concreteLayout, Function<Concrete, Integer> mapper, int posLimit) {
 		return concreteLayout.stream()
 				.map(mapper)
-				.filter(position -> position == 0 || position == posLimit * EFFECTIVE_PIXEL_DIMENSION)
+				.filter(position -> position == 0 || position == posLimit * EFFECTIVE_PIXEL_DIM)
 				.count();
 	}
 }

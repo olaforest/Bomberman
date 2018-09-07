@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIMENSION;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 
 @Getter
 @Setter
@@ -31,11 +31,11 @@ public class Position {
 	}
 
 	public int getModX() {
-		return x / EFFECTIVE_PIXEL_DIMENSION;
+		return x / EFFECTIVE_PIXEL_DIM;
 	}
 
 	public int getModY() {
-		return y / EFFECTIVE_PIXEL_DIMENSION;
+		return y / EFFECTIVE_PIXEL_DIM;
 	}
 
 	public static Position create(int x, int y) {
@@ -47,7 +47,7 @@ public class Position {
 	}
 
 	public static Position modulus(int x, int y) {
-		return new Position(x * EFFECTIVE_PIXEL_DIMENSION, y * EFFECTIVE_PIXEL_DIMENSION);
+		return new Position(x * EFFECTIVE_PIXEL_DIM, y * EFFECTIVE_PIXEL_DIM);
 	}
 
 	public boolean isSame(Position position) {

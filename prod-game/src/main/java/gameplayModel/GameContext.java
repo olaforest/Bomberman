@@ -1,11 +1,12 @@
 package gameplayModel;
 
 import gameplayController.GameplayController;
+import gameplayModel.gridObjects.animatedObjects.EnemyType;
 import lombok.Getter;
 import lombok.Setter;
+import utilities.Position;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static gameplayModel.LevelManager.importLevels;
 import static java.util.Arrays.asList;
@@ -34,6 +35,62 @@ public class GameContext {
 		this.score = score;
 		endGameEnemiesSpawned = false;
 		this.gridMap = gridMap;
+	}
+
+	public void updateBombermanStatus(ArrayDeque<Integer> activeDirectionKeys) {
+		gridMap.updateBombermanStatus(activeDirectionKeys);
+	}
+
+	public void updateEnemiesAnim() {
+		gridMap.updateEnemiesAnim();
+	}
+
+	public void updateBombsStatus() {
+		gridMap.updateBombsStatus();
+	}
+
+	public void updateBricksStatus() {
+		gridMap.updateBricksStatus();
+	}
+
+	public void destroyObjectInExplodedBombsRange(boolean isBonusLevel, EnemyType hardestEnemyType) {
+		gridMap.destroyObjectInExplodedBombsRange(isBonusLevel, hardestEnemyType);
+	}
+
+	public void checkCollisionBtwBombermanAndBricks() {
+		gridMap.checkCollisionBtwBombermanAndBricks();
+	}
+
+	public void checkCollisionBtwBombermanAndEnemies() {
+		gridMap.checkCollisionBtwBombermanAndEnemies();
+	}
+
+	public boolean checkCollisionBtwBombermanAndExitway() {
+		return gridMap.checkCollisionBtwBombermanAndExitway();
+	}
+
+	public void checkCollisionBtwBombermanAndPowerUp() {
+		gridMap.checkCollisionBtwBombermanAndPowerUp();
+	}
+
+	public void addBomb() {
+		gridMap.addBomb();
+	}
+
+	public Position getViewPortPosition() {
+		return gridMap.getViewPortPosition();
+	}
+
+	public void detonateBomb() {
+		gridMap.detonateBomb();
+	}
+
+	public boolean isGameOver() {
+		return gridMap.isGameOver();
+	}
+
+	public void removePowerUps() {
+		gridMap.removePowerUps();
 	}
 
 	public void restartMap() {
