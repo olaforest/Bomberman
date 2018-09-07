@@ -1,11 +1,5 @@
 package gameplayModel;
 
-import gameplayModel.gridObjects.animatedObjects.EnemyType;
-import org.testng.annotations.Test;
-
-import java.util.List;
-import java.util.Map;
-
 import static gameplayModel.gridObjects.PowerUpType.Bomb;
 import static gameplayModel.gridObjects.PowerUpType.Speed;
 import static gameplayModel.gridObjects.animatedObjects.EnemyType.Pass;
@@ -15,6 +9,12 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import gameplayModel.gridObjects.animatedObjects.EnemyType;
+import org.testng.annotations.Test;
+
+import java.util.List;
+import java.util.Map;
 
 public class LevelTest {
 
@@ -48,7 +48,7 @@ public class LevelTest {
 		assertThatThrownBy(() -> new Level(levelSpec))
 				//then
 				.isInstanceOf(NullPointerException.class)
-				.hasMessage("specification");
+				.hasMessageContaining("specification");
 	}
 
 	@Test
