@@ -183,7 +183,7 @@ public class GridMap {
 									.forEach(bomb1 -> bomb1.setTimer(TIMEOUT * 2));
 						});
 
-				ArrayList<Enemy> destEnemies = checkExplEnemies(enemies, bomb);
+				final List<Enemy> destEnemies = checkExplEnemies(enemies, bomb);
 
 				int pointsMultiplier = destEnemies.size();
 

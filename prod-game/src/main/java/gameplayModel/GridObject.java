@@ -3,6 +3,7 @@ package gameplayModel;
 import static gameplayModel.GridMap.MAP_HEIGHT;
 import static gameplayModel.GridMap.MAP_WIDTH;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+import static java.lang.Math.abs;
 
 import lombok.Getter;
 import utilities.Position;
@@ -80,5 +81,13 @@ public class GridObject {
 
 	public boolean isSamePosition(Position position) {
 		return this.position.isSame(position);
+	}
+
+	public boolean isInSameColumnAs(GridObject other) {
+		return abs(getX() - other.getX()) < EFFECTIVE_PIXEL_DIM;
+	}
+
+	public boolean isInSameRowAs(GridObject other) {
+		return abs(getY() - other.getY()) < EFFECTIVE_PIXEL_DIM;
 	}
 }
