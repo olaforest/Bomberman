@@ -108,7 +108,7 @@ public class BombermanTest {
 
 	@Test
 	public void testGetPowerUpsAcquired() {
-		assertTrue(bomberman.getPowerUpsAcquired().getClass().toString().equals("class java.util.ArrayList"));
+		assertEquals("class java.util.ArrayList", bomberman.getPowerUpsAcquired().getClass().toString());
 	}
 
 	@Test
@@ -129,7 +129,7 @@ public class BombermanTest {
 
 		// The invincibilityTimer should be Up, therefore, bomberman should not be invincible and should not have any power ups..
 		assertFalse(bomberman.isInvincible());
-		assertTrue(bomberman.getPowerUpsAcquired().size() == 0);
+		assertEquals(0, bomberman.getPowerUpsAcquired().size());
 
 		bomberman.getPowerUpsAcquired().clear();
 	}
@@ -137,11 +137,11 @@ public class BombermanTest {
 	@Test
 	public void testCanWallpass() {
 
-		assertFalse(bomberman.canWallpass());
+		assertFalse(bomberman.canWallPass());
 
 		bomberman.getPowerUpsAcquired().clear();
 
-		assertTrue(bomberman.canWallpass());
+		assertTrue(bomberman.canWallPass());
 		bomberman.getPowerUpsAcquired().clear();
 	}
 
@@ -157,24 +157,24 @@ public class BombermanTest {
 	}
 
 	@Test
-	public void testCanBombpass() {
+	public void testCanBombPass() {
 
-		assertFalse(bomberman.canBombpass());
+		assertFalse(bomberman.canBombPass());
 
 		bomberman.getPowerUpsAcquired().clear();
 
-		assertTrue(bomberman.canBombpass());
+		assertTrue(bomberman.canBombPass());
 		bomberman.getPowerUpsAcquired().clear();
 	}
 
 	@Test
-	public void testCanFlamepass() {
+	public void testCanFlamePass() {
 
-		assertFalse(bomberman.canFlamepass());
+		assertFalse(bomberman.canFlamePass());
 
 		bomberman.getPowerUpsAcquired().clear();
 
-		assertTrue(bomberman.canFlamepass());
+		assertTrue(bomberman.canFlamePass());
 		bomberman.getPowerUpsAcquired().clear();
 	}
 
@@ -254,11 +254,11 @@ public class BombermanTest {
 	@Test
 	public void testToCSVEntry() {
 
-		assertTrue(bomberman.toCSVEntry().size() == (5 + 3 * bomberman.getPowerUpsAcquired().size()));
-		assertTrue(bomberman.toCSVEntry().get(0).equals(Integer.toString(bomberman.getPosition().getX())));
-		assertTrue(bomberman.toCSVEntry().get(1).equals(Integer.toString(bomberman.getPosition().getY())));
-		assertTrue(bomberman.toCSVEntry().get(3).equals(Integer.toString(bomberman.getBombsLeft())));
-		assertTrue(bomberman.toCSVEntry().get(4).equals("PowerUpAcquired"));
+		assertEquals(bomberman.toCSVEntry().size(), (5 + 3 * bomberman.getPowerUpsAcquired().size()));
+		assertEquals(bomberman.toCSVEntry().get(0), Integer.toString(bomberman.getPosition().getX()));
+		assertEquals(bomberman.toCSVEntry().get(1), Integer.toString(bomberman.getPosition().getY()));
+		assertEquals(bomberman.toCSVEntry().get(3), Integer.toString(bomberman.getBombsLeft()));
+		assertEquals("PowerUpAcquired", bomberman.toCSVEntry().get(4));
 	}
 
 	@Test

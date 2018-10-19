@@ -1,6 +1,5 @@
 package gameplayController;
 
-import static gameplayController.CollisionDetector.*;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 import static java.lang.Math.abs;
 
@@ -86,16 +85,16 @@ class ArtificialIntelligence {
 	private void AICollisionCheck(Enemy enemy, GridObject gridObject) {
 
 		if (enemy.getDirection() == 0) {
-			if (checkUpCollision(enemy, gridObject))
+			if (enemy.checkUpCollision(gridObject))
 				collision = true;
 		} else if (enemy.getDirection() == 1) {
-			if (checkDownCollision(enemy, gridObject))
+			if (enemy.checkDownCollision(gridObject))
 				collision = true;
 		} else if (enemy.getDirection() == 2) {
-			if (checkLeftCollision(enemy, gridObject))
+			if (enemy.checkLeftCollision(gridObject))
 				collision = true;
 		} else if (enemy.getDirection() == 3) {
-			if (checkRightCollision(enemy, gridObject))
+			if (enemy.checkRightCollision(gridObject))
 				collision = true;
 		}
 	}
@@ -353,7 +352,7 @@ class ArtificialIntelligence {
 							}
 						}
 					}
-				} else if (i == 3) {
+				} else {
 					if (current.xPosition >= EFFECTIVE_PIXEL_DIM * 13)
 						obstacle = true;
 

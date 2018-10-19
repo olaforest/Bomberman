@@ -17,34 +17,6 @@ import java.util.List;
 
 public class CollisionDetector {
 
-	public static boolean checkUpCollision(GridObject a, GridObject b) {
-		if (a != null && b != null)
-			if (abs(a.getX() - b.getX()) < MISALIGNMENT_ALLOWED)
-				return b.getY() + EFFECTIVE_PIXEL_DIM > a.getY() && b.getY() <= a.getY();
-		return false;
-	}
-
-	public static boolean checkDownCollision(GridObject a, GridObject b) {
-		if (a != null && b != null)
-			if (abs(a.getX() - b.getX()) < MISALIGNMENT_ALLOWED)
-				return a.getY() + EFFECTIVE_PIXEL_DIM > b.getY() && a.getY() <= b.getY();
-		return false;
-	}
-
-	public static boolean checkLeftCollision(GridObject a, GridObject b) {
-		if (a != null && b != null)
-			if (abs(a.getY() - b.getY()) < MISALIGNMENT_ALLOWED)
-				return b.getX() + EFFECTIVE_PIXEL_DIM > a.getX() && b.getX() <= a.getX();
-		return false;
-	}
-
-	public static boolean checkRightCollision(GridObject a, GridObject b) {
-		if (a != null && b != null)
-			if (abs(a.getY() - b.getY()) < MISALIGNMENT_ALLOWED)
-				return a.getX() + EFFECTIVE_PIXEL_DIM > b.getX() && a.getX() <= b.getX();
-		return false;
-	}
-
 	public static boolean checkExplGridObject(Bomb bomb, GridObject gridObj) {
 		if (abs(bomb.getY() - gridObj.getY()) < EFFECTIVE_PIXEL_DIM) {
 			boolean isInRightRange = bomb.getX() + (bomb.getRightRange() + 1) * EFFECTIVE_PIXEL_DIM >= gridObj.getX() + 6 && bomb.getX() < gridObj.getX();

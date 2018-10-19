@@ -1,97 +1,16 @@
 package gameplayController;
 
+import static gameplayController.CollisionDetector.checkExactCollision;
+import static org.junit.Assert.*;
+import static utilities.Position.create;
+import static utilities.Position.modulus;
+
 import gameplayModel.GridObject;
 import gameplayModel.gridObjects.animatedObjects.Bomb;
 import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import org.junit.Test;
 
-import static gameplayController.CollisionDetector.*;
-import static org.junit.Assert.*;
-import static utilities.Position.create;
-import static utilities.Position.modulus;
-
 public class CollisionDetectorTest {
-
-	@Test
-	public void testCheckUpCollision() {
-		GridObject a;
-		GridObject b;
-		assertFalse(checkUpCollision(null, null));
-
-		a = new GridObject(create(0, 100));
-		b = new GridObject(create(0, 150));
-		assertFalse(checkUpCollision(a, b));
-
-//		a.xPosition = 0;
-//		a.yPosition = 100;
-//		b.xPosition = 0;
-//		b.yPosition = 80;
-		assertTrue(checkUpCollision(a, b));
-
-//		a.xPosition = 0;
-//		a.yPosition = 100;
-//		b.xPosition = 0;
-//		b.yPosition = 60;
-		assertFalse(checkUpCollision(a, b));
-	}
-
-	@Test
-	public void testCheckDownCollision() {
-		GridObject a;
-		GridObject b;
-		assertFalse(checkDownCollision(null, null));
-
-		a = new GridObject(create(0, 100));
-		b = new GridObject(create(0, 150));
-		assertFalse(checkDownCollision(a, b));
-
-//		a.xPosition = 0;
-//		a.yPosition = 100;
-//		b.xPosition = 0;
-//		b.yPosition = 80;
-		assertFalse(checkDownCollision(a, b));
-
-//		a.xPosition = 0;
-//		a.yPosition = 100;
-//		b.xPosition = 0;
-//		b.yPosition = 120;
-		assertTrue(checkDownCollision(a, b));
-
-//		a.xPosition = 0;
-//		a.yPosition = 100;
-//		b.xPosition = 0;
-//		b.yPosition = 150;
-		assertFalse(checkDownCollision(a, b));
-	}
-
-	@Test
-	public void testCheckLeftCollision() {
-		GridObject a;
-		GridObject b;
-		assertFalse(checkLeftCollision(null, null));
-
-		a = new GridObject(create(100, 0));
-		b = new GridObject(create(150, 0));
-		assertFalse(checkLeftCollision(a, b));
-
-//		a.xPosition = 100;
-//		a.yPosition = 0;
-//		b.xPosition = 80;
-//		b.yPosition = 0;
-		assertTrue(checkLeftCollision(a, b));
-
-//		a.xPosition = 100;
-//		a.yPosition = 0;
-//		b.xPosition = 60;
-//		b.yPosition = 0;
-		assertFalse(checkUpCollision(a, b));
-
-//		a.xPosition = 100;
-//		a.yPosition = 0;
-//		b.xPosition = 120;
-//		b.yPosition = 0;
-		assertFalse(checkUpCollision(a, b));
-	}
 
 	@Test
 	public void testCheckExplBricks() {

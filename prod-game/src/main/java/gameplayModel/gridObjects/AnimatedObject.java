@@ -2,6 +2,7 @@ package gameplayModel.gridObjects;
 
 import static gameplayView.AnimationType.Death;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toMap;
 
 import gameplayModel.GridObject;
@@ -67,6 +68,22 @@ public abstract class AnimatedObject extends GridObject {
 	private static Map<AnimationType, Animation> generateAnimations(List<SimpleEntry<AnimationType, AnimParam>> params) {
 		return params.stream()
 				.collect(toMap(SimpleEntry::getKey, entry -> new Animation(entry.getKey(), entry.getValue())));
+	}
+
+	public boolean checkUpCollision(GridObject object) {
+		return abs(getX() - object.getX()) < MISALIGNMENT_ALLOWED && object.getY() + EFFECTIVE_PIXEL_DIM > getY() && object.getY() <= getY();
+	}
+
+	public boolean checkDownCollision(GridObject object) {
+		return abs(getX() - object.getX()) < MISALIGNMENT_ALLOWED && getY() + EFFECTIVE_PIXEL_DIM > object.getY() && getY() <= object.getY();
+	}
+
+	public boolean checkLeftCollision(GridObject object) {
+		return abs(getY() - object.getY()) < MISALIGNMENT_ALLOWED && object.getX() + EFFECTIVE_PIXEL_DIM > getX() && object.getX() <= getX();
+	}
+
+	public boolean checkRightCollision(GridObject object) {
+		return abs(getY() - object.getY()) < MISALIGNMENT_ALLOWED && getX() + EFFECTIVE_PIXEL_DIM > object.getX() && getX() <= object.getX();
 	}
 
 	public boolean isInRangeOf(Bomb bomb) {

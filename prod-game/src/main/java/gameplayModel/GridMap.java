@@ -16,7 +16,6 @@ import static java.util.stream.Collectors.toList;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
 
-import gameplayController.CollisionDetector;
 import gameplayModel.gridObjects.*;
 import gameplayModel.gridObjects.animatedObjects.*;
 import gameplayView.AnimationType;
@@ -27,6 +26,8 @@ import utilities.Position;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -66,23 +67,23 @@ public class GridMap {
 			if (activeDirectionKeys.size() != 0) {
 				switch (activeDirectionKeys.getFirst()) {
 					case VK_UP:
-						updateBombermanStatus(Up, CollisionDetector::checkUpCollision, bomberman::moveUp);
+						updateBombermanStatus(Up, anim -> anim::checkUpCollision, bomberman::moveUp);
 						break;
 					case VK_DOWN:
-						updateBombermanStatus(Down, CollisionDetector::checkDownCollision, bomberman::moveDown);
+						updateBombermanStatus(Down, anim -> anim::checkDownCollision, bomberman::moveDown);
 						break;
 					case VK_LEFT:
-						updateBombermanStatus(Left, CollisionDetector::checkLeftCollision, bomberman::moveLeft);
+						updateBombermanStatus(Left, anim -> anim::checkLeftCollision, bomberman::moveLeft);
 						break;
 					case VK_RIGHT:
-						updateBombermanStatus(Right, CollisionDetector::checkRightCollision, bomberman::moveRight);
+						updateBombermanStatus(Right, anim -> anim::checkRightCollision, bomberman::moveRight);
 						break;
 				}
 			}
 		}
 	}
 
-	private void updateBombermanStatus(AnimationType animationType, BiPredicate<GridObject, GridObject> collisionCheck, Runnable move) {
+	private void updateBombermanStatus(AnimationType animationType, Function<AnimatedObject, Predicate<GridObject>> collisionCheck, Runnable move) {
 		if (bomberman.getCurrentAnimationType() != animationType)
 			bomberman.setCurrentAnimation(animationType);
 		else
@@ -90,12 +91,9 @@ public class GridMap {
 		if (canMove(collisionCheck)) move.run();
 	}
 
-	private Boolean canMove(BiPredicate<GridObject, GridObject> collisionCheck) {
+	private Boolean canMove(Function<AnimatedObject, Predicate<GridObject>> collisionCheck) {
 		return bombs.stream()
-				.filter(bomb -> collisionCheck.test(bomberman, bomb) && !bomberman.canBombPass())
-				.findFirst()
-				.map(bomb -> false)
-				.orElse(true);
+				.noneMatch(bomb -> collisionCheck.apply(bomberman).test(bomb) && !bomberman.canBombPass());
 	}
 
 	void removePowerUps() {
@@ -216,14 +214,14 @@ public class GridMap {
 	void checkCollisionBtwBombermanAndBricks() {
 		if (!bomberman.canWallPass()) {
 			for (Brick brick : bricks) {
-				if (checkRightCollision(bomberman, brick))
+				if (bomberman.checkRightCollision(brick))
 					bomberman.setXPosition(brick.getPosition().getX() - EFFECTIVE_PIXEL_DIM);
-				if (checkLeftCollision(bomberman, brick))
+				if (bomberman.checkLeftCollision(brick))
 					bomberman.setXPosition(brick.getPosition().getX() + EFFECTIVE_PIXEL_DIM);
-				if (checkDownCollision(bomberman, brick))
+				if (bomberman.checkDownCollision(brick))
 					bomberman.setYPosition(brick.getPosition().getY() - EFFECTIVE_PIXEL_DIM);
-				if (CollisionDetector.checkUpCollision(bomberman, brick))
-					bomberman.setYPosition(brick.getPosition().getY() + EFFECTIVE_PIXEL_DIM);
+				if (bomberman.checkUpCollision(brick))
+					bomberman.setYPosition(brick.getY() + EFFECTIVE_PIXEL_DIM);
 			}
 		}
 	}
@@ -231,8 +229,8 @@ public class GridMap {
 	void checkCollisionBtwBombermanAndEnemies() {
 		if (!bomberman.isInvincible()) {
 			for (Enemy enemy : enemies) {
-				boolean isHorzCollision = checkRightCollision(bomberman, enemy) || checkLeftCollision(bomberman, enemy);
-				boolean isVertCollision = checkDownCollision(bomberman, enemy) || CollisionDetector.checkUpCollision(bomberman, enemy);
+				boolean isHorzCollision = bomberman.checkRightCollision(enemy) || bomberman.checkLeftCollision(enemy);
+				boolean isVertCollision = bomberman.checkDownCollision(enemy) || bomberman.checkUpCollision(enemy);
 
 				if (isHorzCollision || isVertCollision)
 					bomberman.triggerDeath();
@@ -298,8 +296,7 @@ public class GridMap {
 
 	private void spawnEightHarderEnemies(GridObject gridObj, EnemyType hardestEnemyType) {
 		enemies.clear();
-		final EnemyType type = hardestEnemyType;
-		spawnEightEnemies(type == Pontan ? Pontan : values()[type.ordinal() + 1], gridObj.getX(), gridObj.getY());
+		spawnEightEnemies(hardestEnemyType == Pontan ? Pontan : values()[hardestEnemyType.ordinal() + 1], gridObj.getX(), gridObj.getY());
 	}
 
 	private void spawnEightEnemies(EnemyType type, int xPosition, int yPosition) {
@@ -363,10 +360,7 @@ public class GridMap {
 	private Boolean validPosition(Position position) {
 		return bricks.stream()
 				.filter(brick -> !BRICK_POS.test(position.getModX(), position.getModY()))
-				.filter(brick -> brick.isSamePosition(position))
-				.findFirst()
-				.map(brick -> false)
-				.orElse(true);
+				.noneMatch(brick -> brick.isSamePosition(position));
 	}
 
 	private static Position generateRandomLocation() {
