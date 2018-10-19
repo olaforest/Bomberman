@@ -6,7 +6,6 @@ import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toMap;
 
 import gameplayModel.GridObject;
-import gameplayModel.gridObjects.animatedObjects.Bomb;
 import gameplayView.AnimParam;
 import gameplayView.Animation;
 import gameplayView.AnimationType;
@@ -70,6 +69,10 @@ public abstract class AnimatedObject extends GridObject {
 				.collect(toMap(SimpleEntry::getKey, entry -> new Animation(entry.getKey(), entry.getValue())));
 	}
 
+	public boolean checkExactCollision(GridObject object) {
+		return isInSameColumnAs(object) && isSameVertPos(object) || isInSameRowAs(object) && isSameHorizPos(object);
+	}
+
 	public boolean checkUpCollision(GridObject object) {
 		return abs(getX() - object.getX()) < MISALIGNMENT_ALLOWED && object.getY() + EFFECTIVE_PIXEL_DIM > getY() && object.getY() <= getY();
 	}
@@ -84,33 +87,5 @@ public abstract class AnimatedObject extends GridObject {
 
 	public boolean checkRightCollision(GridObject object) {
 		return abs(getY() - object.getY()) < MISALIGNMENT_ALLOWED && getX() + EFFECTIVE_PIXEL_DIM > object.getX() && getX() <= object.getX();
-	}
-
-	public boolean isInRangeOf(Bomb bomb) {
-		return isInHorizontalRangeOf(bomb) || isInVerticalRangeOf(bomb);
-	}
-
-	private boolean isInHorizontalRangeOf(Bomb bomb) {
-		return isInSameRowAs(bomb) && (isInRightRangeOf(bomb) || isInLeftRangeOf(bomb));
-	}
-
-	private boolean isInVerticalRangeOf(Bomb bomb) {
-		return isInSameColumnAs(bomb) && (isInDownRangeOf(bomb) || isInUpRangeOf(bomb));
-	}
-
-	private boolean isInRightRangeOf(Bomb bomb) {
-		return bomb.getX() + (bomb.getRightRange() + 1) * EFFECTIVE_PIXEL_DIM >= getX() + 1 && bomb.getX() < getX();
-	}
-
-	private boolean isInLeftRangeOf(Bomb bomb) {
-		return bomb.getX() - (bomb.getLeftRange() + 1) * EFFECTIVE_PIXEL_DIM <= getX() - 1 && bomb.getX() > getX();
-	}
-
-	private boolean isInDownRangeOf(Bomb bomb) {
-		return bomb.getY() + (bomb.getDownRange() + 1) * EFFECTIVE_PIXEL_DIM >= getY() + 1 && bomb.getY() < getY();
-	}
-
-	private boolean isInUpRangeOf(Bomb bomb) {
-		return bomb.getY() - (bomb.getUpRange() + 1) * EFFECTIVE_PIXEL_DIM <= getY() - 1 && bomb.getY() > getY();
 	}
 }

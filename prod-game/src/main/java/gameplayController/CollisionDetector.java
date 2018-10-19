@@ -1,14 +1,10 @@
 package gameplayController;
 
-import static gameplayModel.GridObject.MISALIGNMENT_ALLOWED;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
-import static java.lang.Math.abs;
 import static java.util.stream.Collectors.toList;
 
-import gameplayModel.GridObject;
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayModel.gridObjects.animatedObjects.Bomb;
-import gameplayModel.gridObjects.animatedObjects.Bomberman;
 import gameplayModel.gridObjects.animatedObjects.Brick;
 import gameplayModel.gridObjects.animatedObjects.Enemy;
 
@@ -16,26 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollisionDetector {
-
-	public static boolean checkExplGridObject(Bomb bomb, GridObject gridObj) {
-		if (abs(bomb.getY() - gridObj.getY()) < EFFECTIVE_PIXEL_DIM) {
-			boolean isInRightRange = bomb.getX() + (bomb.getRightRange() + 1) * EFFECTIVE_PIXEL_DIM >= gridObj.getX() + 6 && bomb.getX() < gridObj.getX();
-
-			if (isInRightRange) return true;
-
-			boolean isInLeftRange = bomb.getX() - (bomb.getLeftRange() + 1) * EFFECTIVE_PIXEL_DIM <= gridObj.getX() - 6 && bomb.getX() > gridObj.getX();
-
-			if (isInLeftRange) return true;
-		}
-
-		if (abs(bomb.getX() - gridObj.getX()) < EFFECTIVE_PIXEL_DIM) {
-			boolean isInDownRange = bomb.getY() + (bomb.getDownRange() + 1) * EFFECTIVE_PIXEL_DIM >= gridObj.getY() + 4 && bomb.getY() < gridObj.getY();
-			if (isInDownRange) return true;
-
-			return bomb.getY() - (bomb.getUpRange() + 1) * EFFECTIVE_PIXEL_DIM <= gridObj.getY() - 4 && bomb.getY() > gridObj.getY();
-		}
-		return false;
-	}
 
 	public static List<Enemy> checkExplEnemies(List<Enemy> enemies, Bomb bomb) {
 		return enemies.stream()
@@ -108,13 +84,5 @@ public class CollisionDetector {
 				}
 			}
 		}
-	}
-
-	public static boolean checkExactCollision(Bomberman bomberman, GridObject b) {
-		return bomberman != null
-				&& b != null
-				&& (abs(bomberman.getX() - b.getX()) < MISALIGNMENT_ALLOWED
-				&& bomberman.getY() == b.getY() || (abs(bomberman.getY() - b.getY()) < MISALIGNMENT_ALLOWED
-				&& (bomberman.getX() == b.getX())));
 	}
 }

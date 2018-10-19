@@ -5,6 +5,7 @@ import static gameplayModel.GridMap.MAP_WIDTH;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 import static java.lang.Math.abs;
 
+import gameplayModel.gridObjects.animatedObjects.Bomb;
 import lombok.Getter;
 import utilities.Position;
 
@@ -83,11 +84,47 @@ public class GridObject {
 		return this.position.isSame(position);
 	}
 
-	public boolean isInSameColumnAs(GridObject other) {
-		return abs(getX() - other.getX()) < EFFECTIVE_PIXEL_DIM;
+	protected boolean isInSameColumnAs(GridObject other) {
+		return abs(getX() - other.getX()) < MISALIGNMENT_ALLOWED;
 	}
 
-	public boolean isInSameRowAs(GridObject other) {
-		return abs(getY() - other.getY()) < EFFECTIVE_PIXEL_DIM;
+	protected boolean isInSameRowAs(GridObject other) {
+		return abs(getY() - other.getY()) < MISALIGNMENT_ALLOWED;
+	}
+
+	protected boolean isSameHorizPos(GridObject object) {
+		return getX() == object.getX();
+	}
+
+	protected boolean isSameVertPos(GridObject object) {
+		return getY() == object.getY();
+	}
+
+	public boolean isInRangeOf(Bomb bomb) {
+		return isInHorizontalRangeOf(bomb) || isInVerticalRangeOf(bomb);
+	}
+
+	private boolean isInHorizontalRangeOf(Bomb bomb) {
+		return isInSameRowAs(bomb) && (isInRightRangeOf(bomb) || isInLeftRangeOf(bomb));
+	}
+
+	private boolean isInVerticalRangeOf(Bomb bomb) {
+		return isInSameColumnAs(bomb) && (isInDownRangeOf(bomb) || isInUpRangeOf(bomb));
+	}
+
+	private boolean isInRightRangeOf(Bomb bomb) {
+		return bomb.getX() + (bomb.getRightRange() + 1) * EFFECTIVE_PIXEL_DIM >= getX() + 1 && bomb.getX() < getX();
+	}
+
+	private boolean isInLeftRangeOf(Bomb bomb) {
+		return bomb.getX() - (bomb.getLeftRange() + 1) * EFFECTIVE_PIXEL_DIM <= getX() - 1 && bomb.getX() > getX();
+	}
+
+	private boolean isInDownRangeOf(Bomb bomb) {
+		return bomb.getY() + (bomb.getDownRange() + 1) * EFFECTIVE_PIXEL_DIM >= getY() + 1 && bomb.getY() < getY();
+	}
+
+	private boolean isInUpRangeOf(Bomb bomb) {
+		return bomb.getY() - (bomb.getUpRange() + 1) * EFFECTIVE_PIXEL_DIM <= getY() - 1 && bomb.getY() > getY();
 	}
 }

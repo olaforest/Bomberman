@@ -1,6 +1,7 @@
 package gameplayModel;
 
-import static gameplayController.CollisionDetector.*;
+import static gameplayController.CollisionDetector.checkExplBricks;
+import static gameplayController.CollisionDetector.checkExplEnemies;
 import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayModel.gridObjects.HiddenObject.generateIndex;
 import static gameplayModel.gridObjects.PowerUp.createPowerUp;
@@ -197,14 +198,14 @@ public class GridMap {
 					pointsMultiplier--;
 				}
 
-				if (checkExplGridObject(bomb, bomberman) && !bomberman.canFlamePass() && !bomberman.isInvincible() && !isBonusLevel && !bomberman.isDead())
+				if (bomberman.isInRangeOf(bomb) && !bomberman.canFlamePass() && !bomberman.isInvincible() && !isBonusLevel && !bomberman.isDead())
 					bomberman.triggerDeath();
 
-				if (exitway != null && checkExplGridObject(bomb, exitway)) {
+				if (exitway != null && exitway.isInRangeOf(bomb)) {
 					spawnEightHarderEnemies(exitway, hardestEnemyType);
 				}
 
-				if (powerUp != null && checkExplGridObject(bomb, powerUp)) {
+				if (powerUp != null && powerUp.isInRangeOf(bomb)) {
 					spawnEightHarderEnemies(powerUp, hardestEnemyType);
 				}
 			}
@@ -239,11 +240,11 @@ public class GridMap {
 	}
 
 	boolean checkCollisionBtwBombermanAndExitway() {
-		return checkExactCollision(bomberman, exitway) && enemies.size() == 0;
+		return bomberman.checkExactCollision(exitway) && enemies.size() == 0;
 	}
 
 	void checkCollisionBtwBombermanAndPowerUp() {
-		if (powerUp != null && checkExactCollision(bomberman, powerUp)) {
+		if (powerUp != null && bomberman.checkExactCollision(powerUp)) {
 			bomberman.addPowerUp(powerUp);
 			powerUp = null;
 		}
