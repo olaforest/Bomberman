@@ -104,27 +104,27 @@ public class GridObject {
 		return isInHorizontalRangeOf(bomb) || isInVerticalRangeOf(bomb);
 	}
 
+	public boolean isInRightRangeOf(Bomb bomb) {
+		return bomb.getX() + (bomb.getRightRange() + 1) * EFFECTIVE_PIXEL_DIM >= getX() + 1 && bomb.getX() < getX();
+	}
+
+	public boolean isInLeftRangeOf(Bomb bomb) {
+		return bomb.getX() - (bomb.getLeftRange() + 1) * EFFECTIVE_PIXEL_DIM <= getX() - 1 && bomb.getX() > getX();
+	}
+
+	public boolean isInDownRangeOf(Bomb bomb) {
+		return bomb.getY() + (bomb.getDownRange() + 1) * EFFECTIVE_PIXEL_DIM >= getY() + 1 && bomb.getY() < getY();
+	}
+
+	public boolean isInUpRangeOf(Bomb bomb) {
+		return bomb.getY() - (bomb.getUpRange() + 1) * EFFECTIVE_PIXEL_DIM <= getY() - 1 && bomb.getY() > getY();
+	}
+
 	private boolean isInHorizontalRangeOf(Bomb bomb) {
 		return isInSameRowAs(bomb) && (isInRightRangeOf(bomb) || isInLeftRangeOf(bomb));
 	}
 
 	private boolean isInVerticalRangeOf(Bomb bomb) {
 		return isInSameColumnAs(bomb) && (isInDownRangeOf(bomb) || isInUpRangeOf(bomb));
-	}
-
-	private boolean isInRightRangeOf(Bomb bomb) {
-		return bomb.getX() + (bomb.getRightRange() + 1) * EFFECTIVE_PIXEL_DIM >= getX() + 1 && bomb.getX() < getX();
-	}
-
-	private boolean isInLeftRangeOf(Bomb bomb) {
-		return bomb.getX() - (bomb.getLeftRange() + 1) * EFFECTIVE_PIXEL_DIM <= getX() - 1 && bomb.getX() > getX();
-	}
-
-	private boolean isInDownRangeOf(Bomb bomb) {
-		return bomb.getY() + (bomb.getDownRange() + 1) * EFFECTIVE_PIXEL_DIM >= getY() + 1 && bomb.getY() < getY();
-	}
-
-	private boolean isInUpRangeOf(Bomb bomb) {
-		return bomb.getY() - (bomb.getUpRange() + 1) * EFFECTIVE_PIXEL_DIM <= getY() - 1 && bomb.getY() > getY();
 	}
 }

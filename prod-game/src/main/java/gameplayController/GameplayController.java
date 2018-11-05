@@ -33,7 +33,6 @@ public class GameplayController implements ActionListener {
 	@Getter
 	private final GameContext gameContext;
 	private final ArtificialIntelligence intelligence;
-	private final CollisionDetector colDetect;
 	private final GameplayKeyListener keyListener = new GameplayKeyListener();
 	private final LevelManager levelManager;
 	private final Timer timer;
@@ -46,7 +45,6 @@ public class GameplayController implements ActionListener {
 
 	public GameplayController() {
 		gameContext = new GameContext();
-		colDetect = new CollisionDetector();
 		intelligence = new ArtificialIntelligence(gameContext.getGridMap());
 		levelManager = new LevelManager();
 		activeDirectionKeys = new ArrayDeque<>();
@@ -57,7 +55,6 @@ public class GameplayController implements ActionListener {
 
 	public GameplayController(GameContext gameContext, LevelManager levelManager) {
 		this.gameContext = gameContext;
-		colDetect = new CollisionDetector();
 		intelligence = new ArtificialIntelligence(gameContext.getGridMap());
 		this.levelManager = levelManager;
 		activeDirectionKeys = new ArrayDeque<>();

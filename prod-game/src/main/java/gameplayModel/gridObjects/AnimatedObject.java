@@ -12,9 +12,9 @@ import gameplayView.AnimationType;
 import lombok.Getter;
 import utilities.Position;
 
-import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public abstract class AnimatedObject extends GridObject {
 	private final Map<AnimationType, Animation> animations;
@@ -22,7 +22,7 @@ public abstract class AnimatedObject extends GridObject {
 	@Getter protected boolean isObsolete;
 	protected int counter, animCycleParam;
 
-	protected AnimatedObject(Position position, List<SimpleEntry<AnimationType, AnimParam>> animParams) {
+	protected AnimatedObject(Position position, List<Entry<AnimationType, AnimParam>> animParams) {
 		super(position);
 		this.animations = generateAnimations(animParams);
 		currentAnimation = animations.get(animParams.get(0).getKey());
@@ -64,9 +64,9 @@ public abstract class AnimatedObject extends GridObject {
 			currentAnimation.cycleFrame();
 	}
 
-	private static Map<AnimationType, Animation> generateAnimations(List<SimpleEntry<AnimationType, AnimParam>> params) {
+	private static Map<AnimationType, Animation> generateAnimations(List<Entry<AnimationType, AnimParam>> params) {
 		return params.stream()
-				.collect(toMap(SimpleEntry::getKey, entry -> new Animation(entry.getKey(), entry.getValue())));
+				.collect(toMap(Entry::getKey, entry -> new Animation(entry.getKey(), entry.getValue())));
 	}
 
 	public boolean checkExactCollision(GridObject object) {

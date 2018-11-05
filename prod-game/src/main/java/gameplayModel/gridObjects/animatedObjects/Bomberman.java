@@ -19,10 +19,11 @@ import utilities.Position;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 @Getter
 public class Bomberman extends AnimatedObject {
-	private static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
+	private static final List<Entry<AnimationType, AnimParam>> animParams = asList(
 			new SimpleEntry<>(Right, new AnimParam(56, 3, 4)),
 			new SimpleEntry<>(Left, new AnimParam(56, 21, 4)),
 			new SimpleEntry<>(Down, new AnimParam(2, 3, 3)),

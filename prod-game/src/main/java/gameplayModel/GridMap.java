@@ -1,7 +1,5 @@
 package gameplayModel;
 
-import static gameplayController.CollisionDetector.checkExplBricks;
-import static gameplayController.CollisionDetector.checkExplEnemies;
 import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayModel.gridObjects.HiddenObject.generateIndex;
 import static gameplayModel.gridObjects.PowerUp.createPowerUp;
@@ -57,7 +55,7 @@ public class GridMap {
 		this.enemies = generateEnemies(level.getEnemiesCount());
 		this.exitway = addExitway();
 		this.powerUp = level.getPowerUpType()
-				.map(type -> addPowerup(type, exitway))
+				.map(type -> addPowerUp(type, exitway))
 				.orElse(null);
 	}
 
@@ -167,9 +165,8 @@ public class GridMap {
 		for (Bomb bomb : bombs) {
 			if (bomb.getTimer() == TIMEOUT) {
 
-				List<AnimatedObject> destBricks = checkExplBricks(bricks, bombs, bomb);
-
-				destBricks.stream()
+				bricks.stream()
+						.flatMap(bomb::adjustRanges)
 						.filter(Objects::nonNull)
 						.forEach(destBrick -> {
 
@@ -210,6 +207,12 @@ public class GridMap {
 				}
 			}
 		}
+	}
+
+	private static List<Enemy> checkExplEnemies(List<Enemy> enemies, Bomb bomb) {
+		return enemies.stream()
+				.filter(enemy -> enemy.isInRangeOf(bomb))
+				.collect(toList());
 	}
 
 	void checkCollisionBtwBombermanAndBricks() {
@@ -325,7 +328,7 @@ public class GridMap {
 		return new Exitway(create(bricks.get(brickIndex).getPosition()));
 	}
 
-	private PowerUp addPowerup(PowerUpType type, Exitway exitway) {
+	private PowerUp addPowerUp(PowerUpType type, Exitway exitway) {
 		return IntStream.iterate(0, i -> i++)
 				.limit(1000)
 				.mapToObj(i -> generateIndex(bricks.size()))
