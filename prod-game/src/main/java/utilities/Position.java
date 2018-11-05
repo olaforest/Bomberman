@@ -1,11 +1,11 @@
 package utilities;
 
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 
 @Getter
 @Setter
@@ -38,6 +38,10 @@ public class Position {
 		return y / EFFECTIVE_PIXEL_DIM;
 	}
 
+	public boolean isSame(Position position) {
+		return isSameX(position.getX()) && isSameY(position.getY());
+	}
+
 	public static Position create(int x, int y) {
 		return new Position(x, y);
 	}
@@ -48,10 +52,6 @@ public class Position {
 
 	public static Position modulus(int x, int y) {
 		return new Position(x * EFFECTIVE_PIXEL_DIM, y * EFFECTIVE_PIXEL_DIM);
-	}
-
-	public boolean isSame(Position position) {
-		return isSameX(position.getX()) && isSameY(position.getY());
 	}
 
 	private boolean isSameY(int y) {

@@ -1,14 +1,14 @@
 package gameplayModel.gridObjects.animatedObjects;
 
-import gameplayModel.GridMap;
-import org.junit.Before;
-import org.junit.Test;
-
 import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 import static org.junit.Assert.*;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
+
+import gameplayModel.GridMap;
+import org.junit.Before;
+import org.junit.Test;
 
 public class BombTest {
 	private static final int TIME_TO_EXPLOSION = 2500;
@@ -23,8 +23,8 @@ public class BombTest {
 	@Test
 	public void testBomb() {
 
-		int testXPosition = (((int) (Math.random() * (GridMap.MAPWIDTH / 2))) * 2 + 1) * EFFECTIVE_PIXEL_DIM;
-		int testYPosition = (((int) (Math.random() * (GridMap.MAPHEIGHT / 2))) * 2 + 1) * EFFECTIVE_PIXEL_DIM;
+		int testXPosition = (((int) (Math.random() * (GridMap.MAP_WIDTH / 2))) * 2 + 1) * EFFECTIVE_PIXEL_DIM;
+		int testYPosition = (((int) (Math.random() * (GridMap.MAP_HEIGHT / 2))) * 2 + 1) * EFFECTIVE_PIXEL_DIM;
 		int testTimer = (int) (Math.random() * (TIME_TO_EXPLOSION / TIMEOUT));
 		int testRange = ((int) (Math.random() * 10)) + 1;
 		int testRightRange = ((int) (Math.random() * testRange)) + 1;
@@ -243,7 +243,7 @@ public class BombTest {
 		assertEquals(EFFECTIVE_PIXEL_DIM, bomb.getPosition().getX());
 
 		//Tests if the inputted x position is out of bounds on the Right.
-		bomb.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIM);
+		bomb.setXPosition(GridMap.MAP_WIDTH * EFFECTIVE_PIXEL_DIM);
 		assertEquals(EFFECTIVE_PIXEL_DIM, bomb.getPosition().getX());
 
 		//Tests if the inputted x position is valid.
@@ -287,7 +287,7 @@ public class BombTest {
 		assertEquals(EFFECTIVE_PIXEL_DIM, bomb.getPosition().getY());
 
 		//Tests if the inputted y position is out of bounds on the bottom.
-		bomb.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIM);
+		bomb.setYPosition(GridMap.MAP_WIDTH * EFFECTIVE_PIXEL_DIM);
 		assertEquals(EFFECTIVE_PIXEL_DIM, bomb.getPosition().getY());
 
 		//Tests if the inputted y position is valid.

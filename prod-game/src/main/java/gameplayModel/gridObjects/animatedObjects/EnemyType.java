@@ -1,5 +1,9 @@
 package gameplayModel.gridObjects.animatedObjects;
 
+import static gameplayModel.gridObjects.animatedObjects.Enemy.ANIMATION_TYPES;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+
 import gameplayView.AnimParam;
 import gameplayView.AnimationType;
 import lombok.Getter;
@@ -8,12 +12,9 @@ import lombok.RequiredArgsConstructor;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import static gameplayModel.gridObjects.animatedObjects.Enemy.ANIMATION_TYPES;
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
 
 @Getter
 @RequiredArgsConstructor
@@ -31,13 +32,13 @@ public enum EnemyType {
 	private final int speed;
 	private final int smartness;
 	private final boolean wallpass;
-	private final List<SimpleEntry<AnimationType, AnimParam>> animParams;
+	private final List<Entry<AnimationType, AnimParam>> animParams;
 
 	public static Stream<EnemyType> stream() {
 		return Arrays.stream(values());
 	}
 
-	private static List<SimpleEntry<AnimationType, AnimParam>> generateAnimParam(List<Integer> params) {
+	private static List<Entry<AnimationType, AnimParam>> generateAnimParam(List<Integer> params) {
 		final List<AnimParam> animParams = convertToAnimParam(params);
 		return IntStream.range(0, animParams.size())
 				.mapToObj(i -> new SimpleEntry<>(ANIMATION_TYPES.get(i), animParams.get(i)))

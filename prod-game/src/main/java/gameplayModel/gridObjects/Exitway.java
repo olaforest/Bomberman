@@ -1,13 +1,13 @@
 package gameplayModel.gridObjects;
 
+import static gameplayView.ImageManager.importScaledImage;
+
 import lombok.Getter;
 import utilities.Position;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-
-import static gameplayView.ImageManager.importScaledImage;
 
 public class Exitway extends FixedObject implements HiddenObject {
 	@Getter private static final BufferedImage image = importScaledImage(2, 346);

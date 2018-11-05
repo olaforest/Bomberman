@@ -1,6 +1,20 @@
 package gameplayModel.gridObjects.animatedObjects;
 
+import static fj.data.List.list;
+import static gameplayModel.GridMap.MAP_HEIGHT;
+import static gameplayModel.GridMap.MAP_WIDTH;
+import static gameplayView.AnimationType.*;
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+import static java.lang.Math.abs;
+import static java.util.Arrays.asList;
+import static java.util.function.IntUnaryOperator.identity;
+
+import fj.F;
+import fj.F3;
+import fj.data.Option;
+import fj.function.Effect1;
 import gameplayController.GameplayController;
+import gameplayModel.GridObject;
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayView.AnimParam;
 import gameplayView.Animation;
@@ -14,22 +28,15 @@ import utilities.Position;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BooleanSupplier;
-import java.util.function.IntConsumer;
-import java.util.function.IntPredicate;
-import java.util.function.IntUnaryOperator;
+import java.util.Map.Entry;
+import java.util.function.*;
 import java.util.stream.IntStream;
-
-import static gameplayModel.GridMap.MAPHEIGHT;
-import static gameplayModel.GridMap.MAPWIDTH;
-import static gameplayView.AnimationType.*;
-import static java.util.Arrays.asList;
-import static java.util.function.IntUnaryOperator.identity;
+import java.util.stream.Stream;
 
 @Getter
 public class Bomb extends AnimatedObject {
 	private static final int TIME_TO_EXPLOSION = 2500;
-	private static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
+	private static final List<Entry<AnimationType, AnimParam>> animParams = asList(
 			new SimpleEntry<>(Unexploded, new AnimParam(128, 21, 4)),
 			new SimpleEntry<>(ExpCenter, new AnimParam(2, 273, 7)),
 			new SimpleEntry<>(ExpRight, new AnimParam(2, 255, 7)),
@@ -137,7 +144,7 @@ public class Bomb extends AnimatedObject {
 	}
 
 	private void processRange(int size, IntConsumer addEndAnim, IntConsumer addIntermediateAnim,
-							  IntUnaryOperator direction) {
+														IntUnaryOperator direction) {
 		if (size > 0) {
 			if (isRangeChanged.test(size))
 				addChangedRangeAnim(size, addIntermediateAnim, direction);
@@ -197,14 +204,14 @@ public class Bomb extends AnimatedObject {
 
 	private void setHorizontalRanges() {
 		if (maxRangePosition(position.getX(), rightRange) >= MAX_X_POSITION)
-			rightRange = adjustedMaxRangePosition(position.getX(), MAPWIDTH);
+			rightRange = adjustedMaxRangePosition(position.getX(), MAP_WIDTH);
 		if (minRangePosition(position.getX(), leftRange) <= MIN_X_POSITION)
 			leftRange = adjustedMinRangePosition(position.getX());
 	}
 
 	private void setVerticalRanges() {
 		if (maxRangePosition(position.getY(), downRange) >= MAX_Y_POSITION)
-			downRange = adjustedMaxRangePosition(position.getY(), MAPHEIGHT);
+			downRange = adjustedMaxRangePosition(position.getY(), MAP_HEIGHT);
 		if (minRangePosition(position.getY(), upRange) <= MIN_Y_POSITION)
 			upRange = adjustedMinRangePosition(position.getY());
 	}
@@ -267,5 +274,66 @@ public class Bomb extends AnimatedObject {
 		entryList.add(Integer.toString(upRange));
 
 		return entryList;
+	}
+
+	public Stream<AnimatedObject> adjustRanges(AnimatedObject animObj) {
+		return Option.sequence(adjustHorizontalRanges(animObj).append(adjustVerticalRanges(animObj)))
+				.orSome(list())
+				.toJavaList()
+				.stream();
+	}
+
+	private fj.data.List<Option<AnimatedObject>> adjustHorizontalRanges(AnimatedObject animObj) {
+		return isSameVertPos(animObj) ? list(adjustRightRange(animObj), adjustLeftRange(animObj))
+																	: list();
+	}
+
+	private fj.data.List<Option<AnimatedObject>> adjustVerticalRanges(AnimatedObject animObj) {
+		return isSameVertPos(animObj) ? list(adjustDownRange(animObj), adjustUpRange(animObj))
+																	: list();
+	}
+
+	private Option<AnimatedObject> adjustRightRange(AnimatedObject animObj) {
+		return adjustHorizontalRange(obj -> obj.isInRightRangeOf(this), rightRange, this::setRightRange)
+				.f(animObj);
+	}
+
+	private Option<AnimatedObject> adjustLeftRange(AnimatedObject animObj) {
+		return adjustHorizontalRange(obj -> obj.isInLeftRangeOf(this), leftRange, this::setLeftRange)
+				.f(animObj);
+	}
+
+	private Option<AnimatedObject> adjustDownRange(AnimatedObject animObj) {
+		return adjustVerticalRange(obj -> obj.isInDownRangeOf(this), downRange, this::setDownRange)
+				.f(animObj);
+	}
+
+	private Option<AnimatedObject> adjustUpRange(AnimatedObject animObj) {
+		return adjustVerticalRange(obj -> obj.isInUpRangeOf(this), upRange, this::setUpRange)
+				.f(animObj);
+	}
+
+	private F<AnimatedObject, Option<AnimatedObject>> adjustHorizontalRange(Predicate<GridObject> isInRange, int range, Effect1<Integer> rangeSetter) {
+		return adjustRange(GridObject::getX, getX())
+				.f(isInRange, range, rangeSetter);
+	}
+
+	private F<AnimatedObject, Option<AnimatedObject>> adjustVerticalRange(Predicate<GridObject> isInRange, int range, Effect1<Integer> rangeSetter) {
+		return adjustRange(GridObject::getY, getY())
+				.f(isInRange, range, rangeSetter);
+	}
+
+	private F3<Predicate<GridObject>, Integer, Effect1<Integer>, F<AnimatedObject, Option<AnimatedObject>>> adjustRange(F<AnimatedObject, Integer> objPosition, int bombPosition) {
+		return (isInRange, range, rangeSetter) -> animObj -> {
+			if (isInRange.test(animObj)) {
+				int newRange = abs(objPosition.f(animObj) - bombPosition) / EFFECTIVE_PIXEL_DIM - 1;
+
+				if (range > newRange) {
+					rangeSetter.f(newRange);
+					return Option.some(animObj);
+				}
+			}
+			return Option.none();
+		};
 	}
 }

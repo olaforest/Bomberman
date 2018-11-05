@@ -1,14 +1,14 @@
 package gameplayView;
 
+import static gameplayView.ImageManager.getImages;
+import static java.util.Collections.emptyList;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.List;
-
-import static gameplayView.ImageManager.getImages;
-import static java.util.Collections.emptyList;
 
 @Getter
 public class Animation {
@@ -20,8 +20,7 @@ public class Animation {
 
 	public Animation(AnimationType type, AnimParam animParam) {
 		this.type = type;
-		frameList = getImages(animParam)
-				.orElse(emptyList());
+		frameList = getImages(animParam).orElse(emptyList());
 		frames = frameList.iterator();
 		cycleFrame();
 	}

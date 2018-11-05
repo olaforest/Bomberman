@@ -1,12 +1,12 @@
 package gameplayModel.gridObjects.animatedObjects;
 
-import gameplayModel.GridMap;
-import org.junit.Before;
-import org.junit.Test;
-
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 import static org.junit.Assert.*;
 import static utilities.Position.create;
+
+import gameplayModel.GridMap;
+import org.junit.Before;
+import org.junit.Test;
 
 public class BrickTest {
 
@@ -55,7 +55,7 @@ public class BrickTest {
 		assertEquals(EFFECTIVE_PIXEL_DIM, brick.getPosition().getX());
 
 		//Tests if the inputted x position is out of bounds on the Right.
-		brick.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIM);
+		brick.setXPosition(GridMap.MAP_WIDTH * EFFECTIVE_PIXEL_DIM);
 		assertEquals(EFFECTIVE_PIXEL_DIM, brick.getPosition().getX());
 
 		//Tests if the inputted x position is valid.
@@ -99,7 +99,7 @@ public class BrickTest {
 		assertEquals(EFFECTIVE_PIXEL_DIM, brick.getPosition().getY());
 
 		//Tests if the inputted y position is out of bounds on the bottom.
-		brick.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIM);
+		brick.setYPosition(GridMap.MAP_WIDTH * EFFECTIVE_PIXEL_DIM);
 		assertEquals(EFFECTIVE_PIXEL_DIM, brick.getPosition().getY());
 
 		//Tests if the inputted y position is valid.

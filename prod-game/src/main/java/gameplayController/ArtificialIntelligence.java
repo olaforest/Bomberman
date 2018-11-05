@@ -1,16 +1,18 @@
 package gameplayController;
 
+import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
+import static java.lang.Math.abs;
+
 import gameplayModel.GridMap;
 import gameplayModel.GridObject;
-import gameplayModel.gridObjects.animatedObjects.*;
+import gameplayModel.gridObjects.animatedObjects.Bomb;
+import gameplayModel.gridObjects.animatedObjects.Bomberman;
+import gameplayModel.gridObjects.animatedObjects.Brick;
+import gameplayModel.gridObjects.animatedObjects.Enemy;
 import utilities.Node;
 
 import java.util.LinkedList;
 import java.util.Random;
-
-import static gameplayController.CollisionDetector.*;
-import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
-import static java.lang.Math.abs;
 
 class ArtificialIntelligence {
 	private final GridMap gridMap;
@@ -83,16 +85,16 @@ class ArtificialIntelligence {
 	private void AICollisionCheck(Enemy enemy, GridObject gridObject) {
 
 		if (enemy.getDirection() == 0) {
-			if (checkUpCollision(enemy, gridObject))
+			if (enemy.checkUpCollision(gridObject))
 				collision = true;
 		} else if (enemy.getDirection() == 1) {
-			if (checkDownCollision(enemy, gridObject))
+			if (enemy.checkDownCollision(gridObject))
 				collision = true;
 		} else if (enemy.getDirection() == 2) {
-			if (checkLeftCollision(enemy, gridObject))
+			if (enemy.checkLeftCollision(gridObject))
 				collision = true;
 		} else if (enemy.getDirection() == 3) {
-			if (checkRightCollision(enemy, gridObject))
+			if (enemy.checkRightCollision(gridObject))
 				collision = true;
 		}
 	}
@@ -350,7 +352,7 @@ class ArtificialIntelligence {
 							}
 						}
 					}
-				} else if (i == 3) {
+				} else {
 					if (current.xPosition >= EFFECTIVE_PIXEL_DIM * 13)
 						obstacle = true;
 

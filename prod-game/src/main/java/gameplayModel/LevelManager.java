@@ -1,5 +1,8 @@
 package gameplayModel;
 
+import static java.util.stream.Collectors.toList;
+import static utilities.CsvUtils.readResourcesCSV;
+
 import gameplayModel.gridObjects.animatedObjects.EnemyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +12,6 @@ import utilities.ListUtils;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
-
-import static java.util.stream.Collectors.toList;
-import static utilities.CsvUtils.readResourcesCSV;
 
 @Getter
 @NoArgsConstructor

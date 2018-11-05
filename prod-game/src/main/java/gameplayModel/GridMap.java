@@ -1,20 +1,5 @@
 package gameplayModel;
 
-import gameplayController.CollisionDetector;
-import gameplayModel.gridObjects.*;
-import gameplayModel.gridObjects.animatedObjects.*;
-import gameplayView.AnimationType;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import utilities.Position;
-
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.function.BiPredicate;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
-import static gameplayController.CollisionDetector.*;
 import static gameplayController.GameplayController.TIMEOUT;
 import static gameplayModel.gridObjects.HiddenObject.generateIndex;
 import static gameplayModel.gridObjects.PowerUp.createPowerUp;
@@ -30,11 +15,26 @@ import static java.util.stream.Collectors.toList;
 import static utilities.Position.create;
 import static utilities.Position.modulus;
 
+import gameplayModel.gridObjects.*;
+import gameplayModel.gridObjects.animatedObjects.*;
+import gameplayView.AnimationType;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import utilities.Position;
+
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 @Getter
 @RequiredArgsConstructor
 public class GridMap {
-	public static final int MAPWIDTH = 31;
-	public static final int MAPHEIGHT = 13;
+	public static final int MAP_WIDTH = 31;
+	public static final int MAP_HEIGHT = 13;
 	public static final List<Concrete> CONCRETE_LAYOUT = generateConcreteBlocks();
 	private static final double BRICK_FACTOR = 0.225;
 	private static final BiPredicate<Integer, Integer> CONCRETE_POS = (x, y) -> x % 2 == 0 && y % 2 == 0;
@@ -55,7 +55,7 @@ public class GridMap {
 		this.enemies = generateEnemies(level.getEnemiesCount());
 		this.exitway = addExitway();
 		this.powerUp = level.getPowerUpType()
-				.map(type -> addPowerup(type, exitway))
+				.map(type -> addPowerUp(type, exitway))
 				.orElse(null);
 	}
 
@@ -66,23 +66,23 @@ public class GridMap {
 			if (activeDirectionKeys.size() != 0) {
 				switch (activeDirectionKeys.getFirst()) {
 					case VK_UP:
-						updateBombermanStatus(Up, CollisionDetector::checkUpCollision, bomberman::moveUp);
+						updateBombermanStatus(Up, anim -> anim::checkUpCollision, bomberman::moveUp);
 						break;
 					case VK_DOWN:
-						updateBombermanStatus(Down, CollisionDetector::checkDownCollision, bomberman::moveDown);
+						updateBombermanStatus(Down, anim -> anim::checkDownCollision, bomberman::moveDown);
 						break;
 					case VK_LEFT:
-						updateBombermanStatus(Left, CollisionDetector::checkLeftCollision, bomberman::moveLeft);
+						updateBombermanStatus(Left, anim -> anim::checkLeftCollision, bomberman::moveLeft);
 						break;
 					case VK_RIGHT:
-						updateBombermanStatus(Right, CollisionDetector::checkRightCollision, bomberman::moveRight);
+						updateBombermanStatus(Right, anim -> anim::checkRightCollision, bomberman::moveRight);
 						break;
 				}
 			}
 		}
 	}
 
-	private void updateBombermanStatus(AnimationType animationType, BiPredicate<GridObject, GridObject> collisionCheck, Runnable move) {
+	private void updateBombermanStatus(AnimationType animationType, Function<AnimatedObject, Predicate<GridObject>> collisionCheck, Runnable move) {
 		if (bomberman.getCurrentAnimationType() != animationType)
 			bomberman.setCurrentAnimation(animationType);
 		else
@@ -90,12 +90,9 @@ public class GridMap {
 		if (canMove(collisionCheck)) move.run();
 	}
 
-	private Boolean canMove(BiPredicate<GridObject, GridObject> collisionCheck) {
+	private Boolean canMove(Function<AnimatedObject, Predicate<GridObject>> collisionCheck) {
 		return bombs.stream()
-				.filter(bomb -> collisionCheck.test(bomberman, bomb) && !bomberman.canBombpass())
-				.findFirst()
-				.map(bomb -> false)
-				.orElse(true);
+				.noneMatch(bomb -> collisionCheck.apply(bomberman).test(bomb) && !bomberman.canBombPass());
 	}
 
 	void removePowerUps() {
@@ -168,9 +165,8 @@ public class GridMap {
 		for (Bomb bomb : bombs) {
 			if (bomb.getTimer() == TIMEOUT) {
 
-				List<AnimatedObject> destBricks = checkExplBricks(bricks, bombs, bomb);
-
-				destBricks.stream()
+				bricks.stream()
+						.flatMap(bomb::adjustRanges)
 						.filter(Objects::nonNull)
 						.forEach(destBrick -> {
 
@@ -183,7 +179,7 @@ public class GridMap {
 									.forEach(bomb1 -> bomb1.setTimer(TIMEOUT * 2));
 						});
 
-				ArrayList<Enemy> destEnemies = checkExplEnemies(enemies, bomb);
+				final List<Enemy> destEnemies = checkExplEnemies(enemies, bomb);
 
 				int pointsMultiplier = destEnemies.size();
 
@@ -199,31 +195,37 @@ public class GridMap {
 					pointsMultiplier--;
 				}
 
-				if (checkExplGridObject(bomb, bomberman) && !bomberman.canFlamepass() && !bomberman.isInvincible() && !isBonusLevel && !bomberman.isDead())
+				if (bomberman.isInRangeOf(bomb) && !bomberman.canFlamePass() && !bomberman.isInvincible() && !isBonusLevel && !bomberman.isDead())
 					bomberman.triggerDeath();
 
-				if (exitway != null && checkExplGridObject(bomb, exitway)) {
+				if (exitway != null && exitway.isInRangeOf(bomb)) {
 					spawnEightHarderEnemies(exitway, hardestEnemyType);
 				}
 
-				if (powerUp != null && checkExplGridObject(bomb, powerUp)) {
+				if (powerUp != null && powerUp.isInRangeOf(bomb)) {
 					spawnEightHarderEnemies(powerUp, hardestEnemyType);
 				}
 			}
 		}
 	}
 
+	private static List<Enemy> checkExplEnemies(List<Enemy> enemies, Bomb bomb) {
+		return enemies.stream()
+				.filter(enemy -> enemy.isInRangeOf(bomb))
+				.collect(toList());
+	}
+
 	void checkCollisionBtwBombermanAndBricks() {
-		if (!bomberman.canWallpass()) {
+		if (!bomberman.canWallPass()) {
 			for (Brick brick : bricks) {
-				if (checkRightCollision(bomberman, brick))
+				if (bomberman.checkRightCollision(brick))
 					bomberman.setXPosition(brick.getPosition().getX() - EFFECTIVE_PIXEL_DIM);
-				if (checkLeftCollision(bomberman, brick))
+				if (bomberman.checkLeftCollision(brick))
 					bomberman.setXPosition(brick.getPosition().getX() + EFFECTIVE_PIXEL_DIM);
-				if (checkDownCollision(bomberman, brick))
+				if (bomberman.checkDownCollision(brick))
 					bomberman.setYPosition(brick.getPosition().getY() - EFFECTIVE_PIXEL_DIM);
-				if (CollisionDetector.checkUpCollision(bomberman, brick))
-					bomberman.setYPosition(brick.getPosition().getY() + EFFECTIVE_PIXEL_DIM);
+				if (bomberman.checkUpCollision(brick))
+					bomberman.setYPosition(brick.getY() + EFFECTIVE_PIXEL_DIM);
 			}
 		}
 	}
@@ -231,8 +233,8 @@ public class GridMap {
 	void checkCollisionBtwBombermanAndEnemies() {
 		if (!bomberman.isInvincible()) {
 			for (Enemy enemy : enemies) {
-				boolean isHorzCollision = checkRightCollision(bomberman, enemy) || checkLeftCollision(bomberman, enemy);
-				boolean isVertCollision = checkDownCollision(bomberman, enemy) || CollisionDetector.checkUpCollision(bomberman, enemy);
+				boolean isHorzCollision = bomberman.checkRightCollision(enemy) || bomberman.checkLeftCollision(enemy);
+				boolean isVertCollision = bomberman.checkDownCollision(enemy) || bomberman.checkUpCollision(enemy);
 
 				if (isHorzCollision || isVertCollision)
 					bomberman.triggerDeath();
@@ -241,11 +243,11 @@ public class GridMap {
 	}
 
 	boolean checkCollisionBtwBombermanAndExitway() {
-		return checkExactCollision(bomberman, exitway) && enemies.size() == 0;
+		return bomberman.checkExactCollision(exitway) && enemies.size() == 0;
 	}
 
 	void checkCollisionBtwBombermanAndPowerUp() {
-		if (powerUp != null && checkExactCollision(bomberman, powerUp)) {
+		if (powerUp != null && bomberman.checkExactCollision(powerUp)) {
 			bomberman.addPowerUp(powerUp);
 			powerUp = null;
 		}
@@ -298,8 +300,7 @@ public class GridMap {
 
 	private void spawnEightHarderEnemies(GridObject gridObj, EnemyType hardestEnemyType) {
 		enemies.clear();
-		final EnemyType type = hardestEnemyType;
-		spawnEightEnemies(type == Pontan ? Pontan : values()[type.ordinal() + 1], gridObj.getX(), gridObj.getY());
+		spawnEightEnemies(hardestEnemyType == Pontan ? Pontan : values()[hardestEnemyType.ordinal() + 1], gridObj.getX(), gridObj.getY());
 	}
 
 	private void spawnEightEnemies(EnemyType type, int xPosition, int yPosition) {
@@ -308,14 +309,14 @@ public class GridMap {
 	}
 
 	private static List<Brick> generateBricks() {
-		return IntStream.range(1, MAPHEIGHT - 1)
+		return IntStream.range(1, MAP_HEIGHT - 1)
 				.mapToObj(GridMap::generateBricksInRow)
 				.flatMap(List::stream)
 				.collect(toList());
 	}
 
 	private static List<Brick> generateBricksInRow(int rowNumber) {
-		return IntStream.range(1, MAPWIDTH - 1)
+		return IntStream.range(1, MAP_WIDTH - 1)
 				.filter(x -> BRICK_POS.test(x, rowNumber))
 				.filter(x -> random() < BRICK_FACTOR)
 				.mapToObj(x -> new Brick(modulus(x, rowNumber)))
@@ -327,7 +328,7 @@ public class GridMap {
 		return new Exitway(create(bricks.get(brickIndex).getPosition()));
 	}
 
-	private PowerUp addPowerup(PowerUpType type, Exitway exitway) {
+	private PowerUp addPowerUp(PowerUpType type, Exitway exitway) {
 		return IntStream.iterate(0, i -> i++)
 				.limit(1000)
 				.mapToObj(i -> generateIndex(bricks.size()))
@@ -363,10 +364,7 @@ public class GridMap {
 	private Boolean validPosition(Position position) {
 		return bricks.stream()
 				.filter(brick -> !BRICK_POS.test(position.getModX(), position.getModY()))
-				.filter(brick -> brick.isSamePosition(position))
-				.findFirst()
-				.map(brick -> false)
-				.orElse(true);
+				.noneMatch(brick -> brick.isSamePosition(position));
 	}
 
 	private static Position generateRandomLocation() {
@@ -380,22 +378,22 @@ public class GridMap {
 	}
 
 	private static List<Concrete> generateHoriConcreteBoundary() {
-		return IntStream.range(0, MAPWIDTH)
-				.mapToObj(i -> asList(new Concrete(modulus(i, 0)), new Concrete(modulus(i, (MAPHEIGHT - 1)))))
+		return IntStream.range(0, MAP_WIDTH)
+				.mapToObj(i -> asList(new Concrete(modulus(i, 0)), new Concrete(modulus(i, (MAP_HEIGHT - 1)))))
 				.flatMap(Collection::stream)
 				.collect(toList());
 	}
 
 	private static List<Concrete> generateVertConcreteBoundary() {
-		return IntStream.range(1, MAPHEIGHT - 1)
-				.mapToObj(i -> asList(new Concrete(modulus(0, i)), new Concrete(modulus((MAPWIDTH - 1), i))))
+		return IntStream.range(1, MAP_HEIGHT - 1)
+				.mapToObj(i -> asList(new Concrete(modulus(0, i)), new Concrete(modulus((MAP_WIDTH - 1), i))))
 				.flatMap(Collection::stream)
 				.collect(toList());
 	}
 
 	private static List<Concrete> generateInnerConcreteBlocks() {
 		return IntStream.iterate(2, i -> i + 2)
-				.limit((MAPWIDTH - 2) / 2)
+				.limit((MAP_WIDTH - 2) / 2)
 				.mapToObj(GridMap::addInnerConcreteBlockRow)
 				.flatMap(Collection::stream)
 				.collect(toList());
@@ -403,7 +401,7 @@ public class GridMap {
 
 	private static List<Concrete> addInnerConcreteBlockRow(int xModulusPosition) {
 		return IntStream.iterate(2, i -> i + 2)
-				.limit((MAPHEIGHT - 2) / 2)
+				.limit((MAP_HEIGHT - 2) / 2)
 				.mapToObj(i -> new Concrete(modulus(xModulusPosition, i)))
 				.collect(toList());
 	}

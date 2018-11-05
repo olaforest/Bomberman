@@ -1,12 +1,12 @@
 package gameplayModel;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import static gameplayView.ImageManager.EFFECTIVE_PIXEL_DIM;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static utilities.Position.create;
+
+import org.junit.Before;
+import org.junit.Test;
 
 public class GridObjectTest {
 
@@ -30,7 +30,7 @@ public class GridObjectTest {
 		assertEquals(EFFECTIVE_PIXEL_DIM, gridObj.getPosition().getX());
 
 		//Tests if the inputted x position is out of bounds on the Right.
-		gridObj.setXPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIM);
+		gridObj.setXPosition(GridMap.MAP_WIDTH * EFFECTIVE_PIXEL_DIM);
 		assertEquals(EFFECTIVE_PIXEL_DIM, gridObj.getPosition().getX());
 
 		//Tests if the inputted x position is valid.
@@ -74,7 +74,7 @@ public class GridObjectTest {
 		assertEquals(EFFECTIVE_PIXEL_DIM, gridObj.getPosition().getY());
 
 		//Tests if the inputted y position is out of bounds on the bottom.
-		gridObj.setYPosition(GridMap.MAPWIDTH * EFFECTIVE_PIXEL_DIM);
+		gridObj.setYPosition(GridMap.MAP_WIDTH * EFFECTIVE_PIXEL_DIM);
 		assertEquals(EFFECTIVE_PIXEL_DIM, gridObj.getPosition().getY());
 
 		//Tests if the inputted y position is valid.

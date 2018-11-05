@@ -1,5 +1,9 @@
 package gameplayModel.gridObjects.animatedObjects;
 
+import static gameplayView.AnimationType.Death;
+import static gameplayView.AnimationType.Fixed;
+import static java.util.Arrays.asList;
+
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayView.AnimParam;
 import gameplayView.AnimationType;
@@ -8,13 +12,10 @@ import utilities.Position;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
-
-import static gameplayView.AnimationType.Death;
-import static gameplayView.AnimationType.Fixed;
-import static java.util.Arrays.asList;
+import java.util.Map.Entry;
 
 public class Brick extends AnimatedObject {
-	private static final List<SimpleEntry<AnimationType, AnimParam>> animParams = asList(
+	private static final List<Entry<AnimationType, AnimParam>> animParams = asList(
 			new SimpleEntry<>(Fixed, new AnimParam(38, 346, 2)),
 			new SimpleEntry<>(Death, new AnimParam(56, 346, 6)));
 

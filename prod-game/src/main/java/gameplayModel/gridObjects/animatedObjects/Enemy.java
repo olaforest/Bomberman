@@ -1,5 +1,9 @@
 package gameplayModel.gridObjects.animatedObjects;
 
+import static gameplayView.AnimationType.*;
+import static java.lang.Math.random;
+import static java.util.Arrays.asList;
+
 import gameplayModel.gridObjects.AnimatedObject;
 import gameplayView.AnimationType;
 import lombok.Getter;
@@ -8,10 +12,6 @@ import utilities.Position;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static gameplayView.AnimationType.*;
-import static java.lang.Math.random;
-import static java.util.Arrays.asList;
 
 @Getter
 public class Enemy extends AnimatedObject {
